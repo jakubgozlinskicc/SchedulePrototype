@@ -1,21 +1,13 @@
 import { db } from "./scheduleDb";
 import type { Event } from "./scheduleDb";
 
-export async function addEvent(
-  title: string,
-  description: string,
-  start: Date,
-  end: Date,
-  color: string
-) {
-  const id = await db.events.add({
-    title,
-    description,
-    start,
-    end,
-    color,
-  });
-  return { id, title, description, start, end, color };
+export async function addEvent(event: Omit<Event, "id">): Promise<Event> {
+  const id = await db.events.add(event);
+
+  return {
+    id,
+    ...event,
+  };
 }
 
 export async function getEvents(): Promise<Event[]> {
