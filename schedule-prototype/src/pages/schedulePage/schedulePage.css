@@ -1,0 +1,91 @@
+.schedule-page {
+  padding: 20px;
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.schedule-title {
+  margin: 0;
+}
+
+.events-section {
+  margin-top: 8px;
+}
+
+.section-title {
+  margin: 0 0 8px;
+}
+
+.events-empty {
+  opacity: 0.7;
+  font-size: 0.95rem;
+}
+
+.events-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.event-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.event-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.event-color-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  display: inline-block;
+}
+
+.event-title {
+  font-weight: 500;
+}
+
+.event-dates {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.event-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+.btn-delete {
+  background-color: #dc2626;
+  color: #fff;
+}
