@@ -13,13 +13,15 @@ function SchedulePage() {
     isModalOpen,
     editingEventId,
     eventData,
+    modalMode,
     setEventData,
     openAddModal,
     openEditModal,
     closeModal,
+    beginEditCurrentEvent,
     handleAddEvent,
     handleUpdateEvent,
-    handleDeleteEvent,
+    deleteCurrentEvent,
   } = useEvents();
 
   const handleSubmit = (e: FormEvent) => {
@@ -131,11 +133,14 @@ function SchedulePage() {
       </section> */}
       <EventModal
         isOpen={isModalOpen}
+        mode={modalMode}
         editingEventId={editingEventId}
         eventData={eventData}
         onChange={handleChange}
         onClose={closeModal}
         onSubmit={handleSubmit}
+        onRequestEdit={beginEditCurrentEvent}
+        onRequestDelete={deleteCurrentEvent}
       />
     </div>
   );

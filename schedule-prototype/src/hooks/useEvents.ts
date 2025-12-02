@@ -3,11 +3,13 @@ import type { Event } from "../db/scheduleDb";
 import { getEvents, editEvent, addEvent, deleteEvent } from "../db/eventRepo";
 
 type EventData = Omit<Event, "id">;
+type ModalMode = "add" | "view" | "edit";
 
 export function useEvents() {
   const [events, setEvents] = useState<Event[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEventId, setEditingEventId] = useState<number | null>(null);
+  const [modalMode, setModalMode] = useState<ModalMode>("add");
   const [eventData, setEventData] = useState<EventData>({
     title: "",
     description: "",
@@ -43,6 +45,7 @@ export function useEvents() {
       end: initial?.end ?? new Date(),
       color: initial?.color ?? "blue",
     });
+    setModalMode("add");
     setIsModalOpen(true);
   };
 
@@ -57,6 +60,7 @@ export function useEvents() {
       end: event.end,
       color: event.color,
     });
+    setModalMode("view");
     setIsModalOpen(true);
   };
 
@@ -64,6 +68,19 @@ export function useEvents() {
     setIsModalOpen(false);
     setEditingEventId(null);
     resetEventData();
+  };
+
+  const beginEditCurrentEvent = () => {
+    if (!editingEventId) return;
+    setModalMode("edit");
+  };
+
+  const deleteCurrentEvent = async () => {
+    if (!editingEventId) return;
+    await deleteEvent(editingEventId);
+    const items = await getEvents();
+    setEvents(items);
+    closeModal();
   };
 
   const handleAddEvent = async (e: FormEvent) => {
@@ -76,15 +93,6 @@ export function useEvents() {
 
     resetEventData();
     setIsModalOpen(false);
-  };
-
-  const handleDeleteEvent = async (event: Event) => {
-    if (!event.id) return;
-
-    await deleteEvent(event.id);
-
-    const items = await getEvents();
-    setEvents(items);
   };
 
   const handleUpdateEvent = async (e: FormEvent) => {
@@ -107,6 +115,7 @@ export function useEvents() {
     isModalOpen,
     editingEventId,
     eventData,
+    modalMode,
 
     setEventData,
 
@@ -114,8 +123,9 @@ export function useEvents() {
     openEditModal,
     closeModal,
 
+    beginEditCurrentEvent,
+    deleteCurrentEvent,
     handleAddEvent,
     handleUpdateEvent,
-    handleDeleteEvent,
   };
 }

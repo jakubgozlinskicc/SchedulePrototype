@@ -6,11 +6,14 @@ type EventData = Omit<Event, "id">;
 
 interface EventModalProps {
   isOpen: boolean;
+  mode: "add" | "view" | "edit";
   editingEventId: number | null;
   eventData: EventData;
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onClose: () => void;
   onSubmit: (e: FormEvent) => void;
+  onRequestEdit: () => void;
+  onRequestDelete: () => void | Promise<void>;
 }
 
 function toDateTimeLocal(date: Date) {
@@ -23,19 +26,94 @@ function toDateTimeLocal(date: Date) {
 
 export function EventModal({
   isOpen,
+  mode,
   editingEventId,
   eventData,
   onChange,
   onClose,
   onSubmit,
+  onRequestEdit,
+  onRequestDelete,
 }: EventModalProps) {
   if (!isOpen) return null;
+
+  const isEditMode = mode === "add" || mode === "edit";
+
+  if (!isEditMode) {
+    return (
+      <div className="modal-backdrop">
+        <div className="modal">
+          <h3 className="modal-title">Szczegóły wydarzenia</h3>
+
+          <div className="view-field">
+            <span className="view-label">Tytuł: </span>
+            <span className="view-value">{eventData.title}</span>
+          </div>
+
+          <div className="view-field">
+            <span className="view-label">Początek: </span>
+            <span className="view-value">
+              {eventData.start.toLocaleString()}
+            </span>
+          </div>
+
+          <div className="view-field">
+            <span className="view-label">Koniec: </span>
+            <span className="view-value">{eventData.end.toLocaleString()}</span>
+          </div>
+
+          <div className="view-field">
+            <span className="view-label">Opis: </span>
+            <span className="view-value">
+              {eventData.description || "Brak opisu"}
+            </span>
+          </div>
+
+          <div className="view-field">
+            <span className="view-label">Kolor: </span>
+            <span className="view-value">
+              <span
+                className="event-color-dot"
+                style={{ backgroundColor: eventData.color }}
+              />
+            </span>
+          </div>
+
+          <div className="modal-actions">
+            <button
+              type="button"
+              className="btn btn-delete"
+              onClick={onRequestDelete}
+              disabled={!editingEventId}
+            >
+              Usuń
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={onRequestEdit}
+              disabled={!editingEventId}
+            >
+              Edytuj
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+            >
+              Zamknij
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="modal-backdrop">
       <div className="modal">
         <h3 className="modal-title">
-          {editingEventId === null ? "Dodaj wydarzenie" : "Edytuj wydarzenie"}
+          {mode === "add" ? "Dodaj wydarzenie" : "Edytuj wydarzenie"}
         </h3>
 
         <form onSubmit={onSubmit} className="modal-form">
@@ -50,6 +128,7 @@ export function EventModal({
               required
             />
           </div>
+
           <div className="form-field">
             <label className="form-label">Opis</label>
             <textarea
@@ -59,6 +138,7 @@ export function EventModal({
               className="form-textarea"
             />
           </div>
+
           <div className="form-field">
             <label className="form-label">Początek</label>
             <input
@@ -70,6 +150,7 @@ export function EventModal({
               required
             />
           </div>
+
           <div className="form-field">
             <label className="form-label">Koniec</label>
             <input
@@ -96,13 +177,13 @@ export function EventModal({
           <div className="modal-actions">
             <button
               type="button"
-              onClick={onClose}
               className="btn btn-secondary"
+              onClick={onClose}
             >
               Anuluj
             </button>
             <button type="submit" className="btn btn-primary">
-              {editingEventId === null ? "Dodaj" : "Zapisz zmiany"}
+              {mode === "add" ? "Dodaj" : "Zapisz zmiany"}
             </button>
           </div>
         </form>
