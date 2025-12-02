@@ -1,8 +1,11 @@
 import "./schedulePage.css";
 import { useEvents } from "../../hooks/useEvents";
 import { EventModal } from "../../components/eventModal";
+import { localizer } from "../../utils/calendarLocalizer";
+
 import type { ChangeEvent, FormEvent } from "react";
 import type { Event } from "../../db/scheduleDb";
+import { Calendar, Views, type SlotInfo } from "react-big-calendar";
 
 function SchedulePage() {
   const {
@@ -28,7 +31,7 @@ function SchedulePage() {
   };
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
 
@@ -47,24 +50,48 @@ function SchedulePage() {
     }));
   };
 
-  const handleEditClick = (event: Event) => {
+  const handleSelectSlot = (slotInfo: SlotInfo) => {
+    const { start, end } = slotInfo;
+
+    openAddModal({
+      ...eventData,
+      start: start as Date,
+      end: end as Date,
+    });
+  };
+
+  const handleSelectEvent = (event: Event) => {
     openEditModal(event);
   };
 
   return (
     <div className="schedule-page">
       <header className="schedule-header">
-        <h1 className="schedule-title">Harmonogram</h1>
-        <button className="btn btn-primary" onClick={openAddModal}>
+        <h1 className="schedule-title">Schedule</h1>
+        <button className="btn btn-primary" onClick={() => openAddModal()}>
           Dodaj wydarzenie
         </button>
       </header>
 
-      <section className="events-section">
+      <section className="calendar-section">
+        <Calendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          views={[Views.MONTH, Views.WEEK, Views.DAY]}
+          selectable
+          onSelectSlot={handleSelectSlot}
+          onSelectEvent={handleSelectEvent}
+          style={{ height: "60vh" }}
+        />
+      </section>
+
+      {/* <section className="events-section">
         <h2 className="section-title">Twoje wydarzenia</h2>
 
         {events.length === 0 && (
-          <p className="events-list">Brak wydarzeń. Dodaj pierwsze</p>
+          <p className="events-empty">Brak wydarzeń. Dodaj pierwsze 😊</p>
         )}
 
         <ul className="events-list">
@@ -86,13 +113,13 @@ function SchedulePage() {
 
               <div className="event-actions">
                 <button
-                  className="btn btn-secondary"
-                  onClick={() => handleEditClick(event)}
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => openEditModal(event)}
                 >
                   Edytuj
                 </button>
                 <button
-                  className="btn btn-delete"
+                  className="btn btn-danger btn-sm"
                   onClick={() => handleDeleteEvent(event)}
                 >
                   Usuń
@@ -101,8 +128,7 @@ function SchedulePage() {
             </li>
           ))}
         </ul>
-      </section>
-
+      </section> */}
       <EventModal
         isOpen={isModalOpen}
         editingEventId={editingEventId}

@@ -2,11 +2,13 @@ import { useState, useEffect, type FormEvent } from "react";
 import type { Event } from "../db/scheduleDb";
 import { getEvents, editEvent, addEvent, deleteEvent } from "../db/eventRepo";
 
+type EventData = Omit<Event, "id">;
+
 export function useEvents() {
   const [events, setEvents] = useState<Event[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEventId, setEditingEventId] = useState<number | null>(null);
-  const [eventData, setEventData] = useState<Omit<Event, "id">>({
+  const [eventData, setEventData] = useState<EventData>({
     title: "",
     description: "",
     start: new Date(),
@@ -32,9 +34,15 @@ export function useEvents() {
     load();
   }, []);
 
-  const openAddModal = () => {
+  const openAddModal = (initial?: Partial<EventData>) => {
     setEditingEventId(null);
-    resetEventData();
+    setEventData({
+      title: initial?.title ?? "",
+      description: initial?.description ?? "",
+      start: initial?.start ?? new Date(),
+      end: initial?.end ?? new Date(),
+      color: initial?.color ?? "blue",
+    });
     setIsModalOpen(true);
   };
 
