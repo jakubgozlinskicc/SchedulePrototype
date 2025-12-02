@@ -1,7 +1,3 @@
-.schedule-page {
-  padding: 20px;
-}
-
 .schedule-header {
   display: flex;
   justify-content: space-between;
@@ -88,4 +84,15 @@
 .btn-delete {
   background-color: #dc2626;
   color: #fff;
+}
+
+.calendar-section {
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* centrum! */
+}
+.calendar-section .rbc-calendar {
+  width: 80%;
+  display: flex;
 }

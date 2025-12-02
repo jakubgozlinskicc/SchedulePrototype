@@ -9,6 +9,7 @@ interface EventModalProps {
   mode: "add" | "view" | "edit";
   editingEventId: number | null;
   eventData: EventData;
+  isShaking?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onClose: () => void;
   onSubmit: (e: FormEvent) => void;
@@ -29,6 +30,7 @@ export function EventModal({
   mode,
   editingEventId,
   eventData,
+  isShaking,
   onChange,
   onClose,
   onSubmit,
@@ -42,7 +44,7 @@ export function EventModal({
   if (!isEditMode) {
     return (
       <div className="modal-backdrop">
-        <div className="modal">
+        <div className={`modal ${isShaking ? "shake" : ""}`}>
           <h3 className="modal-title">Szczegóły wydarzenia</h3>
 
           <div className="view-field">
@@ -111,12 +113,12 @@ export function EventModal({
 
   return (
     <div className="modal-backdrop">
-      <div className="modal">
+      <div className={`modal ${isShaking ? "shake" : ""}`}>
         <h3 className="modal-title">
           {mode === "add" ? "Dodaj wydarzenie" : "Edytuj wydarzenie"}
         </h3>
 
-        <form onSubmit={onSubmit} className="modal-form">
+        <form onSubmit={onSubmit} className="modal-form" noValidate>
           <div className="form-field">
             <label className="form-label">Tytuł</label>
             <input

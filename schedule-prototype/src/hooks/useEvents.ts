@@ -15,7 +15,7 @@ export function useEvents() {
     description: "",
     start: new Date(),
     end: new Date(),
-    color: "blue",
+    color: "#0000FF",
   });
 
   const resetEventData = () => {
@@ -24,7 +24,7 @@ export function useEvents() {
       description: "",
       start: new Date(),
       end: new Date(),
-      color: "blue",
+      color: "#0000FF",
     });
   };
 
@@ -43,7 +43,7 @@ export function useEvents() {
       description: initial?.description ?? "",
       start: initial?.start ?? new Date(),
       end: initial?.end ?? new Date(),
-      color: initial?.color ?? "blue",
+      color: initial?.color ?? "#0000FF",
     });
     setModalMode("add");
     setIsModalOpen(true);
@@ -110,6 +110,12 @@ export function useEvents() {
     setIsModalOpen(false);
   };
 
+  const updateEventTime = async (id: number, start: Date, end: Date) => {
+    await editEvent(id, { start, end });
+    const items = await getEvents();
+    setEvents(items);
+  };
+
   return {
     events,
     isModalOpen,
@@ -127,5 +133,6 @@ export function useEvents() {
     deleteCurrentEvent,
     handleAddEvent,
     handleUpdateEvent,
+    updateEventTime,
   };
 }
