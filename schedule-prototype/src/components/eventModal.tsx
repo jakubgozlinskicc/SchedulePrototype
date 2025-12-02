@@ -8,9 +8,7 @@ interface EventModalProps {
   isOpen: boolean;
   editingEventId: number | null;
   eventData: EventData;
-  onChange: (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onClose: () => void;
   onSubmit: (e: FormEvent) => void;
 }
