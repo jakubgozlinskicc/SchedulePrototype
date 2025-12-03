@@ -1,13 +1,10 @@
 import { db } from "./scheduleDb";
 import type { Event } from "./scheduleDb";
 
-export async function addEvent(event: Omit<Event, "id">): Promise<Event> {
+export async function addEvent(event: Omit<Event, "id">): Promise<number> {
   const id = await db.events.add(event);
 
-  return {
-    id,
-    ...event,
-  };
+  return id;
 }
 
 export async function getEvents(): Promise<Event[]> {
@@ -23,4 +20,8 @@ export async function editEvent(
 
 export async function deleteEvent(id: number): Promise<void> {
   await db.events.delete(id);
+}
+
+export async function clearEvents(): Promise<void> {
+  await db.events.clear();
 }
