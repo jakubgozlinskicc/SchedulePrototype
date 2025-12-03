@@ -1,13 +1,20 @@
 import "./schedulePage.css";
+
 import { useEvents } from "../../hooks/useEvents";
 import { EventModal } from "../../components/eventModal";
 import { localizer } from "../../utils/calendarLocalizer";
 
-import type { ChangeEvent, FormEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import type { Event } from "../../db/scheduleDb";
 import { Calendar, Views, type SlotInfo } from "react-big-calendar";
+import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+
+import { CustomToolbar } from "../../components/customToolbar";
+
+const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
 function SchedulePage() {
+  const [isShaking, setIsShaking] = useState(false);
   const {
     events,
     isModalOpen,
@@ -22,9 +29,17 @@ function SchedulePage() {
     handleAddEvent,
     handleUpdateEvent,
     deleteCurrentEvent,
+    updateEventTime,
   } = useEvents();
 
   const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (!eventData.title.trim()) {
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 300);
+      return;
+    }
+
     if (editingEventId === null) {
       handleAddEvent(e);
     } else {
@@ -38,14 +53,26 @@ function SchedulePage() {
     const { name, value } = e.target;
 
     if (name === "start" || name === "end") {
-      const date = value ? new Date(value) : new Date();
-      setEventData((prev) => ({
-        ...prev,
-        [name]: date,
-      }));
+      const newDate = value ? new Date(value) : new Date();
+
+      setEventData((prev) => {
+        const updated = { ...prev, [name]: newDate };
+
+        if (name === "start" && newDate > prev.end) {
+          updated.end = newDate;
+        }
+
+        if (name === "end" && newDate < prev.start) {
+          updated.end = prev.start;
+          setIsShaking(true);
+          setTimeout(() => setIsShaking(false), 300);
+        }
+
+        return updated;
+      });
+
       return;
     }
-
     setEventData((prev) => ({
       ...prev,
       [name]: value,
@@ -66,6 +93,22 @@ function SchedulePage() {
     openEditModal(event);
   };
 
+  type DragDropArgs = {
+    event: Event;
+    start: Date | string;
+    end: Date | string;
+    allDay?: boolean;
+  };
+
+  const handleEventDropResize = async ({ event, start, end }: DragDropArgs) => {
+    if (!event.id) return;
+
+    const startDate = start instanceof Date ? start : new Date(start);
+    const endDate = end instanceof Date ? end : new Date(end);
+
+    await updateEventTime(event.id, startDate, endDate);
+  };
+
   return (
     <div className="schedule-page">
       <header className="schedule-header">
@@ -76,16 +119,37 @@ function SchedulePage() {
       </header>
 
       <section className="calendar-section">
-        <Calendar
+        <DnDCalendar
           localizer={localizer}
+          components={{
+            toolbar: CustomToolbar,
+          }}
           events={events}
           startAccessor="start"
           endAccessor="end"
           views={[Views.MONTH, Views.WEEK, Views.DAY]}
           selectable
+          resizable
+          eventPropGetter={(event) => {
+            const bg = event.color;
+
+            const brightness = parseInt(bg.replace("#", ""), 16);
+            const textColor = brightness > 0xffffff / 2 ? "black" : "white";
+
+            return {
+              style: {
+                backgroundColor: bg,
+                color: textColor,
+                borderRadius: "6px",
+                border: "none",
+              },
+            };
+          }}
           onSelectSlot={handleSelectSlot}
-          onSelectEvent={handleSelectEvent}
-          style={{ height: "60vh" }}
+          onSelectEvent={(ev) => handleSelectEvent(ev as Event)}
+          onEventDrop={handleEventDropResize}
+          onEventResize={handleEventDropResize}
+          style={{ height: "80vh", width: "80%" }}
         />
       </section>
 
@@ -136,6 +200,7 @@ function SchedulePage() {
         mode={modalMode}
         editingEventId={editingEventId}
         eventData={eventData}
+        isShaking={isShaking}
         onChange={handleChange}
         onClose={closeModal}
         onSubmit={handleSubmit}

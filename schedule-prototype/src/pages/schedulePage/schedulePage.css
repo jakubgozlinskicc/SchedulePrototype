@@ -1,7 +1,3 @@
-.schedule-page {
-  padding: 20px;
-}
-
 .schedule-header {
   display: flex;
   justify-content: space-between;
@@ -88,4 +84,47 @@
 .btn-delete {
   background-color: #dc2626;
   color: #fff;
+}
+
+.calendar-section {
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.calendar-section .rbc-calendar {
+  width: 80%;
+  display: flex;
+}
+
+.rbc-time-header-cell .rbc-today {
+  background-color: rgb(155, 132, 255);
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+}
+.rbc-header {
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  background-color: #591efd;
+  border-radius: 8px;
+}
+
+.rbc-time-slot {
+  color: #591efd;
+}
+
+.rbc-time-view {
+  border-radius: 8px;
+}
+
+.rbc-time-content {
+  background-color: #f7f9fcf1;
 }

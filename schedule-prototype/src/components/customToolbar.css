@@ -1,0 +1,60 @@
+.custom-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px 16px;
+  margin-bottom: 8px;
+
+  background: #f7f9fcf1;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nav-button {
+  background: #591efd;
+  color: white;
+
+  border: none;
+  border-radius: 6px;
+
+  padding: 6px 12px;
+  font-size: 0.85rem;
+
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.nav-button:hover {
+  background: #3105aa;
+}
+
+.nav-button:active {
+  background: #591efd;
+}
+
+.toolbar-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  margin: 0 12px;
+  flex: 1;
+  text-align: center;
+}
+
+.view-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.view-buttons .nav-button {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.view-buttons .nav-button:hover {
+  background: #d1d5db;
+}
