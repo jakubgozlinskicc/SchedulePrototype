@@ -118,7 +118,7 @@ export function EventModal({
           {mode === "add" ? "Dodaj wydarzenie" : "Edytuj wydarzenie"}
         </h3>
 
-        <form onSubmit={onSubmit} className="modal-form" noValidate>
+        <form onSubmit={onSubmit} className="modal-form">
           <div className="form-field">
             <label className="form-label">Tytuł</label>
             <input

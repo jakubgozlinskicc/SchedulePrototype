@@ -1,3 +1,5 @@
+import { format, startOfWeek, addDays, isSameDay } from "date-fns";
+import { enGB } from "date-fns/locale";
 import type { ToolbarProps } from "react-big-calendar";
 import type { Event } from "../db/scheduleDb";
 import "./customToolbar.css";
@@ -8,32 +10,74 @@ type CustomToolbarProps<
 > = ToolbarProps<TEvent, TResource>;
 
 export const CustomToolbar = (props: CustomToolbarProps) => {
-  const { label } = props;
+  const { label, date, view } = props;
+
+  const renderWeekStrip = () => {
+    const start = startOfWeek(date, { weekStartsOn: 1 });
+    const days = Array.from({ length: 7 }, (_, i) => addDays(start, i));
+
+    return (
+      <div className="week-strip">
+        {days.map((day) => (
+          <button
+            key={day.toISOString()}
+            className={
+              "week-strip-day" + (isSameDay(day, date) ? " active-day" : "")
+            }
+            onClick={() => {
+              props.onView("day");
+              props.onNavigate("DATE", day);
+            }}
+          >
+            {format(day, "EEE dd", { locale: enGB })}
+          </button>
+        ))}
+      </div>
+    );
+  };
 
   return (
-    <div className="custom-toolbar">
-      <button className="nav-button" onClick={() => props.onNavigate("TODAY")}>
-        Dzisiaj
-      </button>
-      <button className="nav-button" onClick={() => props.onNavigate("PREV")}>
-        ←
-      </button>
-      <span className="toolbar-label">{label}</span>
-      <button className="nav-button" onClick={() => props.onNavigate("NEXT")}>
-        →
-      </button>
+    <>
+      <div className="custom-toolbar">
+        <button
+          className="nav-button"
+          onClick={() => props.onNavigate("TODAY")}
+        >
+          Dzisiaj
+        </button>
 
-      <div className="view-buttons">
-        <button className="nav-button" onClick={() => props.onView("month")}>
-          Miesiąc
-        </button>
-        <button className="nav-button" onClick={() => props.onView("week")}>
-          Tydzień
-        </button>
-        <button className="nav-button" onClick={() => props.onView("day")}>
-          Dzień
-        </button>
+        <div className="nav-buttons">
+          <button
+            className="nav-button"
+            onClick={() => props.onNavigate("PREV")}
+          >
+            ←
+          </button>
+
+          <span className="toolbar-label">{label}</span>
+
+          <button
+            className="nav-button"
+            onClick={() => props.onNavigate("NEXT")}
+          >
+            →
+          </button>
+        </div>
+
+        <div className="view-buttons">
+          <button className="view-button" onClick={() => props.onView("month")}>
+            Miesiąc
+          </button>
+          <button className="view-button" onClick={() => props.onView("week")}>
+            Tydzień
+          </button>
+          <button className="view-button" onClick={() => props.onView("day")}>
+            Dzień
+          </button>
+        </div>
       </div>
-    </div>
+
+      {view === "day" && renderWeekStrip()}
+    </>
   );
 };

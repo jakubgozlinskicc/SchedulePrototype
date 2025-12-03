@@ -4,7 +4,12 @@ import { useEvents } from "../../hooks/useEvents";
 import { EventModal } from "../../components/eventModal";
 import { localizer } from "../../utils/calendarLocalizer";
 
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import {
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+  type CSSProperties,
+} from "react";
 import type { Event } from "../../db/scheduleDb";
 import { Calendar, Views, type SlotInfo } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
@@ -34,11 +39,6 @@ function SchedulePage() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!eventData.title.trim()) {
-      setIsShaking(true);
-      setTimeout(() => setIsShaking(false), 300);
-      return;
-    }
 
     if (editingEventId === null) {
       handleAddEvent(e);
@@ -130,19 +130,19 @@ function SchedulePage() {
           views={[Views.MONTH, Views.WEEK, Views.DAY]}
           selectable
           resizable
+          dayLayoutAlgorithm="no-overlap"
           eventPropGetter={(event) => {
-            const bg = event.color;
+            const bg = event.color || "#591efd";
 
             const brightness = parseInt(bg.replace("#", ""), 16);
             const textColor = brightness > 0xffffff / 2 ? "black" : "white";
 
             return {
+              className: "colored-event",
               style: {
-                backgroundColor: bg,
+                "--event-color": bg,
                 color: textColor,
-                borderRadius: "6px",
-                border: "none",
-              },
+              } as CSSProperties,
             };
           }}
           onSelectSlot={handleSelectSlot}

@@ -25,7 +25,7 @@
   font-size: 0.85rem;
 
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.2s;
 }
 
 .nav-button:hover {
@@ -50,11 +50,48 @@
   gap: 6px;
 }
 
-.view-buttons .nav-button {
+.view-button {
   background: #e5e7eb;
   color: #111827;
+
+  border: none;
+  border-radius: 6px;
+
+  padding: 6px 12px;
+  font-size: 0.85rem;
+
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.view-buttons .nav-button:hover {
+.view-button:hover {
   background: #d1d5db;
+}
+
+.week-strip {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.week-strip-day {
+  padding: 6px 12px;
+  border: 1px solid #d1d5db;
+  background: #f3f4f6;
+
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.week-strip-day:hover {
+  background: #e5e7eb;
+}
+
+.week-strip-day.active-day {
+  background: #591efd;
+  color: white;
+  border-color: #591efd;
+  font-weight: 600;
 }

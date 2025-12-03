@@ -128,3 +128,30 @@
 .rbc-time-content {
   background-color: #f7f9fcf1;
 }
+
+.rbc-time-view .rbc-event.colored-event {
+  overflow: hidden;
+  color: black !important;
+  padding-left: 10px;
+  border-radius: 6px;
+  border: none;
+
+  background: color-mix(in srgb, var(--event-color) 20%, transparent);
+}
+
+.rbc-time-view .rbc-event.colored-event::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: var(--event-color);
+  border-radius: 6px 0 0 6px;
+}
+
+.rbc-month-view .rbc-event.colored-event {
+  background-color: var(--event-color);
+  border-radius: 6px;
+  border: none;
+}
