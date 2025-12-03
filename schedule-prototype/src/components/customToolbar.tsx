@@ -49,7 +49,10 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
         <div className="nav-buttons">
           <button
             className="nav-button"
-            onClick={() => props.onNavigate("PREV")}
+            onClick={() => {
+              console.log("TODAY CLICK");
+              props.onNavigate("PREV");
+            }}
           >
             ←
           </button>

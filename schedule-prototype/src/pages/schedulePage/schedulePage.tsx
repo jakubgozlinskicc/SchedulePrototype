@@ -11,7 +11,7 @@ import {
   type CSSProperties,
 } from "react";
 import type { Event } from "../../db/scheduleDb";
-import { Calendar, Views, type SlotInfo } from "react-big-calendar";
+import { Calendar, Views, type SlotInfo, type View } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 
 import { CustomToolbar } from "../../components/customToolbar";
@@ -20,6 +20,8 @@ const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
 function SchedulePage() {
   const [isShaking, setIsShaking] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [view, setView] = useState<View>("month");
   const {
     events,
     isModalOpen,
@@ -121,6 +123,10 @@ function SchedulePage() {
       <section className="calendar-section">
         <DnDCalendar
           localizer={localizer}
+          date={date}
+          onNavigate={(newDate) => setDate(newDate)}
+          view={view}
+          onView={(newView) => setView(newView)}
           components={{
             toolbar: CustomToolbar,
           }}
