@@ -1,9 +1,7 @@
 import "./schedulePage.css";
-
 import { useEvents } from "../../hooks/useEvents";
 import { EventModal } from "../../components/eventModal";
 import { localizer } from "../../utils/calendarLocalizer";
-
 import {
   useState,
   type ChangeEvent,
@@ -13,7 +11,6 @@ import {
 import type { Event } from "../../db/scheduleDb";
 import { Calendar, Views, type SlotInfo, type View } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
-
 import { CustomToolbar } from "../../components/customToolbar";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
@@ -86,8 +83,8 @@ function SchedulePage() {
 
     openAddModal({
       ...eventData,
-      start: start as Date,
-      end: end as Date,
+      start: start,
+      end: end,
     });
   };
 
@@ -138,7 +135,6 @@ function SchedulePage() {
           dayLayoutAlgorithm="no-overlap"
           eventPropGetter={(event) => {
             const bg = event.color || "#591efd";
-
             const brightness = parseInt(bg.replace("#", ""), 16);
             const textColor = brightness > 0xffffff / 2 ? "black" : "white";
 

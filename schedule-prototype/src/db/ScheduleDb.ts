@@ -17,7 +17,6 @@ export class EventsDB extends Dexie {
     super("EventsDB");
 
     this.version(1).stores({
-      // ++id = auto-increment
       events: "++id, title, description, start, end, color",
     });
   }
