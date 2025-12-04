@@ -6,12 +6,11 @@ const locales = {
   pl,
 };
 
-const formatDate = (date: Date, formatStr: string, options?: any) => {
+const formatDate = (date: Date, formatStr: string): string => {
   if (formatStr === "p" || formatStr === "h:mma") {
-    return dfFormat(date, "HH:mm", options);
+    return dfFormat(date, "HH:mm");
   }
-
-  return dfFormat(date, formatStr, options);
+  return dfFormat(date, formatStr);
 };
 
 export const localizer = dateFnsLocalizer({

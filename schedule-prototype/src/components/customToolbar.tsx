@@ -7,10 +7,12 @@ import "./customToolbar.css";
 type CustomToolbarProps<
   TEvent extends object = Event,
   TResource extends object = object
-> = ToolbarProps<TEvent, TResource>;
+> = ToolbarProps<TEvent, TResource> & {
+  onAddEvent?: () => void;
+};
 
 export const CustomToolbar = (props: CustomToolbarProps) => {
-  const { label, date, view } = props;
+  const { label, date, view, onAddEvent } = props;
 
   const renderWeekStrip = () => {
     const start = startOfWeek(date, { weekStartsOn: 1 });
@@ -39,12 +41,19 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
   return (
     <>
       <div className="custom-toolbar">
-        <button
-          className="nav-button"
-          onClick={() => props.onNavigate("TODAY")}
-        >
-          Dzisiaj
-        </button>
+        <div className="actions-buttons">
+          {onAddEvent && (
+            <button className="nav-button" onClick={onAddEvent}>
+              Dodaj wydarzenie
+            </button>
+          )}
+          <button
+            className="nav-button"
+            onClick={() => props.onNavigate("TODAY")}
+          >
+            Dzisiaj
+          </button>
+        </div>
 
         <div className="nav-buttons">
           <button

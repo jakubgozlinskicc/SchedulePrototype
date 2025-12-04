@@ -1,66 +1,11 @@
 .schedule-header {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+  text-align: center;
 }
 
 .schedule-title {
   margin: 0;
-}
-
-.events-section {
-  margin-top: 8px;
-}
-
-.section-title {
-  margin: 0 0 8px;
-}
-
-.events-empty {
-  opacity: 0.7;
-  font-size: 0.95rem;
-}
-
-.events-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.event-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.event-main {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.event-color-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 9999px;
-  display: inline-block;
-}
-
-.event-title {
-  font-weight: 500;
-}
-
-.event-dates {
-  font-size: 0.8rem;
-  opacity: 0.8;
-}
-
-.event-actions {
-  display: flex;
-  gap: 8px;
 }
 
 .btn {
@@ -72,8 +17,12 @@
 }
 
 .btn-primary {
-  background-color: #2563eb;
+  background-color: #591efd;
   color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #3105aa;
 }
 
 .btn-secondary {
@@ -81,9 +30,18 @@
   color: #111827;
 }
 
+.btn-secondary:hover {
+  background-color: #d1d5db;
+  color: #111827;
+}
+
 .btn-delete {
   background-color: #dc2626;
   color: #fff;
+}
+
+.btn-delete:hover {
+  background-color: #bd1616;
 }
 
 .calendar-section {
@@ -136,6 +94,17 @@
   border: none;
 
   background: color-mix(in srgb, var(--event-color) 20%, transparent);
+}
+
+.rbc-time-view .rbc-event.colored-event-allday::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: auto;
+  background: var(--event-color);
+  border-radius: 6px 0 0 6px;
 }
 
 .rbc-time-view .rbc-event.colored-event::before {

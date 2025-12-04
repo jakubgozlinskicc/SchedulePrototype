@@ -1,5 +1,6 @@
 import type { FormEvent, ChangeEvent } from "react";
 import type { Event } from "../db/scheduleDb";
+import { toDateTimeLocal } from "../utils/toDateTimeLocal";
 import "./eventModal.css";
 
 type EventData = Omit<Event, "id">;
@@ -15,14 +16,6 @@ interface EventModalProps {
   onSubmit: (e: FormEvent) => void;
   onRequestEdit: () => void;
   onRequestDelete: () => void | Promise<void>;
-}
-
-function toDateTimeLocal(date: Date) {
-  if (!date) return "";
-  const d = new Date(date);
-  const offset = d.getTimezoneOffset();
-  const local = new Date(d.getTime() - offset * 60 * 1000);
-  return local.toISOString().slice(0, 16);
 }
 
 export function EventModal({
@@ -122,6 +115,7 @@ export function EventModal({
           <div className="form-field">
             <label className="form-label">Tytuł</label>
             <input
+              id="title"
               type="text"
               name="title"
               value={eventData.title}

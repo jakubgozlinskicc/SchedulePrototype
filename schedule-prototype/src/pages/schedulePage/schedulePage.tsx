@@ -115,9 +115,6 @@ function SchedulePage() {
     <div className="schedule-page">
       <header className="schedule-header">
         <h1 className="schedule-title">Schedule</h1>
-        <button className="btn btn-primary" onClick={() => openAddModal()}>
-          Dodaj wydarzenie
-        </button>
       </header>
 
       <section className="calendar-section">
@@ -128,7 +125,9 @@ function SchedulePage() {
           view={view}
           onView={(newView) => setView(newView)}
           components={{
-            toolbar: CustomToolbar,
+            toolbar: (toolbarProps) => (
+              <CustomToolbar {...toolbarProps} onAddEvent={openAddModal} />
+            ),
           }}
           events={events}
           startAccessor="start"
@@ -159,48 +158,6 @@ function SchedulePage() {
         />
       </section>
 
-      {/* <section className="events-section">
-        <h2 className="section-title">Twoje wydarzenia</h2>
-
-        {events.length === 0 && (
-          <p className="events-empty">Brak wydarzeń. Dodaj pierwsze 😊</p>
-        )}
-
-        <ul className="events-list">
-          {events.map((event) => (
-            <li key={event.id} className="event-item">
-              <div className="event-main">
-                <span
-                  className="event-color-dot"
-                  style={{ backgroundColor: event.color }}
-                />
-                <div>
-                  <div className="event-title">{event.title}</div>
-                  <div className="event-dates">
-                    {event.start.toLocaleString()} –{" "}
-                    {event.end.toLocaleString()}
-                  </div>
-                </div>
-              </div>
-
-              <div className="event-actions">
-                <button
-                  className="btn btn-secondary btn-sm"
-                  onClick={() => openEditModal(event)}
-                >
-                  Edytuj
-                </button>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleDeleteEvent(event)}
-                >
-                  Usuń
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </section> */}
       <EventModal
         isOpen={isModalOpen}
         mode={modalMode}
