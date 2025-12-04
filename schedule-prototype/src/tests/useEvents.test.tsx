@@ -45,7 +45,6 @@ describe("useEvents hook", () => {
   });
 
   it("openAddModal ustawia tryb add i otwiera modal z danymi startowymi", () => {
-    //do wywolania load
     mockedGetEvents.mockResolvedValueOnce([]);
     const { result } = renderHook(() => useEvents());
 
@@ -108,7 +107,7 @@ describe("useEvents hook", () => {
     act(() => {
       result.current.beginEditCurrentEvent();
     });
-    expect(result.current.modalMode).toBe("add"); //domyslny
+    expect(result.current.modalMode).toBe("add");
 
     act(() => {
       result.current.openEditModal(baseEvent);
@@ -137,10 +136,6 @@ describe("useEvents hook", () => {
       result.current.openEditModal(baseEvent);
     });
 
-    // act(() => {
-    //   result.current.beginEditCurrentEvent();
-    // });
-
     await act(() => {
       result.current.deleteCurrentEvent();
     });
@@ -154,8 +149,8 @@ describe("useEvents hook", () => {
 
   it("handleAddEvent dodaje event, odswieza liste, resetuje formularz i zamyka modal", async () => {
     mockedGetEvents
-      .mockResolvedValueOnce([]) // initial
-      .mockResolvedValueOnce([baseEvent]); // po dodaniu
+      .mockResolvedValueOnce([])
+      .mockResolvedValueOnce([baseEvent]);
 
     mockedAddEvent.mockResolvedValueOnce(1);
 
