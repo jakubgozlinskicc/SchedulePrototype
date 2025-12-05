@@ -7,8 +7,8 @@ type EventData = Omit<Event, "id">;
 
 interface EventModalProps {
   isOpen: boolean;
-  mode: "add" | "view" | "edit";
   editingEventId: number | null;
+  isEditingMode: boolean;
   eventData: EventData;
   isShaking?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
@@ -20,8 +20,8 @@ interface EventModalProps {
 
 export function EventModal({
   isOpen,
-  mode,
   editingEventId,
+  isEditingMode,
   eventData,
   isShaking,
   onChange,
@@ -32,9 +32,11 @@ export function EventModal({
 }: EventModalProps) {
   if (!isOpen) return null;
 
-  const isEditMode = mode === "add" || mode === "edit";
+  const isViewMode = editingEventId !== null && !isEditingMode;
 
-  if (!isEditMode) {
+  const isAddMode = editingEventId === null && isEditingMode;
+
+  if (isViewMode) {
     return (
       <div className="modal-backdrop">
         <div className={`modal ${isShaking ? "shake" : ""}`}>
@@ -108,7 +110,7 @@ export function EventModal({
     <div className="modal-backdrop">
       <div className={`modal ${isShaking ? "shake" : ""}`}>
         <h3 className="modal-title">
-          {mode === "add" ? "Dodaj wydarzenie" : "Edytuj wydarzenie"}
+          {isAddMode ? "Dodaj wydarzenie" : "Edytuj wydarzenie"}
         </h3>
 
         <form onSubmit={onSubmit} className="modal-form">
@@ -179,7 +181,7 @@ export function EventModal({
               Anuluj
             </button>
             <button type="submit" className="btn btn-primary">
-              {mode === "add" ? "Dodaj" : "Zapisz zmiany"}
+              {isAddMode ? "Dodaj" : "Zapisz zmiany"}
             </button>
           </div>
         </form>
