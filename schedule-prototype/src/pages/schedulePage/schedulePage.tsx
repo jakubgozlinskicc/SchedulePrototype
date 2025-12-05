@@ -23,11 +23,10 @@ function SchedulePage() {
     events,
     isModalOpen,
     editingEventId,
+    isEditingMode,
     eventData,
-    modalMode,
     setEventData,
-    openAddModal,
-    openEditModal,
+    openModal,
     closeModal,
     beginEditCurrentEvent,
     handleAddEvent,
@@ -81,15 +80,14 @@ function SchedulePage() {
   const handleSelectSlot = (slotInfo: SlotInfo) => {
     const { start, end } = slotInfo;
 
-    openAddModal({
-      ...eventData,
+    openModal({
       start: start,
       end: end,
     });
   };
 
   const handleSelectEvent = (event: Event) => {
-    openEditModal(event);
+    openModal(event);
   };
 
   type DragDropArgs = {
@@ -123,7 +121,7 @@ function SchedulePage() {
           onView={(newView) => setView(newView)}
           components={{
             toolbar: (toolbarProps) => (
-              <CustomToolbar {...toolbarProps} onAddEvent={openAddModal} />
+              <CustomToolbar {...toolbarProps} onAddEvent={() => openModal()} />
             ),
           }}
           events={events}
@@ -156,8 +154,8 @@ function SchedulePage() {
 
       <EventModal
         isOpen={isModalOpen}
-        mode={modalMode}
         editingEventId={editingEventId}
+        isEditingMode={isEditingMode}
         eventData={eventData}
         isShaking={isShaking}
         onChange={handleChange}
