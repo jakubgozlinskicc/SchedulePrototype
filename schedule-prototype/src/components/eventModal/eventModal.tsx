@@ -1,32 +1,102 @@
 import type { FormEvent, ChangeEvent } from "react";
-import type { Event } from "../db/scheduleDb";
-import { toDateTimeLocal } from "../utils/toDateTimeLocal";
+import type { Event } from "../../db/scheduleDb";
+import { toDateTimeLocal } from "../../utils/toDateTimeLocal";
 import "./eventModal.css";
+
+type EventData = Omit<Event, "id">;
 
 interface EventModalProps {
   isOpen: boolean;
   editingEventId: number | null;
-  eventData: Event;
+  isEditingMode: boolean;
+  eventData: EventData;
   isShaking?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onClose: () => void;
   onSubmit: (e: FormEvent) => void;
+  onRequestEdit: () => void;
   onRequestDelete: () => void | Promise<void>;
 }
 
 export function EventModal({
   isOpen,
   editingEventId,
+  isEditingMode,
   eventData,
   isShaking,
   onChange,
   onClose,
   onSubmit,
+  onRequestEdit,
   onRequestDelete,
 }: EventModalProps) {
   if (!isOpen) return null;
 
-  const isAddMode = editingEventId === null;
+  const isViewMode = editingEventId !== null && !isEditingMode;
+
+  const isAddMode = editingEventId === null && isEditingMode;
+
+  if (isViewMode) {
+    return (
+      <div className="modal-backdrop">
+        <div className="modal">
+          <h3 className="modal-title">Szczegóły wydarzenia</h3>
+
+          <div className="view-field">
+            <span className="view-label">Tytuł: </span>
+            <span className="view-value">{eventData.title}</span>
+          </div>
+
+          <div className="view-field">
+            <span className="view-label">Początek: </span>
+            <span className="view-value">
+              {eventData.start.toLocaleString()}
+            </span>
+          </div>
+
+          <div className="view-field">
+            <span className="view-label">Koniec: </span>
+            <span className="view-value">{eventData.end.toLocaleString()}</span>
+          </div>
+
+          <div className="view-field">
+            <span className="view-label">Opis: </span>
+            <span className="view-value">
+              {eventData.description || "Brak opisu"}
+            </span>
+          </div>
+
+          <div className="view-field">
+            <span className="view-label">Kolor: </span>
+            <span className="view-value">
+              <span
+                className="event-color-dot"
+                style={{ backgroundColor: eventData.color }}
+              />
+            </span>
+          </div>
+
+          <div className="modal-actions">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={onRequestEdit}
+              disabled={!editingEventId}
+            >
+              Edytuj
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+            >
+              Zamknij
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="modal-backdrop">
@@ -97,18 +167,18 @@ export function EventModal({
           <div className="modal-actions">
             <button
               type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+            >
+              Anuluj
+            </button>
+            <button
+              type="button"
               className="btn btn-delete"
               onClick={onRequestDelete}
               disabled={!editingEventId}
             >
               Usuń
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={onClose}
-            >
-              Anuluj
             </button>
             <button type="submit" className="btn btn-primary">
               {isAddMode ? "Dodaj" : "Zapisz zmiany"}

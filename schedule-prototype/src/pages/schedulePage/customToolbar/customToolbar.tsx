@@ -1,7 +1,7 @@
 import { format, startOfWeek, addDays, isSameDay } from "date-fns";
-import { pl } from "date-fns/locale";
+import { enGB } from "date-fns/locale";
 import type { ToolbarProps } from "react-big-calendar";
-import type { Event } from "../db/scheduleDb";
+import type { Event } from "../../../db/scheduleDb";
 import "./customToolbar.css";
 
 type CustomToolbarProps<
@@ -31,7 +31,7 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
               props.onNavigate("DATE", day);
             }}
           >
-            {format(day, "EEE dd", { locale: pl })}
+            {format(day, "EEE dd", { locale: enGB })}
           </button>
         ))}
       </div>

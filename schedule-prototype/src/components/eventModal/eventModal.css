@@ -67,6 +67,9 @@
   gap: 8px;
   margin-top: 8px;
 }
+.view-label {
+  font-weight: 500;
+}
 
 @keyframes shake {
   0% {
