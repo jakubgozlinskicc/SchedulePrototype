@@ -30,8 +30,10 @@ function SchedulePage() {
     events,
     isModalOpen,
     eventData,
+    modalMode,
     setEventData,
-    openModal,
+    openAddModal,
+    openEditModal,
     closeModal,
     handleSubmit,
     deleteCurrentEvent,
@@ -113,7 +115,7 @@ function SchedulePage() {
           onView={(newView) => setView(newView)}
           components={{
             toolbar: (toolbarProps) => (
-              <CustomToolbar {...toolbarProps} onAddEvent={() => openModal()} />
+              <CustomToolbar {...toolbarProps} onAddEvent={openAddModal} />
             ),
             event: ({ event }) => (
               <div

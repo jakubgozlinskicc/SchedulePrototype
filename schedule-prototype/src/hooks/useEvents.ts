@@ -74,10 +74,12 @@ export function useEvents() {
     events,
     isModalOpen,
     eventData,
+    modalMode,
 
     setEventData,
 
-    openModal,
+    openAddModal,
+    openEditModal,
     closeModal,
 
     deleteCurrentEvent,
