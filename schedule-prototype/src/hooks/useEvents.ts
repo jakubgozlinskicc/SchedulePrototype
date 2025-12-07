@@ -3,12 +3,13 @@ import type { Event } from "../db/scheduleDb";
 import { getEvents, editEvent, addEvent, deleteEvent } from "../db/eventRepo";
 
 type EventData = Omit<Event, "id">;
+type ModalMode = "add" | "view" | "edit";
 
 export function useEvents() {
   const [events, setEvents] = useState<Event[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEventId, setEditingEventId] = useState<number | null>(null);
-  const [isEditingMode, setIsEditingMode] = useState(false);
+  const [modalMode, setModalMode] = useState<ModalMode>("add");
   const [eventData, setEventData] = useState<EventData>({
     title: "",
     description: "",
@@ -35,42 +36,32 @@ export function useEvents() {
     load();
   }, []);
 
-  const openModal = (eventOrData?: Event | Partial<EventData>) => {
-    if (!eventOrData) {
-      setEditingEventId(null);
-      resetEventData();
-      setIsEditingMode(true);
-      setIsModalOpen(true);
-      return;
-    }
+  const openAddModal = (initial?: Partial<EventData>) => {
+    setEditingEventId(null);
+    setEventData({
+      title: initial?.title ?? "",
+      description: initial?.description ?? "",
+      start: initial?.start ?? new Date(),
+      end: initial?.end ?? new Date(),
+      color: initial?.color ?? "#0000FF",
+    });
+    setModalMode("add");
+    setIsModalOpen(true);
+  };
 
-    const hasId = "id" in eventOrData && eventOrData.id !== undefined;
+  const openEditModal = (event: Event) => {
+    if (!event.id) return;
 
-    if (hasId) {
-      const event = eventOrData as Event;
-      setEditingEventId(event.id!);
-      setEventData({
-        title: event.title,
-        description: event.description,
-        start: event.start,
-        end: event.end,
-        color: event.color,
-      });
-      setIsEditingMode(false);
-      setIsModalOpen(true);
-    } else {
-      const partial = eventOrData as Partial<EventData>;
-      setEditingEventId(null);
-      setEventData({
-        title: partial.title ?? "",
-        description: partial.description ?? "",
-        start: partial.start ?? new Date(),
-        end: partial.end ?? new Date(),
-        color: partial.color ?? "#0000FF",
-      });
-      setIsEditingMode(true);
-      setIsModalOpen(true);
-    }
+    setEditingEventId(event.id);
+    setEventData({
+      title: event.title,
+      description: event.description,
+      start: event.start,
+      end: event.end,
+      color: event.color,
+    });
+    setModalMode("view");
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
@@ -81,8 +72,9 @@ export function useEvents() {
 
   const beginEditCurrentEvent = () => {
     if (!editingEventId) return;
-    setIsEditingMode(true);
+    setModalMode("edit");
   };
+
   const deleteCurrentEvent = async () => {
     if (!editingEventId) return;
     await deleteEvent(editingEventId);
@@ -128,12 +120,13 @@ export function useEvents() {
     events,
     isModalOpen,
     editingEventId,
-    isEditingMode,
     eventData,
+    modalMode,
 
     setEventData,
 
-    openModal,
+    openAddModal,
+    openEditModal,
     closeModal,
 
     beginEditCurrentEvent,
