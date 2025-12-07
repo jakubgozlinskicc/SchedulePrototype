@@ -1,13 +1,10 @@
 import "./schedulePage.css";
 import { useEvents } from "../../hooks/useEvents";
+import { useEventHover } from "../../hooks/useEventHover";
 import { EventModal } from "../../components/eventModal";
 import { localizer } from "../../utils/calendarLocalizer";
-import {
-  useState,
-  type ChangeEvent,
-  type FormEvent,
-  type CSSProperties,
-} from "react";
+import { EventHover } from "../../components/EventHover";
+import { useState, type ChangeEvent, type CSSProperties } from "react";
 import type { Event } from "../../db/scheduleDb";
 import { Calendar, Views, type SlotInfo, type View } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
@@ -19,31 +16,27 @@ function SchedulePage() {
   const [isShaking, setIsShaking] = useState(false);
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState<View>("month");
+
+  const {
+    hoveredEvent,
+    hoverPosition,
+    handleEventMouseEnter,
+    handleEventMouseLeave,
+    updateHoverPosition,
+    clearHover,
+  } = useEventHover();
+
   const {
     events,
     isModalOpen,
-    editingEventId,
-    isEditingMode,
     eventData,
     setEventData,
     openModal,
     closeModal,
-    beginEditCurrentEvent,
-    handleAddEvent,
-    handleUpdateEvent,
+    handleSubmit,
     deleteCurrentEvent,
     updateEventTime,
   } = useEvents();
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    if (editingEventId === null) {
-      handleAddEvent(e);
-    } else {
-      handleUpdateEvent(e);
-    }
-  };
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -78,15 +71,14 @@ function SchedulePage() {
   };
 
   const handleSelectSlot = (slotInfo: SlotInfo) => {
-    const { start, end } = slotInfo;
-
     openModal({
-      start: start,
-      end: end,
+      start: slotInfo.start,
+      end: slotInfo.end,
     });
   };
 
   const handleSelectEvent = (event: Event) => {
+    clearHover();
     openModal(event);
   };
 
@@ -123,6 +115,16 @@ function SchedulePage() {
             toolbar: (toolbarProps) => (
               <CustomToolbar {...toolbarProps} onAddEvent={() => openModal()} />
             ),
+            event: ({ event }) => (
+              <div
+                onMouseEnter={(e) => handleEventMouseEnter(event as Event, e)}
+                onMouseLeave={handleEventMouseLeave}
+                onMouseMove={(e) => updateHoverPosition(event as Event, e)}
+                style={{ height: "100%", cursor: "pointer" }}
+              >
+                {event.title}
+              </div>
+            ),
           }}
           events={events}
           startAccessor="start"
@@ -151,17 +153,14 @@ function SchedulePage() {
           style={{ height: "80vh", width: "80%" }}
         />
       </section>
-
+      <EventHover event={hoveredEvent} position={hoverPosition} />
       <EventModal
         isOpen={isModalOpen}
-        editingEventId={editingEventId}
-        isEditingMode={isEditingMode}
         eventData={eventData}
         isShaking={isShaking}
         onChange={handleChange}
         onClose={closeModal}
         onSubmit={handleSubmit}
-        onRequestEdit={beginEditCurrentEvent}
         onRequestDelete={deleteCurrentEvent}
       />
     </div>

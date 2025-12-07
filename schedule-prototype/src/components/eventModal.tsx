@@ -1,117 +1,40 @@
-import type { FormEvent, ChangeEvent } from "react";
+import type { FormEvent, ChangeEvent, ReactNode } from "react";
 import type { Event } from "../db/scheduleDb";
 import { toDateTimeLocal } from "../utils/toDateTimeLocal";
+import { AddEventModal } from "./AddEventModal";
+import { EditEventModal } from "./EditEventModal";
 import "./eventModal.css";
-
-type EventData = Omit<Event, "id">;
 
 interface EventModalProps {
   isOpen: boolean;
-  editingEventId: number | null;
-  isEditingMode: boolean;
-  eventData: EventData;
+  eventData: Event;
   isShaking?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onClose: () => void;
   onSubmit: (e: FormEvent) => void;
-  onRequestEdit: () => void;
   onRequestDelete: () => void | Promise<void>;
 }
 
-export function EventModal({
-  isOpen,
-  editingEventId,
-  isEditingMode,
+export function BaseEventModal({
+  title,
   eventData,
   isShaking,
   onChange,
-  onClose,
   onSubmit,
-  onRequestEdit,
-  onRequestDelete,
-}: EventModalProps) {
-  if (!isOpen) return null;
-
-  const isViewMode = editingEventId !== null && !isEditingMode;
-
-  const isAddMode = editingEventId === null && isEditingMode;
-
-  if (isViewMode) {
-    return (
-      <div className="modal-backdrop">
-        <div className={`modal ${isShaking ? "shake" : ""}`}>
-          <h3 className="modal-title">Szczegóły wydarzenia</h3>
-
-          <div className="view-field">
-            <span className="view-label">Tytuł: </span>
-            <span className="view-value">{eventData.title}</span>
-          </div>
-
-          <div className="view-field">
-            <span className="view-label">Początek: </span>
-            <span className="view-value">
-              {eventData.start.toLocaleString()}
-            </span>
-          </div>
-
-          <div className="view-field">
-            <span className="view-label">Koniec: </span>
-            <span className="view-value">{eventData.end.toLocaleString()}</span>
-          </div>
-
-          <div className="view-field">
-            <span className="view-label">Opis: </span>
-            <span className="view-value">
-              {eventData.description || "Brak opisu"}
-            </span>
-          </div>
-
-          <div className="view-field">
-            <span className="view-label">Kolor: </span>
-            <span className="view-value">
-              <span
-                className="event-color-dot"
-                style={{ backgroundColor: eventData.color }}
-              />
-            </span>
-          </div>
-
-          <div className="modal-actions">
-            <button
-              type="button"
-              className="btn btn-delete"
-              onClick={onRequestDelete}
-              disabled={!editingEventId}
-            >
-              Usuń
-            </button>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={onRequestEdit}
-              disabled={!editingEventId}
-            >
-              Edytuj
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={onClose}
-            >
-              Zamknij
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+  children,
+}: {
+  title: string;
+  eventData: Event;
+  isShaking?: boolean;
+  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onClose: () => void;
+  onSubmit: (e: FormEvent) => void;
+  children: ReactNode;
+}) {
   return (
     <div className="modal-backdrop">
       <div className={`modal ${isShaking ? "shake" : ""}`}>
-        <h3 className="modal-title">
-          {isAddMode ? "Dodaj wydarzenie" : "Edytuj wydarzenie"}
-        </h3>
+        <h3 className="modal-title">{title}</h3>
 
         <form onSubmit={onSubmit} className="modal-form">
           <div className="form-field">
@@ -172,20 +95,37 @@ export function EventModal({
             />
           </div>
 
-          <div className="modal-actions">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={onClose}
-            >
-              Anuluj
-            </button>
-            <button type="submit" className="btn btn-primary">
-              {isAddMode ? "Dodaj" : "Zapisz zmiany"}
-            </button>
-          </div>
+          <div className="modal-actions">{children}</div>
         </form>
       </div>
     </div>
   );
+}
+
+export function EventModal({
+  isOpen,
+  eventData,
+  isShaking,
+  onChange,
+  onClose,
+  onSubmit,
+  onRequestDelete,
+}: EventModalProps) {
+  if (!isOpen) return null;
+
+  const commonProps = {
+    eventData,
+    isShaking,
+    onChange,
+    onClose,
+    onSubmit,
+    onRequestDelete,
+  };
+
+  if (!eventData.id) {
+    return <AddEventModal {...commonProps} />;
+  }
+  if (!!eventData.id) {
+    return <EditEventModal {...commonProps} />;
+  }
 }
