@@ -38,8 +38,11 @@ export function useCalendarHandlers(
 
       const startDate = start instanceof Date ? start : new Date(start);
       const endDate = end instanceof Date ? end : new Date(end);
-
-      await updateEventTime(event.id, startDate, endDate);
+      try {
+        await updateEventTime(event.id, startDate, endDate);
+      } catch (error) {
+        console.error("Error during droping or resizing event:", error);
+      }
     },
     [updateEventTime]
   );

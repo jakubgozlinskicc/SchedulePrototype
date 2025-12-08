@@ -1,6 +1,6 @@
 import { db } from "./scheduleDb";
 import type { Event } from "./scheduleDb";
-import type { IEventRepository } from "../hooks/useEvents/IEventRepository";
+import type { IEventRepository } from "../pages/schedulePage/useEvents/IEventRepository";
 
 export const dexieEventRepository: IEventRepository = {
   async addEvent(event: Omit<Event, "id">): Promise<number> {
