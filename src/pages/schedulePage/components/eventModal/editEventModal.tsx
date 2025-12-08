@@ -1,5 +1,5 @@
 import type { FormEvent, ChangeEvent } from "react";
-import type { Event } from "../../db/scheduleDb";
+import type { Event } from "../../../../db/scheduleDb";
 import { BaseEventModal } from "./eventModal";
 
 interface EditEventModalProps {

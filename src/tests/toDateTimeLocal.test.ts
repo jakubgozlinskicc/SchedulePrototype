@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { toDateTimeLocal } from "../components/eventModal/toDateTimeLocal";
+import { toDateTimeLocal } from "../utils/toDateTimeLocal";
 
 describe("toDateTimeLocal", () => {
   it("konwertuje Date → datetime-local", () => {
