@@ -1,5 +1,5 @@
 import { dateFnsLocalizer } from "react-big-calendar";
-import { format as dfFormat, startOfWeek, getDay } from "date-fns";
+import { format, startOfWeek, getDay } from "date-fns";
 import { pl } from "date-fns/locale";
 
 const locales = {
@@ -9,10 +9,10 @@ const locales = {
 const formatDate = (date: Date, formatStr: string): string => {
   const options = { locale: pl };
   if (formatStr === "p" || formatStr === "h:mma") {
-    return dfFormat(date, "HH:mm", options);
+    return format(date, "HH:mm", options);
   }
 
-  return dfFormat(date, formatStr, options);
+  return format(date, formatStr, options);
 };
 
 export const localizer = dateFnsLocalizer({
