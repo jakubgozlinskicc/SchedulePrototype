@@ -88,7 +88,7 @@ function SchedulePage() {
       </section>
 
       <EventHover event={hoveredEvent} position={hoverPosition} />
-
+      {/* tu wrzuc to z eventmdoal if (!isOpen) return null; */}
       <EventModal
         isOpen={isModalOpen}
         eventData={eventData}
