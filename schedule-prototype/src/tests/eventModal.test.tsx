@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import type { Event } from "../db/scheduleDb";
-import { EventModal } from "../components/eventModal";
+import { EventModal } from "../components/eventModal/eventModal";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 type EventData = Omit<Event, "id">;

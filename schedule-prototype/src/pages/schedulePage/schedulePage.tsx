@@ -1,104 +1,37 @@
 import "./schedulePage.css";
-import { useEvents } from "../../hooks/useEvents";
-import { useEventHover } from "../../hooks/useEventHover";
-import { EventModal } from "../../components/eventModal";
+import { useEventsData } from "../../hooks/useEvents/useEventsData";
+import { useEventModal } from "../../hooks/useEvents/useEventModal";
+import { useEventForm } from "../../hooks/useEvents/useEventForm";
+import { useCalendarHandlers } from "../../hooks/useEvents/useCalendarHandlers";
+import { useEventHover } from "../../hooks/useEvents/useEventHover";
+import { EventModal } from "../../components/eventModal/eventModal";
 import { localizer } from "../../utils/calendarLocalizer";
-import { EventHover } from "../../components/EventHover";
-import { useState, type ChangeEvent, type CSSProperties } from "react";
+import { EventHover } from "../../components/eventHover/EventHover";
+import { useState, type CSSProperties } from "react";
 import type { Event } from "../../db/scheduleDb";
-import { Calendar, Views, type SlotInfo, type View } from "react-big-calendar";
+import { Calendar, Views, type View } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
-import { CustomToolbar } from "../../components/customToolbar";
+import { CustomToolbar } from "../../components/customToolbar/customToolbar";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
 function SchedulePage() {
-  const [isShaking, setIsShaking] = useState(false);
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState<View>("month");
 
-  const {
-    hoveredEvent,
-    hoverPosition,
-    handleEventMouseEnter,
-    handleEventMouseLeave,
-    updateHoverPosition,
-    clearHover,
-  } = useEventHover();
+  const { hoveredEvent, hoverPosition, handleEventMouseEnter, clearHover } =
+    useEventHover();
 
-  const {
-    events,
-    isModalOpen,
-    eventData,
-    modalMode,
-    setEventData,
-    openAddModal,
-    openEditModal,
-    closeModal,
-    handleSubmit,
-    deleteCurrentEvent,
-    updateEventTime,
-  } = useEvents();
+  const { isModalOpen, eventData, setEventData, openModal, closeModal } =
+    useEventModal();
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
+  const { events, deleteCurrentEvent, handleSubmit, updateEventTime } =
+    useEventsData(eventData, closeModal);
 
-    if (name === "start" || name === "end") {
-      const newDate = value ? new Date(value) : new Date();
+  const { isShaking, handleChange } = useEventForm(setEventData);
 
-      setEventData((prev) => {
-        const updated = { ...prev, [name]: newDate };
-
-        if (name === "start" && newDate > prev.end) {
-          updated.end = newDate;
-        }
-
-        if (name === "end" && newDate < prev.start) {
-          updated.end = prev.start;
-          setIsShaking(true);
-          setTimeout(() => setIsShaking(false), 300);
-        }
-
-        return updated;
-      });
-
-      return;
-    }
-    setEventData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSelectSlot = (slotInfo: SlotInfo) => {
-    openModal({
-      start: slotInfo.start,
-      end: slotInfo.end,
-    });
-  };
-
-  const handleSelectEvent = (event: Event) => {
-    clearHover();
-    openModal(event);
-  };
-
-  type DragDropArgs = {
-    event: Event;
-    start: Date | string;
-    end: Date | string;
-    allDay?: boolean;
-  };
-
-  const handleEventDropResize = async ({ event, start, end }: DragDropArgs) => {
-    if (!event.id) return;
-
-    const startDate = start instanceof Date ? start : new Date(start);
-    const endDate = end instanceof Date ? end : new Date(end);
-
-    await updateEventTime(event.id, startDate, endDate);
-  };
+  const { handleSelectSlot, handleSelectEvent, handleEventDropResize } =
+    useCalendarHandlers(openModal, updateEventTime, clearHover);
 
   return (
     <div className="schedule-page">
@@ -115,13 +48,11 @@ function SchedulePage() {
           onView={(newView) => setView(newView)}
           components={{
             toolbar: (toolbarProps) => (
-              <CustomToolbar {...toolbarProps} onAddEvent={openAddModal} />
+              <CustomToolbar {...toolbarProps} onAddEvent={() => openModal()} />
             ),
             event: ({ event }) => (
               <div
                 onMouseEnter={(e) => handleEventMouseEnter(event as Event, e)}
-                onMouseLeave={handleEventMouseLeave}
-                onMouseMove={(e) => updateHoverPosition(event as Event, e)}
                 style={{ height: "100%", cursor: "pointer" }}
               >
                 {event.title}
@@ -149,13 +80,15 @@ function SchedulePage() {
             };
           }}
           onSelectSlot={handleSelectSlot}
-          onSelectEvent={(ev) => handleSelectEvent(ev as Event)}
+          onSelectEvent={handleSelectEvent}
           onEventDrop={handleEventDropResize}
           onEventResize={handleEventDropResize}
           style={{ height: "80vh", width: "80%" }}
         />
       </section>
+
       <EventHover event={hoveredEvent} position={hoverPosition} />
+
       <EventModal
         isOpen={isModalOpen}
         eventData={eventData}
