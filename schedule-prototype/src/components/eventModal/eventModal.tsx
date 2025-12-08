@@ -3,6 +3,7 @@ import type { Event } from "../../db/scheduleDb";
 import { toDateTimeLocal } from "../../utils/toDateTimeLocal";
 import { AddEventModal } from "./AddEventModal";
 import { EditEventModal } from "./EditEventModal";
+import { eventModalStrategyRegistry } from "./modalRegistry";
 import "./eventModal.css";
 
 interface EventModalProps {
@@ -113,6 +114,8 @@ export function EventModal({
 }: EventModalProps) {
   if (!isOpen) return null;
 
+  const modalType = eventModalStrategyRegistry.getTypeByEvent(eventData);
+
   const commonProps = {
     eventData,
     isShaking,
@@ -122,10 +125,11 @@ export function EventModal({
     onRequestDelete,
   };
 
-  if (!eventData.id) {
-    return <AddEventModal {...commonProps} />;
-  }
-  if (eventData.id) {
-    return <EditEventModal {...commonProps} />;
+  switch (modalType) {
+    case "ADD":
+      return <AddEventModal {...commonProps} />;
+
+    case "EDIT":
+      return <EditEventModal {...commonProps} />;
   }
 }
