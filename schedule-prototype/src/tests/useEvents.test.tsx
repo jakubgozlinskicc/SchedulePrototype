@@ -11,7 +11,12 @@ vi.mock("../db/eventRepo.ts", () => ({
   editEvent: vi.fn(),
 }));
 
-import { getEvents, addEvent, deleteEvent, editEvent } from "../db/eventRepo";
+import {
+  getEvents,
+  addEvent,
+  deleteEvent,
+  editEvent,
+} from "../db/eventRepository";
 
 const mockedGetEvents = vi.mocked(getEvents);
 const mockedAddEvent = vi.mocked(addEvent);

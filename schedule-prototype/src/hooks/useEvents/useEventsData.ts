@@ -1,31 +1,31 @@
 import { useState, useEffect, type FormEvent } from "react";
 import type { Event } from "../../db/scheduleDb";
-import {
-  getEvents,
-  editEvent,
-  addEvent,
-  deleteEvent,
-} from "../../db/eventRepo";
+import type { IEventRepository } from "./IEventRepository";
+import { dexieEventRepository } from "../../db/eventRepository";
 
-export function useEventsData(eventData: Event, closeModal: () => void) {
+export function useEventsData(
+  eventData: Event,
+  closeModal: () => void,
+  repo: IEventRepository = dexieEventRepository
+) {
   const [events, setEvents] = useState<Event[]>([]);
 
   useEffect(() => {
     const load = async () => {
-      const items = await getEvents();
+      const items = await repo.getEvents();
       setEvents(items);
     };
     load();
-  }, []);
+  }, [repo]);
 
   const reloadEvents = async () => {
-    const items = await getEvents();
+    const items = await repo.getEvents();
     setEvents(items);
   };
 
   const deleteCurrentEvent = async () => {
     if (!eventData.id) return;
-    await deleteEvent(eventData.id);
+    await repo.deleteEvent(eventData.id);
     await reloadEvents();
     closeModal();
   };
@@ -34,9 +34,9 @@ export function useEventsData(eventData: Event, closeModal: () => void) {
     e.preventDefault();
 
     if (eventData.id) {
-      await editEvent(eventData.id, eventData);
+      await repo.editEvent(eventData.id, eventData);
     } else {
-      await addEvent(eventData);
+      await repo.addEvent(eventData);
     }
 
     await reloadEvents();
@@ -44,7 +44,7 @@ export function useEventsData(eventData: Event, closeModal: () => void) {
   };
 
   const updateEventTime = async (id: number, start: Date, end: Date) => {
-    await editEvent(id, { start, end });
+    await repo.editEvent(id, { start, end });
     await reloadEvents();
   };
 

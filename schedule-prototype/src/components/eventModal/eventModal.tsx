@@ -7,7 +7,6 @@ import { eventModalStrategyRegistry } from "./modalRegistry";
 import "./eventModal.css";
 
 interface EventModalProps {
-  isOpen: boolean;
   eventData: Event;
   isShaking?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
@@ -104,7 +103,6 @@ export function BaseEventModal({
 }
 
 export function EventModal({
-  isOpen,
   eventData,
   isShaking,
   onChange,
@@ -112,8 +110,6 @@ export function EventModal({
   onSubmit,
   onRequestDelete,
 }: EventModalProps) {
-  if (!isOpen) return null;
-
   const modalType = eventModalStrategyRegistry.getTypeByEvent(eventData);
 
   const commonProps = {
