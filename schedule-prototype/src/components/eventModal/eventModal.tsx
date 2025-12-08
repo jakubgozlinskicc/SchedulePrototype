@@ -1,6 +1,6 @@
 import type { FormEvent, ChangeEvent, ReactNode } from "react";
-import type { Event } from "../db/scheduleDb";
-import { toDateTimeLocal } from "../utils/toDateTimeLocal";
+import type { Event } from "../../db/scheduleDb";
+import { toDateTimeLocal } from "../../utils/toDateTimeLocal";
 import { AddEventModal } from "./AddEventModal";
 import { EditEventModal } from "./EditEventModal";
 import "./eventModal.css";
@@ -125,7 +125,7 @@ export function EventModal({
   if (!eventData.id) {
     return <AddEventModal {...commonProps} />;
   }
-  if (!!eventData.id) {
+  if (eventData.id) {
     return <EditEventModal {...commonProps} />;
   }
 }

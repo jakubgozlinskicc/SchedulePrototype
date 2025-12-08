@@ -7,10 +7,12 @@ const locales = {
 };
 
 const formatDate = (date: Date, formatStr: string): string => {
+  const options = { locale: pl };
   if (formatStr === "p" || formatStr === "h:mma") {
-    return dfFormat(date, "HH:mm");
+    return dfFormat(date, "HH:mm", options);
   }
-  return dfFormat(date, formatStr);
+
+  return dfFormat(date, formatStr, options);
 };
 
 export const localizer = dateFnsLocalizer({
