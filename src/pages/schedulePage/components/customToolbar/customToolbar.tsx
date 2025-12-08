@@ -1,7 +1,7 @@
 import { format, startOfWeek, addDays, isSameDay } from "date-fns";
 import { pl } from "date-fns/locale";
 import type { ToolbarProps } from "react-big-calendar";
-import type { Event } from "../../db/scheduleDb";
+import type { Event } from "../../../../db/scheduleDb";
 import "./customToolbar.css";
 
 type CustomToolbarProps<

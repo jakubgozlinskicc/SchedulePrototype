@@ -1,8 +1,8 @@
 import type { FormEvent, ChangeEvent, ReactNode } from "react";
-import type { Event } from "../../db/scheduleDb";
-import { toDateTimeLocal } from "./toDateTimeLocal";
-import { AddEventModal } from "./AddEventModal";
-import { EditEventModal } from "./EditEventModal";
+import type { Event } from "../../../../db/scheduleDb";
+import { toDateTimeLocal } from "../../../../utils/toDateTimeLocal";
+import { AddEventModal } from "./addEventModal";
+import { EditEventModal } from "./editEventModal";
 import { eventModalStrategyRegistry } from "./modalRegistry";
 import "./eventModal.css";
 

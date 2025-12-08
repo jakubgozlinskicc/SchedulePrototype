@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import type { Event } from "../../db/scheduleDb";
+import type { Event } from "../../../db/scheduleDb";
 import type { SlotInfo } from "react-big-calendar";
 
 type DragDropArgs = {

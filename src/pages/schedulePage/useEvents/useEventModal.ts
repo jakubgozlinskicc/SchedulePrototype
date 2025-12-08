@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Event } from "../../db/scheduleDb";
+import type { Event } from "../../../db/scheduleDb";
 
 const defaultEventData: Event = {
   id: undefined,

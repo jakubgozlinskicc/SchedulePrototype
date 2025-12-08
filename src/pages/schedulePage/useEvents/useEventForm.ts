@@ -4,7 +4,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import type { Event } from "../../db/scheduleDb";
+import type { Event } from "../../../db/scheduleDb";
 
 export function useEventForm(setEventData: Dispatch<SetStateAction<Event>>) {
   const [isShaking, setIsShaking] = useState(false);

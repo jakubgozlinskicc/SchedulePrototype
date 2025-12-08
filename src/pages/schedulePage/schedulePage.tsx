@@ -1,18 +1,18 @@
 import "./schedulePage.css";
-import { useEventsData } from "../../hooks/useEvents/useEventsData";
-import { useEventModal } from "../../hooks/useEvents/useEventModal";
-import { useEventForm } from "../../hooks/useEvents/useEventForm";
-import { useCalendarHandlers } from "../../hooks/useEvents/useCalendarHandlers";
-import { useEventHover } from "../../hooks/useEvents/useEventHover";
-import { EventModal } from "../../components/eventModal/eventModal";
+import { useEventsData } from "./useEvents/useEventsData";
+import { useEventModal } from "./useEvents/useEventModal";
+import { useEventForm } from "./useEvents/useEventForm";
+import { useCalendarHandlers } from "./useEvents/useCalendarHandlers";
+import { useEventHover } from "./useEvents/useEventHover";
+import { EventModal } from "./components/eventModal/eventModal";
 import { localizer } from "../../utils/calendarLocalizer";
 import { formats } from "../../utils/dateFormats";
-import { EventHover } from "../../components/eventHover/EventHover";
+import { EventHover } from "./components/eventHover/eventHover";
 import { useState, type CSSProperties } from "react";
 import type { Event } from "../../db/scheduleDb";
 import { Calendar, Views, type View } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
-import { CustomToolbar } from "../../components/customToolbar/customToolbar";
+import { CustomToolbar } from "./components/customToolbar/customToolbar";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
