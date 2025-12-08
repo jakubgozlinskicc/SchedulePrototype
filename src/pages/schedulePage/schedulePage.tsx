@@ -55,6 +55,7 @@ function SchedulePage() {
             event: ({ event }) => (
               <div
                 onMouseEnter={(e) => handleEventMouseEnter(event as Event, e)}
+                onMouseLeave={clearHover}
                 style={{ height: "100%", cursor: "pointer" }}
               >
                 {event.title}
@@ -89,7 +90,9 @@ function SchedulePage() {
         />
       </section>
 
-      <EventHover event={hoveredEvent} position={hoverPosition} />
+      {hoveredEvent && (
+        <EventHover event={hoveredEvent} position={hoverPosition} />
+      )}
       {isModalOpen && (
         <EventModal
           eventData={eventData}

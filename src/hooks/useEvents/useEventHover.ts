@@ -1,4 +1,4 @@
-import { useState, useEffect, type MouseEvent } from "react";
+import { useState, type MouseEvent } from "react";
 import type { Event } from "../../db/scheduleDb";
 
 export function useEventHover() {
@@ -13,31 +13,6 @@ export function useEventHover() {
   const clearHover = () => {
     setHoveredEvent(null);
   };
-
-  useEffect(() => {
-    if (!hoveredEvent) return;
-
-    const handleGlobalMouseMove = (e: globalThis.MouseEvent) => {
-      setHoverPosition({ x: e.clientX, y: e.clientY });
-
-      const el = document.elementFromPoint(
-        e.clientX,
-        e.clientY
-      ) as HTMLElement | null;
-
-      const isOverEvent = el && el.closest(".rbc-event");
-
-      if (!isOverEvent) {
-        setHoveredEvent(null);
-      }
-    };
-
-    window.addEventListener("mousemove", handleGlobalMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleGlobalMouseMove);
-    };
-  }, [hoveredEvent]);
 
   return {
     hoveredEvent,

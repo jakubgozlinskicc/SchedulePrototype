@@ -1,19 +1,16 @@
 import { useMemo } from "react";
 import type { Event } from "../../db/scheduleDb";
 import "./eventHover.css";
+
 interface EventHoverProps {
-  event: Event | null;
+  event: Event;
   position: { x: number; y: number };
 }
 
 export function EventHover({ event, position }: EventHoverProps) {
   const adjustedPosition = useMemo(() => {
-    if (!event) return position;
-
-    const hover = document.querySelector(".event-hover") as HTMLElement;
-    if (!hover) {
-      return position;
-    }
+    const hover = document.querySelector(".event-hover");
+    if (!hover) return position;
 
     const rect = hover.getBoundingClientRect();
     const viewportWidth = window.innerWidth;
@@ -29,9 +26,11 @@ export function EventHover({ event, position }: EventHoverProps) {
       newY = position.y - rect.height - 15;
     }
     return { x: newX, y: newY };
-  }, [event, position]);
+  }, [position]);
 
-  if (!event) return null;
+  const bg = event.color || "#000000";
+  const brightness = parseInt(bg.replace("#", ""), 16);
+  const textColor = brightness > 0xffffff / 2 ? "black" : "white";
 
   return (
     <div
@@ -42,8 +41,13 @@ export function EventHover({ event, position }: EventHoverProps) {
         pointerEvents: "none",
       }}
     >
-      <div className="hover-header" style={{ backgroundColor: event.color }}>
-        <h3 className="hover-title">{event.title}</h3>
+      <div
+        className="hover-header"
+        style={{ backgroundColor: event.color, color: textColor }}
+      >
+        <h3 className="hover-title" style={{ color: textColor }}>
+          {event.title}
+        </h3>
       </div>
 
       <div className="hover">
