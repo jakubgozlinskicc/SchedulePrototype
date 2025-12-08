@@ -88,16 +88,16 @@ function SchedulePage() {
       </section>
 
       <EventHover event={hoveredEvent} position={hoverPosition} />
-      {/* tu wrzuc to z eventmdoal if (!isOpen) return null; */}
-      <EventModal
-        isOpen={isModalOpen}
-        eventData={eventData}
-        isShaking={isShaking}
-        onChange={handleChange}
-        onClose={closeModal}
-        onSubmit={handleSubmit}
-        onRequestDelete={deleteCurrentEvent}
-      />
+      {isModalOpen && (
+        <EventModal
+          eventData={eventData}
+          isShaking={isShaking}
+          onChange={handleChange}
+          onClose={closeModal}
+          onSubmit={handleSubmit}
+          onRequestDelete={deleteCurrentEvent}
+        />
+      )}
     </div>
   );
 }

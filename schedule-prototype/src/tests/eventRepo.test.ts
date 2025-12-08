@@ -5,7 +5,7 @@ import {
   editEvent,
   deleteEvent,
   clearEvents,
-} from "../db/eventRepo";
+} from "../db/dexieEventRepository";
 import { type Event } from "../db/scheduleDb";
 
 describe("Event Repository", () => {
