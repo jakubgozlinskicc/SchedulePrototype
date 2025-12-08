@@ -6,6 +6,7 @@ import { useCalendarHandlers } from "../../hooks/useEvents/useCalendarHandlers";
 import { useEventHover } from "../../hooks/useEvents/useEventHover";
 import { EventModal } from "../../components/eventModal/eventModal";
 import { localizer } from "../../utils/calendarLocalizer";
+import { formats } from "../../utils/dateFormats";
 import { EventHover } from "../../components/eventHover/EventHover";
 import { useState, type CSSProperties } from "react";
 import type { Event } from "../../db/scheduleDb";
@@ -42,6 +43,7 @@ function SchedulePage() {
       <section className="calendar-section">
         <DnDCalendar
           localizer={localizer}
+          formats={formats}
           date={date}
           onNavigate={(newDate) => setDate(newDate)}
           view={view}

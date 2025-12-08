@@ -11,32 +11,38 @@ type CustomToolbarProps<
   onAddEvent?: () => void;
 };
 
+type WeekStripProps = {
+  date: Date;
+  onNavigate: CustomToolbarProps["onNavigate"];
+  onView: CustomToolbarProps["onView"];
+};
+
+const WeekStrip = ({ date, onNavigate, onView }: WeekStripProps) => {
+  const start = startOfWeek(date, { weekStartsOn: 1 });
+  const days = Array.from({ length: 7 }, (_, i) => addDays(start, i));
+
+  return (
+    <div className="week-strip">
+      {days.map((day) => (
+        <button
+          key={day.toISOString()}
+          className={
+            "week-strip-day" + (isSameDay(day, date) ? " active-day" : "")
+          }
+          onClick={() => {
+            onView("day");
+            onNavigate("DATE", day);
+          }}
+        >
+          {format(day, "EEE dd", { locale: pl })}
+        </button>
+      ))}
+    </div>
+  );
+};
+
 export const CustomToolbar = (props: CustomToolbarProps) => {
-  const { label, date, view, onAddEvent } = props;
-
-  const renderWeekStrip = () => {
-    const start = startOfWeek(date, { weekStartsOn: 1 });
-    const days = Array.from({ length: 7 }, (_, i) => addDays(start, i));
-
-    return (
-      <div className="week-strip">
-        {days.map((day) => (
-          <button
-            key={day.toISOString()}
-            className={
-              "week-strip-day" + (isSameDay(day, date) ? " active-day" : "")
-            }
-            onClick={() => {
-              props.onView("day");
-              props.onNavigate("DATE", day);
-            }}
-          >
-            {format(day, "EEE dd", { locale: pl })}
-          </button>
-        ))}
-      </div>
-    );
-  };
+  const { label, date, view, onAddEvent, onNavigate, onView } = props;
 
   return (
     <>
@@ -88,7 +94,9 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
         </div>
       </div>
 
-      {view === "day" && renderWeekStrip()}
+      {view === "day" && (
+        <WeekStrip date={date} onNavigate={onNavigate} onView={onView} />
+      )}
     </>
   );
 };

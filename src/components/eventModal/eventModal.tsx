@@ -1,6 +1,6 @@
 import type { FormEvent, ChangeEvent, ReactNode } from "react";
 import type { Event } from "../../db/scheduleDb";
-import { toDateTimeLocal } from "../../utils/toDateTimeLocal";
+import { toDateTimeLocal } from "./toDateTimeLocal";
 import { AddEventModal } from "./AddEventModal";
 import { EditEventModal } from "./EditEventModal";
 import { eventModalStrategyRegistry } from "./modalRegistry";
