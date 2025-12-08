@@ -1,12 +1,12 @@
 import { useState, useEffect, type FormEvent } from "react";
 import type { Event } from "../../db/scheduleDb";
-import type { EventRepository } from "./eventRepository";
-import { dexieEventRepository } from "../../db/dexieEventRepository";
+import type { IEventRepository } from "./IEventRepository";
+import { dexieEventRepository } from "../../db/eventRepository";
 
 export function useEventsData(
   eventData: Event,
   closeModal: () => void,
-  repo: EventRepository = dexieEventRepository
+  repo: IEventRepository = dexieEventRepository
 ) {
   const [events, setEvents] = useState<Event[]>([]);
 

@@ -16,7 +16,7 @@ import {
   addEvent,
   deleteEvent,
   editEvent,
-} from "../db/dexieEventRepository";
+} from "../db/eventRepository";
 
 const mockedGetEvents = vi.mocked(getEvents);
 const mockedAddEvent = vi.mocked(addEvent);
