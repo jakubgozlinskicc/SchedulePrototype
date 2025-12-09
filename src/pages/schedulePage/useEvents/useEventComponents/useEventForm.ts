@@ -1,13 +1,9 @@
-import {
-  useState,
-  type ChangeEvent,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
-import type { Event } from "../../../db/scheduleDb";
+import { useState, type ChangeEvent } from "react";
+import { useEventDataContext } from "../useContext/useEventDataContext";
 
-export function useEventForm(setEventData: Dispatch<SetStateAction<Event>>) {
+export function useEventForm() {
   const [isShaking, setIsShaking] = useState(false);
+  const { setEventData } = useEventDataContext();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>

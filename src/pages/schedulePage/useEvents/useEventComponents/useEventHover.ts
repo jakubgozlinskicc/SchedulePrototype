@@ -1,5 +1,5 @@
 import { useState, type MouseEvent } from "react";
-import type { Event } from "../../../db/scheduleDb";
+import type { Event } from "../../../../db/scheduleDb";
 
 export function useEventHover() {
   const [hoveredEvent, setHoveredEvent] = useState<Event | null>(null);

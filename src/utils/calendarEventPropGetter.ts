@@ -4,15 +4,13 @@ import { getTextColor } from "./colorUtils";
 
 export const calendarEventPropGetter = (event: Event) => {
   const bg = event.color;
-
-  const textColor = getTextColor(event.color);
+  const textColor = getTextColor(bg);
 
   return {
     className: "colored-event",
     style: {
       "--event-color": bg,
       color: textColor,
-      backgroundColor: bg,
-    } as CSSProperties,
+    } as CSSProperties & { "--event-color": string },
   };
 };

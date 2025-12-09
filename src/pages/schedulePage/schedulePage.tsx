@@ -1,9 +1,11 @@
 import "./schedulePage.css";
 import { useEventsData } from "./useEvents/useEventsData";
-import { useEventModal } from "./useEvents/useEventModal";
-import { useEventForm } from "./useEvents/useEventForm";
-import { useCalendarHandlers } from "./useEvents/useCalendarHandlers";
-import { useEventHover } from "./useEvents/useEventHover";
+import { useEventModal } from "./useEvents/useEventComponents/useEventModal";
+import { useEventForm } from "./useEvents/useEventComponents/useEventForm";
+import { useEventDropResize } from "./useEvents/useEventCalendar/useEventDropResize";
+import { useEventHover } from "./useEvents/useEventComponents/useEventHover";
+import { useSelectEvent } from "./useEvents/useEventCalendar/useSelectEvent";
+import { useSelectSlot } from "./useEvents/useEventCalendar/useSelectSlot";
 import { EventModal } from "./components/eventModal/eventModal";
 import { localizer } from "../../utils/calendarLocalizer";
 import { formats } from "../../utils/dateFormats";
@@ -24,16 +26,19 @@ function SchedulePage() {
   const { hoveredEvent, hoverPosition, handleMouseEnterEvent, clearHover } =
     useEventHover();
 
-  const { isModalOpen, eventData, setEventData, openModal, closeModal } =
-    useEventModal();
+  const { isModalOpen, openModal, closeModal } = useEventModal();
 
+  const { eventData, handleSelectEvent } = useSelectEvent(
+    openModal,
+    clearHover
+  );
   const { events, deleteCurrentEvent, handleSubmit, updateEventTime } =
     useEventsData(eventData, closeModal);
+  const { handleSelectSlot } = useSelectSlot(openModal);
 
-  const { isShaking, handleChange } = useEventForm(setEventData);
+  const { isShaking, handleChange } = useEventForm();
 
-  const { handleSelectSlot, handleSelectEvent, handleEventDropResize } =
-    useCalendarHandlers(openModal, updateEventTime, clearHover);
+  const { handleEventDropResize } = useEventDropResize(updateEventTime);
 
   return (
     <div className="schedule-page">
@@ -46,16 +51,18 @@ function SchedulePage() {
           localizer={localizer}
           formats={formats}
           date={date}
-          onNavigate={(newDate) => setDate(newDate)}
+          onNavigate={setDate}
           view={view}
-          onView={(newView) => setView(newView)}
+          onView={setView}
           components={{
             toolbar: (toolbarProps) => (
               <CustomToolbar {...toolbarProps} onAddEvent={() => openModal()} />
             ),
             event: ({ event }) => (
               <div
-                onMouseEnter={(e) => handleMouseEnterEvent(event as Event, e)}
+                onMouseEnter={(mouseEvent) =>
+                  handleMouseEnterEvent(event, mouseEvent)
+                }
                 onMouseLeave={clearHover}
                 style={{ height: "100%", cursor: "pointer" }}
               >
