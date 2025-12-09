@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import type { Event } from "../../../db/scheduleDb";
+import type { Event } from "../../../../db/scheduleDb";
 
 type DragDropArgs = {
   event: Event;
@@ -8,7 +8,7 @@ type DragDropArgs = {
   allDay?: boolean;
 };
 
-export function useCalendarHandlers(
+export function useEventDropResize(
   updateEventTime: (id: number, start: Date, end: Date) => Promise<void>
 ) {
   const handleEventDropResize = useCallback(

@@ -1,10 +1,13 @@
 import "./App.css";
 import SchedulePage from "./pages/schedulePage/schedulePage";
+import { EventDataProvider } from "./contexts/eventDataProvider";
 
 function App() {
   return (
     <>
-      <SchedulePage />
+      <EventDataProvider>
+        <SchedulePage />
+      </EventDataProvider>
     </>
   );
 }
