@@ -1,4 +1,4 @@
-import { useState, useEffect, type FormEvent } from "react";
+import { useState, useEffect, useCallback, type FormEvent } from "react";
 import type { Event } from "../../../db/scheduleDb";
 import type { IEventRepository } from "./IEventRepository";
 import { dexieEventRepository } from "../../../db/eventRepository";
@@ -6,68 +6,73 @@ import { dexieEventRepository } from "../../../db/eventRepository";
 export function useEventsData(
   eventData: Event,
   closeModal: () => void,
-  repo: IEventRepository = dexieEventRepository
+  repository: IEventRepository = dexieEventRepository
 ) {
   const [events, setEvents] = useState<Event[]>([]);
+
+  const reloadEvents = useCallback(async () => {
+    try {
+      const items = await repository.getEvents();
+      setEvents(items);
+    } catch (error) {
+      console.error("Error during reloading events:", error);
+    }
+  }, [repository]);
 
   useEffect(() => {
     const load = async () => {
       try {
-        const items = await repo.getEvents();
-        setEvents(items);
+        await reloadEvents();
       } catch (error) {
         console.error("Error during loading events:", error);
       }
     };
     load();
-  }, [repo]);
+  }, [reloadEvents]);
 
-  const reloadEvents = async () => {
-    try {
-      const items = await repo.getEvents();
-      setEvents(items);
-    } catch (error) {
-      console.error("Error during reloading events:", error);
-    }
-  };
-
-  const deleteCurrentEvent = async () => {
+  const deleteCurrentEvent = useCallback(async () => {
     if (!eventData.id) return;
 
     try {
-      await repo.deleteEvent(eventData.id);
+      await repository.deleteEvent(eventData.id);
       await reloadEvents();
       closeModal();
     } catch (error) {
       console.error("Error during deleting event:", error);
     }
-  };
+  }, [eventData.id, repository, reloadEvents, closeModal]);
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault();
 
-    try {
-      if (eventData.id) {
-        await repo.editEvent(eventData.id, eventData);
-      } else {
-        await repo.addEvent(eventData);
+      try {
+        if (eventData.id) {
+          await repository.editEvent(eventData.id, eventData);
+        } else {
+          await repository.addEvent(eventData);
+        }
+
+        await reloadEvents();
+        closeModal();
+      } catch (error) {
+        console.error("Error during saving events:", error);
       }
+    },
+    [eventData, repository, reloadEvents, closeModal]
+  );
 
-      await reloadEvents();
-      closeModal();
-    } catch (error) {
-      console.error("Error during saving events:", error);
-    }
-  };
-
-  const updateEventTime = async (id: number, start: Date, end: Date) => {
-    try {
-      await repo.editEvent(id, { start, end });
-      await reloadEvents();
-    } catch (error) {
-      console.error("Error during event time change:", error);
-    }
-  };
+  const updateEventTime = useCallback(
+    async (id: number, start: Date, end: Date) => {
+      try {
+        await repository.editEvent(id, { start, end });
+        await reloadEvents();
+      } catch (error) {
+        console.error("Error during event time change:", error);
+      }
+    },
+    [repository, reloadEvents]
+  );
 
   return {
     events,
