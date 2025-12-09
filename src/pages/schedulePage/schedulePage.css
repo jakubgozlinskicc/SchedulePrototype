@@ -86,25 +86,15 @@
   background-color: #f7f9fcf1;
 }
 
+/* ZMIENIONE: Dodano position: relative do bazowego eventu */
 .rbc-time-view .rbc-event.colored-event {
   overflow: hidden;
   color: black !important;
   padding-left: 10px;
   border-radius: 6px;
   border: none;
-
+  position: relative;
   background: color-mix(in srgb, var(--event-color) 20%, transparent);
-}
-
-.rbc-time-view .rbc-event.colored-event-allday::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 6px;
-  height: auto;
-  background: var(--event-color);
-  border-radius: 6px 0 0 6px;
 }
 
 .rbc-time-view .rbc-event.colored-event::before {

@@ -11,6 +11,6 @@ export const calendarEventPropGetter = (event: Event) => {
     style: {
       "--event-color": bg,
       color: textColor,
-    } as CSSProperties & { "--event-color": string },
+    } satisfies CSSProperties & { "--event-color": string },
   };
 };
