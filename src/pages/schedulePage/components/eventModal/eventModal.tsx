@@ -1,6 +1,6 @@
 import { EventModalStrategyRegistry } from "./modalStrategy/modalRegistry";
 import "./eventModal.css";
-import type { EventModalProps } from "./eventModalProps";
+import type { EventModalProps } from "./eventModalTypes";
 import { useMemo } from "react";
 
 export function EventModal(commonProps: EventModalProps) {

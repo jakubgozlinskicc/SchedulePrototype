@@ -1,5 +1,5 @@
 import type { Event } from "../../../../../db/scheduleDb";
-import type { EventModalProps } from "../eventModalProps";
+import type { EventModalProps } from "../eventModalTypes";
 import type { EventModalStrategy } from "./eventStrategies/eventModalStrategy";
 import { AddEventStrategy } from "./eventStrategies/addEventStrategy";
 import { EditEventStrategy } from "./eventStrategies/editEventStrategy";

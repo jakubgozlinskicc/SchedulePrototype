@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import type { Event } from "../../../../db/scheduleDb";
 import "./eventHover.css";
+import { getTextColor } from "../../../../utils/colorUtils";
 
 interface EventHoverProps {
   event: Event;
@@ -28,9 +29,7 @@ export function EventHover({ event, position }: EventHoverProps) {
     return { x: newX, y: newY };
   }, [position]);
 
-  const bg = event.color || "#000000";
-  const brightness = parseInt(bg.replace("#", ""), 16);
-  const textColor = brightness > 0xffffff / 2 ? "black" : "white";
+  const textColor = getTextColor(event.color);
 
   return (
     <div

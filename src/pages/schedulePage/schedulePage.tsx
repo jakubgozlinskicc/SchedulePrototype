@@ -13,6 +13,7 @@ import type { Event } from "../../db/scheduleDb";
 import { Calendar, Views, type View } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { CustomToolbar } from "./components/customToolbar/customToolbar";
+import { getTextColor } from "../../utils/colorUtils";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
@@ -71,8 +72,7 @@ function SchedulePage() {
           dayLayoutAlgorithm="no-overlap"
           eventPropGetter={(event) => {
             const bg = event.color || "#591efd";
-            const brightness = parseInt(bg.replace("#", ""), 16);
-            const textColor = brightness > 0xffffff / 2 ? "black" : "white";
+            const textColor = getTextColor(event.color);
 
             return {
               className: "colored-event",
