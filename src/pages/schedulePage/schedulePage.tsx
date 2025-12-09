@@ -8,12 +8,12 @@ import { EventModal } from "./components/eventModal/eventModal";
 import { localizer } from "../../utils/calendarLocalizer";
 import { formats } from "../../utils/dateFormats";
 import { EventHover } from "./components/eventHover/eventHover";
-import { useState, type CSSProperties } from "react";
+import { useState } from "react";
 import type { Event } from "../../db/scheduleDb";
 import { Calendar, Views, type View } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { CustomToolbar } from "./components/customToolbar/customToolbar";
-import { getTextColor } from "../../utils/colorUtils";
+import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
@@ -21,7 +21,7 @@ function SchedulePage() {
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState<View>("month");
 
-  const { hoveredEvent, hoverPosition, handleEventMouseEnter, clearHover } =
+  const { hoveredEvent, hoverPosition, handleMouseEnterEvent, clearHover } =
     useEventHover();
 
   const { isModalOpen, eventData, setEventData, openModal, closeModal } =
@@ -55,7 +55,7 @@ function SchedulePage() {
             ),
             event: ({ event }) => (
               <div
-                onMouseEnter={(e) => handleEventMouseEnter(event as Event, e)}
+                onMouseEnter={(e) => handleMouseEnterEvent(event as Event, e)}
                 onMouseLeave={clearHover}
                 style={{ height: "100%", cursor: "pointer" }}
               >
@@ -70,18 +70,7 @@ function SchedulePage() {
           selectable
           resizable
           dayLayoutAlgorithm="no-overlap"
-          eventPropGetter={(event) => {
-            const bg = event.color || "#591efd";
-            const textColor = getTextColor(event.color);
-
-            return {
-              className: "colored-event",
-              style: {
-                "--event-color": bg,
-                color: textColor,
-              } as CSSProperties,
-            };
-          }}
+          eventPropGetter={calendarEventPropGetter}
           onSelectSlot={handleSelectSlot}
           onSelectEvent={handleSelectEvent}
           onEventDrop={handleEventDropResize}

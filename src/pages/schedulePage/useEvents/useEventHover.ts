@@ -5,7 +5,7 @@ export function useEventHover() {
   const [hoveredEvent, setHoveredEvent] = useState<Event | null>(null);
   const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
 
-  const handleEventMouseEnter = (event: Event, e: MouseEvent<HTMLElement>) => {
+  const handleMouseEnterEvent = (event: Event, e: MouseEvent<HTMLElement>) => {
     setHoveredEvent(event);
     setHoverPosition({ x: e.clientX, y: e.clientY });
   };
@@ -17,7 +17,7 @@ export function useEventHover() {
   return {
     hoveredEvent,
     hoverPosition,
-    handleEventMouseEnter,
+    handleMouseEnterEvent,
     clearHover,
   };
 }

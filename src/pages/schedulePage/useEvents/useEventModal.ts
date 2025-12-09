@@ -1,22 +1,14 @@
 import { useState } from "react";
 import type { Event } from "../../../db/scheduleDb";
-
-const defaultEventData: Event = {
-  id: undefined,
-  title: "",
-  description: "",
-  start: new Date(),
-  end: new Date(),
-  color: "#0000FF",
-};
+import { getDefaultEvent } from "../../../utils/getDefaultEvent";
 
 export function useEventModal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [eventData, setEventData] = useState<Event>(defaultEventData);
+  const [eventData, setEventData] = useState<Event>(getDefaultEvent());
 
   const openModal = (data?: Partial<Event & { id?: number }>) => {
     setEventData({
-      ...defaultEventData,
+      ...getDefaultEvent(),
       ...data,
     });
     setIsModalOpen(true);
