@@ -4,6 +4,7 @@ import { useEventModal } from "./useEvents/useEventModal";
 import { useEventForm } from "./useEvents/useEventForm";
 import { useCalendarHandlers } from "./useEvents/useCalendarHandlers";
 import { useEventHover } from "./useEvents/useEventHover";
+import { useSelectEvent } from "./useEvents/useSelectEvent";
 import { EventModal } from "./components/eventModal/eventModal";
 import { localizer } from "../../utils/calendarLocalizer";
 import { formats } from "../../utils/dateFormats";
@@ -24,16 +25,15 @@ function SchedulePage() {
   const { hoveredEvent, hoverPosition, handleMouseEnterEvent, clearHover } =
     useEventHover();
 
-  const { isModalOpen, eventData, setEventData, openModal, closeModal } =
-    useEventModal();
-
+  const { isModalOpen, openModal, closeModal } = useEventModal();
+  const { eventData, setEventData, handleSelectEvent, handleSelectSlot } =
+    useSelectEvent(openModal, clearHover);
   const { events, deleteCurrentEvent, handleSubmit, updateEventTime } =
     useEventsData(eventData, closeModal);
 
   const { isShaking, handleChange } = useEventForm(setEventData);
 
-  const { handleSelectSlot, handleSelectEvent, handleEventDropResize } =
-    useCalendarHandlers(openModal, updateEventTime, clearHover);
+  const { handleEventDropResize } = useCalendarHandlers(updateEventTime);
 
   return (
     <div className="schedule-page">

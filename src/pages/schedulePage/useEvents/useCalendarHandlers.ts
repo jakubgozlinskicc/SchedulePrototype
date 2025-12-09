@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import type { Event } from "../../../db/scheduleDb";
-import type { SlotInfo } from "react-big-calendar";
 
 type DragDropArgs = {
   event: Event;
@@ -10,28 +9,8 @@ type DragDropArgs = {
 };
 
 export function useCalendarHandlers(
-  openModal: (data?: Partial<Event & { id?: number }>) => void,
-  updateEventTime: (id: number, start: Date, end: Date) => Promise<void>,
-  clearHover: () => void
+  updateEventTime: (id: number, start: Date, end: Date) => Promise<void>
 ) {
-  const handleSelectSlot = useCallback(
-    (slotInfo: SlotInfo) => {
-      openModal({
-        start: slotInfo.start,
-        end: slotInfo.end,
-      });
-    },
-    [openModal]
-  );
-
-  const handleSelectEvent = useCallback(
-    (event: Event) => {
-      if (clearHover) clearHover();
-      openModal(event);
-    },
-    [openModal, clearHover]
-  );
-
   const handleEventDropResize = useCallback(
     async ({ event, start, end }: DragDropArgs) => {
       if (!event.id) return;
@@ -48,8 +27,6 @@ export function useCalendarHandlers(
   );
 
   return {
-    handleSelectSlot,
-    handleSelectEvent,
     handleEventDropResize,
   };
 }
