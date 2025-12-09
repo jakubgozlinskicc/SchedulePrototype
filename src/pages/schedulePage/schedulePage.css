@@ -86,7 +86,6 @@
   background-color: #f7f9fcf1;
 }
 
-/* ZMIENIONE: Dodano position: relative do bazowego eventu */
 .rbc-time-view .rbc-event.colored-event {
   overflow: hidden;
   color: black !important;
@@ -112,4 +111,17 @@
   background-color: var(--event-color);
   border-radius: 6px;
   border: none;
+}
+.rbc-date-cell .rbc-button-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.rbc-date-cell .rbc-button-link:hover {
+  background-color: #591efd;
+  color: #ffffff;
 }
