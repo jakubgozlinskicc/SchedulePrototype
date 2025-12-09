@@ -1,4 +1,4 @@
-import type { FormEvent, ChangeEvent } from "react";
+import type { FormEvent, ChangeEvent, ReactNode } from "react";
 import type { Event } from "../../../../db/scheduleDb";
 
 export interface EventModalProps {
@@ -8,4 +8,9 @@ export interface EventModalProps {
   onClose: () => void;
   onSubmit: (e: FormEvent) => void;
   onRequestDelete: () => void | Promise<void>;
+}
+
+export interface IEventModalStrategy {
+  useSupport: (eventData: Event) => boolean;
+  render: (commonProps: EventModalProps) => ReactNode;
 }

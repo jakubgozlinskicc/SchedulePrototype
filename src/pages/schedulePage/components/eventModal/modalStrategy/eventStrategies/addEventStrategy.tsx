@@ -1,10 +1,10 @@
 import type { Event } from "../../../../../../db/scheduleDb";
-import type { EventModalProps } from "../../eventModalProps";
+import type { EventModalProps } from "../../eventModalTypes";
 import type { ReactNode } from "react";
-import type { EventModalStrategy } from "./eventModalStrategy";
+import type { IEventModalStrategy } from "../../eventModalTypes";
 import { AddEventModal } from "../../modalComponents/addEventModal";
 
-export class AddEventStrategy implements EventModalStrategy {
+export class AddEventStrategy implements IEventModalStrategy {
   useSupport(eventData: Event): boolean {
     return !eventData.id;
   }
