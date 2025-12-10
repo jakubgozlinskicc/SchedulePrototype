@@ -40,7 +40,9 @@ export function BaseEventModal({
           </div>
 
           <div className="form-field">
-            <label className="form-label">{t("description")}</label>
+            <label id="desctription" className="form-label">
+              {t("description")}
+            </label>
             <textarea
               name="description"
               value={eventData.description}
@@ -50,7 +52,9 @@ export function BaseEventModal({
           </div>
 
           <div className="form-field">
-            <label className="form-label">{t("start-date")}</label>
+            <label id="start-date" className="form-label">
+              {t("start-date")}
+            </label>
             <input
               type="datetime-local"
               name="start"
@@ -62,7 +66,9 @@ export function BaseEventModal({
           </div>
 
           <div className="form-field">
-            <label className="form-label">{t("end-date")}</label>
+            <label id="end-date" className="form-label">
+              {t("end-date")}
+            </label>
             <input
               type="datetime-local"
               name="end"
@@ -74,7 +80,9 @@ export function BaseEventModal({
           </div>
 
           <div className="form-field">
-            <label className="form-label">{t("color")}</label>
+            <label id="color" className="form-label">
+              {t("color")}
+            </label>
             <input
               type="color"
               name="color"

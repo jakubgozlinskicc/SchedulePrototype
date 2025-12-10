@@ -1,10 +1,10 @@
 import type { Event } from "../../../../../db/scheduleDb";
 import type { EventModalProps } from "../eventModalTypes";
-import type { EventModalStrategy } from "./eventStrategies/eventModalStrategy";
+import type { IEventModalStrategy } from "../eventModalTypes";
 import { AddEventStrategy } from "./eventStrategies/addEventStrategy";
 import { EditEventStrategy } from "./eventStrategies/editEventStrategy";
 
-const strategies: EventModalStrategy[] = [
+const strategies: IEventModalStrategy[] = [
   new AddEventStrategy(),
   new EditEventStrategy(),
 ];
