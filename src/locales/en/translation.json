@@ -1,0 +1,17 @@
+{
+  "modal_edit_title": "Edit event",
+  "modal_add_title": "Add event",
+  "btn_delete": "Delete",
+  "btn_cancel": "Cancel",
+  "btn_save_changes": "Save Changes",
+  "btn-add": "Add event",
+  "title": "Title",
+  "description": "Description",
+  "start-date": "Start",
+  "end-date": "End",
+  "color": "Color",
+  "today": "Today",
+  "month": "Month",
+  "week": "Week",
+  "day": "Day"
+}

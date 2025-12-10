@@ -1,17 +1,16 @@
 import type { Formats } from "react-big-calendar";
-import { format } from "date-fns";
-import { pl } from "date-fns/locale";
+import { format, type Locale } from "date-fns";
 
-export const formats: Formats = {
+export const createFormats = (locale: Locale): Formats => ({
   dayRangeHeaderFormat: ({ start, end }) => {
-    const startDay = format(start, "dd", { locale: pl });
-    const endDay = format(end, "dd", { locale: pl });
-    const month = format(start, "LLLL", { locale: pl });
+    const startDay = format(start, "dd", { locale });
+    const endDay = format(end, "dd", { locale });
+    const month = format(start, "LLLL", { locale });
 
     return `${startDay}-${endDay} ${month}`;
   },
   monthHeaderFormat: (date) => {
-    return format(date, "LLLL yyyy", { locale: pl });
+    return format(date, "LLLL yyyy", { locale });
   },
-  dayHeaderFormat: (date) => format(date, "dd MMMM eeee", { locale: pl }),
-};
+  dayHeaderFormat: (date) => format(date, "dd MMMM eeee", { locale }),
+});

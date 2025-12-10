@@ -1,0 +1,17 @@
+{
+  "modal_edit_title": "Edytuj wydarzenie",
+  "modal_add_title": "Dodaj wydarzenie",
+  "btn_delete": "Usuń",
+  "btn_cancel": "Anuluj",
+  "btn_save_changes": "Zapisz zmiany",
+  "btn-add": "Dodaj wydarzenie",
+  "title": "Tytuł",
+  "description": "Opis",
+  "start-date": "Początek",
+  "end-date": "Koniec",
+  "color": "Kolor",
+  "today": "Dzisiaj",
+  "month": "Miesiąc",
+  "week": "Tydzień",
+  "day": "Dzień"
+}

@@ -1,8 +1,10 @@
 import { format, startOfWeek, addDays, isSameDay } from "date-fns";
-import { pl } from "date-fns/locale";
 import type { ToolbarProps } from "react-big-calendar";
 import type { Event } from "../../../../db/scheduleDb";
 import "./customToolbar.css";
+import { useTranslation } from "react-i18next";
+import { useTranslationContext } from "../../../../locales/useTranslationContext";
+import { locales } from "../../../../utils/calendarLocalizer";
 
 type CustomToolbarProps<
   TEvent extends object = Event,
@@ -20,6 +22,8 @@ type WeekStripProps = {
 const WeekStrip = ({ date, onNavigate, onView }: WeekStripProps) => {
   const start = startOfWeek(date, { weekStartsOn: 1 });
   const days = Array.from({ length: 7 }, (_, i) => addDays(start, i));
+  const { currentLanguage } = useTranslationContext();
+  const locale = locales[currentLanguage];
 
   return (
     <div className="week-strip">
@@ -34,7 +38,7 @@ const WeekStrip = ({ date, onNavigate, onView }: WeekStripProps) => {
             onNavigate("DATE", day);
           }}
         >
-          {format(day, "EEE dd", { locale: pl })}
+          {format(day, "EEE dd", { locale })}
         </button>
       ))}
     </div>
@@ -43,6 +47,7 @@ const WeekStrip = ({ date, onNavigate, onView }: WeekStripProps) => {
 
 export const CustomToolbar = (props: CustomToolbarProps) => {
   const { label, date, view, onAddEvent, onNavigate, onView } = props;
+  const { t } = useTranslation();
 
   return (
     <>
@@ -50,14 +55,14 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
         <div className="actions-buttons">
           {onAddEvent && (
             <button className="nav-button" onClick={onAddEvent}>
-              Dodaj wydarzenie
+              {t("btn-add")}
             </button>
           )}
           <button
             className="nav-button"
             onClick={() => props.onNavigate("TODAY")}
           >
-            Dzisiaj
+            {t("today")}
           </button>
         </div>
 
@@ -83,13 +88,13 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
 
         <div className="view-buttons">
           <button className="view-button" onClick={() => props.onView("month")}>
-            Miesiąc
+            {t("month")}
           </button>
           <button className="view-button" onClick={() => props.onView("week")}>
-            Tydzień
+            {t("week")}
           </button>
           <button className="view-button" onClick={() => props.onView("day")}>
-            Dzień
+            {t("day")}
           </button>
         </div>
       </div>
