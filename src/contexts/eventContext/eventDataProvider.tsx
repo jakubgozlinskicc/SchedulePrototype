@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
-import type { Event } from "../db/scheduleDb";
-import { getDefaultEvent } from "../utils/getDefaultEvent";
+import type { Event } from "../../db/scheduleDb";
+import { getDefaultEvent } from "../../utils/getDefaultEvent";
 import { EventContext } from "./eventContext";
 
 type EventProviderProps = {

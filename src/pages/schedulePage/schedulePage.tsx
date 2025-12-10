@@ -16,7 +16,7 @@ import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { CustomToolbar } from "./components/customToolbar/customToolbar";
 import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter";
 import { useAddEvent } from "./useEvents/useEventCalendar/useAddEvent";
-import type { Language } from "../../contexts/translationContext";
+import type { Language } from "../../contexts/translationContext/translationContext";
 import { useTranslationContext } from "../../locales/useTranslationContext";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
@@ -49,6 +49,7 @@ function SchedulePage() {
   const { isShaking, handleChange } = useEventForm();
 
   const { handleEventDropResize } = useEventDropResize(updateEventTime);
+
   const handleLanguageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {

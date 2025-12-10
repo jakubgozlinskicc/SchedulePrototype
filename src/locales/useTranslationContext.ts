@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { TranslationContext } from "../contexts/translationContext";
+import { TranslationContext } from "../contexts/translationContext/translationContext";
 
 export function useTranslationContext() {
   const context = useContext(TranslationContext);

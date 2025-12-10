@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import SchedulePage from "../pages/schedulePage/schedulePage";
-import { EventDataProvider } from "../contexts/eventDataProvider";
+import { EventDataProvider } from "../contexts/eventContext/eventDataProvider";
 
 vi.mock("../useEvents/useEventsData");
 vi.mock("../useEvents/useEventComponents/useEventModal");
