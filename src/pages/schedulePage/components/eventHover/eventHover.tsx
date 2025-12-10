@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import type { Event } from "../../../../db/scheduleDb";
 import "./eventHover.css";
 import { getTextColor } from "../../../../utils/colorUtils";
+import { useTranslation } from "react-i18next";
 
 interface EventHoverProps {
   event: Event;
@@ -30,6 +31,7 @@ export function EventHover({ event, position }: EventHoverProps) {
   }, [position]);
 
   const textColor = getTextColor(event.color);
+  const { t } = useTranslation();
 
   return (
     <div
@@ -51,17 +53,17 @@ export function EventHover({ event, position }: EventHoverProps) {
 
       <div className="hover">
         <div className="view-field">
-          <span className="view-label">Początek: </span>
+          <span className="view-label">{t("start-date")}: </span>
           <span className="view-value">{event.start.toLocaleString()}</span>
         </div>
 
         <div className="view-field">
-          <span className="view-label">Koniec: </span>
+          <span className="view-label">{t("end-date")}: </span>
           <span className="view-value">{event.end.toLocaleString()}</span>
         </div>
 
         <div className="view-field">
-          <span className="view-label">Opis: </span>
+          <span className="view-label">{t("description")}: </span>
           <span className="view-value">
             {event.description || "Brak opisu"}
           </span>

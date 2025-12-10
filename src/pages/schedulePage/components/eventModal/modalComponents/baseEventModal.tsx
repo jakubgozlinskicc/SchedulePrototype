@@ -1,6 +1,7 @@
 import type { Event } from "../../../../../db/scheduleDb";
 import { toDateTimeLocal } from "../../../../../utils/toDateTimeLocal";
 import type { FormEvent, ChangeEvent, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 export function BaseEventModal({
   title,
@@ -18,6 +19,7 @@ export function BaseEventModal({
   onSubmit: (e: FormEvent) => void;
   children: ReactNode;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="modal-backdrop">
       <div className={`modal ${isShaking ? "shake" : ""}`}>
@@ -25,7 +27,7 @@ export function BaseEventModal({
 
         <form onSubmit={onSubmit} className="modal-form">
           <div className="form-field">
-            <label className="form-label">Tytuł</label>
+            <label className="form-label">{t("title")}</label>
             <input
               id="title"
               type="text"
@@ -38,7 +40,7 @@ export function BaseEventModal({
           </div>
 
           <div className="form-field">
-            <label className="form-label">Opis</label>
+            <label className="form-label">{t("description")}</label>
             <textarea
               name="description"
               value={eventData.description}
@@ -48,7 +50,7 @@ export function BaseEventModal({
           </div>
 
           <div className="form-field">
-            <label className="form-label">Początek</label>
+            <label className="form-label">{t("start-date")}</label>
             <input
               type="datetime-local"
               name="start"
@@ -60,7 +62,7 @@ export function BaseEventModal({
           </div>
 
           <div className="form-field">
-            <label className="form-label">Koniec</label>
+            <label className="form-label">{t("end-date")}</label>
             <input
               type="datetime-local"
               name="end"
@@ -72,7 +74,7 @@ export function BaseEventModal({
           </div>
 
           <div className="form-field">
-            <label className="form-label">Kolor</label>
+            <label className="form-label">{t("color")}</label>
             <input
               type="color"
               name="color"

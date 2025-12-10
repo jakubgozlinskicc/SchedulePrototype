@@ -3,9 +3,21 @@
   margin-bottom: 16px;
   text-align: center;
 }
+.language-select {
+  background-color: #591efd;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
 
-.schedule-title {
-  margin: 0;
+  outline: none;
+
+  margin-left: 10px;
 }
 
 .btn {
@@ -42,6 +54,10 @@
 
 .btn-delete:hover {
   background-color: #bd1616;
+}
+
+.schedule-title {
+  margin: 0;
 }
 
 .calendar-section {
@@ -94,6 +110,10 @@
   border: none;
   position: relative;
   background: color-mix(in srgb, var(--event-color) 20%, transparent);
+}
+
+.rbc-time-view .rbc-event.colored-event .rbc-event-allday {
+  position: relative;
 }
 
 .rbc-time-view .rbc-event.colored-event::before {

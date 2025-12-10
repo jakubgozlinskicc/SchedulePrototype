@@ -6,9 +6,8 @@ import { useEventDropResize } from "./useEvents/useEventCalendar/useEventDropRes
 import { useEventHover } from "./useEvents/useEventComponents/useEventHover";
 import { useSelectEvent } from "./useEvents/useEventCalendar/useSelectEvent";
 import { useSelectSlot } from "./useEvents/useEventCalendar/useSelectSlot";
+import { useCalendarLocale } from "./useEvents/useEventCalendar/useCalendarLocale";
 import { EventModal } from "./components/eventModal/eventModal";
-import { localizer } from "../../utils/calendarLocalizer";
-import { formats } from "../../utils/dateFormats";
 import { EventHover } from "./components/eventHover/eventHover";
 import { useState } from "react";
 import type { Event } from "../../db/scheduleDb";
@@ -17,12 +16,18 @@ import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { CustomToolbar } from "./components/customToolbar/customToolbar";
 import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter";
 import { useAddEvent } from "./useEvents/useEventCalendar/useAddEvent";
+import type { Language } from "../../contexts/translationContext";
+import { useTranslationContext } from "../../locales/useTranslationContext";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
 function SchedulePage() {
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState<View>("month");
+
+  const { currentLanguage, changeLanguage } = useTranslationContext();
+
+  const { localizer, formats } = useCalendarLocale();
 
   const { hoveredEvent, hoverPosition, handleMouseEnterEvent, clearHover } =
     useEventHover();
@@ -44,13 +49,26 @@ function SchedulePage() {
   const { isShaking, handleChange } = useEventForm();
 
   const { handleEventDropResize } = useEventDropResize(updateEventTime);
+  const handleLanguageChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    changeLanguage(event.target.value as Language);
+  };
 
   return (
     <div className="schedule-page">
+      <select
+        className="language-select"
+        value={currentLanguage}
+        onChange={handleLanguageChange}
+        style={{ marginLeft: "10px", padding: "5px" }}
+      >
+        <option value="enUS">EN</option>
+        <option value="pl">PL</option>
+      </select>
       <header className="schedule-header">
         <h1 className="schedule-title">Schedule</h1>
       </header>
-
       <section className="calendar-section" onMouseLeave={clearHover}>
         <DnDCalendar
           localizer={localizer}
