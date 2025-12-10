@@ -13,5 +13,7 @@
   "today": "Today",
   "month": "Month",
   "week": "Week",
-  "day": "Day"
+  "day": "Day",
+  "hover-footer": "Click to edit or see full description",
+  "missing-description": "Missing description"
 }

@@ -65,13 +65,13 @@ export function EventHover({ event, position }: EventHoverProps) {
         <div className="view-field">
           <span className="view-label">{t("description")}: </span>
           <span className="view-value">
-            {event.description || "Brak opisu"}
+            {event.description || t("missing-description")}
           </span>
         </div>
       </div>
 
       <div className="hover-footer">
-        <small>Kliknij aby edytować lub zobaczyć pełny opis</small>
+        <small>{t("hover-footer")}</small>
       </div>
     </div>
   );
