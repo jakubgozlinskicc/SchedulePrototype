@@ -16,6 +16,7 @@ import { Calendar, Views, type View } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { CustomToolbar } from "./components/customToolbar/customToolbar";
 import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter";
+import { useAddEvent } from "./useEvents/useEventCalendar/useAddEvent";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
@@ -32,9 +33,13 @@ function SchedulePage() {
     openModal,
     clearHover
   );
+
   const { events, deleteCurrentEvent, handleSubmit, updateEventTime } =
     useEventsData(eventData, closeModal);
+
   const { handleSelectSlot } = useSelectSlot(openModal);
+
+  const { handleAddEvent } = useAddEvent(openModal);
 
   const { isShaking, handleChange } = useEventForm();
 
@@ -46,7 +51,7 @@ function SchedulePage() {
         <h1 className="schedule-title">Schedule</h1>
       </header>
 
-      <section className="calendar-section">
+      <section className="calendar-section" onMouseLeave={clearHover}>
         <DnDCalendar
           localizer={localizer}
           formats={formats}
@@ -56,7 +61,10 @@ function SchedulePage() {
           onView={setView}
           components={{
             toolbar: (toolbarProps) => (
-              <CustomToolbar {...toolbarProps} onAddEvent={() => openModal()} />
+              <CustomToolbar
+                {...toolbarProps}
+                onAddEvent={() => handleAddEvent()}
+              />
             ),
             event: ({ event }) => (
               <div
