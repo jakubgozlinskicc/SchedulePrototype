@@ -6,7 +6,6 @@ import type { Event } from "../../../../../db/scheduleDb";
 
 describe("useSelectEvent", () => {
   const mockOpenModal = vi.fn();
-  const mockClearHover = vi.fn();
   const mockSetEventData = vi.fn();
 
   const mockEventData = {
@@ -27,9 +26,7 @@ describe("useSelectEvent", () => {
   });
 
   it("should handle event selection", () => {
-    const { result } = renderHook(() =>
-      useSelectEvent(mockOpenModal, mockClearHover)
-    );
+    const { result } = renderHook(() => useSelectEvent(mockOpenModal));
 
     const selectedEvent: Event = {
       id: 1,
@@ -44,8 +41,8 @@ describe("useSelectEvent", () => {
       result.current.handleSelectEvent(selectedEvent);
     });
 
-    expect(mockClearHover).toBeCalled();
     expect(mockSetEventData).toBeCalled();
     expect(mockOpenModal).toBeCalled();
+  });
   });
 });

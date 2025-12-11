@@ -7,11 +7,10 @@ export function useSelectEvent(openModal: () => void, clearHover: () => void) {
 
   const handleSelectEvent = useCallback(
     (event: Event) => {
-      if (clearHover) clearHover();
       setEventData(event);
       openModal();
     },
-    [openModal, clearHover, setEventData]
+    [openModal, setEventData]
   );
   return { handleSelectEvent };
 }

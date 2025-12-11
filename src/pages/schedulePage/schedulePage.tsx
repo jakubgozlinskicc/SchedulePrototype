@@ -1,14 +1,14 @@
+// schedulePage.tsx
 import "./schedulePage.css";
 import { useEventsData } from "./useEvents/useEventsData";
 import { useEventModal } from "./useEvents/useEventComponents/useEventModal";
 import { useEventForm } from "./useEvents/useEventComponents/useEventForm";
 import { useEventDropResize } from "./useEvents/useEventCalendar/useEventDropResize";
-import { useEventHover } from "./useEvents/useEventComponents/useEventHover";
 import { useSelectEvent } from "./useEvents/useEventCalendar/useSelectEvent";
 import { useSelectSlot } from "./useEvents/useEventCalendar/useSelectSlot";
 import { useCalendarLocale } from "./useEvents/useEventCalendar/useCalendarLocale";
 import { EventModal } from "./components/eventModal/eventModal";
-import { EventHover } from "./components/eventHover/eventHover";
+import { CalendarEvent } from "./components/calendarEvent/calendarEvent";
 import { useState } from "react";
 import type { Event } from "../../db/scheduleDb";
 import { Calendar, Views, type View } from "react-big-calendar";
@@ -32,9 +32,6 @@ function SchedulePage() {
   const { currentLanguage, changeLanguage } = useTranslationContext();
 
   const { localizer, formats } = useCalendarLocale();
-
-  const { hoveredEvent, hoverPosition, handleMouseEnterEvent, clearHover } =
-    useEventHover();
 
   const { isModalOpen, openModal, closeModal } = useEventModal();
 
@@ -71,7 +68,7 @@ function SchedulePage() {
       <header className="schedule-header">
         <h1 className="schedule-title">Schedule</h1>
       </header>
-      <section className="calendar-section" onMouseLeave={clearHover}>
+      <section className="calendar-section">
         <DnDCalendar
           localizer={localizer}
           formats={formats}
@@ -86,17 +83,7 @@ function SchedulePage() {
                 onAddEvent={() => handleAddEvent()}
               />
             ),
-            event: ({ event }) => (
-              <div
-                onMouseEnter={(mouseEvent) =>
-                  handleMouseEnterEvent(event, mouseEvent)
-                }
-                onMouseLeave={clearHover}
-                style={{ height: "100%", cursor: "pointer" }}
-              >
-                {event.title}
-              </div>
-            ),
+            event: ({ event }) => <CalendarEvent event={event} />,
           }}
           events={events}
           startAccessor="start"
@@ -114,9 +101,6 @@ function SchedulePage() {
         />
       </section>
 
-      {hoveredEvent && (
-        <EventHover event={hoveredEvent} position={hoverPosition} />
-      )}
       {isModalOpen && (
         <EventModal
           eventData={eventData}
