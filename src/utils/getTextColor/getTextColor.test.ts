@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getTextColor } from "../getTextColor";
+import { getTextColor } from "./getTextColor";
 
 describe("getTextColor", () => {
   it("It should return black color for bright background", () => {

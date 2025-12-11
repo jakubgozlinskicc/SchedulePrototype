@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { createFormats } from "../dateFormats";
+import { createFormats } from "./dateFormats";
 import { pl, enUS } from "date-fns/locale";
 import type { Culture } from "react-big-calendar";
 

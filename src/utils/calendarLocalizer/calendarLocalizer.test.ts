@@ -1,4 +1,4 @@
-import { createLocalizer } from "../calendarLocalizer";
+import { createLocalizer } from "./calendarLocalizer";
 import { pl, enUS } from "date-fns/locale";
 import { describe, it, expect } from "vitest";
 

@@ -16,7 +16,7 @@ import type { Event } from "../../db/scheduleDb";
 import { Calendar, Views, type View } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { CustomToolbar } from "./components/customToolbar/customToolbar";
-import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter";
+import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter/calendarEventPropGetter";
 import { useAddEvent } from "./useEvents/useEventData/useAddEvent/useAddEvent";
 import type { Language } from "../../contexts/translationContext/translationContext";
 import { useTranslationContext } from "../../locales/useTranslationContext";

@@ -3,8 +3,8 @@ import { useTranslationContext } from "../../../../../locales/useTranslationCont
 import {
   locales,
   createLocalizer,
-} from "../../../../../utils/calendarLocalizer";
-import { createFormats } from "../../../../../utils/dateFormats";
+} from "../../../../../utils/calendarLocalizer/calendarLocalizer";
+import { createFormats } from "../../../../../utils/dateFormats/dateFormats";
 
 export const useCalendarLocale = () => {
   const { currentLanguage } = useTranslationContext();

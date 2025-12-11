@@ -4,7 +4,7 @@ import type { Event } from "../../../../db/scheduleDb";
 import "./customToolbar.css";
 import { useTranslation } from "react-i18next";
 import { useTranslationContext } from "../../../../locales/useTranslationContext";
-import { locales } from "../../../../utils/calendarLocalizer";
+import { locales } from "../../../../utils/calendarLocalizer/calendarLocalizer";
 
 type CustomToolbarProps<
   TEvent extends object = Event,

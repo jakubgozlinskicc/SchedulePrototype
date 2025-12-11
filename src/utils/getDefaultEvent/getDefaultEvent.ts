@@ -1,4 +1,4 @@
-import type { Event } from "../db/scheduleDb";
+import type { Event } from "../../db/scheduleDb";
 
 export const getDefaultEvent = (): Event => ({
   id: undefined,

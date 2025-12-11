@@ -1,4 +1,4 @@
-import { getDefaultEvent } from "../../../../../utils/getDefaultEvent";
+import { getDefaultEvent } from "../../../../../utils/getDefaultEvent/getDefaultEvent";
 import { useCallback } from "react";
 import { useEventDataContext } from "../../useContext/useEventDataContext";
 

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { calendarEventPropGetter } from "../calendarEventPropGetter";
+import { calendarEventPropGetter } from "./calendarEventPropGetter";
 import type { Event } from "../../db/scheduleDb";
 
 vi.mock("./colorUtils", () => ({
