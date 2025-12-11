@@ -41,13 +41,13 @@ describe("useEventForm", () => {
     vi.useRealTimers();
   });
 
-  it("should initialize with isShaking false", () => {
+  it("It should initialize with isShaking false", () => {
     const { result } = renderHook(() => useEventForm());
 
     expect(result.current.isShaking).toBe(false);
   });
 
-  it("should update text fields", () => {
+  it("It should update text fields", () => {
     const { result } = renderHook(() => useEventForm());
 
     const mockEvent = createMockEvent("title", "New Title");
@@ -59,7 +59,7 @@ describe("useEventForm", () => {
     expect(mockSetEventData).toHaveBeenCalled();
   });
 
-  it("should update start date", () => {
+  it("It should update start date", () => {
     const { result } = renderHook(() => useEventForm());
 
     const mockEvent = createMockEvent("start", "2024-03-16T10:00");
@@ -71,7 +71,7 @@ describe("useEventForm", () => {
     expect(mockSetEventData).toHaveBeenCalled();
   });
 
-  it("should update end date when start is changed to after end", () => {
+  it("It should update end date when start is changed to after end", () => {
     const { result } = renderHook(() => useEventForm());
 
     const mockEvent = createMockEvent("start", "2024-03-15T12:00");
@@ -83,7 +83,7 @@ describe("useEventForm", () => {
     expect(mockSetEventData).toHaveBeenCalled();
   });
 
-  it("should handle color change", () => {
+  it("It should handle color change", () => {
     const { result } = renderHook(() => useEventForm());
 
     const mockEvent = createMockEvent("color", "#FF0000");
@@ -95,7 +95,7 @@ describe("useEventForm", () => {
     expect(mockSetEventData).toHaveBeenCalled();
   });
 
-  it("should handle description change", () => {
+  it("It should handle description change", () => {
     const { result } = renderHook(() => useEventForm());
 
     const mockEvent = createMockEvent("description", "New description");

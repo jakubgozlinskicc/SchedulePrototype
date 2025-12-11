@@ -38,7 +38,7 @@ describe("useEventsData", () => {
     };
   });
 
-  it("should load events on mount", async () => {
+  it("It should load events on mount", async () => {
     const eventsFromRepo: Event[] = [
       {
         id: 2,
@@ -61,7 +61,7 @@ describe("useEventsData", () => {
     });
   });
 
-  it("should delete current event when id exists", async () => {
+  it("It should delete current event when id exists", async () => {
     const { result } = renderHook(() =>
       useEventsData(mockCloseModal, mockRepository)
     );
@@ -75,7 +75,7 @@ describe("useEventsData", () => {
     expect(mockCloseModal).toHaveBeenCalledTimes(1);
   });
 
-  it("should not delete event when id is missing", async () => {
+  it("It should not delete event when id is missing", async () => {
     mockEventData = {
       title: "No id event",
       description: "No id",
@@ -96,7 +96,7 @@ describe("useEventsData", () => {
     expect(mockCloseModal).not.toHaveBeenCalled();
   });
 
-  it("should update event time", async () => {
+  it("It should update event time", async () => {
     const { result } = renderHook(() =>
       useEventsData(mockCloseModal, mockRepository)
     );
@@ -115,7 +115,7 @@ describe("useEventsData", () => {
     expect(mockRepository.getEvents).toHaveBeenCalledTimes(2);
   });
 
-  it("should submit form and edit event when id exists", async () => {
+  it("It should submit form and edit event when id exists", async () => {
     const { result } = renderHook(() =>
       useEventsData(mockCloseModal, mockRepository)
     );
@@ -138,7 +138,7 @@ describe("useEventsData", () => {
     expect(mockCloseModal).toHaveBeenCalledTimes(1);
   });
 
-  it("should submit form and add event when id is missing", async () => {
+  it("It should submit form and add event when id is missing", async () => {
     mockEventData = {
       title: "New event",
       description: "New",

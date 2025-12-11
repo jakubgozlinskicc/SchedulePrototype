@@ -26,7 +26,7 @@ describe("useSelectEvent", () => {
     });
   });
 
-  it("should handle event selection", () => {
+  it("It should handle event selection", () => {
     const { result } = renderHook(() =>
       useSelectEvent(mockOpenModal, mockClearHover)
     );

@@ -4,7 +4,7 @@ import { describe, it, expect } from "vitest";
 
 describe("calendarLocalizer", () => {
   describe("createLocalizer", () => {
-    it("should create localizer for pl locale", () => {
+    it("It should create localizer for pl locale", () => {
       const localizer = createLocalizer(pl);
 
       expect(localizer).toBeDefined();
@@ -12,13 +12,13 @@ describe("calendarLocalizer", () => {
       expect(localizer.startOfWeek).toBeDefined();
     });
 
-    it("should create localizer for enUS locale", () => {
+    it("It should create localizer for enUS locale", () => {
       const localizer = createLocalizer(enUS);
 
       expect(localizer).toBeDefined();
     });
 
-    it("should format date with pl locale", () => {
+    it("It should format date with pl locale", () => {
       const localizer = createLocalizer(pl);
       const date = new Date(2025, 11, 15);
 
@@ -27,7 +27,7 @@ describe("calendarLocalizer", () => {
       expect(formatted).toBe("15 grudnia 2025");
     });
 
-    it("should format date with en locale", () => {
+    it("It should format date with en locale", () => {
       const localizer = createLocalizer(enUS);
       const date = new Date(2025, 11, 15);
 

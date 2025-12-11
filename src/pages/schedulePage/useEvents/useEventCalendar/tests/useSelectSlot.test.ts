@@ -25,7 +25,7 @@ describe("useSelectSlot", () => {
     });
   });
 
-  it("should handle slot selection ", () => {
+  it("It should handle slot selection ", () => {
     const { result } = renderHook(() => useSelectSlot(mockOpenModal));
 
     const slotInfo: SlotInfo = {
@@ -51,7 +51,7 @@ describe("useSelectSlot", () => {
     expect(mockOpenModal).toHaveBeenCalled();
   });
 
-  it("should return current eventData", () => {
+  it("It should return current eventData", () => {
     const { result } = renderHook(() => useSelectSlot(mockOpenModal));
 
     expect(result.current.eventData).toBe(mockEventData);

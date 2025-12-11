@@ -11,7 +11,7 @@ describe("getDefaultEvent", () => {
     vi.useRealTimers();
   });
 
-  it("should return object with default values", () => {
+  it("It should return object with default values", () => {
     const event = getDefaultEvent();
 
     expect(event).toEqual({
@@ -24,7 +24,7 @@ describe("getDefaultEvent", () => {
     });
   });
 
-  it("should return new object when called", () => {
+  it("It should return new object when called", () => {
     const event1 = getDefaultEvent();
     const event2 = getDefaultEvent();
 

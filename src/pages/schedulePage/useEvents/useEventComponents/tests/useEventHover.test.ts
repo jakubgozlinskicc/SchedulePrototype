@@ -24,13 +24,13 @@ const createMockMouseEvent = (
 };
 
 describe("useEventHover", () => {
-  it("should initialize with null hovered event", () => {
+  it("It should initialize with null hovered event", () => {
     const { result } = renderHook(() => useEventHover());
 
     expect(result.current.hoveredEvent).toBeNull();
   });
 
-  it("should set hovered event and position on mouse enter", () => {
+  it("It should set hovered event and position on mouse enter", () => {
     const { result } = renderHook(() => useEventHover());
 
     const mockMouseEvent = createMockMouseEvent(100, 200);
@@ -43,7 +43,7 @@ describe("useEventHover", () => {
     expect(result.current.hoverPosition).toEqual({ x: 100, y: 200 });
   });
 
-  it("should clear hovered event", () => {
+  it("It should clear hovered event", () => {
     const { result } = renderHook(() => useEventHover());
 
     const mockMouseEvent = createMockMouseEvent(100, 200);
@@ -61,7 +61,7 @@ describe("useEventHover", () => {
     expect(result.current.hoveredEvent).toBeNull();
   });
 
-  it("should update position on multiple mouse enters", () => {
+  it("It should update position on multiple mouse enters", () => {
     const { result } = renderHook(() => useEventHover());
 
     act(() => {

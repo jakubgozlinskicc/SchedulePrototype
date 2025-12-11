@@ -3,7 +3,7 @@ import { renderHook, act } from "@testing-library/react";
 import { useEventModal } from "../useEventModal";
 
 describe("useEventModal", () => {
-  it("should open modal when openModal is called", () => {
+  it("It should open modal when openModal is called", () => {
     const { result } = renderHook(() => useEventModal());
 
     act(() => {
@@ -13,7 +13,7 @@ describe("useEventModal", () => {
     expect(result.current.isModalOpen).toBe(true);
   });
 
-  it("should close modal when closeModal is called", () => {
+  it("It should close modal when closeModal is called", () => {
     const { result } = renderHook(() => useEventModal());
 
     act(() => {
