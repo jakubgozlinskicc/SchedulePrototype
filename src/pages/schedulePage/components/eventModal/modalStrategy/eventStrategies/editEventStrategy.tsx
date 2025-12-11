@@ -5,7 +5,7 @@ import type { IEventModalStrategy } from "../../eventModalTypes";
 import { EditEventModal } from "../../modalComponents/editEventModal";
 
 export class EditEventStrategy implements IEventModalStrategy {
-  useSupport(eventData: Event): boolean {
+  canSupport(eventData: Event): boolean {
     return !!eventData.id;
   }
 

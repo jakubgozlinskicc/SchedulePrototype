@@ -11,6 +11,6 @@ export interface EventModalProps {
 }
 
 export interface IEventModalStrategy {
-  useSupport: (eventData: Event) => boolean;
+  canSupport: (eventData: Event) => boolean;
   render: (commonProps: EventModalProps) => ReactNode;
 }

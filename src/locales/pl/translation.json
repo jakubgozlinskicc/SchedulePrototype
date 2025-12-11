@@ -13,5 +13,7 @@
   "today": "Dzisiaj",
   "month": "Miesiąc",
   "week": "Tydzień",
-  "day": "Dzień"
+  "day": "Dzień",
+  "hover-footer": "Kliknij aby edytować lub zobaczyć pełny opis",
+  "missing-description": "Brak opisu"
 }

@@ -1,6 +1,6 @@
 import type { Event } from "../db/scheduleDb";
 import type { CSSProperties } from "react";
-import { getTextColor } from "./colorUtils";
+import { getTextColor } from "./getTextColor";
 
 export const calendarEventPropGetter = (event: Event) => {
   const bg = event.color;

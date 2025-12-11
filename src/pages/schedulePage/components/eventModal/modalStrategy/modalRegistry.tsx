@@ -1,16 +1,16 @@
 import type { Event } from "../../../../../db/scheduleDb";
 import type { EventModalProps } from "../eventModalTypes";
-import type { EventModalStrategy } from "./eventStrategies/eventModalStrategy";
+import type { IEventModalStrategy } from "../eventModalTypes";
 import { AddEventStrategy } from "./eventStrategies/addEventStrategy";
 import { EditEventStrategy } from "./eventStrategies/editEventStrategy";
 
-const strategies: EventModalStrategy[] = [
+const strategies: IEventModalStrategy[] = [
   new AddEventStrategy(),
   new EditEventStrategy(),
 ];
 export const EventModalStrategyRegistry = {
   provideRenderer(eventData: Event) {
-    const strategy = strategies.find((s) => s.useSupport(eventData));
+    const strategy = strategies.find((s) => s.canSupport(eventData));
     if (!strategy) {
       throw new Error(
         `No EventModalStrategy found for event with id=${
