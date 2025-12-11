@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import type { Event } from "../../../../db/scheduleDb";
 import "./eventHover.css";
-import { getTextColor } from "../../../../utils/colorUtils";
+import { getTextColor } from "../../../../utils/getTextColor";
 import { useTranslation } from "react-i18next";
 
 interface EventHoverProps {

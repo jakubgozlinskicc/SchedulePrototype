@@ -3,11 +3,11 @@ import { EventHover } from "./eventHover";
 import type { Event } from "../../../../db/scheduleDb";
 import { vi, describe, beforeEach, it, expect } from "vitest";
 
-vi.mock("../../../../utils/colorUtils", () => ({
+vi.mock("../../../../utils/getTextColor", () => ({
   getTextColor: vi.fn(() => "white"),
 }));
 
-import { getTextColor } from "../../../../utils/colorUtils";
+import { getTextColor } from "../../../../utils/getTextColor";
 
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
