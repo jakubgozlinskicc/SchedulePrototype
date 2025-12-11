@@ -18,12 +18,16 @@ import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter";
 import { useAddEvent } from "./useEvents/useEventCalendar/useAddEvent";
 import type { Language } from "../../contexts/translationContext/translationContext";
 import { useTranslationContext } from "../../locales/useTranslationContext";
+import { useEventDataContext } from "./useEvents/useContext/useEventDataContext";
+import { eventRepository } from "../../db/eventRepository";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
 function SchedulePage() {
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState<View>("month");
+
+  const { eventData } = useEventDataContext();
 
   const { currentLanguage, changeLanguage } = useTranslationContext();
 
@@ -34,13 +38,10 @@ function SchedulePage() {
 
   const { isModalOpen, openModal, closeModal } = useEventModal();
 
-  const { eventData, handleSelectEvent } = useSelectEvent(
-    openModal,
-    clearHover
-  );
+  const { handleSelectEvent } = useSelectEvent(openModal, clearHover);
 
   const { events, deleteCurrentEvent, handleSubmit, updateEventTime } =
-    useEventsData(eventData, closeModal);
+    useEventsData(closeModal, eventRepository);
 
   const { handleSelectSlot } = useSelectSlot(openModal);
 

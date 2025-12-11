@@ -1,16 +1,16 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { dexieEventRepository } from "./eventRepository";
+import { eventRepository } from "./eventRepository";
 import { type Event } from "./scheduleDb";
 
 const { addEvent, getEvents, editEvent, deleteEvent, clearEvents } =
-  dexieEventRepository;
+  eventRepository;
 
 describe("Event Repository", () => {
   beforeEach(async () => {
     await clearEvents();
   });
 
-  it("Should add and retrieve an Event", async () => {
+  it("should add and retrieve an Event", async () => {
     const event: Event = {
       id: 1,
       title: "Spotkanie testowe",
@@ -99,7 +99,7 @@ describe("Event Repository", () => {
     expect(events[0].title).toBe("zostaw");
   });
 
-  it("Clears all events", async () => {
+  it("should clear all events", async () => {
     const event1: Event = {
       title: "wywal",
       description: "Opis spotkania",

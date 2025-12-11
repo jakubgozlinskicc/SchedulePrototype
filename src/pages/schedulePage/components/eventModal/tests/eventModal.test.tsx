@@ -46,7 +46,7 @@ describe("EventModal", () => {
     vi.clearAllMocks();
   });
 
-  it("calls EventModalStrategyRegistry.provideRenderer with eventData", () => {
+  it("should call EventModalStrategyRegistry.provideRenderer with eventData", () => {
     const mockRenderer = {
       render: vi.fn().mockReturnValue(<div>Mock Modal</div>),
     };
@@ -61,7 +61,7 @@ describe("EventModal", () => {
     );
   });
 
-  it("renders the result of strategy render method", () => {
+  it("should render the result of strategy render method", () => {
     const mockRenderer = {
       render: vi.fn().mockReturnValue(<div>Test Content</div>),
     };
@@ -74,7 +74,7 @@ describe("EventModal", () => {
     expect(screen.getByText("Test Content")).toBeInTheDocument();
   });
 
-  it("passes all commonProps to renderer.render", () => {
+  it("should pass all commonProps to renderer.render", () => {
     const mockRenderer = {
       render: vi.fn().mockReturnValue(<div>Mock Modal</div>),
     };
@@ -92,7 +92,7 @@ describe("EventModal", () => {
     expect(mockRenderer.render).toHaveBeenCalledWith(props);
   });
 
-  it("memoizes renderer based on eventData", () => {
+  it("should memoize renderer based on eventData", () => {
     const mockRenderer = {
       render: vi.fn().mockReturnValue(<div>Mock Modal</div>),
     };
@@ -111,7 +111,7 @@ describe("EventModal", () => {
     expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledTimes(1);
   });
 
-  it("re-fetches renderer when eventData changes", () => {
+  it("should re-fetch renderer when eventData changes", () => {
     const mockRenderer = {
       render: vi.fn().mockReturnValue(<div>Mock Modal</div>),
     };
@@ -130,7 +130,7 @@ describe("EventModal", () => {
     expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledTimes(2);
   });
 
-  it("handles different event types correctly", () => {
+  it("should handle different event types correctly", () => {
     const mockRendererAdd = {
       render: vi.fn().mockReturnValue(<div>Add Modal</div>),
     };

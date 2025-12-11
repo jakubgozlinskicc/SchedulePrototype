@@ -48,12 +48,4 @@ describe("useSelectEvent", () => {
     expect(mockSetEventData).toBeCalled();
     expect(mockOpenModal).toBeCalled();
   });
-
-  it("should return current event data", () => {
-    const { result } = renderHook(() =>
-      useSelectEvent(mockOpenModal, mockClearHover)
-    );
-
-    expect(result.current.eventData).toBe(mockEventData);
-  });
 });

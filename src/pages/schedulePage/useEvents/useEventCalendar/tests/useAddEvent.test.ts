@@ -32,10 +32,4 @@ describe("useAddEvent", () => {
     });
     expect(mockOpenModal).toHaveBeenCalled();
   });
-
-  it("should return current eventData", () => {
-    const { result } = renderHook(() => useAddEvent(mockOpenModal));
-
-    expect(result.current.eventData).toBe(mockEventData);
-  });
 });

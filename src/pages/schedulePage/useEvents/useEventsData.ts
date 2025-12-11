@@ -1,13 +1,14 @@
 import { useState, useEffect, useCallback, type FormEvent } from "react";
 import type { Event } from "../../../db/scheduleDb";
 import type { IEventRepository } from "./IEventRepository";
-import { dexieEventRepository } from "../../../db/eventRepository";
+import { useEventDataContext } from "./useContext/useEventDataContext";
 
 export function useEventsData(
-  eventData: Event,
   closeModal: () => void,
-  repository: IEventRepository = dexieEventRepository
+  repository: IEventRepository
 ) {
+  const { eventData } = useEventDataContext();
+
   const [events, setEvents] = useState<Event[]>([]);
 
   const reloadEvents = useCallback(async () => {
@@ -27,7 +28,7 @@ export function useEventsData(
         console.error("Error during loading events:", error);
       }
     };
-    load();
+    void load();
   }, [reloadEvents]);
 
   const deleteCurrentEvent = useCallback(async () => {

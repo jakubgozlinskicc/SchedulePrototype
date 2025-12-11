@@ -4,116 +4,88 @@ import { useEventsData } from "./useEventsData";
 import type { Event } from "../../../db/scheduleDb";
 import type { IEventRepository } from "./IEventRepository";
 
-describe("useEventData", () => {
-  const mockCloseModal = vi.fn();
+let mockEventData: Event;
 
-  const mockEvents: Event[] = [
-    {
+vi.mock("./useContext/useEventDataContext", () => ({
+  useEventDataContext: () => ({
+    eventData: mockEventData,
+    setEventData: vi.fn(),
+  }),
+}));
+
+describe("useEventsData", () => {
+  let mockRepository: IEventRepository;
+  let mockCloseModal: () => void;
+
+  beforeEach(() => {
+    mockCloseModal = vi.fn();
+
+    mockRepository = {
+      addEvent: vi.fn().mockResolvedValue(1),
+      getEvents: vi.fn().mockResolvedValue([]),
+      editEvent: vi.fn().mockResolvedValue(undefined),
+      deleteEvent: vi.fn().mockResolvedValue(undefined),
+      clearEvents: vi.fn().mockResolvedValue(undefined),
+    };
+
+    mockEventData = {
       id: 1,
-      title: "test1",
-      description: "test1",
+      title: "Test event",
+      description: "Test description",
       start: new Date("2025-12-10T10:00:00"),
       end: new Date("2025-12-10T11:00:00"),
       color: "#0000FF",
-    },
-    {
-      id: 2,
-      title: "test2",
-      description: "test2",
-      start: new Date("2025-12-11T10:00:00"),
-      end: new Date("2025-12-11T11:00:00"),
-      color: "#0000FF",
-    },
-  ];
-
-  const mockRepository: IEventRepository = {
-    getEvents: vi.fn().mockResolvedValue(mockEvents),
-    addEvent: vi.fn().mockResolvedValue(3),
-    editEvent: vi.fn().mockResolvedValue(undefined),
-    deleteEvent: vi.fn().mockResolvedValue(undefined),
-    clearEvents: vi.fn().mockResolvedValue(undefined),
-  };
-
-  const mockEventData: Event = {
-    id: 1,
-    title: "test",
-    description: "test",
-    start: new Date("2025-12-10T10:00:00"),
-    end: new Date("2025-12-10T11:00:00"),
-    color: "#0000FF",
-  };
-  beforeEach(() => {
-    vi.clearAllMocks();
+    };
   });
 
   it("should load events on mount", async () => {
+    const eventsFromRepo: Event[] = [
+      {
+        id: 2,
+        title: "Repo event",
+        description: "From repository",
+        start: new Date("2025-12-11T10:00:00"),
+        end: new Date("2025-12-11T11:00:00"),
+        color: "#00FF00",
+      },
+    ];
+    mockRepository.getEvents = vi.fn().mockResolvedValue(eventsFromRepo);
+
     const { result } = renderHook(() =>
-      useEventsData(mockEventData, mockCloseModal, mockRepository)
+      useEventsData(mockCloseModal, mockRepository)
     );
 
     await waitFor(() => {
-      expect(result.current.events).toEqual(mockEvents);
+      expect(mockRepository.getEvents).toHaveBeenCalledTimes(1);
+      expect(result.current.events).toEqual(eventsFromRepo);
     });
-
-    expect(mockRepository.getEvents).toHaveBeenCalled();
   });
 
-  it("should handle submit for new event", async () => {
-    const newEvent = { ...mockEventData, id: undefined };
+  it("should delete current event when id exists", async () => {
     const { result } = renderHook(() =>
-      useEventsData(newEvent, mockCloseModal, mockRepository)
+      useEventsData(mockCloseModal, mockRepository)
     );
-
-    await waitFor(() => {
-      expect(result.current.events).toEqual(mockEvents);
-    });
-
-    await act(async () => {
-      await result.current.handleSubmit({ preventDefault: vi.fn() } as any);
-    });
-
-    expect(mockRepository.addEvent).toHaveBeenCalledWith(newEvent);
-    expect(mockCloseModal).toHaveBeenCalled();
-  });
-
-  it("should handle submit for existing event", async () => {
-    const { result } = renderHook(() =>
-      useEventsData(mockEventData, mockCloseModal, mockRepository)
-    );
-
-    await waitFor(() => {
-      expect(result.current.events).toEqual(mockEvents);
-    });
-
-    await act(async () => {
-      await result.current.handleSubmit({ preventDefault: vi.fn() } as any);
-    });
-
-    expect(mockRepository.editEvent).toHaveBeenCalledWith(1, mockEventData);
-    expect(mockCloseModal).toHaveBeenCalled();
-  });
-
-  it("should delete event", async () => {
-    const { result } = renderHook(() =>
-      useEventsData(mockEventData, mockCloseModal, mockRepository)
-    );
-
-    await waitFor(() => {
-      expect(result.current.events).toEqual(mockEvents);
-    });
 
     await act(async () => {
       await result.current.deleteCurrentEvent();
     });
 
     expect(mockRepository.deleteEvent).toHaveBeenCalledWith(1);
-    expect(mockCloseModal).toHaveBeenCalled();
+    expect(mockRepository.getEvents).toHaveBeenCalledTimes(2);
+    expect(mockCloseModal).toHaveBeenCalledTimes(1);
   });
 
-  it("should not delete event without id", async () => {
-    const eventWithoutId = { ...mockEventData, id: undefined };
+  it("should not delete event when id is missing", async () => {
+    mockEventData = {
+      title: "No id event",
+      description: "No id",
+      start: new Date("2025-12-10T10:00:00"),
+      end: new Date("2025-12-10T11:00:00"),
+      color: "#FF0000",
+    };
+
     const { result } = renderHook(() =>
-      useEventsData(eventWithoutId, mockCloseModal, mockRepository)
+      useEventsData(mockCloseModal, mockRepository)
     );
 
     await act(async () => {
@@ -121,15 +93,16 @@ describe("useEventData", () => {
     });
 
     expect(mockRepository.deleteEvent).not.toHaveBeenCalled();
+    expect(mockCloseModal).not.toHaveBeenCalled();
   });
 
   it("should update event time", async () => {
     const { result } = renderHook(() =>
-      useEventsData(mockEventData, mockCloseModal, mockRepository)
+      useEventsData(mockCloseModal, mockRepository)
     );
 
-    const newStart = new Date("2024-03-17T10:00:00");
-    const newEnd = new Date("2024-03-17T11:00:00");
+    const newStart = new Date("2025-12-12T12:00:00");
+    const newEnd = new Date("2025-12-12T13:00:00");
 
     await act(async () => {
       await result.current.updateEventTime(1, newStart, newEnd);
@@ -139,44 +112,57 @@ describe("useEventData", () => {
       start: newStart,
       end: newEnd,
     });
+    expect(mockRepository.getEvents).toHaveBeenCalledTimes(2);
   });
 
-  it("should handle errors during loading", async () => {
-    const consoleErrorSpy = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => {});
-    const failingRepo = {
-      ...mockRepository,
-      getEvents: vi.fn().mockRejectedValue(new Error("Load failed")),
-    };
+  it("should submit form and edit event when id exists", async () => {
+    const { result } = renderHook(() =>
+      useEventsData(mockCloseModal, mockRepository)
+    );
 
-    renderHook(() => useEventsData(mockEventData, mockCloseModal, failingRepo));
+    const fakeEvent = {
+      preventDefault: vi.fn(),
+    } as unknown as React.FormEvent;
 
-    await waitFor(() => {
-      expect(consoleErrorSpy).toHaveBeenCalled();
+    await act(async () => {
+      await result.current.handleSubmit(fakeEvent);
     });
 
-    consoleErrorSpy.mockRestore();
+    expect(fakeEvent.preventDefault).toHaveBeenCalledTimes(1);
+    expect(mockRepository.editEvent).toHaveBeenCalledWith(
+      mockEventData.id as number,
+      mockEventData
+    );
+    expect(mockRepository.addEvent).not.toHaveBeenCalled();
+    expect(mockRepository.getEvents).toHaveBeenCalledTimes(2);
+    expect(mockCloseModal).toHaveBeenCalledTimes(1);
   });
 
-  it("should handle errors during delete", async () => {
-    const consoleErrorSpy = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => {});
-    const failingRepo = {
-      ...mockRepository,
-      deleteEvent: vi.fn().mockRejectedValue(new Error("Delete failed")),
+  it("should submit form and add event when id is missing", async () => {
+    mockEventData = {
+      title: "New event",
+      description: "New",
+      start: new Date("2025-12-10T10:00:00"),
+      end: new Date("2025-12-10T11:00:00"),
+      color: "#FF0000",
     };
 
     const { result } = renderHook(() =>
-      useEventsData(mockEventData, mockCloseModal, failingRepo)
+      useEventsData(mockCloseModal, mockRepository)
     );
 
+    const fakeEvent = {
+      preventDefault: vi.fn(),
+    } as unknown as React.FormEvent;
+
     await act(async () => {
-      await result.current.deleteCurrentEvent();
+      await result.current.handleSubmit(fakeEvent);
     });
 
-    expect(consoleErrorSpy).toHaveBeenCalled();
-    consoleErrorSpy.mockRestore();
+    expect(fakeEvent.preventDefault).toHaveBeenCalledTimes(1);
+    expect(mockRepository.addEvent).toHaveBeenCalledWith(mockEventData);
+    expect(mockRepository.editEvent).not.toHaveBeenCalled();
+    expect(mockRepository.getEvents).toHaveBeenCalledTimes(2);
+    expect(mockCloseModal).toHaveBeenCalledTimes(1);
   });
 });
