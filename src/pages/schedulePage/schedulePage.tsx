@@ -1,12 +1,14 @@
-// schedulePage.tsx
 import "./schedulePage.css";
-import { useEventsData } from "./useEvents/useEventsData";
-import { useEventModal } from "./useEvents/useEventComponents/useEventModal";
-import { useEventForm } from "./useEvents/useEventComponents/useEventForm";
-import { useEventDropResize } from "./useEvents/useEventCalendar/useEventDropResize";
-import { useSelectEvent } from "./useEvents/useEventCalendar/useSelectEvent";
-import { useSelectSlot } from "./useEvents/useEventCalendar/useSelectSlot";
-import { useCalendarLocale } from "./useEvents/useEventCalendar/useCalendarLocale";
+import { useEventModal } from "./useEvents/useEventComponents/useEventModal/useEventModal";
+import { useEventUpdate } from "./useEvents/useEventComponents/useEventUpdate/useEventUpdate";
+import { useEventDropResize } from "./useEvents/useEventCalendar/useEventDropResize/useEventDropResize";
+import { useSelectEvent } from "./useEvents/useEventCalendar/useSelectEvent/useSelectEvent";
+import { useSelectSlot } from "./useEvents/useEventCalendar/useSelectSlot/useSelectSlot";
+import { useCalendarLocale } from "./useEvents/useEventCalendar/useCalendarLocale/useCalendarLocale";
+import { useLoadEvents } from "./useEvents/useEventData/useLoadEvents/useLoadEvents";
+import { useDeleteEvent } from "./useEvents/useEventData/useDeleteEvent/useDeleteEvent";
+import { useSubmitEvent } from "./useEvents/useEventData/useSubmitEvent/useSubmitEvent";
+import { useUpdateEventTime } from "./useEvents/useEventData/useUpdateEventTime/useUpdateEventTime";
 import { EventModal } from "./components/eventModal/eventModal";
 import { CalendarEvent } from "./components/calendarEvent/calendarEvent";
 import { useState } from "react";
@@ -14,10 +16,12 @@ import type { Event } from "../../db/scheduleDb";
 import { Calendar, Views, type View } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { CustomToolbar } from "./components/customToolbar/customToolbar";
-import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter";
-import { useAddEvent } from "./useEvents/useEventCalendar/useAddEvent";
+import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter/calendarEventPropGetter";
+import { useAddEvent } from "./useEvents/useEventData/useAddEvent/useAddEvent";
 import type { Language } from "../../contexts/translationContext/translationContext";
 import { useTranslationContext } from "../../locales/useTranslationContext";
+import { useEventDataContext } from "./useEvents/useEventDataContext/useEventDataContext";
+import { eventRepository } from "../../db/eventRepository";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
@@ -25,22 +29,29 @@ function SchedulePage() {
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState<View>("month");
 
+  const { events } = useEventDataContext();
+
   const { currentLanguage, changeLanguage } = useTranslationContext();
 
   const { localizer, formats } = useCalendarLocale();
 
   const { isModalOpen, openModal, closeModal } = useEventModal();
 
-  const { eventData, handleSelectEvent } = useSelectEvent(openModal);
+  const { handleSelectEvent } = useSelectEvent(openModal);
 
-  const { events, deleteCurrentEvent, handleSubmit, updateEventTime } =
-    useEventsData(eventData, closeModal);
+  useLoadEvents(eventRepository);
+
+  const { deleteCurrentEvent } = useDeleteEvent(closeModal, eventRepository);
+
+  const { handleSubmit } = useSubmitEvent(closeModal, eventRepository);
+
+  const { updateEventTime } = useUpdateEventTime(eventRepository);
 
   const { handleSelectSlot } = useSelectSlot(openModal);
 
   const { handleAddEvent } = useAddEvent(openModal);
 
-  const { isShaking, handleChange } = useEventForm();
+  const { isShaking, handleChange } = useEventUpdate();
 
   const { handleEventDropResize } = useEventDropResize(updateEventTime);
 
@@ -99,7 +110,6 @@ function SchedulePage() {
 
       {isModalOpen && (
         <EventModal
-          eventData={eventData}
           isShaking={isShaking}
           onChange={handleChange}
           onClose={closeModal}

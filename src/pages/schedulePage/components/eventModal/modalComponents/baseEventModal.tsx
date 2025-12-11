@@ -1,5 +1,5 @@
 import type { Event } from "../../../../../db/scheduleDb";
-import { toDateTimeLocal } from "../../../../../utils/toDateTimeLocal";
+import { toDateTimeLocal } from "../../../../../utils/toDateTimeLocal/toDateTimeLocal";
 import type { FormEvent, ChangeEvent, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 

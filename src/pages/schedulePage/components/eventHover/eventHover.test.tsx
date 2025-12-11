@@ -3,11 +3,11 @@ import { EventHover } from "./eventHover";
 import type { Event } from "../../../../db/scheduleDb";
 import { vi, describe, beforeEach, it, expect } from "vitest";
 
-vi.mock("../../../../utils/getTextColor", () => ({
+vi.mock("../../../../utils/getTextColor/getTextColor", () => ({
   getTextColor: vi.fn(() => "white"),
 }));
 
-import { getTextColor } from "../../../../utils/getTextColor";
+import { getTextColor } from "../../../../utils/getTextColor/getTextColor";
 
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
@@ -42,53 +42,53 @@ describe("EventHover", () => {
     }));
   });
 
-  it("renders event hover with title", () => {
+  it("It should render event hover with title", () => {
     render(<EventHover event={mockEvent} position={mockPosition} />);
     expect(screen.getByText("Test Event")).toBeInTheDocument();
   });
 
-  it("renders event description", () => {
+  it("It should render event description", () => {
     render(<EventHover event={mockEvent} position={mockPosition} />);
     expect(screen.getByText("Test Description")).toBeInTheDocument();
   });
 
-  it("renders start date label", () => {
+  it("It should render start date label", () => {
     render(<EventHover event={mockEvent} position={mockPosition} />);
     expect(
       screen.getByText("start-date:", { exact: false })
     ).toBeInTheDocument();
   });
 
-  it("renders end date label", () => {
+  it("It should render end date label", () => {
     render(<EventHover event={mockEvent} position={mockPosition} />);
     expect(screen.getByText("end-date:", { exact: false })).toBeInTheDocument();
   });
 
-  it("renders description label", () => {
+  it("It should render description label", () => {
     render(<EventHover event={mockEvent} position={mockPosition} />);
     expect(
       screen.getByText("description:", { exact: false })
     ).toBeInTheDocument();
   });
 
-  it("displays start date value", () => {
+  it("It should display start date value", () => {
     render(<EventHover event={mockEvent} position={mockPosition} />);
     const startDateString = mockEvent.start.toLocaleString();
     expect(screen.getByText(startDateString)).toBeInTheDocument();
   });
 
-  it("displays end date value", () => {
+  it("It should display end date value", () => {
     render(<EventHover event={mockEvent} position={mockPosition} />);
     const endDateString = mockEvent.end.toLocaleString();
     expect(screen.getByText(endDateString)).toBeInTheDocument();
   });
 
-  it("renders footer with edit hint", () => {
+  it("It should render footer with edit hint", () => {
     render(<EventHover event={mockEvent} position={mockPosition} />);
     expect(screen.getByText("hover-footer")).toBeInTheDocument();
   });
 
-  it("displays 'missing-description' when description is empty", () => {
+  it("It should display 'missing-description' when description is empty", () => {
     const eventWithoutDescription: Event = {
       ...mockEvent,
       description: "",
@@ -99,7 +99,7 @@ describe("EventHover", () => {
     expect(screen.getByText("missing-description")).toBeInTheDocument();
   });
 
-  it("applies correct background color to header", () => {
+  it("It should apply correct background color to header", () => {
     const { container } = render(
       <EventHover event={mockEvent} position={mockPosition} />
     );
@@ -107,12 +107,12 @@ describe("EventHover", () => {
     expect(header).toHaveStyle({ backgroundColor: "#3b82f6" });
   });
 
-  it("calls getTextColor with event color", () => {
+  it("It should call getTextColor with event color", () => {
     render(<EventHover event={mockEvent} position={mockPosition} />);
     expect(getTextColor).toHaveBeenCalledWith("#3b82f6");
   });
 
-  it("uses original position on initial render (element not yet in DOM)", () => {
+  it("It should use original position on initial render (element not yet in DOM)", () => {
     const { container } = render(
       <EventHover event={mockEvent} position={mockPosition} />
     );

@@ -1,22 +1,22 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { dexieEventRepository } from "./eventRepository";
+import { eventRepository } from "./eventRepository";
 import { type Event } from "./scheduleDb";
 
 const { addEvent, getEvents, editEvent, deleteEvent, clearEvents } =
-  dexieEventRepository;
+  eventRepository;
 
 describe("Event Repository", () => {
   beforeEach(async () => {
     await clearEvents();
   });
 
-  it("Should add and retrieve an Event", async () => {
+  it("It should add and retrieve an Event", async () => {
     const event: Event = {
       id: 1,
       title: "Spotkanie testowe",
       description: "Opis spotkania",
-      start: new Date(),
-      end: new Date(),
+      start: new Date("2025-12-10T10:00:00"),
+      end: new Date("2025-12-10T11:00:00"),
       color: "#ffffff",
     };
 
@@ -38,9 +38,9 @@ describe("Event Repository", () => {
     expect(saved.start.getTime()).toBe(event.start.getTime());
   });
 
-  it("should edit an existing event without changing all fields", async () => {
-    const now = new Date();
-    const later = new Date(now.getTime() + 10000);
+  it("It should edit an existing event without changing all fields", async () => {
+    const now = new Date("2025-12-10T10:00:00");
+    const later = new Date("2025-12-10T11:00:00");
 
     const baseEvent: Event = {
       title: "stary tytul",
@@ -61,16 +61,17 @@ describe("Event Repository", () => {
     const events = await getEvents();
     const edited = events[0];
 
-    expect(edited.id).toBe(id);
-    expect(edited.title).toBe("nowy tytul");
-    expect(edited.description).toBe("nowy opis");
-    expect(edited.color).toBe("#000000");
-    expect(edited.end.getTime()).toBe(later.getTime());
-
-    expect(edited.start.getTime()).toBe(now.getTime());
+    expect(edited).toEqual({
+      id,
+      title: "nowy tytul",
+      description: "nowy opis",
+      color: "#000000",
+      start: now,
+      end: later,
+    });
   });
 
-  it("should delete a single item by id", async () => {
+  it("It should delete a single item by id", async () => {
     const event1: Event = {
       title: "wywal",
       description: "Opis spotkania",
@@ -99,7 +100,7 @@ describe("Event Repository", () => {
     expect(events[0].title).toBe("zostaw");
   });
 
-  it("Clears all events", async () => {
+  it("It should clear all events", async () => {
     const event1: Event = {
       title: "wywal",
       description: "Opis spotkania",
