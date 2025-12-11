@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import type { Event } from "../../../../db/scheduleDb";
-import { useEventDataContext } from "../useContext/useEventDataContext";
+import type { Event } from "../../../../../db/scheduleDb";
+import { useEventDataContext } from "../../useContext/useEventDataContext";
 
 export function useSelectEvent(openModal: () => void) {
   const { setEventData } = useEventDataContext();

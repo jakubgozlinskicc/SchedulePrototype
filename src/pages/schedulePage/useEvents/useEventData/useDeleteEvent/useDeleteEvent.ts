@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import type { IEventRepository } from "../IEventRepository";
-import { useEventDataContext } from "../useContext/useEventDataContext";
-import { useReloadEvents } from "./useReloadEvents";
+import type { IEventRepository } from "../../IEventRepository";
+import { useEventDataContext } from "../../useContext/useEventDataContext";
+import { useReloadEvents } from "../useReloadEvents/useReloadEvents";
 
 export function useDeleteEvent(
   closeModal: () => void,

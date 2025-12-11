@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useAddEvent } from "./useAddEvent";
-import * as EventDataContext from "../useContext/useEventDataContext";
+import * as EventDataContext from "../../useContext/useEventDataContext";
 
 describe("useAddEvent", () => {
   const mockOpenModal = vi.fn();

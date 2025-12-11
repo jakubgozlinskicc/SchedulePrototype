@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
-import { useEventDropResize } from "../useEventDropResize";
+import { useEventDropResize } from "./useEventDropResize";
 
 describe("useEventDropResize", () => {
   const mockUpdateEventTime = vi.fn().mockResolvedValue(undefined);

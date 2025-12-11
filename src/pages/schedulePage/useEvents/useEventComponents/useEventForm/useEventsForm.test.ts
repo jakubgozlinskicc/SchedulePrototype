@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
-import { useEventForm } from "../useEventForm";
+import { useEventForm } from "./useEventForm";
 import * as EventDataContext from "../../useContext/useEventDataContext";
 
 import type { ChangeEvent } from "react";
@@ -19,6 +19,7 @@ const createMockEvent = (name: string, value: string): ExpectedEvent => {
 
 describe("useEventForm", () => {
   const mockSetEventData = vi.fn();
+  const mockSetEvents = vi.fn();
 
   beforeEach(() => {
     vi.useFakeTimers();
@@ -34,6 +35,8 @@ describe("useEventForm", () => {
         color: "#0000FF",
       },
       setEventData: mockSetEventData,
+      setEvents: mockSetEvents,
+      events: [],
     });
   });
 

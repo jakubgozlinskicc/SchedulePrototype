@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import { getDefaultEvent } from "../../../../utils/getDefaultEvent";
+import { getDefaultEvent } from "../../../../../utils/getDefaultEvent";
 import type { SlotInfo } from "react-big-calendar";
-import { useEventDataContext } from "../useContext/useEventDataContext";
+import { useEventDataContext } from "../../useContext/useEventDataContext";
 
 export function useSelectSlot(openModal: () => void) {
   const { eventData, setEventData } = useEventDataContext();

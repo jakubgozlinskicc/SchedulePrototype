@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, waitFor } from "@testing-library/react";
 import { useLoadEvents } from "./useLoadEvents";
-import type { IEventRepository } from "../IEventRepository";
+import type { IEventRepository } from "../../IEventRepository";
 
 const mockReloadEvents = vi.fn();
 
-vi.mock("./useReloadEvents", () => ({
+vi.mock("../useReloadEvents/useReloadEvents", () => ({
   useReloadEvents: () => ({
     reloadEvents: mockReloadEvents,
   }),

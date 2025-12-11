@@ -1,6 +1,6 @@
-import { getDefaultEvent } from "../../../../utils/getDefaultEvent";
+import { getDefaultEvent } from "../../../../../utils/getDefaultEvent";
 import { useCallback } from "react";
-import { useEventDataContext } from "../useContext/useEventDataContext";
+import { useEventDataContext } from "../../useContext/useEventDataContext";
 
 export function useAddEvent(openModal: () => void) {
   const { setEventData } = useEventDataContext();

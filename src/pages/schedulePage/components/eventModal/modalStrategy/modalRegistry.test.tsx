@@ -1,10 +1,10 @@
-import { EventModalStrategyRegistry } from "../modalStrategy/modalRegistry";
+import { EventModalStrategyRegistry } from "./modalRegistry";
 import type { Event } from "../../../../../db/scheduleDb";
-import { AddEventStrategy } from "../modalStrategy/eventStrategies/addEventStrategy";
-import { EditEventStrategy } from "../modalStrategy/eventStrategies/editEventStrategy";
+import { AddEventStrategy } from "./eventStrategies/addEventStrategy";
+import { EditEventStrategy } from "./eventStrategies/editEventStrategy";
 import { vi, describe, beforeEach, it, expect } from "vitest";
 
-vi.mock("../modalStrategy/eventStrategies/addEventStrategy", () => {
+vi.mock("./eventStrategies/addEventStrategy", () => {
   const MockedAddEventStrategy = vi.fn();
   MockedAddEventStrategy.prototype.canSupport = vi.fn(
     (eventData) => !eventData.id
@@ -13,7 +13,7 @@ vi.mock("../modalStrategy/eventStrategies/addEventStrategy", () => {
   return { AddEventStrategy: MockedAddEventStrategy };
 });
 
-vi.mock("../modalStrategy/eventStrategies/editEventStrategy", () => {
+vi.mock("./eventStrategies/editEventStrategy", () => {
   const MockedEditEventStrategy = vi.fn();
   MockedEditEventStrategy.prototype.canSupport = vi.fn(
     (eventData) => !!eventData.id

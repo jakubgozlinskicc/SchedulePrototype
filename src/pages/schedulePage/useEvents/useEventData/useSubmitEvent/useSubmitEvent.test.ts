@@ -1,19 +1,19 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useSubmitEvent } from "./useSubmitEvent";
-import type { Event } from "../../../../db/scheduleDb";
-import type { IEventRepository } from "../IEventRepository";
+import type { Event } from "../../../../../db/scheduleDb";
+import type { IEventRepository } from "../../IEventRepository";
 
 let mockEventData: Event;
 const mockReloadEvents = vi.fn();
 
-vi.mock("../useContext/useEventDataContext", () => ({
+vi.mock("../../useContext/useEventDataContext.ts", () => ({
   useEventDataContext: () => ({
     eventData: mockEventData,
   }),
 }));
 
-vi.mock("./useReloadEvents", () => ({
+vi.mock("../useReloadEvents/useReloadEvents", () => ({
   useReloadEvents: () => ({
     reloadEvents: mockReloadEvents,
   }),

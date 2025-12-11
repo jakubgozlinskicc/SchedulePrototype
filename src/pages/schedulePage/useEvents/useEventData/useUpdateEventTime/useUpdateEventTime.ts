@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import type { IEventRepository } from "../IEventRepository";
-import { useReloadEvents } from "./useReloadEvents";
+import type { IEventRepository } from "../../IEventRepository";
+import { useReloadEvents } from "../useReloadEvents/useReloadEvents";
 
 export function useUpdateEventTime(repository: IEventRepository) {
   const { reloadEvents } = useReloadEvents(repository);

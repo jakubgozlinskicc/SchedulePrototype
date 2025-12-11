@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import type { IEventRepository } from "../IEventRepository";
-import { useEventDataContext } from "../useContext/useEventDataContext";
+import type { IEventRepository } from "../../IEventRepository";
+import { useEventDataContext } from "../../useContext/useEventDataContext";
 
 export function useReloadEvents(repository: IEventRepository) {
   const { setEvents } = useEventDataContext();

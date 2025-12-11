@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { EventModal } from "../eventModal";
-import type { Event } from "../../../../../db/scheduleDb";
-import { EventModalStrategyRegistry } from "../modalStrategy/modalRegistry";
+import { EventModal } from "./eventModal";
+import type { Event } from "../../../../db/scheduleDb";
+import { EventModalStrategyRegistry } from "./modalStrategy/modalRegistry";
 import { vi, describe, beforeEach, it, expect } from "vitest";
 
 vi.mock("react-i18next", () => ({
@@ -10,7 +10,7 @@ vi.mock("react-i18next", () => ({
   }),
 }));
 
-vi.mock("../modalStrategy/modalRegistry", () => ({
+vi.mock("./modalStrategy/modalRegistry", () => ({
   EventModalStrategyRegistry: {
     provideRenderer: vi.fn(),
   },
