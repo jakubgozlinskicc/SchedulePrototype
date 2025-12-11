@@ -9,10 +9,13 @@ type EventProviderProps = {
 
 export function EventDataProvider({ children }: EventProviderProps) {
   const [eventData, setEventData] = useState<Event>(getDefaultEvent());
+  const [events, setEvents] = useState<Event[]>([]);
 
   const value = {
     eventData,
     setEventData,
+    events,
+    setEvents,
   };
 
   return (

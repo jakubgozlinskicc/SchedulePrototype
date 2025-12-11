@@ -1,11 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
-import { useAddEvent } from "../useAddEvent";
-import * as EventDataContext from "../../useContext/useEventDataContext";
+import { useAddEvent } from "./useAddEvent";
+import * as EventDataContext from "../useContext/useEventDataContext";
 
 describe("useAddEvent", () => {
   const mockOpenModal = vi.fn();
   const mockSetEventData = vi.fn();
+  const mockSetEvents = vi.fn();
 
   const mockEventData = {
     id: undefined,
@@ -21,6 +22,8 @@ describe("useAddEvent", () => {
     vi.spyOn(EventDataContext, "useEventDataContext").mockReturnValue({
       eventData: mockEventData,
       setEventData: mockSetEventData,
+      setEvents: mockSetEvents,
+      events: [],
     });
   });
 

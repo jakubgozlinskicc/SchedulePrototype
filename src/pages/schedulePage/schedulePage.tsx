@@ -1,12 +1,14 @@
-// schedulePage.tsx
 import "./schedulePage.css";
-import { useEventsData } from "./useEvents/useEventsData";
 import { useEventModal } from "./useEvents/useEventComponents/useEventModal";
 import { useEventForm } from "./useEvents/useEventComponents/useEventForm";
 import { useEventDropResize } from "./useEvents/useEventCalendar/useEventDropResize";
 import { useSelectEvent } from "./useEvents/useEventCalendar/useSelectEvent";
 import { useSelectSlot } from "./useEvents/useEventCalendar/useSelectSlot";
 import { useCalendarLocale } from "./useEvents/useEventCalendar/useCalendarLocale";
+import { useLoadEvents } from "./useEvents/useEventData/useLoadEvents";
+import { useDeleteEvent } from "./useEvents/useEventData/useDeleteEvent";
+import { useSubmitEvent } from "./useEvents/useEventData/useSubmitEvent";
+import { useUpdateEventTime } from "./useEvents/useEventData/useUpdateEventTime";
 import { EventModal } from "./components/eventModal/eventModal";
 import { CalendarEvent } from "./components/calendarEvent/calendarEvent";
 import { useState } from "react";
@@ -15,7 +17,7 @@ import { Calendar, Views, type View } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { CustomToolbar } from "./components/customToolbar/customToolbar";
 import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter";
-import { useAddEvent } from "./useEvents/useEventCalendar/useAddEvent";
+import { useAddEvent } from "./useEvents/useEventData/useAddEvent";
 import type { Language } from "../../contexts/translationContext/translationContext";
 import { useTranslationContext } from "../../locales/useTranslationContext";
 import { useEventDataContext } from "./useEvents/useContext/useEventDataContext";
@@ -27,7 +29,7 @@ function SchedulePage() {
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState<View>("month");
 
-  const { eventData } = useEventDataContext();
+  const { eventData, events } = useEventDataContext();
 
   const { currentLanguage, changeLanguage } = useTranslationContext();
 
@@ -37,8 +39,13 @@ function SchedulePage() {
 
   const { handleSelectEvent } = useSelectEvent(openModal);
 
-  const { events, deleteCurrentEvent, handleSubmit, updateEventTime } =
-    useEventsData(closeModal, eventRepository);
+  useLoadEvents(eventRepository);
+
+  const { deleteCurrentEvent } = useDeleteEvent(closeModal, eventRepository);
+
+  const { handleSubmit } = useSubmitEvent(closeModal, eventRepository);
+
+  const { updateEventTime } = useUpdateEventTime(eventRepository);
 
   const { handleSelectSlot } = useSelectSlot(openModal);
 

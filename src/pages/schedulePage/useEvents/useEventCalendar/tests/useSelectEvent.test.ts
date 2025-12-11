@@ -7,6 +7,7 @@ import type { Event } from "../../../../../db/scheduleDb";
 describe("useSelectEvent", () => {
   const mockOpenModal = vi.fn();
   const mockSetEventData = vi.fn();
+  const mockSetEvents = vi.fn();
 
   const mockEventData = {
     id: 1,
@@ -22,6 +23,8 @@ describe("useSelectEvent", () => {
     vi.spyOn(EventDataContext, "useEventDataContext").mockReturnValue({
       eventData: mockEventData,
       setEventData: mockSetEventData,
+      setEvents: mockSetEvents,
+      events: [],
     });
   });
 
