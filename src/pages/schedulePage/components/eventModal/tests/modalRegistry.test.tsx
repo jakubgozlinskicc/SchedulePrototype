@@ -45,21 +45,21 @@ describe("EventModalStrategyRegistry", () => {
       vi.clearAllMocks();
     });
 
-    it("should return renderer for event without id (AddEventStrategy)", () => {
+    it("It should return renderer for event without id (AddEventStrategy)", () => {
       const result =
         EventModalStrategyRegistry.provideRenderer(mockEventWithoutId);
       expect(result).toBeDefined();
       expect(result.render).toBeInstanceOf(Function);
     });
 
-    it("should return renderer for event with id (EditEventStrategy)", () => {
+    it("It should return renderer for event with id (EditEventStrategy)", () => {
       const result =
         EventModalStrategyRegistry.provideRenderer(mockEventWithId);
       expect(result).toBeDefined();
       expect(result.render).toBeInstanceOf(Function);
     });
 
-    it("should throw error when no strategy supports the event", () => {
+    it("It should throw error when no strategy supports the event", () => {
       vi.mocked(AddEventStrategy.prototype.canSupport).mockReturnValue(false);
       vi.mocked(EditEventStrategy.prototype.canSupport).mockReturnValue(false);
 
@@ -68,7 +68,7 @@ describe("EventModalStrategyRegistry", () => {
       ).toThrow(/No EventModalStrategy found for event with id=/);
     });
 
-    it("should throw error with event id when event has id", () => {
+    it("It should throw error with event id when event has id", () => {
       vi.mocked(AddEventStrategy.prototype.canSupport).mockReturnValue(false);
       vi.mocked(EditEventStrategy.prototype.canSupport).mockReturnValue(false);
 
@@ -77,7 +77,7 @@ describe("EventModalStrategyRegistry", () => {
       ).toThrow(/No EventModalStrategy found for event with id=1/);
     });
 
-    it("should throw error with 'null' when event has no id", () => {
+    it("It should throw error with 'null' when event has no id", () => {
       vi.mocked(AddEventStrategy.prototype.canSupport).mockReturnValue(false);
       vi.mocked(EditEventStrategy.prototype.canSupport).mockReturnValue(false);
 
@@ -86,7 +86,7 @@ describe("EventModalStrategyRegistry", () => {
       ).toThrow(/No EventModalStrategy found for event with id=null/);
     });
 
-    it("should select first matching strategy", () => {
+    it("It should select first matching strategy", () => {
       vi.mocked(AddEventStrategy.prototype.canSupport).mockReturnValue(true);
       vi.mocked(AddEventStrategy.prototype.render).mockReturnValue("AddModal");
 
@@ -105,7 +105,7 @@ describe("EventModalStrategyRegistry", () => {
       expect(AddEventStrategy.prototype.render).toHaveBeenCalledWith(mockProps);
     });
 
-    it("should use AddEventStrategy when event id is undefined", () => {
+    it("It should use AddEventStrategy when event id is undefined", () => {
       const eventWithUndefinedId: Event = {
         id: undefined,
         title: "Event",
@@ -120,13 +120,13 @@ describe("EventModalStrategyRegistry", () => {
       expect(result).toBeDefined();
     });
 
-    it("should use EditEventStrategy when event has numeric id", () => {
+    it("It should use EditEventStrategy when event has numeric id", () => {
       const result =
         EventModalStrategyRegistry.provideRenderer(mockEventWithId);
       expect(result).toBeDefined();
     });
 
-    it("should register contains both strategies", () => {
+    it("It should register contains both strategies", () => {
       const resultAdd =
         EventModalStrategyRegistry.provideRenderer(mockEventWithoutId);
       const resultEdit =
@@ -138,7 +138,7 @@ describe("EventModalStrategyRegistry", () => {
   });
 
   describe("strategy selection logic", () => {
-    it("should correctly identifies new event (no id)", () => {
+    it("It should correctly identifies new event (no id)", () => {
       const event: Event = {
         title: "New",
         description: "",
@@ -151,7 +151,7 @@ describe("EventModalStrategyRegistry", () => {
       expect(result.render).toBeInstanceOf(Function);
     });
 
-    it("should correctly identifies existing event (with id)", () => {
+    it("It should correctly identifies existing event (with id)", () => {
       const event: Event = {
         id: 42,
         title: "Existing",
@@ -165,7 +165,7 @@ describe("EventModalStrategyRegistry", () => {
       expect(result.render).toBeInstanceOf(Function);
     });
 
-    it("should handle event with id = 0", () => {
+    it("It should handle event with id = 0", () => {
       const event: Event = {
         id: 0,
         title: "Event with id 0",

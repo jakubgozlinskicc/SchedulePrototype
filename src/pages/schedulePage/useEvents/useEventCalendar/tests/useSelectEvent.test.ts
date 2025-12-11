@@ -44,5 +44,4 @@ describe("useSelectEvent", () => {
     expect(mockSetEventData).toBeCalled();
     expect(mockOpenModal).toBeCalled();
   });
-  });
 });

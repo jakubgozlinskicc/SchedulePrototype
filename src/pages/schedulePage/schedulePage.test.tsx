@@ -9,7 +9,7 @@ describe("SchedulePage", () => {
     vi.clearAllMocks();
   });
 
-  it("should render the schedule page with header", () => {
+  it("It should render the schedule page with header", () => {
     render(
       <TranslationProvider>
         <EventDataProvider>

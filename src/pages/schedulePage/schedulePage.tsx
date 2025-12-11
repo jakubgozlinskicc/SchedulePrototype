@@ -35,7 +35,7 @@ function SchedulePage() {
 
   const { isModalOpen, openModal, closeModal } = useEventModal();
 
-  const { handleSelectEvent } = useSelectEvent(openModal, clearHover);
+  const { handleSelectEvent } = useSelectEvent(openModal);
 
   const { events, deleteCurrentEvent, handleSubmit, updateEventTime } =
     useEventsData(closeModal, eventRepository);

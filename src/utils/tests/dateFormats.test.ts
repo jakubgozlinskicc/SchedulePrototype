@@ -9,7 +9,7 @@ describe("dateFormats", () => {
   describe("createFormats", () => {
     describe("with pl locale", () => {
       const formats = createFormats(pl);
-      it("should format day range", () => {
+      it("It should format day range", () => {
         const start = new Date(2025, 11, 10);
         const end = new Date(2025, 11, 15);
 
@@ -23,7 +23,7 @@ describe("dateFormats", () => {
         expect(result).toBe("10-15 grudzień");
       });
 
-      it("should handle range in one day", () => {
+      it("It should handle range in one day", () => {
         const start = new Date(2025, 11, 11);
         const end = new Date(2024, 11, 11);
 
@@ -37,7 +37,7 @@ describe("dateFormats", () => {
         expect(result).toBe("11-11 grudzień");
       });
 
-      it("should format month header", () => {
+      it("It should format month header", () => {
         const date = new Date(2025, 11, 10);
 
         const formatter = formats.monthHeaderFormat;
@@ -50,7 +50,7 @@ describe("dateFormats", () => {
         expect(result).toBe("grudzień 2025");
       });
 
-      it("should format day header", () => {
+      it("It should format day header", () => {
         const date = new Date(2025, 11, 10);
 
         const formatter = formats.dayHeaderFormat;
@@ -67,7 +67,7 @@ describe("dateFormats", () => {
     describe("with english locale", () => {
       const formats = createFormats(enUS);
 
-      it("should format day range", () => {
+      it("It should format day range", () => {
         const start = new Date(2025, 11, 10);
         const end = new Date(2025, 11, 15);
 
@@ -81,7 +81,7 @@ describe("dateFormats", () => {
         expect(result).toBe("10-15 December");
       });
 
-      it("should format month header", () => {
+      it("It should format month header", () => {
         const date = new Date(2025, 11, 10);
 
         const formatter = formats.monthHeaderFormat;
@@ -94,7 +94,7 @@ describe("dateFormats", () => {
         expect(result).toBe("December 2025");
       });
 
-      it("should format day header", () => {
+      it("It should format day header", () => {
         const date = new Date(2025, 11, 10);
 
         const formatter = formats.dayHeaderFormat;

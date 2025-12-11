@@ -32,40 +32,40 @@ describe("EditEventModal", () => {
     vi.clearAllMocks();
   });
 
-  it("should render edit event modal with correct title", () => {
+  it("It should render edit event modal with correct title", () => {
     render(<EditEventModal {...mockProps} />);
     expect(screen.getByText("modal_edit_title")).toBeInTheDocument();
   });
 
-  it("should render delete, cancel and save changes buttons", () => {
+  it("It should render delete, cancel and save changes buttons", () => {
     render(<EditEventModal {...mockProps} />);
     expect(screen.getByText("btn_delete")).toBeInTheDocument();
     expect(screen.getByText("btn_cancel")).toBeInTheDocument();
     expect(screen.getByText("btn_save_changes")).toBeInTheDocument();
   });
 
-  it("should call onRequestDelete when delete button is clicked", () => {
+  it("It should call onRequestDelete when delete button is clicked", () => {
     render(<EditEventModal {...mockProps} />);
     const deleteButton = screen.getByText("btn_delete");
     fireEvent.click(deleteButton);
     expect(mockProps.onRequestDelete).toHaveBeenCalledTimes(1);
   });
 
-  it("should call onClose when cancel button is clicked", () => {
+  it("It should call onClose when cancel button is clicked", () => {
     render(<EditEventModal {...mockProps} />);
     const cancelButton = screen.getByText("btn_cancel");
     fireEvent.click(cancelButton);
     expect(mockProps.onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("should call onSubmit when save changes button is clicked", () => {
+  it("It should call onSubmit when save changes button is clicked", () => {
     render(<EditEventModal {...mockProps} />);
     const saveButton = screen.getByText("btn_save_changes");
     fireEvent.click(saveButton);
     expect(mockProps.onSubmit).toHaveBeenCalled();
   });
 
-  it("should apply shake class when isShaking is true", () => {
+  it("It should apply shake class when isShaking is true", () => {
     const { container } = render(
       <EditEventModal {...mockProps} isShaking={true} />
     );
@@ -73,13 +73,13 @@ describe("EditEventModal", () => {
     expect(modal).toHaveClass("shake");
   });
 
-  it("should do not apply shake class when isShaking is false", () => {
+  it("It should do not apply shake class when isShaking is false", () => {
     const { container } = render(<EditEventModal {...mockProps} />);
     const modal = container.querySelector(".modal");
     expect(modal).not.toHaveClass("shake");
   });
 
-  it("should pass all props correctly to BaseEventModal", () => {
+  it("It should pass all props correctly to BaseEventModal", () => {
     render(<EditEventModal {...mockProps} />);
     expect(screen.getByDisplayValue(mockEventData.title)).toBeInTheDocument();
     expect(
@@ -88,7 +88,7 @@ describe("EditEventModal", () => {
     expect(screen.getByDisplayValue(mockEventData.color)).toBeInTheDocument();
   });
 
-  it("should render with all form fields from BaseEventModal", () => {
+  it("It should render with all form fields from BaseEventModal", () => {
     render(<EditEventModal {...mockProps} />);
     expect(screen.getByText("title")).toBeInTheDocument();
     expect(screen.getByText("description")).toBeInTheDocument();
@@ -97,7 +97,7 @@ describe("EditEventModal", () => {
     expect(screen.getByText("color")).toBeInTheDocument();
   });
 
-  it("should handle async onRequestDelete", async () => {
+  it("It should handle async onRequestDelete", async () => {
     const asyncDelete = vi.fn().mockResolvedValue(undefined);
     render(<EditEventModal {...mockProps} onRequestDelete={asyncDelete} />);
     const deleteButton = screen.getByText("btn_delete");

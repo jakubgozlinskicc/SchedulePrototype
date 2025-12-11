@@ -24,7 +24,7 @@ describe("useAddEvent", () => {
     });
   });
 
-  it("should handle add event", () => {
+  it("It should handle add event", () => {
     const { result } = renderHook(() => useAddEvent(mockOpenModal));
 
     act(() => {

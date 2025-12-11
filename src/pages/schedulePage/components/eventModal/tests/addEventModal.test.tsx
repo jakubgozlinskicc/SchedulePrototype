@@ -30,32 +30,32 @@ describe("AddEventModal", () => {
     vi.clearAllMocks();
   });
 
-  it("should render add event modal with correct title", () => {
+  it("It should render add event modal with correct title", () => {
     render(<AddEventModal {...mockProps} />);
     expect(screen.getByText("modal_add_title")).toBeInTheDocument();
   });
 
-  it("should render cancel and add buttons", () => {
+  it("It should render cancel and add buttons", () => {
     render(<AddEventModal {...mockProps} />);
     expect(screen.getByText("btn_cancel")).toBeInTheDocument();
     expect(screen.getByText("btn-add")).toBeInTheDocument();
   });
 
-  it("should call onClose when cancel button is clicked", () => {
+  it("It should call onClose when cancel button is clicked", () => {
     render(<AddEventModal {...mockProps} />);
     const cancelButton = screen.getByText("btn_cancel");
     fireEvent.click(cancelButton);
     expect(mockProps.onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("should call onSubmit when add button is clicked", () => {
+  it("It should call onSubmit when add button is clicked", () => {
     render(<AddEventModal {...mockProps} />);
     const addButton = screen.getByText("btn-add");
     fireEvent.click(addButton);
     expect(mockProps.onSubmit).toHaveBeenCalledTimes(1);
   });
 
-  it("should apply shake class when isShaking is true", () => {
+  it("It should apply shake class when isShaking is true", () => {
     const { container } = render(
       <AddEventModal {...mockProps} isShaking={true} />
     );
@@ -63,18 +63,18 @@ describe("AddEventModal", () => {
     expect(modal).toHaveClass("shake");
   });
 
-  it("should do not apply shake class when isShaking is false", () => {
+  it("It should do not apply shake class when isShaking is false", () => {
     const { container } = render(<AddEventModal {...mockProps} />);
     const modal = container.querySelector(".modal");
     expect(modal).not.toHaveClass("shake");
   });
 
-  it("should pass all props correctly to BaseEventModal", () => {
+  it("It should pass all props correctly to BaseEventModal", () => {
     render(<AddEventModal {...mockProps} />);
     expect(screen.getByDisplayValue(mockEventData.color)).toBeInTheDocument();
   });
 
-  it("should render with all form fields from BaseEventModal", () => {
+  it("It should render with all form fields from BaseEventModal", () => {
     render(<AddEventModal {...mockProps} />);
     expect(screen.getByText("title")).toBeInTheDocument();
     expect(screen.getByText("description")).toBeInTheDocument();

@@ -17,7 +17,7 @@ describe("useEventDropResize", () => {
     vi.clearAllMocks();
   });
 
-  it("should handle event drop with date objects", async () => {
+  it("It should handle event drop with date objects", async () => {
     const { result } = renderHook(() =>
       useEventDropResize(mockUpdateEventTime)
     );
