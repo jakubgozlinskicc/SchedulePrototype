@@ -98,6 +98,7 @@ describe("Event Repository", () => {
     expect(events[0].id).toBe(id2);
     expect(events[0].title).toBe("zostaw");
   });
+
   it("Clears all events", async () => {
     const event1: Event = {
       title: "wywal",

@@ -6,7 +6,7 @@ import { vi, describe, beforeEach, it, expect } from "vitest";
 
 vi.mock("../modalStrategy/eventStrategies/addEventStrategy", () => {
   const MockedAddEventStrategy = vi.fn();
-  MockedAddEventStrategy.prototype.useSupport = vi.fn(
+  MockedAddEventStrategy.prototype.canSupport = vi.fn(
     (eventData) => !eventData.id
   );
   MockedAddEventStrategy.prototype.render = vi.fn();
@@ -15,7 +15,7 @@ vi.mock("../modalStrategy/eventStrategies/addEventStrategy", () => {
 
 vi.mock("../modalStrategy/eventStrategies/editEventStrategy", () => {
   const MockedEditEventStrategy = vi.fn();
-  MockedEditEventStrategy.prototype.useSupport = vi.fn(
+  MockedEditEventStrategy.prototype.canSupport = vi.fn(
     (eventData) => !!eventData.id
   );
   MockedEditEventStrategy.prototype.render = vi.fn();
@@ -60,8 +60,8 @@ describe("EventModalStrategyRegistry", () => {
     });
 
     it("throws error when no strategy supports the event", () => {
-      vi.mocked(AddEventStrategy.prototype.useSupport).mockReturnValue(false);
-      vi.mocked(EditEventStrategy.prototype.useSupport).mockReturnValue(false);
+      vi.mocked(AddEventStrategy.prototype.canSupport).mockReturnValue(false);
+      vi.mocked(EditEventStrategy.prototype.canSupport).mockReturnValue(false);
 
       expect(() =>
         EventModalStrategyRegistry.provideRenderer(mockEventWithoutId)
@@ -69,8 +69,8 @@ describe("EventModalStrategyRegistry", () => {
     });
 
     it("throws error with event id when event has id", () => {
-      vi.mocked(AddEventStrategy.prototype.useSupport).mockReturnValue(false);
-      vi.mocked(EditEventStrategy.prototype.useSupport).mockReturnValue(false);
+      vi.mocked(AddEventStrategy.prototype.canSupport).mockReturnValue(false);
+      vi.mocked(EditEventStrategy.prototype.canSupport).mockReturnValue(false);
 
       expect(() =>
         EventModalStrategyRegistry.provideRenderer(mockEventWithId)
@@ -78,8 +78,8 @@ describe("EventModalStrategyRegistry", () => {
     });
 
     it("throws error with 'null' when event has no id", () => {
-      vi.mocked(AddEventStrategy.prototype.useSupport).mockReturnValue(false);
-      vi.mocked(EditEventStrategy.prototype.useSupport).mockReturnValue(false);
+      vi.mocked(AddEventStrategy.prototype.canSupport).mockReturnValue(false);
+      vi.mocked(EditEventStrategy.prototype.canSupport).mockReturnValue(false);
 
       expect(() =>
         EventModalStrategyRegistry.provideRenderer(mockEventWithoutId)
@@ -87,7 +87,7 @@ describe("EventModalStrategyRegistry", () => {
     });
 
     it("selects first matching strategy", () => {
-      vi.mocked(AddEventStrategy.prototype.useSupport).mockReturnValue(true);
+      vi.mocked(AddEventStrategy.prototype.canSupport).mockReturnValue(true);
       vi.mocked(AddEventStrategy.prototype.render).mockReturnValue("AddModal");
 
       const result =

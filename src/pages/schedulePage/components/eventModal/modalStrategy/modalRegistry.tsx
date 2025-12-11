@@ -10,7 +10,7 @@ const strategies: IEventModalStrategy[] = [
 ];
 export const EventModalStrategyRegistry = {
   provideRenderer(eventData: Event) {
-    const strategy = strategies.find((s) => s.useSupport(eventData));
+    const strategy = strategies.find((s) => s.canSupport(eventData));
     if (!strategy) {
       throw new Error(
         `No EventModalStrategy found for event with id=${

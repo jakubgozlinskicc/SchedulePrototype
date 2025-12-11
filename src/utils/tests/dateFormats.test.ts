@@ -64,7 +64,7 @@ describe("dateFormats", () => {
       });
     });
 
-    describe("z angielskim locale", () => {
+    describe("with english locale", () => {
       const formats = createFormats(enUS);
 
       it("should format day range", () => {

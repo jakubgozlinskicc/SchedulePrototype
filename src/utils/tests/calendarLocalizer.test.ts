@@ -18,24 +18,22 @@ describe("calendarLocalizer", () => {
       expect(localizer).toBeDefined();
     });
 
-    describe("date format", () => {
-      it("should format date with pl locale", () => {
-        const localizer = createLocalizer(pl);
-        const date = new Date(2025, 11, 15);
+    it("should format date with pl locale", () => {
+      const localizer = createLocalizer(pl);
+      const date = new Date(2025, 11, 15);
 
-        const formatted = localizer.format(date, "dd MMMM yyyy");
+      const formatted = localizer.format(date, "dd MMMM yyyy");
 
-        expect(formatted).toBe("15 grudnia 2025");
-      });
+      expect(formatted).toBe("15 grudnia 2025");
+    });
 
-      it("should format date with en locale", () => {
-        const localizer = createLocalizer(enUS);
-        const date = new Date(2025, 11, 15);
+    it("should format date with en locale", () => {
+      const localizer = createLocalizer(enUS);
+      const date = new Date(2025, 11, 15);
 
-        const formatted = localizer.format(date, "dd MMMM yyyy");
+      const formatted = localizer.format(date, "dd MMMM yyyy");
 
-        expect(formatted).toBe("15 December 2025");
-      });
+      expect(formatted).toBe("15 December 2025");
     });
   });
 });

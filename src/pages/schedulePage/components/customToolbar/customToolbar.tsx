@@ -10,7 +10,7 @@ type CustomToolbarProps<
   TEvent extends object = Event,
   TResource extends object = object
 > = ToolbarProps<TEvent, TResource> & {
-  onAddEvent?: () => void;
+  onAddEvent: () => void;
 };
 
 type WeekStripProps = {
