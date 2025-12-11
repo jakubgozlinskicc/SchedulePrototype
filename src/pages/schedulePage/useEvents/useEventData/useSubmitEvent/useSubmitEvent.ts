@@ -1,6 +1,6 @@
 import { useCallback, type FormEvent } from "react";
 import type { IEventRepository } from "../../IEventRepository";
-import { useEventDataContext } from "../../useContext/useEventDataContext";
+import { useEventDataContext } from "../../useEventDataContext/useEventDataContext";
 import { useReloadEvents } from "../useReloadEvents/useReloadEvents";
 
 export function useSubmitEvent(

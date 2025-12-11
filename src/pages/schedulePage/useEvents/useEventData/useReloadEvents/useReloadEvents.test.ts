@@ -6,7 +6,7 @@ import type { IEventRepository } from "../../IEventRepository";
 
 const mockSetEvents = vi.fn();
 
-vi.mock("../../useContext/useEventDataContext", () => ({
+vi.mock("../../useEventDataContext/useEventDataContext", () => ({
   useEventDataContext: () => ({
     setEvents: mockSetEvents,
   }),

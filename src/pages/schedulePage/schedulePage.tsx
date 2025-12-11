@@ -1,6 +1,6 @@
 import "./schedulePage.css";
 import { useEventModal } from "./useEvents/useEventComponents/useEventModal/useEventModal";
-import { useEventForm } from "./useEvents/useEventComponents/useEventForm/useEventForm";
+import { useEventUpdate } from "./useEvents/useEventComponents/useEventUpdate/useEventUpdate";
 import { useEventDropResize } from "./useEvents/useEventCalendar/useEventDropResize/useEventDropResize";
 import { useSelectEvent } from "./useEvents/useEventCalendar/useSelectEvent/useSelectEvent";
 import { useSelectSlot } from "./useEvents/useEventCalendar/useSelectSlot/useSelectSlot";
@@ -20,7 +20,7 @@ import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter/cal
 import { useAddEvent } from "./useEvents/useEventData/useAddEvent/useAddEvent";
 import type { Language } from "../../contexts/translationContext/translationContext";
 import { useTranslationContext } from "../../locales/useTranslationContext";
-import { useEventDataContext } from "./useEvents/useContext/useEventDataContext";
+import { useEventDataContext } from "./useEvents/useEventDataContext/useEventDataContext";
 import { eventRepository } from "../../db/eventRepository";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
@@ -29,7 +29,7 @@ function SchedulePage() {
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState<View>("month");
 
-  const { eventData, events } = useEventDataContext();
+  const { events } = useEventDataContext();
 
   const { currentLanguage, changeLanguage } = useTranslationContext();
 
@@ -51,7 +51,7 @@ function SchedulePage() {
 
   const { handleAddEvent } = useAddEvent(openModal);
 
-  const { isShaking, handleChange } = useEventForm();
+  const { isShaking, handleChange } = useEventUpdate();
 
   const { handleEventDropResize } = useEventDropResize(updateEventTime);
 
@@ -110,7 +110,6 @@ function SchedulePage() {
 
       {isModalOpen && (
         <EventModal
-          eventData={eventData}
           isShaking={isShaking}
           onChange={handleChange}
           onClose={closeModal}

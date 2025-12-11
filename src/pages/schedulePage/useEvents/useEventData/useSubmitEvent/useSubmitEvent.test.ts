@@ -7,7 +7,7 @@ import type { IEventRepository } from "../../IEventRepository";
 let mockEventData: Event;
 const mockReloadEvents = vi.fn();
 
-vi.mock("../../useContext/useEventDataContext.ts", () => ({
+vi.mock("../../useEventDataContext/useEventDataContext.ts", () => ({
   useEventDataContext: () => ({
     eventData: mockEventData,
   }),

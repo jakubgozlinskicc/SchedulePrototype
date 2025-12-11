@@ -2,11 +2,20 @@ import { EventModalStrategyRegistry } from "./modalStrategy/modalRegistry";
 import "./eventModal.css";
 import type { EventModalProps } from "./eventModalTypes";
 import { useMemo } from "react";
+import { useEventDataContext } from "../../useEvents/useEventDataContext/useEventDataContext";
 
-export function EventModal(commonProps: EventModalProps) {
+export function EventModal(commonProps: Omit<EventModalProps, "eventData">) {
+  const { eventData } = useEventDataContext();
+
   const renderer = useMemo(
-    () => EventModalStrategyRegistry.provideRenderer(commonProps.eventData),
-    [commonProps.eventData]
+    () => EventModalStrategyRegistry.provideRenderer(eventData),
+    [eventData]
   );
-  return renderer.render(commonProps);
+
+  const fullProps: EventModalProps = {
+    ...commonProps,
+    eventData,
+  };
+
+  return renderer.render(fullProps);
 }

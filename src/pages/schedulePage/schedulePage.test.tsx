@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import SchedulePage from "./schedulePage";
-import { EventDataProvider } from "../../contexts/eventContext/eventDataProvider";
+import { EventDataProvider } from "./eventContext/eventDataProvider";
 import { TranslationProvider } from "../../contexts/translationContext/translationProvider";
 
 describe("SchedulePage", () => {

@@ -4,9 +4,18 @@ import type { Event } from "../../../../db/scheduleDb";
 import { EventModalStrategyRegistry } from "./modalStrategy/modalRegistry";
 import { vi, describe, beforeEach, it, expect } from "vitest";
 
+let mockEventData: Event;
+
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string) => key,
+  }),
+}));
+
+vi.mock("../../useEvents/useEventDataContext/useEventDataContext", () => ({
+  useEventDataContext: () => ({
+    eventData: mockEventData,
+    setEventData: vi.fn(),
   }),
 }));
 
@@ -44,6 +53,7 @@ describe("EventModal", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    mockEventData = mockEventDataWithoutId;
   });
 
   it("It should call EventModalStrategyRegistry.provideRenderer with eventData", () => {
@@ -54,7 +64,9 @@ describe("EventModal", () => {
       mockRenderer
     );
 
-    render(<EventModal {...mockProps} eventData={mockEventDataWithoutId} />);
+    mockEventData = mockEventDataWithoutId;
+
+    render(<EventModal {...mockProps} />);
 
     expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledWith(
       mockEventDataWithoutId
@@ -69,7 +81,9 @@ describe("EventModal", () => {
       mockRenderer
     );
 
-    render(<EventModal {...mockProps} eventData={mockEventDataWithoutId} />);
+    mockEventData = mockEventDataWithoutId;
+
+    render(<EventModal {...mockProps} />);
 
     expect(screen.getByText("Test Content")).toBeInTheDocument();
   });
@@ -82,14 +96,14 @@ describe("EventModal", () => {
       mockRenderer
     );
 
-    const props = {
+    mockEventData = mockEventDataWithId;
+
+    render(<EventModal {...mockProps} />);
+
+    expect(mockRenderer.render).toHaveBeenCalledWith({
       ...mockProps,
       eventData: mockEventDataWithId,
-    };
-
-    render(<EventModal {...props} />);
-
-    expect(mockRenderer.render).toHaveBeenCalledWith(props);
+    });
   });
 
   it("It should memoize renderer based on eventData", () => {
@@ -100,13 +114,13 @@ describe("EventModal", () => {
       mockRenderer
     );
 
-    const { rerender } = render(
-      <EventModal {...mockProps} eventData={mockEventDataWithoutId} />
-    );
+    mockEventData = mockEventDataWithoutId;
+
+    const { rerender } = render(<EventModal {...mockProps} />);
 
     expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledTimes(1);
 
-    rerender(<EventModal {...mockProps} eventData={mockEventDataWithoutId} />);
+    rerender(<EventModal {...mockProps} />);
 
     expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledTimes(1);
   });
@@ -119,13 +133,15 @@ describe("EventModal", () => {
       mockRenderer
     );
 
-    const { rerender } = render(
-      <EventModal {...mockProps} eventData={mockEventDataWithoutId} />
-    );
+    mockEventData = mockEventDataWithoutId;
+
+    const { rerender } = render(<EventModal {...mockProps} />);
 
     expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledTimes(1);
 
-    rerender(<EventModal {...mockProps} eventData={mockEventDataWithId} />);
+    mockEventData = mockEventDataWithId;
+
+    rerender(<EventModal {...mockProps} />);
 
     expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledTimes(2);
   });
@@ -142,16 +158,18 @@ describe("EventModal", () => {
       mockRendererAdd
     );
 
-    const { rerender } = render(
-      <EventModal {...mockProps} eventData={mockEventDataWithoutId} />
-    );
+    mockEventData = mockEventDataWithoutId;
+
+    const { rerender } = render(<EventModal {...mockProps} />);
     expect(screen.getByText("Add Modal")).toBeInTheDocument();
 
     vi.mocked(EventModalStrategyRegistry.provideRenderer).mockReturnValueOnce(
       mockRendererEdit
     );
 
-    rerender(<EventModal {...mockProps} eventData={mockEventDataWithId} />);
+    mockEventData = mockEventDataWithId;
+
+    rerender(<EventModal {...mockProps} />);
     expect(screen.getByText("Edit Modal")).toBeInTheDocument();
   });
 });

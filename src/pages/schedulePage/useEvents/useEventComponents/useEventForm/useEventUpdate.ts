@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent } from "react";
-import { useEventDataContext } from "../../useContext/useEventDataContext";
+import { useEventDataContext } from "../../useEventDataContext/useEventDataContext";
 
-export function useEventForm() {
+export function useEventUpdate() {
   const [isShaking, setIsShaking] = useState(false);
   const { setEventData } = useEventDataContext();
 
