@@ -1,20 +1,22 @@
 .event-hover {
   position: fixed;
   z-index: 10000;
-  background: white;
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
-  min-width: 280px;
-  max-width: 350px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08);
+  min-width: 260px;
+  max-width: 360px;
+  font-size: 14px;
+  color: #333333;
   pointer-events: none;
-  animation: hoverFadeIn 0.2s ease-out;
   overflow: hidden;
+  animation: hoverFadeIn 0.15s ease-out;
 }
 
 @keyframes hoverFadeIn {
   from {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-6px);
   }
   to {
     opacity: 1;
@@ -24,31 +26,71 @@
 
 .hover-header {
   padding: 12px 16px;
-  color: white;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .hover-title {
   margin: 0;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  line-height: 1.3;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.hover-footer {
-  padding: 8px 16px;
-  background: #f0f0f0;
-  text-align: center;
-  border-top: 1px solid #e0e0e0;
+.hover {
+  padding: 12px 16px 14px;
+  background: #ffffff;
+}
+
+.view-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.view-field:last-child {
+  margin-bottom: 0;
 }
 
 .view-label {
-  font-weight: 500;
+  font-weight: 600;
+  flex-shrink: 0;
+  color: #444444;
+}
+
+.view-value {
+  flex: 1;
+  word-break: break-word;
+}
+
+.hover .view-field:last-child .view-value {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hover-footer {
+  padding: 9px 16px 11px;
+  background: #f7f7f7;
+  text-align: center;
+  border-top: 1px solid #e3e3e3;
+  font-size: 14px;
+  color: #666666;
 }
 
 @media (max-width: 768px) {
-  .event-tooltip {
-    min-width: 240px;
-    max-width: 280px;
+  .event-hover {
+    min-width: 220px;
+    max-width: 260px;
+    font-size: 13px;
   }
 }
