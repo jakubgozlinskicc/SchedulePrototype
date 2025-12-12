@@ -7,7 +7,7 @@ import { useDatePicker } from "../useCustomToolbar/useDatePicker/useDatePicker";
 import { DatePickerDropdown } from "./DatePickerDropdown";
 import { WeekStrip } from "./WeekStrip";
 import "./customToolbar.css";
-import "./datePicker.css";
+import "./datePickerDropdown.css";
 import "./weekStrip.css";
 
 type CustomToolbarProps<
