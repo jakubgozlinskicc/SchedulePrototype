@@ -1,7 +1,13 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  useMemo,
+  type ComponentType,
+} from "react";
 import type { NavigateAction } from "react-big-calendar";
 import { DatePickerStrategyRegistry } from "../../strategies/datePickerRegistry";
-import type { DatePickerConfig } from "../../types/datePickerTypes";
+import type { DatePickerDropdownProps } from "../../types/datePickerTypes";
 
 type OnNavigate = (action: NavigateAction, newDate?: Date) => void;
 
@@ -13,10 +19,10 @@ interface UseDatePickerOptions {
 interface UseDatePickerReturn {
   isDatePickerOpen: boolean;
   datePickerRef: React.RefObject<HTMLDivElement | null>;
-  config: DatePickerConfig;
   handleDateChange: (date: Date | null) => void;
   toggleDatePicker: () => void;
   closeDatePicker: () => void;
+  DatePickerComponent: ComponentType<DatePickerDropdownProps>;
 }
 
 export const useDatePicker = ({
@@ -26,9 +32,14 @@ export const useDatePicker = ({
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const datePickerRef = useRef<HTMLDivElement>(null);
 
-  const config = useMemo(
+  const strategy = useMemo(
     () => DatePickerStrategyRegistry.provideConfig(view),
     [view]
+  );
+
+  const DatePickerComponent = useMemo(
+    () => strategy.getComponent(),
+    [strategy]
   );
 
   useEffect(() => {
@@ -68,7 +79,8 @@ export const useDatePicker = ({
   return {
     isDatePickerOpen,
     datePickerRef,
-    config,
+    // config,
+    DatePickerComponent,
     handleDateChange,
     toggleDatePicker,
     closeDatePicker,

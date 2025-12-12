@@ -4,11 +4,10 @@ import { useTranslation } from "react-i18next";
 import { useTranslationContext } from "../../../../../locales/useTranslationContext";
 import { locales } from "../../../../../utils/calendarLocalizer/calendarLocalizer";
 import { useDatePicker } from "../useCustomToolbar/useDatePicker/useDatePicker";
-import { DatePickerDropdown } from "./DatePickerDropdown";
 import { WeekStrip } from "./WeekStrip";
-import "./customToolbar.css";
-import "./datePickerDropdown.css";
-import "./weekStrip.css";
+import "./CustomToolbar.css";
+import "./DatePickerDropdown.css";
+import "./WeekStrip.css";
 
 type CustomToolbarProps<
   TEvent extends object = Event,
@@ -26,9 +25,9 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
   const {
     isDatePickerOpen,
     datePickerRef,
-    config,
     handleDateChange,
     toggleDatePicker,
+    DatePickerComponent,
   } = useDatePicker({ onNavigate, view });
 
   return (
@@ -60,14 +59,13 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
               <span className="toolbar-label">{label}</span>
               <span className="calendar-icon">📅</span>
             </button>
-
-            <DatePickerDropdown
-              isOpen={isDatePickerOpen}
-              selected={date}
-              locale={locale}
-              config={config}
-              onChange={handleDateChange}
-            />
+            {isDatePickerOpen && (
+              <DatePickerComponent
+                selected={date}
+                locale={locale}
+                onChange={handleDateChange}
+              />
+            )}
           </div>
 
           <button className="nav-button" onClick={() => onNavigate("NEXT")}>
