@@ -1,0 +1,61 @@
+:root {
+  --primary: #591efd;
+  --primary-hover: #3105aa;
+  --gray-100: #f7f9fc;
+  --gray-200: #f3f4f6;
+  --gray-300: #e5e7eb;
+  --gray-400: #d1d5db;
+  --gray-900: #111827;
+  --white: #fff;
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  --radius: 6px;
+  --radius-lg: 12px;
+}
+
+.custom-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 10px 16px;
+  margin-bottom: 8px;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300);
+  border-radius: 8px;
+}
+
+.actions-buttons,
+.nav-buttons,
+.view-buttons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-button,
+.view-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.nav-button {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.nav-button:hover {
+  background: var(--primary-hover);
+}
+
+.view-button {
+  background: var(--gray-300);
+  color: var(--gray-900);
+}
+
+.view-button:hover {
+  background: var(--gray-400);
+}

@@ -108,7 +108,6 @@
   padding-left: 10px;
   border-radius: 6px;
   border: none;
-  position: relative;
   background: color-mix(in srgb, var(--event-color) 20%, transparent);
 }
 
