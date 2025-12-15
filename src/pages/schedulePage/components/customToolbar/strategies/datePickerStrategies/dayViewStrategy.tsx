@@ -3,7 +3,7 @@ import type {
   IDatePickerStrategy,
   DatePickerDropdownProps,
 } from "../../types/datePickerTypes";
-import { DayViewDatePicker } from "../../components/dayViewDatePicker";
+import { DayViewDatePicker } from "../../components/DayViewDatePicker";
 
 export class DayViewDatePickerStrategy implements IDatePickerStrategy {
   canSupport(view: string): boolean {

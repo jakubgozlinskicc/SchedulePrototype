@@ -110,6 +110,7 @@ function SchedulePage() {
 
       {isModalOpen && (
         <EventModal
+          repository={eventRepository}
           isShaking={isShaking}
           onChange={handleChange}
           onClose={closeModal}

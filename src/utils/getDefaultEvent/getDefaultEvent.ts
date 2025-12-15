@@ -7,4 +7,8 @@ export const getDefaultEvent = (): Event => ({
   start: new Date(),
   end: new Date(),
   color: "#0000FF",
+  recurrenceRule: {
+    type: "none",
+    interval: 1,
+  },
 });

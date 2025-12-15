@@ -15,5 +15,31 @@
   "week": "Week",
   "day": "Day",
   "hover-footer": "Click to edit or see full description",
-  "missing-description": "Missing description"
+  "missing-description": "Missing description",
+  "recurrence-type": "Recurrence",
+  "recurrence-none": "Do not repeat",
+  "recurrence-daily": "Daily",
+  "recurrence-weekly": "Weekly",
+  "recurrence-monthly": "Monthly",
+  "recurrence-yearly": "Yearly",
+
+  "recurrence-interval": "Every",
+  "recurrence-interval-daily-unit": "days",
+  "recurrence-interval-weekly-unit": "weeks",
+  "recurrence-interval-monthly-unit": "months",
+  "recurrence-interval-yearly-unit": "years",
+
+  "recurrence-end-type": "End recurrence",
+  "recurrence-end-never": "Never",
+  "recurrence-end-date": "On date",
+  "recurrence-end-count": "After number of occurrences",
+
+  "recurrence-end-date-label": "End Date",
+  "recurrence-count-label": "Number of occurrences",
+
+  "modal_recurring_title": "Editing Recurring Event",
+  "modal_recurring_prompt": "This is a recurring event. What do you want to edit?",
+  "btn_edit_single": "This event only",
+  "btn_edit_all": "All events in the series",
+  "edit": "Edit"
 }

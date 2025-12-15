@@ -3,7 +3,7 @@ import type {
   IDatePickerStrategy,
   DatePickerDropdownProps,
 } from "../../types/datePickerTypes";
-import { MonthViewDatePicker } from "../../components/monthViewDatePicker";
+import { MonthViewDatePicker } from "../../components/MonthViewDatePicker";
 
 export class MonthViewDatePickerStrategy implements IDatePickerStrategy {
   canSupport(view: string): boolean {

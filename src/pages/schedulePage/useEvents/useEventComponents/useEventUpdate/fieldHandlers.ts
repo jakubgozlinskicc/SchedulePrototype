@@ -1,4 +1,4 @@
-import type { Event } from "../../../../../db/scheduleDb";
+import type { Event, RecurrenceType } from "../../../../../db/scheduleDb";
 
 export type TriggerShake = () => void;
 
@@ -30,6 +30,72 @@ export const fieldHandlers: Record<string, FieldHandler> = {
     }
 
     return { ...prev, end: newDate };
+  },
+
+  recurrenceType: (prev, _name, value) => {
+    const type = value as RecurrenceType;
+
+    return {
+      ...prev,
+      recurrenceRule: {
+        type,
+        interval: prev.recurrenceRule?.interval ?? 1,
+        endDate: prev.recurrenceRule?.endDate,
+        count: prev.recurrenceRule?.count,
+      },
+    };
+  },
+
+  recurrenceInterval: (prev, _name, value) => {
+    const interval = parseInt(value) || 1;
+
+    return {
+      ...prev,
+      recurrenceRule: {
+        type: prev.recurrenceRule?.type ?? "none",
+        interval: Math.max(1, Math.min(100, interval)),
+        endDate: prev.recurrenceRule?.endDate,
+        count: prev.recurrenceRule?.count,
+      },
+    };
+  },
+
+  recurrenceEndType: (prev, _name, value) => {
+    return {
+      ...prev,
+      recurrenceRule: {
+        type: prev.recurrenceRule?.type ?? "none",
+        interval: prev.recurrenceRule?.interval ?? 1,
+        endDate: value === "date" ? new Date() : undefined,
+        count: value === "count" ? 10 : undefined,
+      },
+    };
+  },
+
+  recurrenceEndDate: (prev, _name, value) => {
+    return {
+      ...prev,
+      recurrenceRule: {
+        type: prev.recurrenceRule?.type ?? "none",
+        interval: prev.recurrenceRule?.interval ?? 1,
+        endDate: value ? new Date(value) : undefined,
+        count: undefined,
+      },
+    };
+  },
+
+  recurrenceCount: (prev, _name, value) => {
+    const count = parseInt(value) || 1;
+
+    return {
+      ...prev,
+      recurrenceRule: {
+        type: prev.recurrenceRule?.type ?? "none",
+        interval: prev.recurrenceRule?.interval ?? 1,
+        endDate: undefined,
+        count: Math.max(1, Math.min(365, count)),
+      },
+    };
   },
 };
 

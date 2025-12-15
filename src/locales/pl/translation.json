@@ -15,5 +15,31 @@
   "week": "Tydzień",
   "day": "Dzień",
   "hover-footer": "Kliknij aby edytować lub zobaczyć pełny opis",
-  "missing-description": "Brak opisu"
+  "missing-description": "Brak opisu",
+  "recurrence-type": "Powtarzanie",
+  "recurrence-none": "Nie powtarzaj",
+  "recurrence-daily": "Codziennie",
+  "recurrence-weekly": "Co tydzień",
+  "recurrence-monthly": "Co miesiąc",
+  "recurrence-yearly": "Co rok",
+
+  "recurrence-interval": "Co ile",
+  "recurrence-interval-daily-unit": "dni",
+  "recurrence-interval-weekly-unit": "tygodni",
+  "recurrence-interval-monthly-unit": "miesięcy",
+  "recurrence-interval-yearly-unit": "lat",
+
+  "recurrence-end-type": "Zakończ powtarzanie",
+  "recurrence-end-never": "Nigdy",
+  "recurrence-end-date": "W dniu",
+  "recurrence-end-count": "Po liczbie wystąpień",
+
+  "recurrence-end-date-label": "Data zakończenia",
+  "recurrence-count-label": "Liczba wystąpień",
+
+  "modal_recurring_title": "Edycja powtarzającego się wydarzenia",
+  "modal_recurring_prompt": "To jest powtarzające się wydarzenie. Co chcesz edytować?",
+  "btn_edit_single": "To wydarzenie",
+  "btn_edit_all": "Wszystkie wydarzenia",
+  "edit": "Edytuj"
 }

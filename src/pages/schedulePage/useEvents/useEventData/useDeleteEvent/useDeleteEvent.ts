@@ -11,16 +11,30 @@ export function useDeleteEvent(
   const { reloadEvents } = useReloadEvents(repository);
 
   const deleteCurrentEvent = useCallback(async () => {
-    if (!eventData.id) return;
-
     try {
-      await repository.deleteEvent(eventData.id);
+      if (eventData.recurringEventId && !eventData.id) {
+        const allEvents = await repository.getEvents();
+        const parentEvent = allEvents.find(
+          (e) => e.id === eventData.recurringEventId
+        );
+
+        if (parentEvent) {
+          const cancelledDates = parentEvent.cancelledDates ?? [];
+          const dateToCancel = eventData.originalStart ?? eventData.start;
+          cancelledDates.push(dateToCancel.getTime());
+
+          await repository.editEvent(parentEvent.id!, { cancelledDates });
+        }
+      } else if (eventData.id) {
+        await repository.deleteEvent(eventData.id);
+      }
+
       await reloadEvents();
       closeModal();
     } catch (error) {
       console.error("Error during deleting event:", error);
     }
-  }, [eventData.id, repository, reloadEvents, closeModal]);
+  }, [eventData, repository, reloadEvents, closeModal]);
 
   return { deleteCurrentEvent };
 }

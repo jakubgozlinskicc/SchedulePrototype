@@ -4,10 +4,14 @@ import type { Event } from "../../../../db/scheduleDb";
 export interface EventModalProps {
   eventData: Event;
   isShaking?: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onChange: (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => void;
   onClose: () => void;
   onSubmit: (e: FormEvent) => void;
   onRequestDelete: () => void | Promise<void>;
+  onEditSingle?: () => void;
+  onEditAll?: () => void;
 }
 
 export interface IEventModalStrategy {
