@@ -13,7 +13,6 @@ export interface Event {
   recurrenceRule?: RecurrenceRule;
   recurringEventId?: number;
   originalStart?: Date;
-  isException?: boolean;
   cancelledDates?: number[];
 }
 

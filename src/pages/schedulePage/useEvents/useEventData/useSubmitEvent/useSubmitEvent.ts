@@ -15,16 +15,10 @@ export function useSubmitEvent(
       e.preventDefault();
 
       try {
-        if (
-          eventData.isException &&
-          eventData.recurringEventId &&
-          !eventData.id
-        ) {
+        if (eventData.recurringEventId && !eventData.id) {
           await repository.addEvent({
             ...eventData,
           });
-        } else if (eventData.isException && eventData.id) {
-          await repository.editEvent(eventData.id, eventData);
         } else if (eventData.id) {
           await repository.editEvent(eventData.id, eventData);
         } else {

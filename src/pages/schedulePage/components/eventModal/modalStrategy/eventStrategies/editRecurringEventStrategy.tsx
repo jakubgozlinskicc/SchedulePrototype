@@ -8,7 +8,7 @@ export class EditRecurringEventStrategy implements IEventModalStrategy {
   canSupport(eventData: Event): boolean {
     return (
       (!eventData.id && !!eventData.recurringEventId) ||
-      (!!eventData.id && !!eventData.isException)
+      (!!eventData.id && !!eventData.recurringEventId)
     );
   }
 

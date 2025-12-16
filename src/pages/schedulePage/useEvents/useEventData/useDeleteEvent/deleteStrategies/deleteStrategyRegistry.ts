@@ -2,13 +2,11 @@ import type { Event } from "../../../../../../db/scheduleDb";
 import type { IEventRepository } from "../../../IEventRepository";
 import type { IDeleteStrategy } from "./IDeleteStrategy";
 import { DeleteRecurringParentStrategy } from "./DeleteRecurringParentStrategy";
-import { DeleteExceptionStrategy } from "./DeleteExceptionStrategy";
 import { DeleteVirtualOccurrenceStrategy } from "./DeleteVirtualOccurrenceStrategy";
 import { DeleteRegularEventStrategy } from "./DeleteRegularEventStrategy";
 
 const strategies: IDeleteStrategy[] = [
   new DeleteRecurringParentStrategy(),
-  new DeleteExceptionStrategy(),
   new DeleteVirtualOccurrenceStrategy(),
   new DeleteRegularEventStrategy(),
 ];
