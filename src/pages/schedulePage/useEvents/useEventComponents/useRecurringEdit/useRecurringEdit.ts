@@ -16,22 +16,35 @@ export function useRecurringEdit(repository: IEventRepository) {
         (e) => e.id === eventData.recurringEventId
       );
       if (parentEvent) {
+        console.log("tutej");
         const cancelledDates = parentEvent.cancelledDates ?? [];
         const dateToCancel = eventData.originalStart ?? eventData.start;
         cancelledDates.push(dateToCancel.getTime());
 
         await repository.editEvent(parentEvent.id!, { cancelledDates });
+      } else {
+        const currentEventId = eventData.id;
+        if (!currentEventId) return;
+
+        const { id, ...parentCopy } = eventData;
+
+        const nextStart = new Date(eventData.start);
+
+        await repository.addEvent({
+          ...parentCopy,
+          start: nextStart,
+          cancelledDates: [],
+        });
+
+        await repository.editEvent(currentEventId, {
+          recurrenceRule: { type: "none", interval: 1 },
+          cancelledDates: [],
+        });
       }
     } catch (error) {
       console.error("Error loading parent event:", error);
     }
-  }, [
-    repository,
-    setEventData,
-    eventData.recurringEventId,
-    eventData.originalStart,
-    eventData.start,
-  ]);
+  }, [setEventData, repository, eventData]);
 
   const handleEditAll = useCallback(async () => {
     if (!eventData.recurringEventId) return;
