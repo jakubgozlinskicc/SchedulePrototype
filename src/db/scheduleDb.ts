@@ -1,14 +1,6 @@
 import Dexie from "dexie";
 import type { Table } from "dexie";
-
-export type RecurrenceType = "none" | "daily" | "weekly" | "monthly" | "yearly";
-
-export interface RecurrenceRule {
-  type: RecurrenceType;
-  interval: number;
-  endDate?: Date;
-  count?: number;
-}
+import type { RecurrenceRule } from "../pages/schedulePage/recurrence/recurrenceTypes";
 
 export interface Event {
   id?: number;

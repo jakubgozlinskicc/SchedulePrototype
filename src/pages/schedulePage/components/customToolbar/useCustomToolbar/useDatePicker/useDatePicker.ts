@@ -79,7 +79,6 @@ export const useDatePicker = ({
   return {
     isDatePickerOpen,
     datePickerRef,
-    // config,
     DatePickerComponent,
     handleDateChange,
     toggleDatePicker,

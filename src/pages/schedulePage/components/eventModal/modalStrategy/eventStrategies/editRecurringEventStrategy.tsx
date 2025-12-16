@@ -7,12 +7,19 @@ import { EditRecurringEventModal } from "../../modalComponents/editRecurringEven
 export class EditRecurringEventStrategy implements IEventModalStrategy {
   canSupport(eventData: Event): boolean {
     return (
-      !!eventData.recurringEventId ||
-      (!!eventData.id && eventData.recurrenceRule?.type !== "none")
+      (!eventData.id && !!eventData.recurringEventId) ||
+      (!!eventData.id && !!eventData.isException)
     );
   }
 
   render(commonProps: EventModalProps): ReactNode {
-    return <EditRecurringEventModal {...commonProps} />;
+    return (
+      <EditRecurringEventModal
+        {...commonProps}
+        onRequestDelete={commonProps.onRequestDelete ?? (() => {})}
+        onEditSingle={commonProps.onEditSingle ?? (() => {})}
+        onEditAll={commonProps.onEditAll ?? (() => {})}
+      />
+    );
   }
 }

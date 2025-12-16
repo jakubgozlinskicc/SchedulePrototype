@@ -1,21 +1,16 @@
-import type { FormEvent, ChangeEvent } from "react";
-import type { Event } from "../../../../../db/scheduleDb";
+import type { EventModalProps } from "../eventModalTypes";
 import { BaseEventModal } from "./baseEventModal";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 
-interface EditRecurringEventModalProps {
-  eventData: Event;
-  isShaking?: boolean;
-  onChange: (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => void;
-  onClose: () => void;
-  onSubmit: (e: FormEvent) => void;
-  onRequestDelete: () => void | Promise<void>;
-  onEditSingle?: () => void;
-  onEditAll?: () => void;
-}
+type EditRecurringEventModalProps = Pick<
+  EventModalProps,
+  "eventData" | "isShaking" | "onChange" | "onClose" | "onSubmit"
+> & {
+  onRequestDelete: NonNullable<EventModalProps["onRequestDelete"]>;
+  onEditSingle: NonNullable<EventModalProps["onEditSingle"]>;
+  onEditAll: NonNullable<EventModalProps["onEditAll"]>;
+};
 
 export function EditRecurringEventModal({
   eventData,
@@ -52,7 +47,7 @@ export function EditRecurringEventModal({
                 className="btn btn-primary"
                 onClick={() => {
                   setShowChoice(false);
-                  onEditSingle?.();
+                  onEditSingle();
                 }}
               >
                 {t("btn_edit_single")}
@@ -62,7 +57,7 @@ export function EditRecurringEventModal({
                 className="btn btn-primary"
                 onClick={() => {
                   setShowChoice(false);
-                  onEditAll?.();
+                  onEditAll();
                 }}
               >
                 {t("btn_edit_all")}
@@ -93,7 +88,7 @@ export function EditRecurringEventModal({
       <button type="button" className="btn btn-secondary" onClick={onClose}>
         {t("btn_cancel")}
       </button>
-      <button type="submit" className="btn btn-primary" onClick={onSubmit}>
+      <button type="submit" className="btn btn-primary">
         {t("btn_save_changes")}
       </button>
     </BaseEventModal>

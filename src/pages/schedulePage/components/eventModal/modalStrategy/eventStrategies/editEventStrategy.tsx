@@ -10,6 +10,11 @@ export class EditEventStrategy implements IEventModalStrategy {
   }
 
   render(commonProps: EventModalProps): ReactNode {
-    return <EditEventModal {...commonProps} />;
+    return (
+      <EditEventModal
+        {...commonProps}
+        onRequestDelete={commonProps.onRequestDelete ?? (() => {})}
+      />
+    );
   }
 }

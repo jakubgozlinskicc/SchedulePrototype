@@ -1,15 +1,11 @@
-import type { FormEvent, ChangeEvent } from "react";
-import type { Event } from "../../../../../db/scheduleDb";
+import type { EventModalProps } from "../eventModalTypes";
 import { BaseEventModal } from "./baseEventModal";
 import { useTranslation } from "react-i18next";
 
-interface AddEventModalProps {
-  eventData: Event;
-  isShaking?: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onClose: () => void;
-  onSubmit: (e: FormEvent) => void;
-}
+type AddEventModalProps = Pick<
+  EventModalProps,
+  "eventData" | "isShaking" | "onChange" | "onClose" | "onSubmit"
+>;
 
 export function AddEventModal({
   eventData,
@@ -19,6 +15,7 @@ export function AddEventModal({
   onSubmit,
 }: AddEventModalProps) {
   const { t } = useTranslation();
+
   return (
     <BaseEventModal
       title={t("modal_add_title")}
@@ -31,7 +28,7 @@ export function AddEventModal({
       <button type="button" className="btn btn-secondary" onClick={onClose}>
         {t("btn_cancel")}
       </button>
-      <button type="submit" className="btn btn-primary" onClick={onSubmit}>
+      <button type="submit" className="btn btn-primary">
         {t("btn-add")}
       </button>
     </BaseEventModal>

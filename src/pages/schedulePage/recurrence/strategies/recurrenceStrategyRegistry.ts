@@ -30,7 +30,6 @@ export const RecurrenceStrategyRegistry = {
       throw new Error(
         `No strategy found for recurrence type: ${baseEvent.recurrenceRule.type}`
       );
-      return [baseEvent];
     }
 
     return strategy.generateOccurrences(

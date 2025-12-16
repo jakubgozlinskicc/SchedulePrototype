@@ -1,45 +1,15 @@
-import type { IRecurrenceStrategy } from "../../recurrenceTypes";
-import type { Event, RecurrenceRule } from "../../../../../db/scheduleDb";
+import { BaseRecurrenceStrategy } from "./BaseRecurrenceStartegy";
 
-export class YearlyRecurrenceStrategy implements IRecurrenceStrategy {
+export class YearlyRecurrenceStrategy extends BaseRecurrenceStrategy {
   canSupport(type: string): boolean {
     return type === "yearly";
   }
 
-  generateOccurrences(
-    baseEvent: Event,
-    rule: RecurrenceRule,
-    rangeStart: Date,
-    rangeEnd: Date
-  ): Event[] {
-    const occurrences: Event[] = [];
-    const eventDuration = baseEvent.end.getTime() - baseEvent.start.getTime();
+  protected advanceDate(date: Date, interval: number): void {
+    date.setFullYear(date.getFullYear() + interval);
+  }
 
-    const currentDate = new Date(baseEvent.start);
-    let count = 0;
-    const maxOccurrences = rule.count ?? 10;
-
-    while (currentDate <= rangeEnd && count < maxOccurrences) {
-      if (rule.endDate && currentDate > rule.endDate) break;
-
-      if (currentDate >= rangeStart) {
-        const occurrenceStart = new Date(currentDate);
-        const occurrenceEnd = new Date(currentDate.getTime() + eventDuration);
-
-        occurrences.push({
-          ...baseEvent,
-          id: undefined,
-          start: occurrenceStart,
-          end: occurrenceEnd,
-          recurringEventId: baseEvent.id,
-          originalStart: occurrenceStart,
-        });
-      }
-
-      currentDate.setFullYear(currentDate.getFullYear() + rule.interval);
-      count++;
-    }
-
-    return occurrences;
+  protected getDefaultMaxOccurrences(): number {
+    return 10;
   }
 }

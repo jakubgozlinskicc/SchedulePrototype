@@ -1,7 +1,7 @@
-import type { Event } from "../../../../../db/scheduleDb";
+import type { BaseEventModalProps } from "../eventModalTypes";
 import { toDateTimeLocal } from "../../../../../utils/toDateTimeLocal/toDateTimeLocal";
-import type { FormEvent, ChangeEvent, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { RecurrenceFields } from "./recurrenceFields/recurrenceFields";
 
 export function BaseEventModal({
   title,
@@ -10,29 +10,10 @@ export function BaseEventModal({
   onChange,
   onSubmit,
   children,
-}: {
-  title: string;
-  eventData: Event;
-  isShaking?: boolean;
-  onChange: (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => void;
-  onClose: () => void;
-  onSubmit: (e: FormEvent) => void;
-  children: ReactNode;
-}) {
+}: BaseEventModalProps) {
   const { t } = useTranslation();
 
   const recurrenceType = eventData.recurrenceRule?.type ?? "none";
-  const recurrenceInterval = eventData.recurrenceRule?.interval ?? 1;
-  const recurrenceEndDate = eventData.recurrenceRule?.endDate;
-  const recurrenceCount = eventData.recurrenceRule?.count;
-
-  const endType = recurrenceEndDate
-    ? "date"
-    : recurrenceCount
-    ? "count"
-    : "never";
 
   return (
     <div className="modal-backdrop">
@@ -54,7 +35,7 @@ export function BaseEventModal({
           </div>
 
           <div className="form-field">
-            <label id="desctription" className="form-label">
+            <label id="description" className="form-label">
               {t("description")}
             </label>
             <textarea
@@ -124,83 +105,10 @@ export function BaseEventModal({
             </select>
           </div>
 
-          {recurrenceType !== "none" && (
-            <>
-              <div className="form-field">
-                <label id="recurrence-interval" className="form-label">
-                  {t("recurrence-interval")}{" "}
-                  {recurrenceType === "daily"
-                    ? t("recurrence-interval-daily-unit")
-                    : recurrenceType === "weekly"
-                    ? t("recurrence-interval-weekly-unit")
-                    : recurrenceType === "monthly"
-                    ? t("recurrence-interval-monthly-unit")
-                    : t("recurrence-interval-yearly-unit")}
-                </label>
-                <input
-                  type="number"
-                  name="recurrenceInterval"
-                  value={recurrenceInterval}
-                  onChange={onChange}
-                  className="form-input"
-                  min="1"
-                  max="100"
-                />
-              </div>
-
-              <div className="form-field">
-                <label id="recurrence-end-type" className="form-label">
-                  {t("recurrence-end-type")}
-                </label>
-                <select
-                  name="recurrenceEndType"
-                  value={endType}
-                  onChange={onChange}
-                  className="form-input"
-                >
-                  <option value="never">{t("recurrence-end-never")}</option>
-                  <option value="date">{t("recurrence-end-date")}</option>
-                  <option value="count">{t("recurrence-end-count")}</option>
-                </select>
-              </div>
-
-              {endType === "date" && (
-                <div className="form-field">
-                  <label id="recurrence-end-date" className="form-label">
-                    {t("recurrence-end-date-label")}
-                  </label>
-                  <input
-                    type="date"
-                    name="recurrenceEndDate"
-                    value={
-                      recurrenceEndDate
-                        ? toDateTimeLocal(recurrenceEndDate)
-                        : ""
-                    }
-                    onChange={onChange}
-                    className="form-input"
-                  />
-                </div>
-              )}
-
-              {endType === "count" && (
-                <div className="form-field">
-                  <label id="recurrence-count" className="form-label">
-                    {t("recurrence-count-label")}
-                  </label>
-                  <input
-                    type="number"
-                    name="recurrenceCount"
-                    value={recurrenceCount ?? 10}
-                    onChange={onChange}
-                    className="form-input"
-                    min="1"
-                    max="365"
-                  />
-                </div>
-              )}
-            </>
-          )}
+          <RecurrenceFields
+            recurrenceRule={eventData.recurrenceRule}
+            onChange={onChange}
+          />
 
           <div className="modal-actions">{children}</div>
         </form>
