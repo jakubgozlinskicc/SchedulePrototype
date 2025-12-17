@@ -8,18 +8,20 @@ export function useDeleteEvent(
   closeModal: () => void,
   repository: IEventRepository
 ) {
-  const { eventData } = useEventDataContext();
+  const { eventData, isDeleteAll } = useEventDataContext();
   const { reloadEvents } = useReloadEvents(repository);
 
   const deleteCurrentEvent = useCallback(async () => {
     try {
-      await DeleteStrategyRegistry.executeDelete(eventData, repository);
+      await DeleteStrategyRegistry.executeDelete(eventData, repository, {
+        isDeleteAll,
+      });
       await reloadEvents();
       closeModal();
     } catch (error) {
       console.error("Error during deleting event:", error);
     }
-  }, [eventData, repository, reloadEvents, closeModal]);
+  }, [eventData, repository, isDeleteAll, reloadEvents, closeModal]);
 
   return { deleteCurrentEvent };
 }

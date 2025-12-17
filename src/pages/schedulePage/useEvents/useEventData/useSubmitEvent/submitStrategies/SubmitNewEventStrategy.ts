@@ -1,13 +1,13 @@
 import type { Event } from "../../../../../../db/scheduleDb";
 import type { IEventRepository } from "../../../IEventRepository";
-import type { IDeleteStrategy } from "./IDeleteStrategy";
+import type { ISubmitStrategy } from "./ISubmitStrategy";
 
-export class DeleteRegularEventStrategy implements IDeleteStrategy {
+export class SubmitNewEventStrategy implements ISubmitStrategy {
   canExecute(eventData: Event): boolean {
-    return !!eventData.id && eventData.recurrenceRule?.type === "none";
+    return !eventData.id && !eventData.recurringEventId;
   }
 
   async execute(eventData: Event, repository: IEventRepository): Promise<void> {
-    await repository.deleteEvent(eventData.id!);
+    await repository.addEvent(eventData);
   }
 }

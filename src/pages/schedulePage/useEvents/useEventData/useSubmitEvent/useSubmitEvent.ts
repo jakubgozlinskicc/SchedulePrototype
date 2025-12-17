@@ -1,7 +1,9 @@
+// useSubmitEvent.ts
 import { useCallback, type FormEvent } from "react";
 import type { IEventRepository } from "../../IEventRepository";
 import { useEventDataContext } from "../../useEventDataContext/useEventDataContext";
 import { useReloadEvents } from "../useReloadEvents/useReloadEvents";
+import { SubmitStrategyRegistry } from "./submitStrategies/submitStrategyRegistry";
 
 export function useSubmitEvent(
   closeModal: () => void,
@@ -15,16 +17,7 @@ export function useSubmitEvent(
       e.preventDefault();
 
       try {
-        if (eventData.recurringEventId && !eventData.id) {
-          await repository.addEvent({
-            ...eventData,
-          });
-        } else if (eventData.id) {
-          await repository.editEvent(eventData.id, eventData);
-        } else {
-          await repository.addEvent(eventData);
-        }
-
+        await SubmitStrategyRegistry.executeSubmit(eventData, repository);
         await reloadEvents();
         closeModal();
       } catch (error) {

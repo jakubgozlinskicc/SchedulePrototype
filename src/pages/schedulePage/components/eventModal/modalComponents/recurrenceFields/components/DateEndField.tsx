@@ -8,6 +8,10 @@ export const DateEndField = ({
 }: EndTypeFieldProps) => {
   const { t } = useTranslation();
 
+  const dateValue = recurrenceEndDate
+    ? toDateTimeLocal(recurrenceEndDate).slice(0, 10)
+    : "";
+
   return (
     <div className="form-field">
       <label id="recurrence-end-date" className="form-label">
@@ -16,7 +20,7 @@ export const DateEndField = ({
       <input
         type="date"
         name="recurrenceEndDate"
-        value={recurrenceEndDate ? toDateTimeLocal(recurrenceEndDate) : ""}
+        value={dateValue}
         onChange={onChange}
         className="form-input"
       />

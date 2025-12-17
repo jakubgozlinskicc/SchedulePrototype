@@ -10,7 +10,6 @@ export function expandRecurringEvent(event: Event, range: DateRange): Event[] {
     range.start,
     range.end
   );
-
   return occurrences.filter((occurrence) => {
     const occurrenceTime = occurrence.originalStart?.getTime();
     return !occurrenceTime || !cancelledDates.includes(occurrenceTime);

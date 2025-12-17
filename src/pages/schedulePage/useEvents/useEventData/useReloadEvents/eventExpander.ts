@@ -17,6 +17,5 @@ export function expandAllEvents(baseEvents: Event[]): Event[] {
       result.push(event);
     }
   }
-
   return result;
 }

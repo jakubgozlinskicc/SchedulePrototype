@@ -1,10 +1,14 @@
 import type { Event } from "../../../../../../db/scheduleDb";
 import type { IEventRepository } from "../../../IEventRepository";
-import type { IDeleteStrategy } from "./IDeleteStrategy";
+import type { IDeleteStrategy, DeleteOptions } from "./IDeleteStrategy";
 
 export class DeleteVirtualOccurrenceStrategy implements IDeleteStrategy {
-  canSupport(eventData: Event): boolean {
-    return !eventData.id && !!eventData.recurringEventId;
+  canExecute(eventData: Event, options?: DeleteOptions): boolean {
+    return (
+      !eventData.id &&
+      !!eventData.recurringEventId &&
+      options?.isDeleteAll === false
+    );
   }
 
   async execute(eventData: Event, repository: IEventRepository): Promise<void> {

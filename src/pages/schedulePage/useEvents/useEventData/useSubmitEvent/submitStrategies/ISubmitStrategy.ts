@@ -1,11 +1,7 @@
 import type { Event } from "../../../../../../db/scheduleDb";
 import type { IEventRepository } from "../../../IEventRepository";
 
-export interface IDeleteStrategy {
-  canExecute(eventData: Event, options?: DeleteOptions): boolean;
+export interface ISubmitStrategy {
+  canExecute(eventData: Event): boolean;
   execute(eventData: Event, repository: IEventRepository): Promise<void>;
 }
-
-export type DeleteOptions = {
-  isDeleteAll?: boolean;
-};
