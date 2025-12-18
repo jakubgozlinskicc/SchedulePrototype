@@ -29,7 +29,6 @@ export async function setNewParentEvent(
     ) {
       parentCopy.recurrenceRule.count -= nextInstance.index;
     }
-    console.log(parentCopy.recurrenceRule?.count);
     await repository.addEvent({
       ...parentCopy,
       start: nextInstance.event.start,

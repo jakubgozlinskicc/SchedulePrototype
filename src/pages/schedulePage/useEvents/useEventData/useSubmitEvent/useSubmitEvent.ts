@@ -1,9 +1,8 @@
-// useSubmitEvent.ts
 import { useCallback, type FormEvent } from "react";
 import type { IEventRepository } from "../../IEventRepository";
 import { useEventDataContext } from "../../useEventDataContext/useEventDataContext";
 import { useReloadEvents } from "../useReloadEvents/useReloadEvents";
-import { SubmitStrategyRegistry } from "./submitStrategies/submitStrategyRegistry";
+import { SubmitStrategyRegistry } from "./submitStrategies/SubmitStrategyRegistry";
 
 export function useSubmitEvent(
   closeModal: () => void,

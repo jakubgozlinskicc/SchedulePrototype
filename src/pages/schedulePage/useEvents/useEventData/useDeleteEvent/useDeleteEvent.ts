@@ -8,7 +8,7 @@ export function useDeleteEvent(
   closeModal: () => void,
   repository: IEventRepository
 ) {
-  const { eventData, isDeleteAll } = useEventDataContext();
+  const { eventData, isDeleteAll, setIsDeleteAll } = useEventDataContext();
   const { reloadEvents } = useReloadEvents(repository);
 
   const deleteCurrentEvent = useCallback(async () => {
@@ -17,11 +17,19 @@ export function useDeleteEvent(
         isDeleteAll,
       });
       await reloadEvents();
+      setIsDeleteAll(false);
       closeModal();
     } catch (error) {
       console.error("Error during deleting event:", error);
     }
-  }, [eventData, repository, isDeleteAll, reloadEvents, closeModal]);
+  }, [
+    eventData,
+    repository,
+    isDeleteAll,
+    reloadEvents,
+    setIsDeleteAll,
+    closeModal,
+  ]);
 
   return { deleteCurrentEvent };
 }
