@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import type { Event } from "../../../../db/scheduleDb";
 import "./eventHover.css";
 import { getTextColor } from "../../../../utils/getTextColor/getTextColor";
@@ -10,7 +9,7 @@ interface EventHoverProps {
 }
 
 export function EventHover({ event, position }: EventHoverProps) {
-  const adjustedPosition = useMemo(() => {
+  const adjustedPosition = (() => {
     const hover = document.querySelector(".event-hover");
     if (!hover) return position;
 
@@ -28,7 +27,7 @@ export function EventHover({ event, position }: EventHoverProps) {
       newY = position.y - rect.height - 15;
     }
     return { x: newX, y: newY };
-  }, [position]);
+  })();
 
   const textColor = getTextColor(event.color);
   const { t } = useTranslation();

@@ -1,4 +1,4 @@
-import { useMemo, type ComponentType } from "react";
+import type { ComponentType } from "react";
 import { EndTypeStrategyRegistry } from "./endTypeStrategies/endTypeStrategyRegistry";
 import type { RecurrenceRule } from "../../../../recurrence/recurrenceTypes";
 import type {
@@ -28,13 +28,10 @@ export const useRecurrenceField = ({
   const recurrenceEndDate = recurrenceRule?.endDate;
   const recurrenceCount = recurrenceRule?.count;
 
-  const strategy = useMemo(
-    () => EndTypeStrategyRegistry.deriveFromRule(recurrenceRule),
-    [recurrenceRule]
-  );
+  const strategy = EndTypeStrategyRegistry.deriveFromRule(recurrenceRule);
 
   const endType = strategy.type;
-  const EndTypeComponent = useMemo(() => strategy.getComponent(), [strategy]);
+  const EndTypeComponent = strategy.getComponent();
 
   return {
     recurrenceType,

@@ -1,18 +1,17 @@
-import { useCallback } from "react";
 import { useEventDataContext } from "../../useEventDataContext/useEventDataContext";
 import type { IEventRepository } from "../../IEventRepository";
 
 export function useRecurringEdit(repository: IEventRepository) {
   const { eventData, setEventData, setIsDeleteAll } = useEventDataContext();
 
-  const handleEditSingle = useCallback(() => {
+  const handleEditSingle = () => {
     setIsDeleteAll(false);
     setEventData((prev) => ({
       ...prev,
     }));
-  }, [setEventData, setIsDeleteAll]);
+  };
 
-  const handleEditAll = useCallback(async () => {
+  const handleEditAll = async () => {
     setIsDeleteAll(true);
 
     if (!eventData.recurringEventId) return;
@@ -28,7 +27,7 @@ export function useRecurringEdit(repository: IEventRepository) {
     } catch (error) {
       console.error("Error loading parent event:", error);
     }
-  }, [eventData.recurringEventId, repository, setEventData, setIsDeleteAll]);
+  };
 
   return {
     handleEditSingle,

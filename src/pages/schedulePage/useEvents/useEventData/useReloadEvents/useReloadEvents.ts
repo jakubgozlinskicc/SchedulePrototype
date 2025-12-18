@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import type { IEventRepository } from "../../IEventRepository";
 import { useEventDataContext } from "../../useEventDataContext/useEventDataContext";
 import { expandAllEvents } from "./eventExpander";
@@ -6,7 +5,7 @@ import { expandAllEvents } from "./eventExpander";
 export function useReloadEvents(repository: IEventRepository) {
   const { setEvents } = useEventDataContext();
 
-  const reloadEvents = useCallback(async () => {
+  const reloadEvents = async () => {
     try {
       const baseEvents = await repository.getEvents();
       const expandedEvents = expandAllEvents(baseEvents);
@@ -14,7 +13,7 @@ export function useReloadEvents(repository: IEventRepository) {
     } catch (error) {
       console.error("Error during reloading events:", error);
     }
-  }, [repository, setEvents]);
+  };
 
   return { reloadEvents };
 }

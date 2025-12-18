@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import type { IEventRepository } from "../../IEventRepository";
 import { useEventDataContext } from "../../useEventDataContext/useEventDataContext";
 import { useReloadEvents } from "../useReloadEvents/useReloadEvents";
@@ -11,7 +10,7 @@ export function useDeleteEvent(
   const { eventData, isDeleteAll, setIsDeleteAll } = useEventDataContext();
   const { reloadEvents } = useReloadEvents(repository);
 
-  const deleteCurrentEvent = useCallback(async () => {
+  const deleteCurrentEvent = async () => {
     try {
       await DeleteStrategyRegistry.executeDelete(eventData, repository, {
         isDeleteAll,
@@ -22,14 +21,7 @@ export function useDeleteEvent(
     } catch (error) {
       console.error("Error during deleting event:", error);
     }
-  }, [
-    eventData,
-    repository,
-    isDeleteAll,
-    reloadEvents,
-    setIsDeleteAll,
-    closeModal,
-  ]);
+  };
 
   return { deleteCurrentEvent };
 }
