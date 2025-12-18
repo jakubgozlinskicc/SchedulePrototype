@@ -7,7 +7,6 @@ import { DropResizeVirtualOccurrenceStrategy } from "./dropResizeVirtualOccurenc
 
 const strategies: IDropResizeStrategy[] = [
   new DropResizeVirtualOccurrenceStrategy(),
-
   new DropResizeParentStrategy(),
   new DropResizeRegularEventStrategy(),
 ];

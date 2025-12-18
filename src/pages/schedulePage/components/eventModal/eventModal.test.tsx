@@ -49,6 +49,8 @@ describe("EventModal", () => {
     onClose: vi.fn(),
     onSubmit: vi.fn(),
     onRequestDelete: vi.fn(),
+    onEditAll: vi.fn(),
+    onEditSingle: vi.fn(),
   };
 
   beforeEach(() => {
@@ -125,6 +127,31 @@ describe("EventModal", () => {
     expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledTimes(1);
   });
 
+  it("It should use same renderer instance when eventData hasn't changed", () => {
+    const mockRenderer = {
+      render: vi.fn().mockReturnValue(<div>Mock Modal</div>),
+    };
+    vi.mocked(EventModalStrategyRegistry.provideRenderer).mockReturnValue(
+      mockRenderer
+    );
+
+    mockEventData = mockEventDataWithoutId;
+
+    const { rerender } = render(<EventModal {...mockProps} />);
+
+    // Pobierz argumenty pierwszego wywołania renderera
+    const firstRenderArgs = mockRenderer.render.mock.calls[0];
+
+    // Zmień NIEZWIĄZANY prop (nie eventData)
+    rerender(<EventModal {...mockProps} isShaking={true} />);
+
+    // Renderer powinien być wywołany z tymi samymi eventData
+    const lastRenderArgs =
+      mockRenderer.render.mock.calls[mockRenderer.render.mock.calls.length - 1];
+
+    expect(lastRenderArgs[0].eventData).toEqual(firstRenderArgs[0].eventData);
+    expect(screen.getByText("Mock Modal")).toBeInTheDocument();
+  });
   it("It should re-fetch renderer when eventData changes", () => {
     const mockRenderer = {
       render: vi.fn().mockReturnValue(<div>Mock Modal</div>),

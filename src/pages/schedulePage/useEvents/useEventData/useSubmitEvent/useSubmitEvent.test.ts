@@ -19,18 +19,29 @@ vi.mock("../useReloadEvents/useReloadEvents", () => ({
   }),
 }));
 
+vi.mock("./submitStrategies/SubmitStrategyRegistry", () => ({
+  SubmitStrategyRegistry: {
+    executeSubmit: vi.fn().mockResolvedValue(undefined),
+  },
+}));
+
+import { SubmitStrategyRegistry } from "./submitStrategies/SubmitStrategyRegistry";
+
 describe("useSubmitEvent", () => {
   let mockRepository: IEventRepository;
   let mockCloseModal: () => void;
+  let mockFormEvent: React.FormEvent;
 
   beforeEach(() => {
     vi.clearAllMocks();
     mockCloseModal = vi.fn();
     mockReloadEvents.mockResolvedValue(undefined);
+    mockFormEvent = { preventDefault: vi.fn() } as unknown as React.FormEvent;
 
     mockRepository = {
       addEvent: vi.fn().mockResolvedValue(1),
       getEvents: vi.fn().mockResolvedValue([]),
+      getEventById: vi.fn().mockResolvedValue(undefined),
       editEvent: vi.fn().mockResolvedValue(undefined),
       deleteEvent: vi.fn().mockResolvedValue(undefined),
       clearEvents: vi.fn().mockResolvedValue(undefined),
@@ -46,54 +57,56 @@ describe("useSubmitEvent", () => {
     };
   });
 
-  it("It should submit form and edit event when id exists", async () => {
+  it("should call SubmitStrategyRegistry.executeSubmit with correct parameters", async () => {
     const { result } = renderHook(() =>
       useSubmitEvent(mockCloseModal, mockRepository)
     );
 
-    const fakeEvent = {
-      preventDefault: vi.fn(),
-    } as unknown as React.FormEvent;
-
     await act(async () => {
-      await result.current.handleSubmit(fakeEvent);
+      await result.current.handleSubmit(mockFormEvent);
     });
 
-    expect(fakeEvent.preventDefault).toHaveBeenCalledTimes(1);
-    expect(mockRepository.editEvent).toHaveBeenCalledWith(
-      mockEventData.id as number,
-      mockEventData
+    expect(SubmitStrategyRegistry.executeSubmit).toHaveBeenCalledWith(
+      mockEventData,
+      mockRepository
     );
-    expect(mockRepository.addEvent).not.toHaveBeenCalled();
+  });
+
+  it("should call reloadEvents after submitting event", async () => {
+    const { result } = renderHook(() =>
+      useSubmitEvent(mockCloseModal, mockRepository)
+    );
+    await act(async () => {
+      await result.current.handleSubmit(mockFormEvent);
+    });
+
     expect(mockReloadEvents).toHaveBeenCalledTimes(1);
+  });
+
+  it("should call closeModal after submitting event", async () => {
+    const { result } = renderHook(() =>
+      useSubmitEvent(mockCloseModal, mockRepository)
+    );
+    await act(async () => {
+      await result.current.handleSubmit(mockFormEvent);
+    });
     expect(mockCloseModal).toHaveBeenCalledTimes(1);
   });
 
-  it("It should submit form and add event when id is missing", async () => {
-    mockEventData = {
-      title: "New event",
-      description: "New",
-      start: new Date("2025-12-10T10:00:00"),
-      end: new Date("2025-12-10T11:00:00"),
-      color: "#FF0000",
-    };
+  it("should not close modal or reload events if an error occurs", async () => {
+    (
+      SubmitStrategyRegistry.executeSubmit as ReturnType<typeof vi.fn>
+    ).mockRejectedValueOnce(new Error("Submission failed"));
 
     const { result } = renderHook(() =>
       useSubmitEvent(mockCloseModal, mockRepository)
     );
 
-    const fakeEvent = {
-      preventDefault: vi.fn(),
-    } as unknown as React.FormEvent;
-
     await act(async () => {
-      await result.current.handleSubmit(fakeEvent);
+      await result.current.handleSubmit(mockFormEvent);
     });
 
-    expect(fakeEvent.preventDefault).toHaveBeenCalledTimes(1);
-    expect(mockRepository.addEvent).toHaveBeenCalledWith(mockEventData);
-    expect(mockRepository.editEvent).not.toHaveBeenCalled();
-    expect(mockReloadEvents).toHaveBeenCalledTimes(1);
-    expect(mockCloseModal).toHaveBeenCalledTimes(1);
+    expect(mockReloadEvents).not.toHaveBeenCalled();
+    expect(mockCloseModal).not.toHaveBeenCalled();
   });
 });

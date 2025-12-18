@@ -7,6 +7,7 @@ describe("useAddEvent", () => {
   const mockOpenModal = vi.fn();
   const mockSetEventData = vi.fn();
   const mockSetEvents = vi.fn();
+  const mockSetIsDeleteAll = vi.fn();
 
   const mockEventData = {
     id: undefined,
@@ -23,7 +24,9 @@ describe("useAddEvent", () => {
       eventData: mockEventData,
       setEventData: mockSetEventData,
       setEvents: mockSetEvents,
+      setIsDeleteAll: mockSetIsDeleteAll,
       events: [],
+      isDeleteAll: false,
     });
   });
 

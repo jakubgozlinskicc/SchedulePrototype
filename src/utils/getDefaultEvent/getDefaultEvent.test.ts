@@ -21,6 +21,10 @@ describe("getDefaultEvent", () => {
       start: new Date("2024-01-15T10:30:00.000Z"),
       end: new Date("2024-01-15T10:30:00.000Z"),
       color: "#0000FF",
+      recurrenceRule: {
+        type: "none",
+        interval: 1,
+      },
     });
   });
 
