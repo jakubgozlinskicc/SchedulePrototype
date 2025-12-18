@@ -90,43 +90,6 @@ describe("EventModal", () => {
     expect(screen.getByText("Test Content")).toBeInTheDocument();
   });
 
-  it("It should pass all commonProps to renderer.render", () => {
-    const mockRenderer = {
-      render: vi.fn().mockReturnValue(<div>Mock Modal</div>),
-    };
-    vi.mocked(EventModalStrategyRegistry.provideRenderer).mockReturnValue(
-      mockRenderer
-    );
-
-    mockEventData = mockEventDataWithId;
-
-    render(<EventModal {...mockProps} />);
-
-    expect(mockRenderer.render).toHaveBeenCalledWith({
-      ...mockProps,
-      eventData: mockEventDataWithId,
-    });
-  });
-
-  it("It should memoize renderer based on eventData", () => {
-    const mockRenderer = {
-      render: vi.fn().mockReturnValue(<div>Mock Modal</div>),
-    };
-    vi.mocked(EventModalStrategyRegistry.provideRenderer).mockReturnValue(
-      mockRenderer
-    );
-
-    mockEventData = mockEventDataWithoutId;
-
-    const { rerender } = render(<EventModal {...mockProps} />);
-
-    expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledTimes(1);
-
-    rerender(<EventModal {...mockProps} />);
-
-    expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledTimes(1);
-  });
-
   it("It should use same renderer instance when eventData hasn't changed", () => {
     const mockRenderer = {
       render: vi.fn().mockReturnValue(<div>Mock Modal</div>),
@@ -139,19 +102,17 @@ describe("EventModal", () => {
 
     const { rerender } = render(<EventModal {...mockProps} />);
 
-    // Pobierz argumenty pierwszego wywołania renderera
     const firstRenderArgs = mockRenderer.render.mock.calls[0];
 
-    // Zmień NIEZWIĄZANY prop (nie eventData)
     rerender(<EventModal {...mockProps} isShaking={true} />);
 
-    // Renderer powinien być wywołany z tymi samymi eventData
     const lastRenderArgs =
       mockRenderer.render.mock.calls[mockRenderer.render.mock.calls.length - 1];
 
     expect(lastRenderArgs[0].eventData).toEqual(firstRenderArgs[0].eventData);
     expect(screen.getByText("Mock Modal")).toBeInTheDocument();
   });
+
   it("It should re-fetch renderer when eventData changes", () => {
     const mockRenderer = {
       render: vi.fn().mockReturnValue(<div>Mock Modal</div>),

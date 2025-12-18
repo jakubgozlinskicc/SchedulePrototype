@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { CustomToolbar } from "./customToolbar";
 import type { ToolbarProps } from "react-big-calendar";
-import type { Event } from "../../../../db/scheduleDb";
+import type { Event } from "../../../../../db/scheduleDb";
 
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
@@ -19,18 +19,58 @@ vi.mock("react-i18next", () => ({
   }),
 }));
 
-vi.mock("../../../../locales/useTranslationContext", () => ({
+vi.mock("../../../../../locales/useTranslationContext", () => ({
   useTranslationContext: () => ({
     currentLanguage: "enUS",
     changeLanguage: vi.fn(),
   }),
 }));
 
-vi.mock("../../../../utils/calendarLocalizer", () => ({
+vi.mock("../../../../../utils/calendarLocalizer/calendarLocalizer", () => ({
   locales: {
     enUS: undefined,
     pl: undefined,
   },
+}));
+
+const mockToggleDatePicker = vi.fn();
+const MockDatePickerComponent = () => (
+  <div data-testid="date-picker">DatePicker</div>
+);
+
+vi.mock("../useCustomToolbar/useDatePicker/useDatePicker", () => ({
+  useDatePicker: () => ({
+    isDatePickerOpen: false,
+    datePickerRef: { current: null },
+    handleDateChange: vi.fn(),
+    toggleDatePicker: mockToggleDatePicker,
+    DatePickerComponent: MockDatePickerComponent,
+  }),
+}));
+
+vi.mock("./WeekStrip", () => ({
+  WeekStrip: ({
+    onNavigate,
+    onView,
+  }: {
+    onNavigate: (action: string, date?: Date) => void;
+    onView: (view: string) => void;
+  }) => (
+    <div className="week-strip">
+      {Array.from({ length: 7 }).map((_, i) => (
+        <button
+          key={i}
+          className={`week-strip-day ${i === 0 ? "active-day" : ""}`}
+          onClick={() => {
+            onView("day");
+            onNavigate("DATE", new Date());
+          }}
+        >
+          Day {i}
+        </button>
+      ))}
+    </div>
+  ),
 }));
 
 describe("CustomToolbar", () => {
@@ -207,5 +247,19 @@ describe("CustomToolbar", () => {
     render(<CustomToolbar {...dayProps} />);
 
     expect(screen.getByText("Sunday Jun 15")).toBeInTheDocument();
+  });
+
+  it("should toggle date picker when label is clicked", () => {
+    render(<CustomToolbar {...mockProps} />);
+
+    fireEvent.click(screen.getByText("June 2025"));
+
+    expect(mockToggleDatePicker).toHaveBeenCalledTimes(1);
+  });
+
+  it("should render calendar icon", () => {
+    render(<CustomToolbar {...mockProps} />);
+
+    expect(screen.getByText("📅")).toBeInTheDocument();
   });
 });

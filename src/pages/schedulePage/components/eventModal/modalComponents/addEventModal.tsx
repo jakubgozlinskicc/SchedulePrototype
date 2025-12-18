@@ -28,7 +28,7 @@ export function AddEventModal({
       <button type="button" className="btn btn-secondary" onClick={onClose}>
         {t("btn_cancel")}
       </button>
-      <button type="submit" className="btn btn-primary">
+      <button type="submit" className="btn btn-primary" onClick={onSubmit}>
         {t("btn-add")}
       </button>
     </BaseEventModal>

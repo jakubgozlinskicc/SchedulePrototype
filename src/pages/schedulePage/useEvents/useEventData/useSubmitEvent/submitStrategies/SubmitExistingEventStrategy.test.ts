@@ -19,7 +19,7 @@ describe("SubmitExistingEventStrategy", () => {
   });
 
   describe("canExecute", () => {
-    it("should return true for existing regular event with id", () => {
+    it("should return true for existing regular event", () => {
       const eventData: Event = {
         id: 1,
         title: "Existing event",
@@ -35,7 +35,7 @@ describe("SubmitExistingEventStrategy", () => {
       expect(strategy.canExecute(eventData)).toBe(true);
     });
 
-    it("should return false for new event without id", () => {
+    it("should return false for new event", () => {
       const eventData: Event = {
         title: "New event",
         description: "Test",

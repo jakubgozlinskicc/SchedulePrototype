@@ -2,7 +2,7 @@ import type { IDropResizeStrategy } from "./dropResizeStrategyTypes";
 import type { Event } from "../../../../../../db/scheduleDb";
 import type { IEventRepository } from "../../../IEventRepository";
 import { DropResizeParentStrategy } from "./dropResizeParentStrategy";
-import { DropResizeRegularEventStrategy } from "./dropResizeRegularEvent";
+import { DropResizeRegularEventStrategy } from "./dropResizeRegularEventStrategy";
 import { DropResizeVirtualOccurrenceStrategy } from "./dropResizeVirtualOccurenceStrategy";
 
 const strategies: IDropResizeStrategy[] = [

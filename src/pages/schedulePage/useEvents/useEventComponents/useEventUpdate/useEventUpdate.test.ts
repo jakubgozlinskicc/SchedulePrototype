@@ -19,6 +19,8 @@ const createMockEvent = (name: string, value: string): ExpectedEvent => {
 
 describe("useEventUpdate", () => {
   const mockSetEventData = vi.fn();
+  const mockSetEvents = vi.fn();
+  const mockSetIsDeleteAll = vi.fn();
 
   const baseEvent: Event = {
     title: "",
@@ -35,8 +37,10 @@ describe("useEventUpdate", () => {
     vi.spyOn(EventDataContext, "useEventDataContext").mockReturnValue({
       eventData: baseEvent,
       setEventData: mockSetEventData,
+      setEvents: mockSetEvents,
       events: [],
-      setEvents: vi.fn(),
+      isDeleteAll: false,
+      setIsDeleteAll: mockSetIsDeleteAll,
     });
   });
 

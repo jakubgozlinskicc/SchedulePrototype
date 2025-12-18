@@ -5,7 +5,7 @@ import type {
 } from "../recurrenceFieldsTypes";
 import { CountEndStrategy } from "./CountEndStrategy";
 import { DateEndStrategy } from "./DateEndStrategy";
-import { NeverEndStrategy } from "./neverEndStrategy";
+import { NeverEndStrategy } from "./NeverEndStrategy";
 
 const strategies: IEndTypeStrategy[] = [
   new DateEndStrategy(),
