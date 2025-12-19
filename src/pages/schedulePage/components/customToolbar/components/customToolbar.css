@@ -19,10 +19,11 @@
   flex-wrap: wrap;
   gap: 12px;
   padding: 10px 16px;
-  margin-bottom: 8px;
   background: var(--gray-100);
   border: 1px solid var(--gray-300);
   border-radius: 8px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .actions-buttons,

@@ -21,6 +21,7 @@ import type { Language } from "../../contexts/translationContext/translationCont
 import { useTranslationContext } from "../../locales/useTranslationContext";
 import { useEventDataContext } from "../../events/useEvents/useEventDataContext/useEventDataContext";
 import { eventRepository } from "../../db/eventRepository";
+import { useNavigate } from "react-router-dom";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
@@ -52,6 +53,8 @@ function SchedulePage() {
 
   const { handleEventDropResize } = useEventDropResize(eventRepository);
 
+  const navigate = useNavigate();
+
   const handleLanguageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -60,15 +63,23 @@ function SchedulePage() {
 
   return (
     <div className="schedule-page">
-      <select
-        className="language-select"
-        value={currentLanguage}
-        onChange={handleLanguageChange}
-        style={{ marginLeft: "10px", padding: "5px" }}
-      >
-        <option value="enUS">EN</option>
-        <option value="pl">PL</option>
-      </select>
+      <div className="top-controls">
+        <button
+          className="overview-button"
+          onClick={() => navigate("/overview")}
+        >
+          Overview
+        </button>
+        <select
+          className="language-select"
+          value={currentLanguage}
+          onChange={handleLanguageChange}
+          style={{ marginLeft: "10px", padding: "5px" }}
+        >
+          <option value="enUS">EN</option>
+          <option value="pl">PL</option>
+        </select>
+      </div>
       <header className="schedule-header">
         <h1 className="schedule-title">Schedule</h1>
       </header>
@@ -101,7 +112,7 @@ function SchedulePage() {
           onSelectEvent={handleSelectEvent}
           onEventDrop={handleEventDropResize}
           onEventResize={handleEventDropResize}
-          style={{ height: "80vh", width: "80%" }}
+          style={{ height: "80vh", width: "100%" }}
         />
       </section>
 

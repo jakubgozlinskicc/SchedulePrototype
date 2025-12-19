@@ -1,4 +1,13 @@
+.schedule-page {
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
 .schedule-header {
+  padding: 10px;
   align-items: center;
   margin-bottom: 16px;
   text-align: center;
@@ -8,16 +17,54 @@
   color: #ffffff;
   border: none;
   border-radius: 4px;
-  padding: 6px 10px;
   font-size: 0.9rem;
   cursor: pointer;
-  position: absolute;
+}
+
+.calendar-section {
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.calendar-section .rbc-calendar {
+  width: 100%;
+  display: flex;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.top-controls {
   top: 20px;
   right: 20px;
-
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 6px 10px;
+  gap: 10px;
   outline: none;
-
+  position: absolute;
   margin-left: 10px;
+}
+
+.overview-button {
+  padding: 8px 16px;
+  background-color: #591efd;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.overview-button:hover {
+  background-color: #3105aa;
 }
 
 .btn {
@@ -58,17 +105,6 @@
 
 .schedule-title {
   margin: 0;
-}
-
-.calendar-section {
-  margin-top: 1rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-.calendar-section .rbc-calendar {
-  width: 80%;
-  display: flex;
 }
 
 .rbc-time-header-cell .rbc-today {
