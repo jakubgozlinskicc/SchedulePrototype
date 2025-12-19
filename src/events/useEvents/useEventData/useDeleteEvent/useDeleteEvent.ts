@@ -12,6 +12,8 @@ export function useDeleteEvent(
 
   const deleteCurrentEvent = async () => {
     try {
+      console.log("tutej");
+      console.log(eventData);
       await DeleteStrategyRegistry.executeDelete(eventData, repository, {
         isDeleteAll,
       });

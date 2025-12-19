@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  width: 100%;
 }
 
 .event-item {
@@ -9,7 +10,10 @@
   padding: 16px;
   border-radius: 8px;
   border-left: 4px solid;
+  border-right: 4px solid;
   transition: box-shadow 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .event-item:hover {
@@ -35,4 +39,9 @@
   margin-top: 8px;
   padding-top: 8px;
   border-top: 1px solid #eee;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  max-height: 100px;
+  overflow-y: auto;
 }

@@ -1,4 +1,3 @@
-import "./EventList.css";
 import { eventRepository } from "../../../db/eventRepository";
 import { useLoadEvents } from "../../../events/useEvents/useEventData/useLoadEvents/useLoadEvents";
 import { useEventDataContext } from "../../../events/useEvents/useEventDataContext/useEventDataContext";
@@ -30,17 +29,22 @@ export function EventList() {
         <div
           key={event.id}
           className="event-item"
-          style={{ borderLeftColor: event.color }}
+          style={{
+            borderLeftColor: event.color,
+            borderRightColor: event.color,
+          }}
         >
-          <div className="event-title">{event.title}</div>
-          <div className="event-time">
-            <span>{formatDate(event.start)}</span>
-            <span> — </span>
-            <span>{formatDate(event.end)}</span>
+          <div>
+            <div className="event-title">{event.title}</div>
+            <div className="event-time">
+              <span>{formatDate(event.start)}</span>
+              <span> — </span>
+              <span>{formatDate(event.end)}</span>
+            </div>
+            {event.description && (
+              <div className="event-description">{event.description}</div>
+            )}
           </div>
-          {event.description && (
-            <div className="event-description">{event.description}</div>
-          )}
         </div>
       ))}
     </div>
