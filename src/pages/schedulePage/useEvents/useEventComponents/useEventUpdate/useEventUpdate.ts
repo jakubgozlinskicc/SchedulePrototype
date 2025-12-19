@@ -1,5 +1,5 @@
 import { type ChangeEvent } from "react";
-import { useEventDataContext } from "../../useEventDataContext/useEventDataContext";
+import { useEventDataContext } from "../../../../../events/useEvents/useEventDataContext/useEventDataContext";
 import { useShake } from "./useShake";
 import { fieldHandlers, defaultFieldHandler } from "./fieldHandlers";
 

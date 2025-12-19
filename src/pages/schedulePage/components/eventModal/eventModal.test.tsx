@@ -3,7 +3,6 @@ import { EventModal } from "./eventModal";
 import type { Event } from "../../../../db/scheduleDb";
 import { EventModalStrategyRegistry } from "./modalStrategy/modalRegistry";
 import { vi, describe, beforeEach, it, expect } from "vitest";
-
 let mockEventData: Event;
 
 vi.mock("react-i18next", () => ({
@@ -12,12 +11,15 @@ vi.mock("react-i18next", () => ({
   }),
 }));
 
-vi.mock("../../useEvents/useEventDataContext/useEventDataContext", () => ({
-  useEventDataContext: () => ({
-    eventData: mockEventData,
-    setEventData: vi.fn(),
-  }),
-}));
+vi.mock(
+  "../../../../events/useEvents/useEventDataContext/useEventDataContext",
+  () => ({
+    useEventDataContext: () => ({
+      eventData: mockEventData,
+      setEventData: vi.fn(),
+    }),
+  })
+);
 
 vi.mock("./modalStrategy/modalRegistry", () => ({
   EventModalStrategyRegistry: {

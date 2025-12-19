@@ -1,5 +1,5 @@
 import type { Event } from "../../../../../../db/scheduleDb";
-import type { IEventRepository } from "../../../IEventRepository";
+import type { IEventRepository } from "../../../../../../events/useEvents/IEventRepository";
 
 export type DragDropArgs = {
   event: Event;

@@ -5,9 +5,9 @@ import { useEventDropResize } from "./useEvents/useEventCalendar/useEventDropRes
 import { useSelectEvent } from "./useEvents/useEventCalendar/useSelectEvent/useSelectEvent";
 import { useSelectSlot } from "./useEvents/useEventCalendar/useSelectSlot/useSelectSlot";
 import { useCalendarLocale } from "./useEvents/useEventCalendar/useCalendarLocale/useCalendarLocale";
-import { useLoadEvents } from "./useEvents/useEventData/useLoadEvents/useLoadEvents";
-import { useDeleteEvent } from "./useEvents/useEventData/useDeleteEvent/useDeleteEvent";
-import { useSubmitEvent } from "./useEvents/useEventData/useSubmitEvent/useSubmitEvent";
+import { useLoadEvents } from "../../events/useEvents/useEventData/useLoadEvents/useLoadEvents";
+import { useDeleteEvent } from "../../events/useEvents/useEventData/useDeleteEvent/useDeleteEvent";
+import { useSubmitEvent } from "../../events/useEvents/useEventData/useSubmitEvent/useSubmitEvent";
 import { EventModal } from "./components/eventModal/eventModal";
 import { CalendarEvent } from "./components/calendarEvent/calendarEvent";
 import { useState } from "react";
@@ -16,10 +16,10 @@ import { Calendar, Views, type View } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { CustomToolbar } from "./components/customToolbar/components/customToolbar";
 import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter/calendarEventPropGetter";
-import { useAddEvent } from "./useEvents/useEventData/useAddEvent/useAddEvent";
+import { useAddEvent } from "../../events/useEvents/useEventData/useAddEvent/useAddEvent";
 import type { Language } from "../../contexts/translationContext/translationContext";
 import { useTranslationContext } from "../../locales/useTranslationContext";
-import { useEventDataContext } from "./useEvents/useEventDataContext/useEventDataContext";
+import { useEventDataContext } from "../../events/useEvents/useEventDataContext/useEventDataContext";
 import { eventRepository } from "../../db/eventRepository";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
