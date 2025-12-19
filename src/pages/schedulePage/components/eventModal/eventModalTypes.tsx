@@ -1,13 +1,25 @@
 import type { FormEvent, ChangeEvent, ReactNode } from "react";
 import type { Event } from "../../../../db/scheduleDb";
 
-export interface EventModalProps {
+export interface BaseFormProps {
   eventData: Event;
   isShaking?: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onChange: (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => void;
   onClose: () => void;
   onSubmit: (e: FormEvent) => void;
-  onRequestDelete: () => void | Promise<void>;
+}
+
+export interface BaseEventModalProps extends BaseFormProps {
+  title: string;
+  children: ReactNode;
+}
+
+export interface EventModalProps extends BaseFormProps {
+  onRequestDelete?: () => void | Promise<void>;
+  onEditSingle?: () => void;
+  onEditAll?: () => void;
 }
 
 export interface IEventModalStrategy {

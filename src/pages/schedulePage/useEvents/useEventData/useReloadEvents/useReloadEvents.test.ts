@@ -3,6 +3,7 @@ import { renderHook, act } from "@testing-library/react";
 import { useReloadEvents } from "./useReloadEvents";
 import type { Event } from "../../../../../db/scheduleDb";
 import type { IEventRepository } from "../../IEventRepository";
+import { expandAllEvents } from "./eventExpander";
 
 const mockSetEvents = vi.fn();
 
@@ -10,6 +11,10 @@ vi.mock("../../useEventDataContext/useEventDataContext", () => ({
   useEventDataContext: () => ({
     setEvents: mockSetEvents,
   }),
+}));
+
+vi.mock("./eventExpander", () => ({
+  expandAllEvents: vi.fn((events) => events),
 }));
 
 describe("useReloadEvents", () => {
@@ -21,13 +26,14 @@ describe("useReloadEvents", () => {
     mockRepository = {
       addEvent: vi.fn().mockResolvedValue(1),
       getEvents: vi.fn().mockResolvedValue([]),
+      getEventById: vi.fn().mockResolvedValue(null),
       editEvent: vi.fn().mockResolvedValue(undefined),
       deleteEvent: vi.fn().mockResolvedValue(undefined),
       clearEvents: vi.fn().mockResolvedValue(undefined),
     };
   });
 
-  it("It should reload events from repository", async () => {
+  it("should reload and expand events from repository", async () => {
     const eventsFromRepo: Event[] = [
       {
         id: 1,
@@ -38,7 +44,12 @@ describe("useReloadEvents", () => {
         color: "#00FF00",
       },
     ];
+    const expandedEvents = [...eventsFromRepo, { ...eventsFromRepo[0], id: 2 }];
+
     mockRepository.getEvents = vi.fn().mockResolvedValue(eventsFromRepo);
+    (expandAllEvents as ReturnType<typeof vi.fn>).mockReturnValue(
+      expandedEvents
+    );
 
     const { result } = renderHook(() => useReloadEvents(mockRepository));
 
@@ -47,6 +58,26 @@ describe("useReloadEvents", () => {
     });
 
     expect(mockRepository.getEvents).toHaveBeenCalledTimes(1);
-    expect(mockSetEvents).toHaveBeenCalledWith(eventsFromRepo);
+    expect(expandAllEvents).toHaveBeenCalledWith(eventsFromRepo);
+    expect(mockSetEvents).toHaveBeenCalledWith(expandedEvents);
+  });
+
+  it("should handle error", async () => {
+    const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    mockRepository.getEvents = vi.fn().mockRejectedValue(new Error("DB error"));
+
+    const { result } = renderHook(() => useReloadEvents(mockRepository));
+
+    await act(async () => {
+      await result.current.reloadEvents();
+    });
+
+    expect(consoleSpy).toHaveBeenCalledWith(
+      "Error during reloading events:",
+      expect.any(Error)
+    );
+    expect(mockSetEvents).not.toHaveBeenCalled();
+
+    consoleSpy.mockRestore();
   });
 });

@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useTranslationContext } from "../../../../../locales/useTranslationContext";
 import {
   locales,
@@ -11,9 +10,9 @@ export const useCalendarLocale = () => {
 
   const locale = locales[currentLanguage];
 
-  const localizer = useMemo(() => createLocalizer(locale), [locale]);
+  const localizer = createLocalizer(locale);
 
-  const formats = useMemo(() => createFormats(locale), [locale]);
+  const formats = createFormats(locale);
 
   return { localizer, formats };
 };

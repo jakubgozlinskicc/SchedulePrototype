@@ -3,6 +3,7 @@ import type { Event } from "../../../../../db/scheduleDb";
 import { AddEventStrategy } from "./eventStrategies/addEventStrategy";
 import { EditEventStrategy } from "./eventStrategies/editEventStrategy";
 import { vi, describe, beforeEach, it, expect } from "vitest";
+import { EditRecurringEventStrategy } from "./eventStrategies/editRecurringEventStrategy";
 
 vi.mock("./eventStrategies/addEventStrategy", () => {
   const MockedAddEventStrategy = vi.fn();
@@ -20,6 +21,15 @@ vi.mock("./eventStrategies/editEventStrategy", () => {
   );
   MockedEditEventStrategy.prototype.render = vi.fn();
   return { EditEventStrategy: MockedEditEventStrategy };
+});
+
+vi.mock("./eventStrategies/editRecurringEventStrategy.tsx", () => {
+  const MockedEditRecurringEventStrategy = vi.fn();
+  MockedEditRecurringEventStrategy.prototype.canSupport = vi.fn(
+    (eventData) => !!eventData.id && eventData.recurrenceRule?.type !== "none"
+  );
+  MockedEditRecurringEventStrategy.prototype.render = vi.fn();
+  return { EditRecurringEventStrategy: MockedEditRecurringEventStrategy };
 });
 
 describe("EventModalStrategyRegistry", () => {
@@ -62,6 +72,9 @@ describe("EventModalStrategyRegistry", () => {
     it("It should throw error when no strategy supports the event", () => {
       vi.mocked(AddEventStrategy.prototype.canSupport).mockReturnValue(false);
       vi.mocked(EditEventStrategy.prototype.canSupport).mockReturnValue(false);
+      vi.mocked(
+        EditRecurringEventStrategy.prototype.canSupport
+      ).mockReturnValue(false);
 
       expect(() =>
         EventModalStrategyRegistry.provideRenderer(mockEventWithoutId)

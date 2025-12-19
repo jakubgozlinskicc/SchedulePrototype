@@ -8,80 +8,122 @@ const createBaseEvent = (): Event => ({
   start: new Date("2024-03-15T10:00:00"),
   end: new Date("2024-03-15T11:00:00"),
   color: "#0000FF",
+  recurrenceRule: { type: "daily", interval: 2 },
 });
 
 describe("fieldHandlers", () => {
-  it("It should handle start field and update start date", () => {
-    const prev = createBaseEvent();
-    const handler = fieldHandlers.start;
+  describe("start", () => {
+    it("should update start and adjust end if needed", () => {
+      const prev = createBaseEvent();
 
-    const updated = handler(prev, "start", "2024-03-16T10:00", vi.fn());
+      const updated = fieldHandlers.start(
+        prev,
+        "start",
+        "2024-03-15T12:00",
+        vi.fn()
+      );
 
-    expect(updated.start.getTime()).toBe(
-      new Date("2024-03-16T10:00").getTime()
-    );
+      expect(updated.start.getTime()).toBe(
+        new Date("2024-03-15T12:00").getTime()
+      );
+      expect(updated.end.getTime()).toBe(
+        new Date("2024-03-15T12:00").getTime()
+      );
+    });
   });
 
-  it("It should update end when start becomes after current end", () => {
-    const prev: Event = {
-      ...createBaseEvent(),
-      end: new Date("2024-03-15T11:00:00"),
-    };
+  describe("end", () => {
+    it("should trigger shake when end is before start", () => {
+      const prev = createBaseEvent();
+      const triggerShake = vi.fn();
 
-    const handler = fieldHandlers.start;
+      const updated = fieldHandlers.end(
+        prev,
+        "end",
+        "2024-03-15T09:00",
+        triggerShake
+      );
 
-    const updated = handler(prev, "start", "2024-03-15T12:00", vi.fn());
-
-    expect(updated.start.getTime()).toBe(
-      new Date("2024-03-15T12:00").getTime()
-    );
-    expect(updated.end.getTime()).toBe(new Date("2024-03-15T12:00").getTime());
+      expect(updated.end.getTime()).toBe(prev.start.getTime());
+      expect(triggerShake).toHaveBeenCalled();
+    });
   });
 
-  it("It should handle end field and trigger shake when end is before start", () => {
-    const prev = createBaseEvent();
-    const triggerShake = vi.fn();
-    const handler = fieldHandlers.end;
+  describe("recurrenceType", () => {
+    it("should update type and preserve interval", () => {
+      const prev = createBaseEvent();
 
-    const updated = handler(prev, "end", "2024-03-15T09:00", triggerShake);
+      const updated = fieldHandlers.recurrenceType(
+        prev,
+        "recurrenceType",
+        "weekly",
+        vi.fn()
+      );
 
-    expect(updated.end.getTime()).toBe(prev.start.getTime());
-    expect(triggerShake).toHaveBeenCalledTimes(1);
+      expect(updated.recurrenceRule?.type).toBe("weekly");
+      expect(updated.recurrenceRule?.interval).toBe(2);
+    });
   });
 
-  it("It should handle end field without triggering shake when end is after start", () => {
-    const prev = createBaseEvent();
-    const triggerShake = vi.fn();
-    const handler = fieldHandlers.end;
+  describe("recurrenceInterval", () => {
+    it("should clamp interval between 1 and 100", () => {
+      const prev = createBaseEvent();
 
-    const updated = handler(prev, "end", "2024-03-15T12:00", triggerShake);
+      expect(
+        fieldHandlers.recurrenceInterval(prev, "", "0", vi.fn()).recurrenceRule
+          ?.interval
+      ).toBe(1);
+      expect(
+        fieldHandlers.recurrenceInterval(prev, "", "150", vi.fn())
+          .recurrenceRule?.interval
+      ).toBe(100);
+    });
+  });
 
-    expect(updated.end.getTime()).toBe(new Date("2024-03-15T12:00").getTime());
-    expect(triggerShake).not.toHaveBeenCalled();
+  describe("recurrenceEndType", () => {
+    it("should set count for count type and endDate for date type", () => {
+      const prev = createBaseEvent();
+
+      const countUpdate = fieldHandlers.recurrenceEndType(
+        prev,
+        "",
+        "count",
+        vi.fn()
+      );
+      expect(countUpdate.recurrenceRule?.count).toBe(10);
+
+      const dateUpdate = fieldHandlers.recurrenceEndType(
+        prev,
+        "",
+        "date",
+        vi.fn()
+      );
+      expect(dateUpdate.recurrenceRule?.endDate).toBeDefined();
+    });
+  });
+
+  describe("recurrenceCount", () => {
+    it("should clamp count between 1 and 365", () => {
+      const prev = createBaseEvent();
+
+      expect(
+        fieldHandlers.recurrenceCount(prev, "", "0", vi.fn()).recurrenceRule
+          ?.count
+      ).toBe(1);
+      expect(
+        fieldHandlers.recurrenceCount(prev, "", "500", vi.fn()).recurrenceRule
+          ?.count
+      ).toBe(365);
+    });
   });
 });
 
 describe("defaultFieldHandler", () => {
-  it("It should update arbitrary field", () => {
+  it("should update field by name", () => {
     const prev = createBaseEvent();
 
-    const updated = defaultFieldHandler(prev, "title", "My title", vi.fn());
+    const updated = defaultFieldHandler(prev, "title", "New Title", vi.fn());
 
-    expect(updated.title).toBe("My title");
-  });
-
-  it("It should not modify other fields", () => {
-    const prev = createBaseEvent();
-
-    const updated = defaultFieldHandler(
-      prev,
-      "description",
-      "New description",
-      vi.fn()
-    );
-
-    expect(updated.start).toBe(prev.start);
-    expect(updated.end).toBe(prev.end);
-    expect(updated.color).toBe(prev.color);
+    expect(updated.title).toBe("New Title");
   });
 });

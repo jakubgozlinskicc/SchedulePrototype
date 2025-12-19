@@ -21,6 +21,7 @@ describe("useLoadEvents", () => {
     mockRepository = {
       addEvent: vi.fn().mockResolvedValue(1),
       getEvents: vi.fn().mockResolvedValue([]),
+      getEventById: vi.fn().mockResolvedValue(undefined),
       editEvent: vi.fn().mockResolvedValue(undefined),
       deleteEvent: vi.fn().mockResolvedValue(undefined),
       clearEvents: vi.fn().mockResolvedValue(undefined),

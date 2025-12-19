@@ -1,7 +1,8 @@
-import { useCallback, type FormEvent } from "react";
+import { type FormEvent } from "react";
 import type { IEventRepository } from "../../IEventRepository";
 import { useEventDataContext } from "../../useEventDataContext/useEventDataContext";
 import { useReloadEvents } from "../useReloadEvents/useReloadEvents";
+import { SubmitStrategyRegistry } from "./submitStrategies/SubmitStrategyRegistry";
 
 export function useSubmitEvent(
   closeModal: () => void,
@@ -10,25 +11,17 @@ export function useSubmitEvent(
   const { eventData } = useEventDataContext();
   const { reloadEvents } = useReloadEvents(repository);
 
-  const handleSubmit = useCallback(
-    async (e: FormEvent) => {
-      e.preventDefault();
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
 
-      try {
-        if (eventData.id) {
-          await repository.editEvent(eventData.id, eventData);
-        } else {
-          await repository.addEvent(eventData);
-        }
-
-        await reloadEvents();
-        closeModal();
-      } catch (error) {
-        console.error("Error during saving events:", error);
-      }
-    },
-    [eventData, repository, reloadEvents, closeModal]
-  );
+    try {
+      await SubmitStrategyRegistry.executeSubmit(eventData, repository);
+      await reloadEvents();
+      closeModal();
+    } catch (error) {
+      console.error("Error during saving events:", error);
+    }
+  };
 
   return { handleSubmit };
 }

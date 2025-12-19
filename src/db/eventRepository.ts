@@ -11,6 +11,9 @@ export const eventRepository: IEventRepository = {
   async getEvents(): Promise<Event[]> {
     return await db.events.orderBy("id").reverse().toArray();
   },
+  async getEventById(id: number): Promise<Event | undefined> {
+    return await db.events.get(id);
+  },
 
   async editEvent(id: number, changes: Partial<Event>): Promise<void> {
     await db.events.update(id, changes);

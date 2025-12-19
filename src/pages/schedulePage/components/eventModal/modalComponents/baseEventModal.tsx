@@ -1,7 +1,7 @@
-import type { Event } from "../../../../../db/scheduleDb";
+import type { BaseEventModalProps } from "../eventModalTypes";
 import { toDateTimeLocal } from "../../../../../utils/toDateTimeLocal/toDateTimeLocal";
-import type { FormEvent, ChangeEvent, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { RecurrenceFields } from "./recurrenceFields/recurrenceFields";
 
 export function BaseEventModal({
   title,
@@ -10,16 +10,11 @@ export function BaseEventModal({
   onChange,
   onSubmit,
   children,
-}: {
-  title: string;
-  eventData: Event;
-  isShaking?: boolean;
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onClose: () => void;
-  onSubmit: (e: FormEvent) => void;
-  children: ReactNode;
-}) {
+}: BaseEventModalProps) {
   const { t } = useTranslation();
+
+  const recurrenceType = eventData.recurrenceRule?.type ?? "none";
+
   return (
     <div className="modal-backdrop">
       <div className={`modal ${isShaking ? "shake" : ""}`}>
@@ -40,7 +35,7 @@ export function BaseEventModal({
           </div>
 
           <div className="form-field">
-            <label id="desctription" className="form-label">
+            <label id="description" className="form-label">
               {t("description")}
             </label>
             <textarea
@@ -91,6 +86,29 @@ export function BaseEventModal({
               className="color-input"
             />
           </div>
+
+          <div className="form-field">
+            <label id="recurrence-type" className="form-label">
+              {t("recurrence-type")}
+            </label>
+            <select
+              name="recurrenceType"
+              value={recurrenceType}
+              onChange={onChange}
+              className="form-input"
+            >
+              <option value="none">{t("recurrence-none")}</option>
+              <option value="daily">{t("recurrence-daily")}</option>
+              <option value="weekly">{t("recurrence-weekly")}</option>
+              <option value="monthly">{t("recurrence-monthly")}</option>
+              <option value="yearly">{t("recurrence-yearly")}</option>
+            </select>
+          </div>
+
+          <RecurrenceFields
+            recurrenceRule={eventData.recurrenceRule}
+            onChange={onChange}
+          />
 
           <div className="modal-actions">{children}</div>
         </form>

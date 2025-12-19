@@ -8,7 +8,6 @@ import { useCalendarLocale } from "./useEvents/useEventCalendar/useCalendarLocal
 import { useLoadEvents } from "./useEvents/useEventData/useLoadEvents/useLoadEvents";
 import { useDeleteEvent } from "./useEvents/useEventData/useDeleteEvent/useDeleteEvent";
 import { useSubmitEvent } from "./useEvents/useEventData/useSubmitEvent/useSubmitEvent";
-import { useUpdateEventTime } from "./useEvents/useEventData/useUpdateEventTime/useUpdateEventTime";
 import { EventModal } from "./components/eventModal/eventModal";
 import { CalendarEvent } from "./components/calendarEvent/calendarEvent";
 import { useState } from "react";
@@ -45,15 +44,13 @@ function SchedulePage() {
 
   const { handleSubmit } = useSubmitEvent(closeModal, eventRepository);
 
-  const { updateEventTime } = useUpdateEventTime(eventRepository);
-
   const { handleSelectSlot } = useSelectSlot(openModal);
 
   const { handleAddEvent } = useAddEvent(openModal);
 
   const { isShaking, handleChange } = useEventUpdate();
 
-  const { handleEventDropResize } = useEventDropResize(updateEventTime);
+  const { handleEventDropResize } = useEventDropResize(eventRepository);
 
   const handleLanguageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -110,6 +107,7 @@ function SchedulePage() {
 
       {isModalOpen && (
         <EventModal
+          repository={eventRepository}
           isShaking={isShaking}
           onChange={handleChange}
           onClose={closeModal}

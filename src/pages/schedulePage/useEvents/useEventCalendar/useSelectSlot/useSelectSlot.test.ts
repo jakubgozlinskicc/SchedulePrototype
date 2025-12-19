@@ -8,6 +8,7 @@ describe("useSelectSlot", () => {
   const mockOpenModal = vi.fn();
   const mockSetEventData = vi.fn();
   const mockSetEvents = vi.fn();
+  const mockSetIsDeleteAll = vi.fn();
 
   const mockEventData = {
     id: undefined,
@@ -25,6 +26,8 @@ describe("useSelectSlot", () => {
       setEventData: mockSetEventData,
       setEvents: mockSetEvents,
       events: [],
+      isDeleteAll: false,
+      setIsDeleteAll: mockSetIsDeleteAll,
     });
   });
 

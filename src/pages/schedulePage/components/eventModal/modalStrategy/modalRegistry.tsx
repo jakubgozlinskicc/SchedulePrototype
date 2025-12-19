@@ -3,11 +3,14 @@ import type { EventModalProps } from "../eventModalTypes";
 import type { IEventModalStrategy } from "../eventModalTypes";
 import { AddEventStrategy } from "./eventStrategies/addEventStrategy";
 import { EditEventStrategy } from "./eventStrategies/editEventStrategy";
+import { EditRecurringEventStrategy } from "./eventStrategies/editRecurringEventStrategy";
 
 const strategies: IEventModalStrategy[] = [
+  new EditRecurringEventStrategy(),
   new AddEventStrategy(),
   new EditEventStrategy(),
 ];
+
 export const EventModalStrategyRegistry = {
   provideRenderer(eventData: Event) {
     const strategy = strategies.find((s) => s.canSupport(eventData));
