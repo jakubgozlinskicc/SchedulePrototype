@@ -51,5 +51,9 @@
   "search-placeholder": "Search events...",
   "show-past-events": "Show past events",
   "reset-filters": "Reset filters",
-  "no-upcoming-events": "No upcoming events"
+  "no-upcoming-events": "No upcoming events",
+
+  "errors-title-message": "Title required",
+  "errors-start-message": "Start required",
+  "errors-end-message": "End required"
 }

@@ -8,9 +8,11 @@ import {
   startOfWeek,
 } from "date-fns";
 import { useFiltersContext } from "../../../context/useFiltersContext";
+import { useNavigate } from "react-router-dom";
 
 export function useEventToolbar() {
   const { filters, updateFilter } = useFiltersContext();
+  const navigate = useNavigate();
 
   const setToday = () => {
     const today = new Date();

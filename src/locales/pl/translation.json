@@ -51,5 +51,9 @@
   "search-placeholder": "Szukaj wydarzeń...",
   "show-past-events": "Pokaż przeszłe wydarzenia",
   "reset-filters": "Resetuj filtry",
-  "no-upcoming-events": "Brak nadchodzących wydarzeń"
+  "no-upcoming-events": "Brak nadchodzących wydarzeń",
+
+  "errors-title-message": "Tytuł wymagany",
+  "errors-start-message": "Początek wymagany",
+  "errors-end-message": "Koniec wymagany"
 }

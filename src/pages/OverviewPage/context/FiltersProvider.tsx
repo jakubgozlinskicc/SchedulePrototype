@@ -6,7 +6,7 @@ interface FiltersProviderProps {
 }
 
 const defaultFilters: EventFilters = {
-  dateFrom: new Date(),
+  dateFrom: null,
   dateTo: null,
   searchQuery: "",
   showPastEvents: false,

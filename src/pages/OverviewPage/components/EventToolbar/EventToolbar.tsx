@@ -2,10 +2,12 @@ import { useTranslation } from "react-i18next";
 import { FiltersDropdown } from "../FiltersDropdown/FiltersDropdown";
 import { useFiltersContext } from "../../context/useFiltersContext";
 import { useEventToolbar } from "./useEventToolbar/useEventToolbar";
+import { useNavigate } from "react-router-dom";
 
 export function EventToolbar() {
   const { t } = useTranslation();
   const { filters, updateFilter } = useFiltersContext();
+  const navigate = useNavigate();
 
   const {
     setToday,
@@ -20,7 +22,9 @@ export function EventToolbar() {
     <div className="event-toolbar">
       <div className="toolbar-left-side">
         <div className="actions-buttons">
-          <button className="nav-button">{t("btn-add")}</button>
+          <button className="nav-button" onClick={() => navigate("/event/add")}>
+            {t("btn-add")}
+          </button>
           <button className="nav-button" onClick={setToday}>
             {t("today")}
           </button>

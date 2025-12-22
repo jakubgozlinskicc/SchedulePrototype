@@ -3,12 +3,15 @@ import { useLoadEvents } from "../../../../events/useEvents/useEventData/useLoad
 import { useEventList } from "./useEventList/useEventList";
 import "./EventList.css";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export function EventList() {
   useLoadEvents(eventRepository);
 
   const { groupedEvents, formatTime } = useEventList();
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
   if (groupedEvents.length === 0) {
     return (
       <div className="events-list">
@@ -32,13 +35,23 @@ export function EventList() {
                 borderRightColor: event.color,
               }}
             >
-              <div className="event-title">{event.title}</div>
-              <div className="event-time">
-                {formatTime(event.start)} — {formatTime(event.end)}
+              <div className="event-content">
+                <div className="event-header">
+                  <span className="event-title">{event.title}</span>
+                  <button
+                    className="nav-button"
+                    onClick={() => navigate(`/event/edit/${event.id}`)}
+                  >
+                    {t("edit")}
+                  </button>
+                </div>
+                <div className="event-time">
+                  {formatTime(event.start)} — {formatTime(event.end)}
+                </div>
+                {event.description && (
+                  <div className="event-description">{event.description}</div>
+                )}
               </div>
-              {event.description && (
-                <div className="event-description">{event.description}</div>
-              )}
             </div>
           ))}
         </div>
