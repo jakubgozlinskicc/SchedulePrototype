@@ -45,3 +45,8 @@
   max-height: 100px;
   overflow-y: auto;
 }
+
+.day-header {
+  font-weight: bold;
+  padding: 10px;
+}

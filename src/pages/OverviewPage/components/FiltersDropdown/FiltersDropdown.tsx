@@ -57,17 +57,6 @@ export function FiltersDropdown() {
       {isOpen && (
         <div className="filters-panel">
           <div className="filter-group">
-            <label className="filter-label">{t("search")}</label>
-            <input
-              type="text"
-              placeholder={t("search-placeholder")}
-              value={filters.searchQuery}
-              onChange={(e) => updateFilter("searchQuery", e.target.value)}
-              className="filter-input"
-            />
-          </div>
-
-          <div className="filter-group">
             <label className="filter-label">{t("date-from")}</label>
             <input
               type="date"
