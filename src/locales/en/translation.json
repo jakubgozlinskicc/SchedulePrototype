@@ -1,4 +1,5 @@
 {
+  "events": "Events",
   "modal_edit_title": "Edit event",
   "modal_add_title": "Add event",
   "btn_delete": "Delete",
@@ -11,6 +12,7 @@
   "end-date": "End",
   "color": "Color",
   "today": "Today",
+  "tomorrow": "Tomorrow",
   "month": "Month",
   "week": "Week",
   "day": "Day",
@@ -41,5 +43,13 @@
   "modal_recurring_prompt": "This is a recurring event. What do you want to edit?",
   "btn_edit_single": "This event only",
   "btn_edit_all": "All events in the series",
-  "edit": "Edit"
+  "edit": "Edit",
+  "date-from": "From date",
+  "date-to": "To date",
+  "filters": "Filters",
+  "search": "Search",
+  "search-placeholder": "Search events...",
+  "show-past-events": "Show past events",
+  "reset-filters": "Reset filters",
+  "no-upcoming-events": "No upcoming events"
 }

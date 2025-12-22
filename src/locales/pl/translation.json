@@ -1,4 +1,5 @@
 {
+  "events": "Wydarzenia",
   "modal_edit_title": "Edytuj wydarzenie",
   "modal_add_title": "Dodaj wydarzenie",
   "btn_delete": "Usuń",
@@ -11,6 +12,7 @@
   "end-date": "Koniec",
   "color": "Kolor",
   "today": "Dzisiaj",
+  "tomorrow": "Jutro",
   "month": "Miesiąc",
   "week": "Tydzień",
   "day": "Dzień",
@@ -41,5 +43,13 @@
   "modal_recurring_prompt": "To jest powtarzające się wydarzenie. Co chcesz edytować?",
   "btn_edit_single": "To wydarzenie",
   "btn_edit_all": "Wszystkie wydarzenia",
-  "edit": "Edytuj"
+  "edit": "Edytuj",
+  "date-from": "Od daty",
+  "date-to": "Do daty",
+  "filters": "Filtry",
+  "search": "Szukaj",
+  "search-placeholder": "Szukaj wydarzeń...",
+  "show-past-events": "Pokaż przeszłe wydarzenia",
+  "reset-filters": "Resetuj filtry",
+  "no-upcoming-events": "Brak nadchodzących wydarzeń"
 }

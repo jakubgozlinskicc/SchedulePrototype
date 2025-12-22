@@ -1,15 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import "./components/EventList.css";
+import "./components/EventList/EventList.css";
+import "./components/FiltersDropdown/FiltersDropdown.css";
 import "./OverviewPage.css";
 import { useTranslationContext } from "../../locales/useTranslationContext";
 import type { Language } from "../../contexts/translationContext/translationContext";
-import { useEventDataContext } from "../../events/useEvents/useEventDataContext/useEventDataContext";
-import { EventList } from "./components/EventList";
+import { EventList } from "./components/EventList/EventList";
+import { useTranslation } from "react-i18next";
+import { FiltersDropdown } from "./components/FiltersDropdown/FiltersDropdown";
+import { FiltersProvider } from "./context/FiltersProvider";
 
 function OverviewPage() {
   const navigate = useNavigate();
-
-  const { events } = useEventDataContext();
 
   const { currentLanguage, changeLanguage } = useTranslationContext();
 
@@ -19,35 +20,37 @@ function OverviewPage() {
     changeLanguage(event.target.value as Language);
   };
 
-  return (
-    <div className="overview-page">
-      <div className="top-controls">
-        <button className="overview-button" onClick={() => navigate("/")}>
-          Schedule
-        </button>
-        <select
-          className="language-select"
-          value={currentLanguage}
-          onChange={handleLanguageChange}
-          style={{ marginLeft: "10px", padding: "5px" }}
-        >
-          <option value="enUS">EN</option>
-          <option value="pl">PL</option>
-        </select>
-      </div>
-      <header className="overview-header">
-        <h1>Overview</h1>
-      </header>
-      <main className="overview-content">
-        <h2>Events</h2>
+  const { t } = useTranslation();
 
-        {events.length === 0 ? (
-          <div className="no-events">No events found</div>
-        ) : (
+  return (
+    <FiltersProvider>
+      <div className="overview-page">
+        <div className="top-controls">
+          <button className="overview-button" onClick={() => navigate("/")}>
+            Schedule
+          </button>
+          <select
+            className="language-select"
+            value={currentLanguage}
+            onChange={handleLanguageChange}
+            style={{ marginLeft: "10px", padding: "5px" }}
+          >
+            <option value="enUS">EN</option>
+            <option value="pl">PL</option>
+          </select>
+        </div>
+        <header className="overview-header">
+          <h1>Overview</h1>
+        </header>
+        <div className="overview-toolbar">
+          <FiltersDropdown />
+        </div>
+        <main className="overview-content">
+          <h2>{t("events")}</h2>
           <EventList />
-        )}
-      </main>
-    </div>
+        </main>
+      </div>
+    </FiltersProvider>
   );
 }
 
