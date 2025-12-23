@@ -13,10 +13,9 @@
   text-align: center;
 }
 .language-select {
-  background-color: #591efd;
-  color: #ffffff;
+  background-color: var(--primary);
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius);
   font-size: 0.9rem;
   cursor: pointer;
 }
@@ -28,13 +27,13 @@
   width: 80%;
   display: flex;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 }
 
 .calendar-section .rbc-calendar {
   width: 100%;
   display: flex;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
@@ -53,10 +52,9 @@
 
 .overview-button {
   padding: 8px 16px;
-  background-color: #591efd;
-  color: white;
+  background-color: var(--primary);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius);
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
@@ -64,24 +62,23 @@
 }
 
 .overview-button:hover {
-  background-color: #3105aa;
+  background-color: var(--primary-hover);
 }
 
 .btn {
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius);
   padding: 6px 10px;
   font-size: 0.9rem;
   cursor: pointer;
 }
 
 .btn-primary {
-  background-color: #591efd;
-  color: #fff;
+  background-color: var(--primary);
 }
 
 .btn-primary:hover {
-  background-color: #3105aa;
+  background-color: var(--primary-hover);
 }
 
 .btn-secondary {
@@ -108,7 +105,6 @@
 }
 
 .rbc-time-header-cell .rbc-today {
-  color: #fff;
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -116,22 +112,21 @@
   height: 36px;
 }
 .rbc-header {
-  color: #fff;
   font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 36px;
-  background-color: #591efd;
-  border-radius: 8px;
+  background-color: var(--primary);
+  border-radius: var(--radius);
 }
 
 .rbc-time-slot {
-  color: #591efd;
+  color: var(--primary);
 }
 
 .rbc-time-view {
-  border-radius: 8px;
+  border-radius: var(--radius);
 }
 
 .rbc-time-content {
@@ -142,7 +137,7 @@
   overflow: hidden;
   color: black !important;
   padding-left: 10px;
-  border-radius: 6px;
+  border-radius: var(--radius);
   border: none;
   background: color-mix(in srgb, var(--event-color) 20%, transparent);
 }
@@ -164,7 +159,7 @@
 
 .rbc-month-view .rbc-event.colored-event {
   background-color: var(--event-color);
-  border-radius: 6px;
+  border-radius: var(--radius);
   border: none;
 }
 .rbc-date-cell .rbc-button-link {
@@ -177,6 +172,5 @@
   border-radius: 50%;
 }
 .rbc-date-cell .rbc-button-link:hover {
-  background-color: #591efd;
-  color: #ffffff;
+  background-color: var(--primary);
 }

@@ -21,24 +21,16 @@
 .pagination-controls button {
   padding: 8px 12px;
   border: 1px solid #ddd;
-  border-radius: 6px;
+  border-radius: var(--radius);
   background: white;
   cursor: pointer;
   font-size: 14px;
   min-width: 36px;
 }
 .pagination-controls button:hover {
-  background-color: #591efd;
-  color: white;
+  background-color: var(--primary);
 }
 
 .pagination-controls button.active {
-  background-color: #591efd;
-  color: white;
-}
-
-.pagination-controls span {
-  padding: 8px 4px;
-  color: #999;
-  font-size: 14px;
+  background-color: var(--primary);
 }

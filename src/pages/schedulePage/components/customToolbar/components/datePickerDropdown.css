@@ -70,7 +70,6 @@
 
 .date-picker-dropdown .react-datepicker__header {
   background: var(--primary);
-  color: var(--white);
   border: none;
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   padding-top: 12px;
@@ -92,7 +91,6 @@
 .date-picker-dropdown .react-datepicker__current-month,
 .date-picker-dropdown .react-datepicker__day-name,
 .date-picker-dropdown .react-datepicker__navigation-icon::before {
-  color: var(--white);
   border-color: var(--white);
 }
 
@@ -114,7 +112,6 @@
 .date-picker-dropdown .react-datepicker__month-text--selected,
 .date-picker-dropdown .react-datepicker__month-text--keyboard-selected {
   background: var(--primary);
-  color: var(--white);
 }
 
 .date-picker-dropdown .react-datepicker__day--selected:hover,
@@ -129,7 +126,6 @@
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 4px;
-  color: var(--white);
   font-size: 0.9rem;
   cursor: pointer;
   min-width: 100px;
@@ -166,10 +162,6 @@
 
 .date-picker-dropdown .react-datepicker__month-text:hover {
   background: var(--gray-300);
-}
-
-.react-datepicker-year-header {
-  color: var(--white);
 }
 
 .date-picker-dropdown .react-datepicker__day--outside-month {

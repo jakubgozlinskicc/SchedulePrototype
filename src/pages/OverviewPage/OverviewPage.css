@@ -43,13 +43,12 @@
 
 .overview-header h1 {
   margin: 0;
-  color: #333;
 }
 
 .overview-content h2 {
-  color: #333;
+  text-align: center;
   margin-bottom: 20px;
-  border-bottom: 2px solid #591efd;
+  border-bottom: 2px solid var(--primary);
   padding-bottom: 10px;
 }
 

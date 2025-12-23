@@ -1,15 +1,4 @@
 :root {
-  --primary: #591efd;
-  --primary-hover: #3105aa;
-  --gray-100: #f7f9fc;
-  --gray-200: #f3f4f6;
-  --gray-300: #e5e7eb;
-  --gray-400: #d1d5db;
-  --gray-900: #111827;
-  --white: #fff;
-  --shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-  --radius: 6px;
-  --radius-lg: 12px;
 }
 
 .custom-toolbar {
@@ -46,7 +35,6 @@
 
 .nav-button {
   background: var(--primary);
-  color: var(--white);
 }
 
 .nav-button:hover {

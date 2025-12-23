@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   height: 100vh;
-  background-color: #3105aa;
+  background-color: var(--primary-hover);
   color: white;
   padding: 0.25rem 0;
   display: flex;
@@ -26,8 +26,8 @@
   display: block;
   color: #b0b0c0;
   padding: 0.75rem 1rem;
-  transition: all 0.3s ease;
   border-left: 3px solid transparent;
+  transition: 0.5s;
 }
 
 .sidebar-links a:hover {
@@ -38,5 +38,5 @@
 .sidebar-links a.active {
   background-color: #000000;
   color: #ffffff;
-  border-left-color: #591efd;
+  border-left-color: var(--primary);
 }
