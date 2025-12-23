@@ -33,7 +33,7 @@ function OverviewPageContent() {
     <div className="overview-page">
       <div className="top-controls">
         <button className="overview-button" onClick={() => navigate("/")}>
-          Schedule
+          Schedule <i className="fa-regular fa-calendar"></i>
         </button>
         <select
           className="language-select"

@@ -44,15 +44,3 @@
   display: flex;
   gap: 8px;
 }
-
-.actions-buttons .nav-button:first-child {
-  background-color: #591efd;
-  color: white;
-  border: none;
-}
-
-.actions-buttons .nav-button {
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-}

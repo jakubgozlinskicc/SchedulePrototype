@@ -36,7 +36,7 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
         <div className="actions-buttons">
           {onAddEvent && (
             <button className="nav-button" onClick={onAddEvent}>
-              {t("btn-add")}
+              {t("btn-add")} <i className="fa-solid fa-calendar-plus"></i>
             </button>
           )}
           <button className="nav-button" onClick={() => onNavigate("TODAY")}>
@@ -46,7 +46,7 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
 
         <div className="nav-buttons">
           <button className="nav-button" onClick={() => onNavigate("PREV")}>
-            ←
+            <i className="fa-solid fa-arrow-left"></i>
           </button>
 
           <div className="date-picker-container" ref={datePickerRef}>
@@ -57,7 +57,9 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
               aria-haspopup="dialog"
             >
               <span className="toolbar-label">{label}</span>
-              <span className="calendar-icon">📅</span>
+              <span className="calendar-icon">
+                <i className="fa-solid fa-calendar"></i>
+              </span>
             </button>
             {isDatePickerOpen && (
               <DatePickerComponent
@@ -69,7 +71,7 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
           </div>
 
           <button className="nav-button" onClick={() => onNavigate("NEXT")}>
-            →
+            <i className="fa-solid fa-arrow-right"></i>
           </button>
         </div>
 

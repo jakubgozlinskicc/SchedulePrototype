@@ -55,5 +55,9 @@
 
   "errors-title-message": "Tytuł wymagany",
   "errors-start-message": "Początek wymagany",
-  "errors-end-message": "Koniec wymagany"
+  "errors-end-message": "Koniec wymagany",
+
+  "toast-error-select-date": "Musisz wybrać przynajmniej jedną datę",
+
+  "page": "Strona"
 }

@@ -8,11 +8,12 @@ import {
   startOfWeek,
 } from "date-fns";
 import { useFiltersContext } from "../../../context/useFiltersContext";
-import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 export function useEventToolbar() {
   const { filters, updateFilter } = useFiltersContext();
-  const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const setToday = () => {
     const today = new Date();
@@ -22,7 +23,17 @@ export function useEventToolbar() {
     updateFilter("dateTo", today);
   };
 
+  const toastDateError = () => {
+    if (!filters.dateFrom && !filters.dateTo) {
+      toast.error(t("toast-error-select-date"), {
+        id: "date-error",
+      });
+      return;
+    }
+  };
+
   const handleNextDay = () => {
+    toastDateError();
     if (filters.dateFrom) {
       const nextFromDay = addDays(filters.dateFrom, 1);
       updateFilter("dateFrom", nextFromDay);
@@ -34,6 +45,8 @@ export function useEventToolbar() {
   };
 
   const handlePreviousDay = () => {
+    toastDateError();
+
     if (filters.dateFrom) {
       const nextFromDay = addDays(filters.dateFrom, -1);
       updateFilter("dateFrom", nextFromDay);
@@ -45,6 +58,7 @@ export function useEventToolbar() {
   };
 
   const setCurrentMonthRange = () => {
+    toastDateError();
     if (filters.dateFrom) {
       const currentDate = filters.dateFrom;
       const start = startOfMonth(currentDate);
@@ -56,6 +70,7 @@ export function useEventToolbar() {
   };
 
   const setCurrentWeekRange = () => {
+    toastDateError();
     if (filters.dateFrom) {
       const currentDate = filters.dateFrom;
       const start = startOfWeek(currentDate, { weekStartsOn: 1 });
@@ -67,6 +82,7 @@ export function useEventToolbar() {
   };
 
   const setCurrentDayRange = () => {
+    toastDateError();
     if (filters.dateFrom) {
       const currentDate = filters.dateFrom;
       const start = startOfDay(currentDate);

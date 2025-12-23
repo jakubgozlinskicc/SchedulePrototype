@@ -1,14 +1,15 @@
 import { eventRepository } from "../../../../db/eventRepository";
 import { useLoadEvents } from "../../../../events/useEvents/useEventData/useLoadEvents/useLoadEvents";
 import { useEventList } from "./useEventList/useEventList";
-import "./EventList.css";
+import { Pagination } from "../Pagination/Pagination";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import "./EventList.css";
 
 export function EventList() {
   useLoadEvents(eventRepository);
 
-  const { groupedEvents, formatTime } = useEventList();
+  const { groupedEvents, formatTime, pagination } = useEventList();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -56,6 +57,16 @@ export function EventList() {
           ))}
         </div>
       ))}
+
+      <Pagination
+        currentPage={pagination.currentPage}
+        totalPages={pagination.totalPages}
+        onPageChange={pagination.goToPage}
+        onNext={pagination.goToNextPage}
+        onPrevious={pagination.goToPreviousPage}
+        hasNext={pagination.hasNextPage}
+        hasPrevious={pagination.hasPreviousPage}
+      />
     </div>
   );
 }

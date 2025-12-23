@@ -68,7 +68,7 @@ function SchedulePage() {
           className="overview-button"
           onClick={() => navigate("/overview")}
         >
-          Overview
+          Overview <i className="fa-solid fa-list"></i>
         </button>
         <select
           className="language-select"
