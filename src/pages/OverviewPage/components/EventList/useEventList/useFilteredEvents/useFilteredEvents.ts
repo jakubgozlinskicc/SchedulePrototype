@@ -1,6 +1,6 @@
 import { useEventDataContext } from "../../../../../../events/useEvents/useEventDataContext/useEventDataContext";
 import { useFiltersContext } from "../../../../context/useFiltersContext";
-import { filterRegistry } from "./strategies/FilterRegistry";
+import { filterRegistry } from "./strategies/filterRegistry";
 
 export function useFilteredEvents() {
   const { events } = useEventDataContext();

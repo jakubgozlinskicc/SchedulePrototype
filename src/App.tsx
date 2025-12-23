@@ -5,18 +5,22 @@ import OverviewPage from "./pages/OverviewPage/OverviewPage";
 import { EventFormPage } from "./pages/EventFormPage/EventFormPage";
 import { TranslationProvider } from "./contexts/translationContext/translationProvider";
 import { EventDataProvider } from "./events/eventContext/eventDataProvider";
+import Nav from "./components/Nav/Nav";
 
 function App() {
   return (
     <BrowserRouter>
       <TranslationProvider>
         <EventDataProvider>
-          <Routes>
-            <Route path="/" element={<SchedulePage />} />
-            <Route path="/overview" element={<OverviewPage />} />
-            <Route path="/event/add" element={<EventFormPage />} />
-            <Route path="/event/edit/:id" element={<EventFormPage />} />
-          </Routes>
+          <Nav />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<SchedulePage />} />
+              <Route path="/overview" element={<OverviewPage />} />
+              <Route path="/event/add" element={<EventFormPage />} />
+              <Route path="/event/edit/:id" element={<EventFormPage />} />
+            </Routes>
+          </main>
         </EventDataProvider>
       </TranslationProvider>
     </BrowserRouter>
