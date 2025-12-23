@@ -14,6 +14,7 @@
 }
 .language-select {
   background-color: var(--primary);
+  font-weight: bold;
   border: none;
   border-radius: var(--radius);
   font-size: 0.9rem;
@@ -121,8 +122,8 @@
   border-radius: var(--radius);
 }
 
-.rbc-time-slot {
-  color: var(--primary);
+.rbc-today {
+  background-color: rgba(89, 30, 253, 0.05);
 }
 
 .rbc-time-view {
