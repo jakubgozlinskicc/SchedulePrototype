@@ -9,15 +9,17 @@
   background-color: #f9f9f9e5;
   padding: 16px;
   border-radius: 8px;
+  border-bottom: 1px solid;
   border-left: 4px solid;
   border-right: 4px solid;
   transition: box-shadow 0.2s ease;
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: 5px;
 }
 
 .event-item:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .event-header {

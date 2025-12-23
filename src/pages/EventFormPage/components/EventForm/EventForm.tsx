@@ -35,65 +35,79 @@ export function EventForm({ eventId, title, children }: EventFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="event-form">
-      <h2 className="event-form-title">{title}</h2>
+    <div className="event-form-page">
+      <header className="event-form-header">
+        <h1>{title}</h1>
+      </header>
 
-      <div className="event-form-field">
-        <label className="event-form-label">{t("title")}</label>
-        <input
-          type="text"
-          {...register("title")}
-          className="event-form-input"
-        />
-        {errors.title?.message && (
-          <span className="event-form-error">{t(errors.title.message)}</span>
-        )}
-      </div>
+      <div className="form-wrapper">
+        <main className="form-content">
+          <form onSubmit={handleSubmit(onSubmit)} className="event-form">
+            <div className="event-form-field">
+              <label className="event-form-label">{t("title")}</label>
+              <input
+                type="text"
+                {...register("title")}
+                className="event-form-input"
+              />
+              {errors.title?.message && (
+                <span className="event-form-error">
+                  {t(errors.title.message)}
+                </span>
+              )}
+            </div>
 
-      <div className="event-form-field">
-        <label className="event-form-label">{t("description")}</label>
-        <textarea
-          {...register("description")}
-          className="event-form-textarea"
-        />
-      </div>
+            <div className="event-form-field">
+              <label className="event-form-label">{t("description")}</label>
+              <textarea
+                {...register("description")}
+                className="event-form-textarea"
+              />
+            </div>
 
-      <div className="event-form-field">
-        <label className="event-form-label">{t("start-date")}</label>
-        <input
-          type="datetime-local"
-          {...register("start")}
-          className="event-form-input"
-        />
-        {errors.start?.message && (
-          <span className="event-form-error">{t(errors.start.message)}</span>
-        )}
-      </div>
+            <div className="event-form-field">
+              <label className="event-form-label">{t("start-date")}</label>
+              <input
+                type="datetime-local"
+                {...register("start")}
+                className="event-form-input"
+              />
+              {errors.start?.message && (
+                <span className="event-form-error">
+                  {t(errors.start.message)}
+                </span>
+              )}
+            </div>
 
-      <div className="event-form-field">
-        <label className="event-form-label">{t("end-date")}</label>
-        <input
-          type="datetime-local"
-          {...register("end")}
-          className="event-form-input"
-        />
-        {errors.end?.message && (
-          <span className="event-form-error">{t(errors.end.message)}</span>
-        )}
-      </div>
+            <div className="event-form-field">
+              <label className="event-form-label">{t("end-date")}</label>
+              <input
+                type="datetime-local"
+                {...register("end")}
+                className="event-form-input"
+              />
+              {errors.end?.message && (
+                <span className="event-form-error">
+                  {t(errors.end.message)}
+                </span>
+              )}
+            </div>
 
-      <div className="event-form-field">
-        <label className="event-form-label">{t("color")}</label>
-        <input
-          type="color"
-          {...register("color")}
-          className="event-form-color-picker"
-        />
-      </div>
+            <div className="event-form-field">
+              <label className="event-form-label">{t("color")}</label>
+              <input
+                type="color"
+                {...register("color")}
+                className="event-form-color-picker"
+              />
+            </div>
 
-      <div className="event-form-actions">
-        {children({ handleCancel, handleDelete })}
+            <div className="event-form-actions">
+              {children({ handleCancel, handleDelete })}
+            </div>
+          </form>
+        </main>
       </div>
-    </form>
+    </div>
   );
 }

@@ -32,8 +32,7 @@ export function EventList() {
               key={event.id}
               className="event-item"
               style={{
-                borderLeftColor: event.color,
-                borderRightColor: event.color,
+                borderColor: event.color,
               }}
             >
               <div className="event-content">

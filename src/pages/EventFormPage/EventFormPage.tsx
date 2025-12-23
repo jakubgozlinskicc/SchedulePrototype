@@ -12,5 +12,5 @@ export function EventFormPage() {
 
   const strategy = EventFormStrategyRegistry.getStrategy(context);
 
-  return <div className="event-form-page">{strategy.render(context)}</div>;
+  return strategy.render(context);
 }

@@ -4,7 +4,6 @@ import { EventForm } from "./EventForm/EventForm";
 
 export function EditEventForm({ eventId }: EventFormContentProps) {
   const { t } = useTranslation();
-
   return (
     <EventForm eventId={eventId} title={t("modal_edit_title")}>
       {({ handleCancel, handleDelete }) => (
