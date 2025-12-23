@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useEventUpdate } from "./useEventUpdate";
-import * as EventDataContext from "../../useEventDataContext/useEventDataContext";
+import * as EventDataContext from "../../../../../events/useEvents/useEventDataContext/useEventDataContext";
 import type { ChangeEvent } from "react";
 import type { Event } from "../../../../../db/scheduleDb";
 

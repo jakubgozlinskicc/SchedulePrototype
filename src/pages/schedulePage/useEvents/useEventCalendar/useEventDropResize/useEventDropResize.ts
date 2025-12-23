@@ -1,7 +1,7 @@
 import type { Event } from "../../../../../db/scheduleDb";
 import { DropResizeStrategyRegistry } from "./dropResizeStrategies.ts/dropResizeStrategyRegistry";
-import type { IEventRepository } from "../../IEventRepository";
-import { useReloadEvents } from "../../useEventData/useReloadEvents/useReloadEvents";
+import { useReloadEvents } from "../../../../../events/useEvents/useEventData/useReloadEvents/useReloadEvents";
+import type { IEventRepository } from "../../../../../events/useEvents/IEventRepository";
 
 type DragDropArgs = {
   event: Event;

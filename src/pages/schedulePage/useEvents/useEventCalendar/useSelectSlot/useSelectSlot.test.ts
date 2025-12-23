@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useSelectSlot } from "./useSelectSlot";
-import * as EventDataContext from "../../useEventDataContext/useEventDataContext";
+import * as EventDataContext from "../../../../../events/useEvents/useEventDataContext/useEventDataContext";
 import type { SlotInfo } from "react-big-calendar";
 
 describe("useSelectSlot", () => {

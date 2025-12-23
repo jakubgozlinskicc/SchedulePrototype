@@ -1,6 +1,6 @@
+import type { IEventRepository } from "../events/useEvents/IEventRepository";
 import { db } from "./scheduleDb";
 import type { Event } from "./scheduleDb";
-import type { IEventRepository } from "../pages/schedulePage/useEvents/IEventRepository";
 
 export const eventRepository: IEventRepository = {
   async addEvent(event: Event): Promise<number> {

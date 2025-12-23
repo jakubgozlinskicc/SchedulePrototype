@@ -1,6 +1,6 @@
 import type { Event } from "../../../../../../db/scheduleDb";
-import type { IEventRepository } from "../../../IEventRepository";
-import { setNewParentEvent } from "../../../useEventComponents/useRecurringEdit/setNewParentEvent";
+import type { IEventRepository } from "../../../../../../events/useEvents/IEventRepository";
+import { setNewParentEvent } from "../../../../../../events/useEvents/useEventData/useRecurringEdit/setNewParentEvent";
 import type { IDropResizeStrategy } from "./dropResizeStrategyTypes";
 
 export class DropResizeParentStrategy implements IDropResizeStrategy {

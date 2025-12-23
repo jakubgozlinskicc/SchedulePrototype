@@ -1,5 +1,5 @@
 import type { Event } from "../../../../../db/scheduleDb";
-import type { RecurrenceType } from "../../../recurrence/recurrenceTypes";
+import type { RecurrenceType } from "../../../../../events/recurrence/recurrenceTypes";
 
 export type TriggerShake = () => void;
 
