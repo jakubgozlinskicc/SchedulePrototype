@@ -1,6 +1,5 @@
 import type { Event } from "../../../../../db/scheduleDb";
 import type { EditOptions, ISubmitStrategy } from "./ISubmitStrategy";
-import { SubmitParentStrategy } from "./SubmitParentStrategy";
 import { SubmitExistingEventStrategy } from "./SubmitExistingEventStrategy";
 import { SubmitNewEventStrategy } from "./SubmitNewEventStrategy";
 import { SubmitVirtualOccurrenceStrategy } from "./SubmitVirtualOccurenceStrategy";
@@ -10,7 +9,6 @@ import { SubmitAllRecurringEventsStrategy } from "./SubmitAllRecurringEventsStra
 const strategies: ISubmitStrategy[] = [
   new SubmitAllRecurringEventsStrategy(),
   new SubmitVirtualOccurrenceStrategy(),
-  new SubmitParentStrategy(),
   new SubmitExistingEventStrategy(),
   new SubmitNewEventStrategy(),
 ];
