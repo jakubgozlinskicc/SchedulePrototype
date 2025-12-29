@@ -6,8 +6,8 @@ export type EventContextType = {
   setEventData: React.Dispatch<React.SetStateAction<Event>>;
   events: Event[];
   setEvents: React.Dispatch<React.SetStateAction<Event[]>>;
-  isDeleteAll: boolean;
-  setIsDeleteAll: React.Dispatch<React.SetStateAction<boolean>>;
+  isEditAll: boolean;
+  setIsEditAll: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const EventContext = createContext<EventContextType | undefined>(

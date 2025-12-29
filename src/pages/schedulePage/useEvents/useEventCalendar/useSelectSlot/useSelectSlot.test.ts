@@ -26,8 +26,8 @@ describe("useSelectSlot", () => {
       setEventData: mockSetEventData,
       setEvents: mockSetEvents,
       events: [],
-      isDeleteAll: false,
-      setIsDeleteAll: mockSetIsDeleteAll,
+      isEditAll: false,
+      setIsEditAll: mockSetIsDeleteAll,
     });
   });
 

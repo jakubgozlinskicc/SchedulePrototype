@@ -13,8 +13,8 @@ const mockSetIsDeleteAll = vi.fn();
 vi.mock("../../useEventDataContext/useEventDataContext", () => ({
   useEventDataContext: () => ({
     eventData: mockEventData,
-    isDeleteAll: mockIsDeleteAll,
-    setIsDeleteAll: mockSetIsDeleteAll,
+    isEditAll: mockIsDeleteAll,
+    setIsEditAll: mockSetIsDeleteAll,
   }),
 }));
 
@@ -71,11 +71,11 @@ describe("useDeleteEvent", () => {
     expect(DeleteStrategyRegistry.executeDelete).toHaveBeenCalledWith(
       mockEventData,
       mockRepository,
-      { isDeleteAll: false }
+      { isEditAll: false }
     );
   });
 
-  it("should pass isDeleteAll option to strategy registry", async () => {
+  it("should pass isEditAll option to strategy registry", async () => {
     mockIsDeleteAll = true;
 
     const { result } = renderHook(() =>
@@ -88,7 +88,7 @@ describe("useDeleteEvent", () => {
     expect(DeleteStrategyRegistry.executeDelete).toHaveBeenCalledWith(
       mockEventData,
       mockRepository,
-      { isDeleteAll: true }
+      { isEditAll: true }
     );
   });
 
@@ -114,7 +114,7 @@ describe("useDeleteEvent", () => {
     expect(mockCloseModal).toHaveBeenCalled();
   });
 
-  it("should reset isDeleteAll to false after deletion", async () => {
+  it("should reset isEditAll to false after deletion", async () => {
     mockIsDeleteAll = true;
     const { result } = renderHook(() =>
       useDeleteEvent(mockCloseModal, mockRepository)

@@ -12,7 +12,7 @@ vi.mock("../../useEventDataContext/useEventDataContext", () => ({
   useEventDataContext: () => ({
     eventData: mockEventData,
     setEventData: mockSetEventData,
-    setIsDeleteAll: mockSetIsDeleteAll,
+    setIsEditAll: mockSetIsDeleteAll,
   }),
 }));
 
@@ -42,7 +42,7 @@ describe("useRecurringEdit", () => {
   });
 
   describe("handleEditSingle", () => {
-    it("should set isDeleteAll to false", () => {
+    it("should set isEditAll to false", () => {
       const { result } = renderHook(() => useRecurringEdit(mockRepository));
 
       act(() => {
@@ -71,7 +71,7 @@ describe("useRecurringEdit", () => {
   });
 
   describe("handleEditAll", () => {
-    it("should set isDeleteAll to true", async () => {
+    it("should set isEditAll to true", async () => {
       mockEventData = {
         ...mockEventData,
         recurringEventId: 5,

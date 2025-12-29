@@ -15,7 +15,7 @@ export function useEventFormDelete() {
 
     try {
       await DeleteStrategyRegistry.executeDelete(eventData, eventRepository, {
-        isDeleteAll: false,
+        isEditAll: false,
       });
       await reloadEvents();
       setEventData(getDefaultEvent);

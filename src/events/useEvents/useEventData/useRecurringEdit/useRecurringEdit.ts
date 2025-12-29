@@ -2,17 +2,17 @@ import type { IEventRepository } from "../../IEventRepository";
 import { useEventDataContext } from "../../useEventDataContext/useEventDataContext";
 
 export function useRecurringEdit(repository: IEventRepository) {
-  const { eventData, setEventData, setIsDeleteAll } = useEventDataContext();
+  const { eventData, setEventData, setIsEditAll } = useEventDataContext();
 
   const handleEditSingle = () => {
-    setIsDeleteAll(false);
+    setIsEditAll(false);
     setEventData((prev) => ({
       ...prev,
     }));
   };
 
   const handleEditAll = async () => {
-    setIsDeleteAll(true);
+    setIsEditAll(true);
 
     if (!eventData.recurringEventId) return;
 

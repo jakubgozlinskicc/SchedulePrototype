@@ -10,13 +10,17 @@ import { getDefaultEvent } from "../../../../../../utils/getDefaultEvent/getDefa
 export function useEventFormSubmit() {
   const { reloadEvents } = useReloadEvents(eventRepository);
   const { goToOverview } = useEventFormNavigation();
-  const { eventData, setEventData } = useEventDataContext();
+  const { eventData, setEventData, isEditAll, setIsEditAll } =
+    useEventDataContext();
 
   const onSubmit = async (data: EventFormData) => {
     try {
       const event = convertFormDataToEvent(data, eventData);
-      await SubmitStrategyRegistry.executeSubmit(event, eventRepository);
+      await SubmitStrategyRegistry.executeSubmit(event, eventRepository, {
+        isEditAll,
+      });
       await reloadEvents();
+      setIsEditAll(false);
       setEventData(getDefaultEvent);
       goToOverview();
     } catch (error) {

@@ -45,7 +45,7 @@ describe("DeleteStrategyRegistry", () => {
       expect(mockRepository.deleteEvent).toHaveBeenCalledWith(1);
     });
 
-    it("should use DeleteAllRecurringEventsStrategy when isDeleteAll is true", async () => {
+    it("should use DeleteAllRecurringEventsStrategy when isEditAll is true", async () => {
       const eventData: Event = {
         id: 5,
         title: "Recurring event",
@@ -60,7 +60,7 @@ describe("DeleteStrategyRegistry", () => {
       };
 
       await DeleteStrategyRegistry.executeDelete(eventData, mockRepository, {
-        isDeleteAll: true,
+        isEditAll: true,
       });
 
       expect(mockRepository.deleteEvent).toHaveBeenCalledWith(5);
@@ -93,7 +93,7 @@ describe("DeleteStrategyRegistry", () => {
       };
 
       await DeleteStrategyRegistry.executeDelete(eventData, mockRepository, {
-        isDeleteAll: false,
+        isEditAll: false,
       });
 
       expect(mockRepository.editEvent).toHaveBeenCalledWith(5, {
@@ -102,7 +102,7 @@ describe("DeleteStrategyRegistry", () => {
       expect(mockRepository.deleteEvent).not.toHaveBeenCalled();
     });
 
-    it("should use DeleteRecurringParentStrategy for recurring parent with isDeleteAll false", async () => {
+    it("should use DeleteRecurringParentStrategy for recurring parent with isEditAll false", async () => {
       const eventData: Event = {
         id: 10,
         title: "Recurring parent",
@@ -117,7 +117,7 @@ describe("DeleteStrategyRegistry", () => {
       };
 
       await DeleteStrategyRegistry.executeDelete(eventData, mockRepository, {
-        isDeleteAll: false,
+        isEditAll: false,
       });
 
       expect(mockRepository.deleteEvent).toHaveBeenCalledWith(10);
@@ -141,7 +141,7 @@ describe("DeleteStrategyRegistry", () => {
       ).rejects.toThrow("No delete strategy found for event");
     });
 
-    it("should delete parent via recurringEventId for virtual occurrence with isDeleteAll true", async () => {
+    it("should delete parent via recurringEventId for virtual occurrence with isEditAll true", async () => {
       const eventData: Event = {
         title: "Virtual occurrence",
         description: "Test",
@@ -156,7 +156,7 @@ describe("DeleteStrategyRegistry", () => {
       };
 
       await DeleteStrategyRegistry.executeDelete(eventData, mockRepository, {
-        isDeleteAll: true,
+        isEditAll: true,
       });
 
       expect(mockRepository.deleteEvent).toHaveBeenCalledWith(7);

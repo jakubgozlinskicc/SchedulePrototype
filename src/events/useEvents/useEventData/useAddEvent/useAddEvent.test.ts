@@ -24,9 +24,9 @@ describe("useAddEvent", () => {
       eventData: mockEventData,
       setEventData: mockSetEventData,
       setEvents: mockSetEvents,
-      setIsDeleteAll: mockSetIsDeleteAll,
+      setIsEditAll: mockSetIsDeleteAll,
       events: [],
-      isDeleteAll: false,
+      isEditAll: false,
     });
   });
 

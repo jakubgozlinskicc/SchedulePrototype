@@ -33,9 +33,7 @@ describe("DeleteVirtualOccurrenceStrategy", () => {
         },
       };
 
-      expect(strategy.canExecute(eventData, { isDeleteAll: false })).toBe(
-        false
-      );
+      expect(strategy.canExecute(eventData, { isEditAll: false })).toBe(false);
     });
 
     it("should return false for recurring parent event", () => {
@@ -53,9 +51,7 @@ describe("DeleteVirtualOccurrenceStrategy", () => {
         },
       };
 
-      expect(strategy.canExecute(eventData, { isDeleteAll: false })).toBe(
-        false
-      );
+      expect(strategy.canExecute(eventData, { isEditAll: false })).toBe(false);
     });
 
     it("should return true for virtual occurrence", () => {
@@ -73,10 +69,10 @@ describe("DeleteVirtualOccurrenceStrategy", () => {
         },
       };
 
-      expect(strategy.canExecute(eventData, { isDeleteAll: false })).toBe(true);
+      expect(strategy.canExecute(eventData, { isEditAll: false })).toBe(true);
     });
 
-    it("should return false for virtual occurrence when isDeleteAll is true", () => {
+    it("should return false for virtual occurrence when isEditAll is true", () => {
       const eventData: Event = {
         id: undefined,
         title: "Virtual occurrence",
@@ -91,7 +87,7 @@ describe("DeleteVirtualOccurrenceStrategy", () => {
         },
       };
 
-      expect(strategy.canExecute(eventData, { isDeleteAll: true })).toBe(false);
+      expect(strategy.canExecute(eventData, { isEditAll: true })).toBe(false);
     });
   });
   describe("execute", () => {

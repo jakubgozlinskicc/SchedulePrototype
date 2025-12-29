@@ -6,7 +6,7 @@ import { useEventDataContext } from "../../../../../events/useEvents/useEventDat
 export function RecurringEditCheckbox() {
   const { t } = useTranslation();
   const { handleEditSingle, handleEditAll } = useRecurringEdit(eventRepository);
-  const { isDeleteAll } = useEventDataContext();
+  const { isEditAll } = useEventDataContext();
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -19,7 +19,7 @@ export function RecurringEditCheckbox() {
   return (
     <div className="checkbox">
       <label className="checkbox-label">
-        <input type="checkbox" checked={isDeleteAll} onChange={handleChange} />
+        <input type="checkbox" checked={isEditAll} onChange={handleChange} />
         <span className="checkbox-text">{t("edit-all-ocurrences")}</span>
       </label>
     </div>

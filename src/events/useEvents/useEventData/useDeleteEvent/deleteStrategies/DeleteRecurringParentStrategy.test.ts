@@ -60,7 +60,7 @@ describe("DeleteRecurringParentStrategy", () => {
         },
       };
 
-      expect(strategy.canExecute(eventData, { isDeleteAll: false })).toBe(true);
+      expect(strategy.canExecute(eventData, { isEditAll: false })).toBe(true);
     });
 
     it("should return false for virtual occurrence", () => {
@@ -78,9 +78,7 @@ describe("DeleteRecurringParentStrategy", () => {
         },
       };
 
-      expect(strategy.canExecute(eventData, { isDeleteAll: false })).toBe(
-        false
-      );
+      expect(strategy.canExecute(eventData, { isEditAll: false })).toBe(false);
     });
   });
   describe("execute", () => {

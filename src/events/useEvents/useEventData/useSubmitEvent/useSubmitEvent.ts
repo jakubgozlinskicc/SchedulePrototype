@@ -8,15 +8,18 @@ export function useSubmitEvent(
   closeModal: () => void,
   repository: IEventRepository
 ) {
-  const { eventData } = useEventDataContext();
+  const { eventData, isEditAll, setIsEditAll } = useEventDataContext();
   const { reloadEvents } = useReloadEvents(repository);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      await SubmitStrategyRegistry.executeSubmit(eventData, repository);
+      await SubmitStrategyRegistry.executeSubmit(eventData, repository, {
+        isEditAll,
+      });
       await reloadEvents();
+      setIsEditAll(false);
       closeModal();
     } catch (error) {
       console.error("Error during saving events:", error);

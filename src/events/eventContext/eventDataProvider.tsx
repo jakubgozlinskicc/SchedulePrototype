@@ -10,15 +10,15 @@ type EventProviderProps = {
 export function EventDataProvider({ children }: EventProviderProps) {
   const [eventData, setEventData] = useState<Event>(getDefaultEvent());
   const [events, setEvents] = useState<Event[]>([]);
-  const [isDeleteAll, setIsDeleteAll] = useState<boolean>(false);
+  const [isEditAll, setIsEditAll] = useState<boolean>(false);
 
   const value = {
     eventData,
     setEventData,
     events,
     setEvents,
-    isDeleteAll,
-    setIsDeleteAll,
+    isEditAll,
+    setIsEditAll,
   };
 
   return (
