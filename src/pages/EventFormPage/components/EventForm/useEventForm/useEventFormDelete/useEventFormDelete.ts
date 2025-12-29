@@ -1,30 +1,25 @@
 import { eventRepository } from "../../../../../../db/eventRepository";
 import { useReloadEvents } from "../../../../../../events/useEvents/useEventData/useReloadEvents/useReloadEvents";
+import { useEventDataContext } from "../../../../../../events/useEvents/useEventDataContext/useEventDataContext";
+import { useEventFormNavigation } from "../useEventFormNavigation/useEventFormNavigation";
 import { DeleteStrategyRegistry } from "../../../../../../events/useEvents/useEventData/useDeleteEvent/deleteStrategies/deleteStrategyRegistry";
+import { getDefaultEvent } from "../../../../../../utils/getDefaultEvent/getDefaultEvent";
 
-interface UseEventFormDeleteProps {
-  eventId?: number;
-  onSuccess: () => void;
-}
-
-export function useEventFormDelete({
-  eventId,
-  onSuccess,
-}: UseEventFormDeleteProps) {
+export function useEventFormDelete() {
+  const { eventData, setEventData } = useEventDataContext();
   const { reloadEvents } = useReloadEvents(eventRepository);
+  const { goToOverview } = useEventFormNavigation();
 
   const handleDelete = async () => {
-    if (!eventId) return;
+    if (!eventData?.id) return;
 
     try {
-      const event = await eventRepository.getEventById(eventId);
-      if (!event) return;
-
-      await DeleteStrategyRegistry.executeDelete(event, eventRepository, {
+      await DeleteStrategyRegistry.executeDelete(eventData, eventRepository, {
         isDeleteAll: false,
       });
       await reloadEvents();
-      onSuccess();
+      setEventData(getDefaultEvent);
+      goToOverview();
     } catch (error) {
       console.error("Error deleting event:", error);
     }

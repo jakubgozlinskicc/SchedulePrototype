@@ -1,12 +1,16 @@
-import type { EventFormData } from "../eventFormSchema";
 import type { Event } from "../../../../../db/scheduleDb";
-export const convertFormDataToEvent = (data: EventFormData): Event => {
+import type { EventFormData } from "../eventFormSchema";
+
+export function convertFormDataToEvent(
+  data: EventFormData,
+  eventData?: Event
+): Event {
   return {
-    ...(eventId && { id: eventId }),
+    ...eventData,
     title: data.title,
     description: data.description,
     start: new Date(data.start),
     end: new Date(data.end),
     color: data.color,
   };
-};
+}

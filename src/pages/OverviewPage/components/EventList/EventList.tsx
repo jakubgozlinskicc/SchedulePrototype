@@ -5,13 +5,21 @@ import { Pagination } from "../Pagination/Pagination";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import "./EventList.css";
+import { useEventDataContext } from "../../../../events/useEvents/useEventDataContext/useEventDataContext";
+import type { Event } from "../../../../db/scheduleDb";
 
 export function EventList() {
   useLoadEvents(eventRepository);
 
   const { groupedEvents, formatTime, pagination } = useEventList();
+  const { setEventData } = useEventDataContext();
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const handleEditClick = (event: Event) => {
+    setEventData(event);
+    navigate("/event/edit");
+  };
 
   if (groupedEvents.length === 0) {
     return (
@@ -40,7 +48,7 @@ export function EventList() {
                   <span className="event-title">{event.title}</span>
                   <button
                     className="nav-button"
-                    onClick={() => navigate(`/event/edit/${event.id}`)}
+                    onClick={() => handleEditClick(event)}
                   >
                     {t("edit")}
                   </button>

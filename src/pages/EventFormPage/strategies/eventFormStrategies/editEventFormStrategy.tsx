@@ -1,16 +1,14 @@
 import type { ReactNode } from "react";
-import type {
-  IEventFormStrategy,
-  EventFormPageContext,
-} from "../../eventFormTypes";
+import type { IEventFormStrategy } from "../../eventFormTypes";
+import type { Event } from "../../../../db/scheduleDb";
 import { EditEventForm } from "../../components/EditEventForm";
 
 export class EditEventFormStrategy implements IEventFormStrategy {
-  canRender(context: EventFormPageContext): boolean {
-    return context.mode === "edit";
+  canRender(eventData: Event | null): boolean {
+    return !!eventData?.id;
   }
 
-  render(context: EventFormPageContext): ReactNode {
-    return <EditEventForm eventId={context.eventId} />;
+  render(): ReactNode {
+    return <EditEventForm />;
   }
 }

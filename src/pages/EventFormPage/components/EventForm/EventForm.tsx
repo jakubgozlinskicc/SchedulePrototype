@@ -1,38 +1,45 @@
 import { useTranslation } from "react-i18next";
-import { useEventFormSetup } from "./useEventForm/useEventFormSetup/useEventFormSetup";
-import { useLoadEvent } from "./useEventForm/useLoadEvent/useLoadEvent";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useEventDataContext } from "../../../../events/useEvents/useEventDataContext/useEventDataContext";
 import { useEventFormSubmit } from "./useEventForm/useEventFormSubmit/useEventFormSubmit";
 import { useEventFormNavigation } from "./useEventForm/useEventFormNavigation/useEventFormNavigation";
 import { useEventFormDelete } from "./useEventForm/useEventFormDelete/useEventFormDelete";
-import type { ReactNode } from "react";
+import { toDateTimeLocal } from "../../../../utils/toDateTimeLocal/toDateTimeLocal";
+import type { EventFormProps } from "../../eventFormTypes";
 import "./EventForm.css";
+import { eventFormSchema, type EventFormData } from "./eventFormSchema";
 
-interface EventFormRenderProps {
-  handleCancel: () => void;
-  handleDelete: () => void;
-}
-
-interface EventFormProps {
-  eventId?: number;
-  title: string;
-  children: (props: EventFormRenderProps) => ReactNode;
-}
-
-export function EventForm({ eventId, title, children }: EventFormProps) {
+export function EventForm({ title, children }: EventFormProps) {
   const { t } = useTranslation();
+  const { eventData } = useEventDataContext();
 
-  const { register, handleSubmit, reset, errors } = useEventFormSetup();
-  const { isLoading } = useLoadEvent({ eventId, reset });
-  const { goToOverview, handleCancel } = useEventFormNavigation();
-  const { onSubmit } = useEventFormSubmit({ eventId, onSuccess: goToOverview });
-  const { handleDelete } = useEventFormDelete({
-    eventId,
-    onSuccess: goToOverview,
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<EventFormData>({
+    resolver: yupResolver(eventFormSchema),
+    defaultValues: eventData
+      ? {
+          title: eventData.title,
+          description: eventData.description ?? "",
+          start: toDateTimeLocal(eventData.start),
+          end: toDateTimeLocal(eventData.end),
+          color: eventData.color ?? "#0000FF",
+        }
+      : {
+          title: "",
+          description: "",
+          start: "",
+          end: "",
+          color: "#0000FF",
+        },
   });
 
-  if (isLoading) {
-    return <div className="event-form-loading">{t("loading")}</div>;
-  }
+  const { handleCancel } = useEventFormNavigation();
+  const { onSubmit } = useEventFormSubmit();
+  const { handleDelete } = useEventFormDelete();
 
   return (
     <div className="event-form-page">

@@ -1,7 +1,5 @@
-import type {
-  EventFormPageContext,
-  IEventFormStrategy,
-} from "../eventFormTypes";
+import type { Event } from "../../../db/scheduleDb";
+import type { IEventFormStrategy } from "../eventFormTypes";
 import { AddEventFormStrategy } from "./eventFormStrategies/addEventFormStrategy";
 import { EditEventFormStrategy } from "./eventFormStrategies/editEventFormStrategy";
 
@@ -11,13 +9,17 @@ const strategies: IEventFormStrategy[] = [
 ];
 
 export const EventFormStrategyRegistry = {
-  getStrategy(context: EventFormPageContext): IEventFormStrategy {
-    const strategy = strategies.find((s) => s.canRender(context));
-
+  provideRenderer(eventData: Event | null) {
+    const strategy = strategies.find((s) => s.canRender(eventData));
     if (!strategy) {
-      throw new Error(`No EventFormStrategy found for mode="${context.mode}"`);
+      throw new Error(
+        `No EventFormStrategy found for event with id=${
+          eventData?.id ?? "null"
+        }`
+      );
     }
-
-    return strategy;
+    return {
+      render: () => strategy.render(),
+    };
   },
 };

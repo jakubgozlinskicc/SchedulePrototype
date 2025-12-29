@@ -1,15 +1,17 @@
 import type { ReactNode } from "react";
+import type { Event } from "../../db/scheduleDb";
 
-export interface EventFormPageContext {
-  mode: "add" | "edit";
-  eventId?: number;
+export interface EventFormRenderProps {
+  handleCancel: () => void;
+  handleDelete: () => void;
 }
 
-export interface EventFormContentProps {
-  eventId?: number;
+export interface EventFormProps {
+  title: string;
+  children: (props: EventFormRenderProps) => ReactNode;
 }
 
 export interface IEventFormStrategy {
-  canRender: (context: EventFormPageContext) => boolean;
-  render: (context: EventFormPageContext) => ReactNode;
+  canRender: (eventData: Event | null) => boolean;
+  render: () => ReactNode;
 }

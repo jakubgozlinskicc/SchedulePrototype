@@ -18,7 +18,7 @@ function App() {
               <Route path="/" element={<SchedulePage />} />
               <Route path="/overview" element={<OverviewPage />} />
               <Route path="/event/add" element={<EventFormPage />} />
-              <Route path="/event/edit/:id" element={<EventFormPage />} />
+              <Route path="/event/edit" element={<EventFormPage />} />
             </Routes>
           </main>
         </EventDataProvider>

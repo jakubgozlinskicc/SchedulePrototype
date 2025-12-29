@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
-import type { EventFormContentProps } from "../eventFormTypes";
 import { EventForm } from "./EventForm/EventForm";
 
-export function EditEventForm({ eventId }: EventFormContentProps) {
+export function EditEventForm() {
   const { t } = useTranslation();
+
   return (
-    <EventForm eventId={eventId} title={t("modal_edit_title")}>
+    <EventForm title={t("modal_edit_title")}>
       {({ handleCancel, handleDelete }) => (
         <>
           <button

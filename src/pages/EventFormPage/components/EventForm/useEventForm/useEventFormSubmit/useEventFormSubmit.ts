@@ -1,37 +1,24 @@
 import { eventRepository } from "../../../../../../db/eventRepository";
 import { SubmitStrategyRegistry } from "../../../../../../events/useEvents/useEventData/useSubmitEvent/submitStrategies/SubmitStrategyRegistry";
 import { useReloadEvents } from "../../../../../../events/useEvents/useEventData/useReloadEvents/useReloadEvents";
+import { useEventFormNavigation } from "../useEventFormNavigation/useEventFormNavigation";
 import type { EventFormData } from "../../eventFormSchema";
-import type { Event } from "../../../../../../db/scheduleDb";
+import { convertFormDataToEvent } from "../convertFormDataToEvent";
+import { useEventDataContext } from "../../../../../../events/useEvents/useEventDataContext/useEventDataContext";
+import { getDefaultEvent } from "../../../../../../utils/getDefaultEvent/getDefaultEvent";
 
-interface UseEventFormSubmitProps {
-  eventId?: number;
-  onSuccess: () => void;
-}
-
-export function useEventFormSubmit({
-  eventId,
-  onSuccess,
-}: UseEventFormSubmitProps) {
+export function useEventFormSubmit() {
   const { reloadEvents } = useReloadEvents(eventRepository);
-
-  const convertFormDataToEvent = (data: EventFormData): Event => {
-    return {
-      ...(eventId && { id: eventId }),
-      title: data.title,
-      description: data.description,
-      start: new Date(data.start),
-      end: new Date(data.end),
-      color: data.color,
-    };
-  };
+  const { goToOverview } = useEventFormNavigation();
+  const { eventData, setEventData } = useEventDataContext();
 
   const onSubmit = async (data: EventFormData) => {
     try {
-      const event = convertFormDataToEvent(data);
+      const event = convertFormDataToEvent(data, eventData);
       await SubmitStrategyRegistry.executeSubmit(event, eventRepository);
       await reloadEvents();
-      onSuccess();
+      setEventData(getDefaultEvent);
+      goToOverview();
     } catch (error) {
       console.error("Error saving event:", error);
     }

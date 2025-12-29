@@ -1,16 +1,10 @@
-import { useParams } from "react-router-dom";
 import { EventFormStrategyRegistry } from "./strategies/eventFormStrategyRegistry";
-import type { EventFormPageContext } from "./eventFormTypes";
+import { useEventDataContext } from "../../events/useEvents/useEventDataContext/useEventDataContext";
 
 export function EventFormPage() {
-  const { id } = useParams();
+  const { eventData } = useEventDataContext();
 
-  const context: EventFormPageContext = {
-    mode: id ? "edit" : "add",
-    eventId: id ? Number(id) : undefined,
-  };
+  const { render } = EventFormStrategyRegistry.provideRenderer(eventData);
 
-  const strategy = EventFormStrategyRegistry.getStrategy(context);
-
-  return strategy.render(context);
+  return <div className="event-form-page">{render()}</div>;
 }

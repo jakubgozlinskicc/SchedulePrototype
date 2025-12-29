@@ -1,13 +1,11 @@
 import type { ReactNode } from "react";
-import type {
-  IEventFormStrategy,
-  EventFormPageContext,
-} from "../../eventFormTypes";
+import type { IEventFormStrategy } from "../../eventFormTypes";
+import type { Event } from "../../../../db/scheduleDb";
 import { AddEventForm } from "../../components/AddEventForm";
 
 export class AddEventFormStrategy implements IEventFormStrategy {
-  canRender(context: EventFormPageContext): boolean {
-    return context.mode === "add";
+  canRender(eventData: Event | null): boolean {
+    return !eventData || !eventData.id;
   }
 
   render(): ReactNode {
