@@ -1,5 +1,6 @@
 {
   "events": "Events",
+  "form_edit_recurring_title": "Edit recurring event",
   "modal_edit_title": "Edit event",
   "modal_add_title": "Add event",
   "btn_delete": "Delete",
@@ -59,5 +60,8 @@
 
   "toast-error-select-date": "You must select at least one date",
 
-  "page": "Page"
+  "page": "Page",
+
+  "edit-all-ocurrences": "Edit all ocurrences",
+  "edit_all_warning": "Changes will be applied to all occurrences of this recurring event!"
 }

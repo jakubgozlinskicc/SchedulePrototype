@@ -1,5 +1,6 @@
 {
   "events": "Wydarzenia",
+  "form_edit_recurring_title": "Edytuj Powtarzające się wydarzenie",
   "modal_edit_title": "Edytuj wydarzenie",
   "modal_add_title": "Dodaj wydarzenie",
   "btn_delete": "Usuń",
@@ -59,5 +60,8 @@
 
   "toast-error-select-date": "Musisz wybrać przynajmniej jedną datę",
 
-  "page": "Strona"
+  "page": "Strona",
+
+  "edit-all-ocurrences": "Edytuj wszystkie wystąpienia",
+  "edit_all_warning": "Zmiany zostaną zastosowane do wszystkich elementów tego zdarzenia cyklicznego!"
 }

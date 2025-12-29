@@ -19,7 +19,6 @@ export const SubmitStrategyRegistry = {
     repository: IEventRepository
   ): Promise<void> {
     const strategy = strategies.find((s) => s.canExecute(eventData));
-
     if (!strategy) {
       throw new Error("No submit strategy found for event");
     }

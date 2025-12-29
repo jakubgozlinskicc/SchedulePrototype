@@ -20,7 +20,6 @@ export function useRecurringEdit(repository: IEventRepository) {
       const parentEvent = await repository.getEventById(
         eventData.recurringEventId
       );
-
       if (parentEvent) {
         setEventData(parentEvent);
       }
