@@ -73,7 +73,13 @@ export function EventForm({ title, children }: EventFormProps) {
           <main className="form-content">
             <form onSubmit={handleSubmit(onSubmit)} className="event-form">
               <div className="event-form-field">
-                <label className="event-form-label">{t("title")}</label>
+                <label className="event-form-label">
+                  <i
+                    className="fa-solid fa-pen-to-square"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  {t("title")}
+                </label>
                 <input
                   type="text"
                   {...register("title")}
@@ -87,7 +93,13 @@ export function EventForm({ title, children }: EventFormProps) {
               </div>
 
               <div className="event-form-field">
-                <label className="event-form-label">{t("description")}</label>
+                <label className="event-form-label">
+                  <i
+                    className="fa-solid fa-bars-staggered"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  {t("description")}
+                </label>
                 <textarea
                   {...register("description")}
                   className="event-form-textarea"
@@ -95,7 +107,13 @@ export function EventForm({ title, children }: EventFormProps) {
               </div>
 
               <div className="event-form-field">
-                <label className="event-form-label">{t("start-date")}</label>
+                <label className="event-form-label">
+                  <i
+                    className="fa-solid fa-hourglass-start"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  {t("start-date")}
+                </label>
                 <input
                   type="datetime-local"
                   {...register("start")}
@@ -109,7 +127,13 @@ export function EventForm({ title, children }: EventFormProps) {
               </div>
 
               <div className="event-form-field">
-                <label className="event-form-label">{t("end-date")}</label>
+                <label className="event-form-label">
+                  <i
+                    className="fa-solid fa-hourglass-end"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  {t("end-date")}
+                </label>
                 <input
                   type="datetime-local"
                   {...register("end")}
@@ -123,7 +147,13 @@ export function EventForm({ title, children }: EventFormProps) {
               </div>
 
               <div className="event-form-field">
-                <label className="event-form-label">{t("color")}</label>
+                <label className="event-form-label">
+                  <i
+                    className="fa-solid fa-palette"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  {t("color")}
+                </label>
                 <input
                   type="color"
                   {...register("color")}
@@ -133,6 +163,10 @@ export function EventForm({ title, children }: EventFormProps) {
 
               <div className="event-form-field">
                 <label className="event-form-label">
+                  <i
+                    className="fa-solid fa-repeat"
+                    style={{ marginRight: "8px" }}
+                  ></i>
                   {t("recurrence-type")}
                 </label>
                 <select

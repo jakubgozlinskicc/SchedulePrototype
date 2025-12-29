@@ -58,7 +58,7 @@
   "errors-start-message": "Start required",
   "errors-end-message": "End required",
 
-  "toast-error-select-date": "You must select at least one date",
+  "toast-error-select-date": "You must select at least one date\n\nYou can do it quickly by pressing button (Today)",
 
   "page": "Page",
 

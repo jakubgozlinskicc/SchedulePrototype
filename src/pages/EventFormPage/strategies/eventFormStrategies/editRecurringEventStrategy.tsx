@@ -7,7 +7,9 @@ export class EditRecurringEventStrategy implements IEventFormStrategy {
   canRender(eventData: Event | null): boolean {
     return (
       (!eventData?.id && !!eventData?.recurringEventId) ||
-      (!!eventData?.id && eventData.recurrenceRule?.type !== "none")
+      (!!eventData?.id &&
+        !!eventData.recurrenceRule &&
+        eventData.recurrenceRule.type !== "none")
     );
   }
   render(): ReactNode {

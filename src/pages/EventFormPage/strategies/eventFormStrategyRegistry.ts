@@ -13,7 +13,6 @@ const strategies: IEventFormStrategy[] = [
 export const EventFormStrategyRegistry = {
   provideRenderer(eventData: Event | null) {
     const strategy = strategies.find((s) => s.canRender(eventData));
-
     if (!strategy) {
       throw new Error(
         `No EventFormStrategy found for event with id=${
