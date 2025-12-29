@@ -50,6 +50,10 @@ export function EventList() {
                     className="nav-button"
                     onClick={() => handleEditClick(event)}
                   >
+                    <i
+                      className="fa-solid fa-pen-to-square"
+                      style={{ marginRight: "8px" }}
+                    ></i>
                     {t("edit")}
                   </button>
                 </div>

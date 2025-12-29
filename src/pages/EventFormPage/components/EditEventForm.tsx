@@ -20,9 +20,14 @@ export function EditEventForm() {
             className="btn btn-secondary"
             onClick={handleCancel}
           >
+            <i className="fa-solid fa-xmark" style={{ marginRight: "8px" }}></i>
             {t("btn_cancel")}
           </button>
           <button type="submit" className="btn btn-primary">
+            <i
+              className="fa-solid fa-floppy-disk"
+              style={{ marginRight: "8px" }}
+            ></i>
             {t("btn_save_changes")}
           </button>
         </>

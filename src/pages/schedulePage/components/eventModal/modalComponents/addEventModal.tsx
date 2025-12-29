@@ -26,9 +26,14 @@ export function AddEventModal({
       onSubmit={onSubmit}
     >
       <button type="button" className="btn btn-secondary" onClick={onClose}>
+        <i className="fa-solid fa-xmark" style={{ marginRight: "8px" }}></i>
         {t("btn_cancel")}
       </button>
       <button type="submit" className="btn btn-primary" onClick={onSubmit}>
+        <i
+          className="fa-solid fa-calendar-plus"
+          style={{ marginRight: "8px" }}
+        ></i>
         {t("btn-add")}
       </button>
     </BaseEventModal>

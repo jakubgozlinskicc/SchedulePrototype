@@ -44,6 +44,7 @@ export function EventToolbar() {
 
         <div className="toolbar-center-side">
           <div className="search-events">
+            <i className="fa-solid fa-magnifying-glass"></i>
             <input
               type="text"
               placeholder={t("search-placeholder")}

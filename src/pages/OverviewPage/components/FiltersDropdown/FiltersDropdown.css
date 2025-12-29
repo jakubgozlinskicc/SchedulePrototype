@@ -7,7 +7,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: #fff;
+  background: var(--gray-300);
   border: 1px solid #ddd;
   border-radius: var(--radius);
   cursor: pointer;
@@ -15,14 +15,13 @@
 }
 
 .filters-toggle-btn:hover {
-  background: #f5f5f5;
+  background: var(--gray-400);
 }
 
 .filters-badge {
-  background: #3498db;
-  color: white;
+  background: var(--primary);
   font-size: 0.75rem;
-  padding: 2px 6px;
+  padding: 2px 6ch;
   border-radius: var(--radius-lg);
 }
 

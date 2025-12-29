@@ -13,9 +13,14 @@ export function AddEventForm() {
             className="btn btn-secondary"
             onClick={handleCancel}
           >
+            <i className="fa-solid fa-xmark" style={{ marginRight: "8px" }}></i>
             {t("btn_cancel")}
           </button>
           <button type="submit" className="btn btn-primary">
+            <i
+              className="fa-solid fa-calendar-plus"
+              style={{ marginRight: "8px" }}
+            ></i>
             {t("btn-add")}
           </button>
         </>

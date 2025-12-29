@@ -28,7 +28,15 @@
 }
 
 .search-events {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   flex-grow: 1;
+  justify-content: center;
+  border: solid 1px #ddd;
+  padding-left: 10px;
+  border-radius: var(--radius);
+  background-color: var(--primary);
 }
 
 .filter-input {
