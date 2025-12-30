@@ -120,6 +120,7 @@
   height: 36px;
   background-color: var(--primary);
   border-radius: var(--radius);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .rbc-today {
@@ -135,6 +136,7 @@
 }
 
 .rbc-time-view .rbc-event.colored-event {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   color: black !important;
   padding-left: 10px;

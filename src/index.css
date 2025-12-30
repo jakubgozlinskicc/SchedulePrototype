@@ -20,4 +20,8 @@
 button {
   font-weight: 600 !important;
   transition: 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+h1 {
 }
