@@ -7,19 +7,18 @@ import { useEventFormNavigation } from "./useEventForm/useEventFormNavigation/us
 import { useEventFormDelete } from "./useEventForm/useEventFormDelete/useEventFormDelete";
 import { toDateTimeLocal } from "../../../../utils/toDateTimeLocal/toDateTimeLocal";
 import type { EventFormProps } from "../../eventFormTypes";
-import { eventFormSchema } from "./eventFormSchema";
 import { RecurrenceFields } from "../RecurrenceFields/RecurrenceFields";
 import "./EventForm.css";
 import { getRecurrenceDefaults } from "../getRecurrenceDefault";
+import { useEventFormSchema } from "./useEventForm/useEventFormSchema/useEventFormSchema";
 
 export function EventForm({ title, children }: EventFormProps) {
   const { t } = useTranslation();
-
+  const { eventFormSchema } = useEventFormSchema();
   const { eventData } = useEventDataContext();
 
   const methods = useForm({
     resolver: yupResolver(eventFormSchema),
-
     defaultValues: eventData
       ? {
           title: eventData.title,
@@ -35,8 +34,8 @@ export function EventForm({ title, children }: EventFormProps) {
           start: "",
           end: "",
           color: "#0000FF",
-          recurrenceType: "none",
-          recurrenceEndType: "never",
+          recurrenceType: "none" as const,
+          recurrenceEndType: "never" as const,
           recurrenceEndDate: undefined,
           recurrenceCount: undefined,
         },
@@ -62,6 +61,7 @@ export function EventForm({ title, children }: EventFormProps) {
   const { handleCancel } = useEventFormNavigation();
   const { onSubmit } = useEventFormSubmit();
   const { handleDelete } = useEventFormDelete();
+
   return (
     <FormProvider {...methods}>
       <div className="event-form-page">
@@ -93,7 +93,7 @@ export function EventForm({ title, children }: EventFormProps) {
                 />
                 {errors.title?.message && (
                   <span className="event-form-error">
-                    {t(errors.title.message)}
+                    {errors.title.message}
                   </span>
                 )}
               </div>
@@ -127,7 +127,7 @@ export function EventForm({ title, children }: EventFormProps) {
                 />
                 {errors.start?.message && (
                   <span className="event-form-error">
-                    {t(errors.start.message)}
+                    {errors.start.message}
                   </span>
                 )}
               </div>
@@ -146,9 +146,7 @@ export function EventForm({ title, children }: EventFormProps) {
                   className="event-form-input"
                 />
                 {errors.end?.message && (
-                  <span className="event-form-error">
-                    {t(errors.end.message)}
-                  </span>
+                  <span className="event-form-error">{errors.end.message}</span>
                 )}
               </div>
 

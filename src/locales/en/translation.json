@@ -68,5 +68,10 @@
   "colors": "Colors",
   "select-colors": "Select colors",
   "colors-selected": "Selected colors",
-  "clear-colors": "Clear colors"
+  "clear-colors": "Clear colors",
+
+  "title-required": "Title required",
+  "title-min-length": "Title must be at least 3 characters long",
+  "start-required": "Start Required",
+  "end-required": "End Required"
 }
