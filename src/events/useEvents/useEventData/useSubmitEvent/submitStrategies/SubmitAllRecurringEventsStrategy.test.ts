@@ -1,19 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { SubmitExistingEventStrategy } from "./SubmitExistingEventStrategy";
+import { SubmitAllRecurringEventsStrategy } from "./SubmitAllRecurringEventsStrategy";
 import type { Event } from "../../../../../db/scheduleDb";
 import type { IEventRepository } from "../../../IEventRepository";
-import { setNewParentEvent } from "../../useRecurringEdit/setNewParentEvent";
 
-vi.mock("../../useRecurringEdit/setNewParentEvent", () => ({
-  setNewParentEvent: vi.fn().mockResolvedValue(undefined),
-}));
-
-describe("SubmitExistingEventStrategy", () => {
-  let strategy: SubmitExistingEventStrategy;
+describe("SubmitAllRecurringEventsStrategy", () => {
+  let strategy: SubmitAllRecurringEventsStrategy;
   let mockRepository: IEventRepository;
 
   beforeEach(() => {
-    strategy = new SubmitExistingEventStrategy();
+    strategy = new SubmitAllRecurringEventsStrategy();
     mockRepository = {
       addEvent: vi.fn().mockResolvedValue(1),
       getEvents: vi.fn().mockResolvedValue([]),
@@ -22,112 +17,86 @@ describe("SubmitExistingEventStrategy", () => {
       deleteEvent: vi.fn().mockResolvedValue(undefined),
       clearEvents: vi.fn().mockResolvedValue(undefined),
     };
-    vi.clearAllMocks();
   });
 
   describe("canExecute", () => {
-    it("should return true when event has id and isEditAll is false", () => {
+    it("should return true for recurring event with isEditAll true", () => {
       const eventData: Event = {
         id: 1,
-        title: "Existing event",
+        title: "Recurring event",
         description: "Test",
         start: new Date("2025-12-10T10:00:00"),
         end: new Date("2025-12-10T11:00:00"),
         color: "#0000FF",
+        recurrenceRule: { type: "daily", interval: 1 },
+      };
+
+      expect(strategy.canExecute(eventData, { isEditAll: true })).toBe(true);
+    });
+
+    it("should return true for virtual occurrence with isEditAll true", () => {
+      const eventData: Event = {
+        id: 1,
+        title: "Virtual occurrence",
+        description: "Test",
+        start: new Date("2025-12-10T10:00:00"),
+        end: new Date("2025-12-10T11:00:00"),
+        color: "#0000FF",
+        recurringEventId: 5,
         recurrenceRule: { type: "none", interval: 1 },
       };
 
-      expect(strategy.canExecute(eventData, { isEditAll: false })).toBe(true);
+      expect(strategy.canExecute(eventData, { isEditAll: true })).toBe(true);
     });
 
-    it("should return false when event has no id", () => {
+    it("should return false when isEditAll is false", () => {
       const eventData: Event = {
-        title: "New event",
+        id: 1,
+        title: "Recurring event",
         description: "Test",
         start: new Date("2025-12-10T10:00:00"),
         end: new Date("2025-12-10T11:00:00"),
         color: "#0000FF",
-        recurrenceRule: { type: "none", interval: 1 },
+        recurrenceRule: { type: "daily", interval: 1 },
       };
 
       expect(strategy.canExecute(eventData, { isEditAll: false })).toBe(false);
     });
 
-    it("should return false when isEditAll is true", () => {
+    it("should return false when isEditAll is undefined", () => {
       const eventData: Event = {
         id: 1,
-        title: "Existing event",
+        title: "Recurring event",
         description: "Test",
         start: new Date("2025-12-10T10:00:00"),
         end: new Date("2025-12-10T11:00:00"),
         color: "#0000FF",
         recurrenceRule: { type: "daily", interval: 1 },
-      };
-
-      expect(strategy.canExecute(eventData, { isEditAll: true })).toBe(false);
-    });
-
-    it("should return false when isEditAll is undefined", () => {
-      const eventData: Event = {
-        id: 1,
-        title: "Existing event",
-        description: "Test",
-        start: new Date("2025-12-10T10:00:00"),
-        end: new Date("2025-12-10T11:00:00"),
-        color: "#0000FF",
-        recurrenceRule: { type: "none", interval: 1 },
       };
 
       expect(strategy.canExecute(eventData, {})).toBe(false);
     });
+
+    it("should return false for non-recurring event even with isEditAll true", () => {
+      const eventData: Event = {
+        id: 1,
+        title: "Regular event",
+        description: "Test",
+        start: new Date("2025-12-10T10:00:00"),
+        end: new Date("2025-12-10T11:00:00"),
+        color: "#0000FF",
+        recurrenceRule: { type: "none", interval: 1 },
+      };
+
+      expect(strategy.canExecute(eventData, { isEditAll: true })).toBe(false);
+    });
   });
 
   describe("execute", () => {
-    it("should edit event directly when original event not found", async () => {
+    it("should edit parent event using event id", async () => {
       const eventData: Event = {
         id: 1,
-        title: "Existing event",
-        description: "Test",
-        start: new Date("2025-12-10T10:00:00"),
-        end: new Date("2025-12-10T11:00:00"),
-        color: "#0000FF",
-        recurrenceRule: { type: "none", interval: 1 },
-      };
-
-      mockRepository.getEventById = vi.fn().mockResolvedValue(undefined);
-
-      await strategy.execute(eventData, mockRepository);
-
-      expect(mockRepository.editEvent).toHaveBeenCalledWith(1, eventData);
-      expect(setNewParentEvent).not.toHaveBeenCalled();
-    });
-
-    it("should edit event directly when original event has no recurrence", async () => {
-      const eventData: Event = {
-        id: 1,
-        title: "Existing event",
-        description: "Test",
-        start: new Date("2025-12-10T10:00:00"),
-        end: new Date("2025-12-10T11:00:00"),
-        color: "#0000FF",
-        recurrenceRule: { type: "none", interval: 1 },
-      };
-
-      mockRepository.getEventById = vi.fn().mockResolvedValue({
-        ...eventData,
-        recurrenceRule: { type: "none", interval: 1 },
-      });
-
-      await strategy.execute(eventData, mockRepository);
-
-      expect(mockRepository.editEvent).toHaveBeenCalledWith(1, eventData);
-      expect(setNewParentEvent).not.toHaveBeenCalled();
-    });
-
-    it("should set new parent and clear recurrence when editing recurring event", async () => {
-      const eventData: Event = {
-        id: 1,
-        title: "Updated recurring event",
+        title: "Recurring event",
         description: "Test",
         start: new Date("2025-12-10T10:00:00"),
         end: new Date("2025-12-10T11:00:00"),
@@ -135,35 +104,44 @@ describe("SubmitExistingEventStrategy", () => {
         recurrenceRule: { type: "daily", interval: 1 },
       };
 
-      mockRepository.getEventById = vi.fn().mockResolvedValue({
-        ...eventData,
-        recurrenceRule: { type: "daily", interval: 1 },
-      });
-
       await strategy.execute(eventData, mockRepository);
 
-      expect(setNewParentEvent).toHaveBeenCalledWith(mockRepository, eventData);
-      expect(mockRepository.editEvent).toHaveBeenCalledWith(1, {
-        ...eventData,
-        recurrenceRule: { type: "none", interval: 1 },
-        cancelledDates: [],
-      });
+      expect(mockRepository.editEvent).toHaveBeenCalledWith(1, eventData);
     });
 
-    it("should call getEventById with correct id", async () => {
+    it("should edit parent event using recurringEventId when available", async () => {
       const eventData: Event = {
-        id: 5,
-        title: "Test event",
+        id: 10,
+        title: "Virtual occurrence",
         description: "Test",
         start: new Date("2025-12-10T10:00:00"),
         end: new Date("2025-12-10T11:00:00"),
         color: "#0000FF",
+        recurringEventId: 5,
         recurrenceRule: { type: "none", interval: 1 },
       };
 
       await strategy.execute(eventData, mockRepository);
 
-      expect(mockRepository.getEventById).toHaveBeenCalledWith(5);
+      expect(mockRepository.editEvent).toHaveBeenCalledWith(5, eventData);
+    });
+
+    it("should prioritize recurringEventId over id", async () => {
+      const eventData: Event = {
+        id: 100,
+        title: "Virtual occurrence",
+        description: "Test",
+        start: new Date("2025-12-10T10:00:00"),
+        end: new Date("2025-12-10T11:00:00"),
+        color: "#0000FF",
+        recurringEventId: 1,
+        recurrenceRule: { type: "none", interval: 1 },
+      };
+
+      await strategy.execute(eventData, mockRepository);
+
+      expect(mockRepository.editEvent).toHaveBeenCalledWith(1, eventData);
+      expect(mockRepository.editEvent).not.toHaveBeenCalledWith(100, eventData);
     });
   });
 });

@@ -68,6 +68,7 @@ describe("SubmitNewEventStrategy", () => {
 
     it("should return false for parent event", () => {
       const eventData: Event = {
+        id: 1,
         title: "Parent event",
         description: "Test",
         start: new Date("2025-12-9T9"),

@@ -5,11 +5,15 @@ import type { Event } from "../../../../db/scheduleDb";
 import type { IEventRepository } from "../../IEventRepository";
 
 let mockEventData: Event;
+let mockIsEditAll = false;
 const mockReloadEvents = vi.fn();
+const mockSetIsEditAll = vi.fn();
 
 vi.mock("../../useEventDataContext/useEventDataContext.ts", () => ({
   useEventDataContext: () => ({
     eventData: mockEventData,
+    isEditAll: mockIsEditAll,
+    setIsEditAll: mockSetIsEditAll,
   }),
 }));
 
@@ -37,6 +41,7 @@ describe("useSubmitEvent", () => {
     mockCloseModal = vi.fn();
     mockReloadEvents.mockResolvedValue(undefined);
     mockFormEvent = { preventDefault: vi.fn() } as unknown as React.FormEvent;
+    mockIsEditAll = false;
 
     mockRepository = {
       addEvent: vi.fn().mockResolvedValue(1),
@@ -57,6 +62,18 @@ describe("useSubmitEvent", () => {
     };
   });
 
+  it("should call preventDefault on form event", async () => {
+    const { result } = renderHook(() =>
+      useSubmitEvent(mockCloseModal, mockRepository)
+    );
+
+    await act(async () => {
+      await result.current.handleSubmit(mockFormEvent);
+    });
+
+    expect(mockFormEvent.preventDefault).toHaveBeenCalled();
+  });
+
   it("should call SubmitStrategyRegistry.executeSubmit with correct parameters", async () => {
     const { result } = renderHook(() =>
       useSubmitEvent(mockCloseModal, mockRepository)
@@ -68,7 +85,26 @@ describe("useSubmitEvent", () => {
 
     expect(SubmitStrategyRegistry.executeSubmit).toHaveBeenCalledWith(
       mockEventData,
-      mockRepository
+      mockRepository,
+      { isEditAll: false }
+    );
+  });
+
+  it("should pass isEditAll true when editing all occurrences", async () => {
+    mockIsEditAll = true;
+
+    const { result } = renderHook(() =>
+      useSubmitEvent(mockCloseModal, mockRepository)
+    );
+
+    await act(async () => {
+      await result.current.handleSubmit(mockFormEvent);
+    });
+
+    expect(SubmitStrategyRegistry.executeSubmit).toHaveBeenCalledWith(
+      mockEventData,
+      mockRepository,
+      { isEditAll: true }
     );
   });
 
@@ -76,6 +112,7 @@ describe("useSubmitEvent", () => {
     const { result } = renderHook(() =>
       useSubmitEvent(mockCloseModal, mockRepository)
     );
+
     await act(async () => {
       await result.current.handleSubmit(mockFormEvent);
     });
@@ -83,17 +120,33 @@ describe("useSubmitEvent", () => {
     expect(mockReloadEvents).toHaveBeenCalledTimes(1);
   });
 
+  it("should reset isEditAll to false after submitting", async () => {
+    mockIsEditAll = true;
+
+    const { result } = renderHook(() =>
+      useSubmitEvent(mockCloseModal, mockRepository)
+    );
+
+    await act(async () => {
+      await result.current.handleSubmit(mockFormEvent);
+    });
+
+    expect(mockSetIsEditAll).toHaveBeenCalledWith(false);
+  });
+
   it("should call closeModal after submitting event", async () => {
     const { result } = renderHook(() =>
       useSubmitEvent(mockCloseModal, mockRepository)
     );
+
     await act(async () => {
       await result.current.handleSubmit(mockFormEvent);
     });
+
     expect(mockCloseModal).toHaveBeenCalledTimes(1);
   });
 
-  it("should not close modal or reload events if an error occurs", async () => {
+  it("should not close modal, reload events or reset isEditAll if an error occurs", async () => {
     (
       SubmitStrategyRegistry.executeSubmit as ReturnType<typeof vi.fn>
     ).mockRejectedValueOnce(new Error("Submission failed"));
@@ -107,6 +160,7 @@ describe("useSubmitEvent", () => {
     });
 
     expect(mockReloadEvents).not.toHaveBeenCalled();
+    expect(mockSetIsEditAll).not.toHaveBeenCalled();
     expect(mockCloseModal).not.toHaveBeenCalled();
   });
 });

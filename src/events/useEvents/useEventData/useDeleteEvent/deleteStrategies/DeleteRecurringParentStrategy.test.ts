@@ -2,12 +2,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { DeleteRecurringParentStrategy } from "./DeleteRecurringParentStrategy";
 import type { Event } from "../../../../../db/scheduleDb";
 
-vi.mock(
-  "../../../useEventComponents/useRecurringEdit/setNewParentEvent",
-  () => ({
-    setNewParentEvent: vi.fn().mockResolvedValue(undefined),
-  })
-);
+vi.mock("../../useRecurringEdit/setNewParentEvent", () => ({
+  setNewParentEvent: vi.fn().mockResolvedValue(undefined),
+}));
 
 import { setNewParentEvent } from "../../useRecurringEdit/setNewParentEvent";
 import type { IEventRepository } from "../../../IEventRepository";
@@ -17,6 +14,7 @@ describe("DeleteRecurringParentStrategy", () => {
   let mockRepository: IEventRepository;
 
   beforeEach(() => {
+    vi.clearAllMocks();
     strategy = new DeleteRecurringParentStrategy();
     mockRepository = {
       addEvent: vi.fn().mockResolvedValue(1),
