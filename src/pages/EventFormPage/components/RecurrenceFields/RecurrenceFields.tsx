@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import type { EventFormData } from "../EventForm/eventFormSchema";
-import type { EndType } from "./RecurrenceFieldsTypes";
+import type { EndType } from "./recurrenceFieldsTypes";
 import { EndTypeStrategyRegistry } from "./endTypeStrategies/endTypeStrategyRegistry";
 
 interface RecurrenceFieldsProps {

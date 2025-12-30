@@ -45,7 +45,16 @@ export function EventList() {
             >
               <div className="event-content">
                 <div className="event-header">
-                  <span className="event-title">{event.title}</span>
+                  <span className="event-title">
+                    {(!event.id || event.recurrenceRule?.type !== "none") && (
+                      <i
+                        className="fa-solid fa-repeat"
+                        style={{ marginRight: "8px" }}
+                      ></i>
+                    )}
+                    {event.title}
+                  </span>
+
                   <button
                     className="nav-button"
                     onClick={() => handleEditClick(event)}

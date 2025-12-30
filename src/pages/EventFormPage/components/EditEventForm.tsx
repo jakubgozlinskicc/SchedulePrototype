@@ -13,6 +13,10 @@ export function EditEventForm() {
             className="btn btn-delete"
             onClick={handleDelete}
           >
+            <i
+              className="fa-solid fa-trash-can"
+              style={{ marginRight: "8px" }}
+            ></i>
             {t("btn_delete")}
           </button>
           <button
