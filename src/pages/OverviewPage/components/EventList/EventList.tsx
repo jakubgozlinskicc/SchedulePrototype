@@ -54,7 +54,6 @@ export function EventList() {
                     )}
                     {event.title}
                   </span>
-
                   <button
                     className="nav-button"
                     onClick={() => handleEditClick(event)}

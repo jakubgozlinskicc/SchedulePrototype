@@ -81,7 +81,13 @@ function SchedulePage() {
         </select>
       </div>
       <header className="schedule-header">
-        <h1 className="schedule-title">Schedule</h1>
+        <h1 className="schedule-title">
+          Schedule
+          <i
+            className="fa-regular fa-calendar"
+            style={{ marginLeft: "8px" }}
+          ></i>
+        </h1>
       </header>
       <section className="calendar-section">
         <DnDCalendar

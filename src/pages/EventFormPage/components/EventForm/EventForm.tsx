@@ -66,7 +66,13 @@ export function EventForm({ title, children }: EventFormProps) {
     <FormProvider {...methods}>
       <div className="event-form-page">
         <header className="event-form-header">
-          <h1>{title}</h1>
+          <h1>
+            {title}
+            <i
+              className="fa-solid fa-calendar-plus"
+              style={{ marginLeft: "8px" }}
+            ></i>
+          </h1>
         </header>
 
         <div className="form-wrapper">

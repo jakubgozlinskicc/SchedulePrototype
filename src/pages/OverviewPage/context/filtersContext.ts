@@ -5,6 +5,7 @@ export interface EventFilters {
   dateTo: Date | null;
   searchQuery: string;
   showPastEvents: boolean;
+  colors: string[];
 }
 
 export interface FiltersContextType {

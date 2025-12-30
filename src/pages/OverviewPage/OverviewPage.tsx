@@ -46,7 +46,10 @@ function OverviewPageContent() {
         </select>
       </div>
       <header className="overview-header">
-        <h1>Overview</h1>
+        <h1>
+          Overview
+          <i className="fa-solid fa-list" style={{ marginLeft: "8px" }}></i>
+        </h1>
       </header>
       <div className="overview-wrapper">
         <div className="overview-toolbar">

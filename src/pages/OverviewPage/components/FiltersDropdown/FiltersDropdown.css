@@ -21,7 +21,7 @@
 .filters-badge {
   background: var(--primary);
   font-size: 0.75rem;
-  padding: 2px 6ch;
+  padding: 2px 6px;
   border-radius: var(--radius-lg);
 }
 
@@ -36,6 +36,17 @@
   min-width: 280px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 100;
+
+  opacity: 0;
+  transform: translateY(-10px);
+  visibility: hidden;
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+}
+
+.filters-panel.open {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
 }
 
 .filter-group {

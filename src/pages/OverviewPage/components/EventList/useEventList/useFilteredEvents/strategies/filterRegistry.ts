@@ -4,11 +4,13 @@ import type { Event } from "../../../../../../../db/scheduleDb";
 import { DateRangeFilter } from "./DateRangeFilter";
 import { PastEventsFilter } from "./PastEventsFilter";
 import { SearchQuery } from "./SearchQuery";
+import { ColorFilter } from "./ColorFilter";
 
 const strategies: IFilterStrategy[] = [
   new DateRangeFilter(),
   new PastEventsFilter(),
   new SearchQuery(),
+  new ColorFilter(),
 ];
 
 export const filterRegistry = {

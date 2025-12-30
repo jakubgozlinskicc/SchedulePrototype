@@ -10,6 +10,7 @@ const defaultFilters: EventFilters = {
   dateTo: null,
   searchQuery: "",
   showPastEvents: false,
+  colors: [],
 };
 
 export function FiltersProvider({ children }: FiltersProviderProps) {

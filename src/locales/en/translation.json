@@ -63,5 +63,10 @@
   "page": "Page",
 
   "edit-all-ocurrences": "Edit all ocurrences",
-  "edit_all_warning": "Changes will be applied to all occurrences of this recurring event!"
+  "edit_all_warning": "Changes will be applied to all occurrences of this recurring event!",
+
+  "colors": "Colors",
+  "select-colors": "Select colors",
+  "colors-selected": "Selected colors",
+  "clear-colors": "Clear colors"
 }

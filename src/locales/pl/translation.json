@@ -63,5 +63,10 @@
   "page": "Strona",
 
   "edit-all-ocurrences": "Edytuj wszystkie wystąpienia",
-  "edit_all_warning": "Zmiany zostaną zastosowane do wszystkich elementów tego zdarzenia cyklicznego!"
+  "edit_all_warning": "Zmiany zostaną zastosowane do wszystkich elementów tego zdarzenia cyklicznego!",
+
+  "colors": "Kolory",
+  "select-colors": "Wybierz kolory",
+  "colors-selected": "Wybrano",
+  "clear-colors": "Wyczyść kolory"
 }

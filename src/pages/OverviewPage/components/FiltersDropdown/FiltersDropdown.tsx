@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import "./FiltersDropdown.css";
 import { useFiltersContext } from "../../context/useFiltersContext";
+import { ColorSelect } from "./ColorSelect";
 
 export function FiltersDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,6 +29,7 @@ export function FiltersDropdown() {
     filters.showPastEvents,
     filters.dateFrom,
     filters.dateTo,
+    filters.colors.length > 0,
   ].filter(Boolean).length;
 
   const formatDateForInput = (date: Date | null): string => {
@@ -49,51 +51,76 @@ export function FiltersDropdown() {
     <div className="filters-dropdown" ref={dropdownRef}>
       <button className="filters-toggle-btn" onClick={() => setIsOpen(!isOpen)}>
         {t("filters")}
+        <i className="fa-solid fa-filter"></i>
         {activeFiltersCount > 0 && (
           <span className="filters-badge">{activeFiltersCount}</span>
         )}
       </button>
 
-      {isOpen && (
-        <div className="filters-panel">
-          <div className="filter-group">
-            <label className="filter-label">{t("date-from")}</label>
-            <input
-              type="date"
-              value={formatDateForInput(filters.dateFrom)}
-              onChange={handleDateFromChange}
-              className="filter-input"
-            />
-          </div>
-
-          <div className="filter-group">
-            <label className="filter-label">{t("date-to")}</label>
-            <input
-              type="date"
-              value={formatDateForInput(filters.dateTo)}
-              onChange={handleDateToChange}
-              className="filter-input"
-            />
-          </div>
-
-          <div className="filter-group">
-            <label className="filter-checkbox">
-              <input
-                type="checkbox"
-                checked={filters.showPastEvents}
-                onChange={(e) =>
-                  updateFilter("showPastEvents", e.target.checked)
-                }
-              />
-              {t("show-past-events")}
-            </label>
-          </div>
-
-          <button onClick={resetFilters} className="reset-filters-btn">
-            {t("reset-filters")}
-          </button>
+      <div className={`filters-panel ${isOpen ? "open" : ""}`}>
+        <div className="filter-group">
+          <label className="filter-label">
+            <i
+              className="fa-solid fa-hourglass-start"
+              style={{ marginRight: "8px" }}
+            ></i>
+            {t("date-from")}
+          </label>
+          <input
+            type="date"
+            value={formatDateForInput(filters.dateFrom)}
+            onChange={handleDateFromChange}
+            className="filter-input"
+          />
         </div>
-      )}
+
+        <div className="filter-group">
+          <label className="filter-label">
+            <i
+              className="fa-solid fa-hourglass-end"
+              style={{ marginRight: "8px" }}
+            ></i>
+            {t("date-to")}
+          </label>
+          <input
+            type="date"
+            value={formatDateForInput(filters.dateTo)}
+            onChange={handleDateToChange}
+            className="filter-input"
+          />
+        </div>
+
+        <div className="filter-group">
+          <label className="filter-checkbox">
+            <i className="fa-solid fa-backward-fast"></i>
+            {t("show-past-events")}
+            <input
+              type="checkbox"
+              checked={filters.showPastEvents}
+              onChange={(e) => updateFilter("showPastEvents", e.target.checked)}
+            />
+          </label>
+        </div>
+
+        <div className="filter-group">
+          <label className="filter-label">
+            <i
+              className="fa-solid fa-palette"
+              style={{ marginRight: "8px" }}
+            ></i>
+            {t("colors")}
+          </label>
+          <ColorSelect
+            selectedColors={filters.colors}
+            onChange={(colors) => updateFilter("colors", colors)}
+          />
+        </div>
+
+        <button onClick={resetFilters} className="reset-filters-btn">
+          {t("reset-filters")}
+          <i className="fa-solid fa-toilet" style={{ marginLeft: "8px" }}></i>
+        </button>
+      </div>
     </div>
   );
 }
