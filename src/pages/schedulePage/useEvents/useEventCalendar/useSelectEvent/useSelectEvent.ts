@@ -1,5 +1,5 @@
 import type { Event } from "../../../../../db/scheduleDb";
-import { useEventDataContext } from "../../useEventDataContext/useEventDataContext";
+import { useEventDataContext } from "../../../../../events/useEvents/useEventDataContext/useEventDataContext";
 
 export function useSelectEvent(openModal: () => void) {
   const { setEventData } = useEventDataContext();

@@ -1,11 +1,11 @@
 import type { ComponentType } from "react";
 import { EndTypeStrategyRegistry } from "./endTypeStrategies/endTypeStrategyRegistry";
-import type { RecurrenceRule } from "../../../../recurrence/recurrenceTypes";
 import type {
   EndType,
   EndTypeFieldProps,
   RecurrenceType,
 } from "./recurrenceFieldsTypes";
+import type { RecurrenceRule } from "../../../../../../events/recurrence/recurrenceTypes";
 
 interface UseRecurrenceFieldOptions {
   recurrenceRule?: RecurrenceRule;

@@ -1,9 +1,9 @@
 import { EventModalStrategyRegistry } from "./modalStrategy/modalRegistry";
 import "./eventModal.css";
 import type { EventModalProps } from "./eventModalTypes";
-import { useEventDataContext } from "../../useEvents/useEventDataContext/useEventDataContext";
-import { useRecurringEdit } from "../../useEvents/useEventComponents/useRecurringEdit/useRecurringEdit";
-import type { IEventRepository } from "../../useEvents/IEventRepository";
+import { useEventDataContext } from "../../../../events/useEvents/useEventDataContext/useEventDataContext";
+import { useRecurringEdit } from "../../../../events/useEvents/useEventData/useRecurringEdit/useRecurringEdit";
+import type { IEventRepository } from "../../../../events/useEvents/IEventRepository";
 
 interface EventModalComponentProps
   extends Omit<EventModalProps, "eventData" | "onEditSingle" | "onEditAll"> {

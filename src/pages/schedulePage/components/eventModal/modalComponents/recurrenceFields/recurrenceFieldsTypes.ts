@@ -1,8 +1,8 @@
 import type { ChangeEvent, ComponentType } from "react";
 import type {
-  RecurrenceType,
   RecurrenceRule,
-} from "../../../../recurrence/recurrenceTypes";
+  RecurrenceType,
+} from "../../../../../../events/recurrence/recurrenceTypes";
 
 export type EndType = "never" | "date" | "count";
 

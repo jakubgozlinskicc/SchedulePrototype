@@ -20,7 +20,6 @@
 
 .week-strip-day.active-day {
   background: var(--primary);
-  color: var(--white);
   border-color: var(--primary);
   font-weight: 600;
 }

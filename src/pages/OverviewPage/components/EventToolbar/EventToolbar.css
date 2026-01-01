@@ -1,0 +1,54 @@
+.event-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 20px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px 12px 0 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.toolbar-left-side,
+.toolbar-right-side {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.toolbar-center-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-grow: 1;
+  justify-content: center;
+  max-width: 500px;
+}
+
+.search-events {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-grow: 1;
+  justify-content: center;
+  border: solid 1px #ddd;
+  padding-left: 10px;
+  border-radius: var(--radius);
+  background-color: var(--primary);
+}
+
+.filter-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: var(--radius);
+  box-sizing: border-box;
+}
+
+.actions-buttons,
+.view-buttons {
+  display: flex;
+  gap: 8px;
+}
