@@ -11,7 +11,7 @@ export function LanguageSelect({
 }: LanguageSelectProps) {
   return (
     <select
-      className={styles["language-select"]}
+      className={styles.languageSelect}
       value={currentLanguage}
       onChange={onChange}
     >

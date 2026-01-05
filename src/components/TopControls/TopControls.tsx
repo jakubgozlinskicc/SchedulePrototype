@@ -17,9 +17,9 @@ export function TopControls({
   const navigate = useNavigate();
 
   return (
-    <div className={styles["top-controls"]}>
+    <div className={styles["topControls"]}>
       <button
-        className={styles["overview-button"]}
+        className={styles["overviewButton"]}
         onClick={() => navigate(navigateTo)}
       >
         {buttonText} <i className={buttonIcon}></i>
