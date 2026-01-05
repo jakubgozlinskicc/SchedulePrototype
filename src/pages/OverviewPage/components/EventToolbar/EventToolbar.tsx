@@ -10,14 +10,8 @@ export function EventToolbar() {
   const { filters, updateFilter } = useFiltersContext();
   const navigate = useNavigate();
 
-  const {
-    setToday,
-    handleNextDay,
-    handlePreviousDay,
-    setCurrentDayRange,
-    setCurrentWeekRange,
-    setCurrentMonthRange,
-  } = useEventToolbar();
+  const { currentView, setToday, handleNext, handlePrevious, changeView } =
+    useEventToolbar();
 
   return (
     <>
@@ -33,10 +27,10 @@ export function EventToolbar() {
             <button className="nav-button" onClick={setToday}>
               {t("today")}
             </button>
-            <button className="nav-button" onClick={handlePreviousDay}>
+            <button className="nav-button" onClick={handlePrevious}>
               <i className="fa-solid fa-arrow-left"></i>
             </button>
-            <button className="nav-button" onClick={handleNextDay}>
+            <button className="nav-button" onClick={handleNext}>
               <i className="fa-solid fa-arrow-right"></i>
             </button>
           </div>
@@ -58,13 +52,26 @@ export function EventToolbar() {
 
         <div className="toolbar-right-side">
           <div className="view-buttons">
-            <button className="view-button" onClick={setCurrentMonthRange}>
+            <button
+              className={`view-button ${
+                currentView === "month" ? "active" : ""
+              }`}
+              onClick={() => changeView("month")}
+            >
               {t("month")}
             </button>
-            <button className="view-button" onClick={setCurrentWeekRange}>
+            <button
+              className={`view-button ${
+                currentView === "week" ? "active" : ""
+              }`}
+              onClick={() => changeView("week")}
+            >
               {t("week")}
             </button>
-            <button className="view-button" onClick={setCurrentDayRange}>
+            <button
+              className={`view-button ${currentView === "day" ? "active" : ""}`}
+              onClick={() => changeView("day")}
+            >
               {t("day")}
             </button>
           </div>

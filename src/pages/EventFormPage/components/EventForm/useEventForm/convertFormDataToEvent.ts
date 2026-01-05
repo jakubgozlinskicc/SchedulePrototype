@@ -3,10 +3,6 @@ import type { EventFormData } from "../eventFormSchema";
 import type { RecurrenceRule } from "../../../../../events/recurrence/recurrenceTypes";
 
 function buildRecurrenceRule(data: EventFormData): RecurrenceRule | undefined {
-  if (data.recurrenceType === "none") {
-    return undefined;
-  }
-
   const rule: RecurrenceRule = {
     type: data.recurrenceType,
     interval: 1,

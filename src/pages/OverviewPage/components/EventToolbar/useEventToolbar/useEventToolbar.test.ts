@@ -3,6 +3,8 @@ import { renderHook, act } from "@testing-library/react";
 import { useEventToolbar } from "./useEventToolbar";
 import {
   addDays,
+  addWeeks,
+  addMonths,
   startOfMonth,
   endOfMonth,
   startOfWeek,
@@ -49,17 +51,78 @@ describe("useEventToolbar", () => {
     vi.useRealTimers();
   });
 
-  describe("setToday", () => {
-    it("should set dateFrom and dateTo to today with time reset to midnight", () => {
+  describe("currentView", () => {
+    it("should default to 'day' view", () => {
       const { result } = renderHook(() => useEventToolbar());
+
+      expect(result.current.currentView).toBe("day");
+    });
+  });
+
+  describe("setToday", () => {
+    it("should set dateFrom and dateTo to today's range based on current view", () => {
+      const { result } = renderHook(() => useEventToolbar());
+      const today = new Date("2024-06-15T12:00:00");
 
       act(() => {
         result.current.setToday();
       });
 
-      const expectedDate = new Date("2024-06-15T00:00:00");
-      expect(mockUpdateFilter).toHaveBeenCalledWith("dateFrom", expectedDate);
-      expect(mockUpdateFilter).toHaveBeenCalledWith("dateTo", expectedDate);
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateFrom",
+        startOfDay(today)
+      );
+      expect(mockUpdateFilter).toHaveBeenCalledWith("dateTo", endOfDay(today));
+    });
+
+    it("should set week range when view is week", () => {
+      const { result } = renderHook(() => useEventToolbar());
+      const today = new Date("2024-06-15T12:00:00");
+      mockFilters = { dateFrom: today, dateTo: today };
+
+      act(() => {
+        result.current.changeView("week");
+      });
+
+      vi.clearAllMocks();
+
+      act(() => {
+        result.current.setToday();
+      });
+
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateFrom",
+        startOfWeek(today, { weekStartsOn: 1 })
+      );
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateTo",
+        endOfWeek(today, { weekStartsOn: 1 })
+      );
+    });
+
+    it("should set month range when view is month", () => {
+      const { result } = renderHook(() => useEventToolbar());
+      const today = new Date("2024-06-15T12:00:00");
+      mockFilters = { dateFrom: today, dateTo: today };
+
+      act(() => {
+        result.current.changeView("month");
+      });
+
+      vi.clearAllMocks();
+
+      act(() => {
+        result.current.setToday();
+      });
+
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateFrom",
+        startOfMonth(today)
+      );
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateTo",
+        endOfMonth(today)
+      );
     });
 
     it("should be called twice for both date filters", () => {
@@ -73,24 +136,79 @@ describe("useEventToolbar", () => {
     });
   });
 
-  describe("handleNextDay", () => {
-    it("should advance both dates by 1 day", () => {
+  describe("handleNext", () => {
+    it("should advance by 1 day when view is day", () => {
       const currentDate = new Date("2024-06-15");
       mockFilters = { dateFrom: currentDate, dateTo: currentDate };
 
       const { result } = renderHook(() => useEventToolbar());
 
       act(() => {
-        result.current.handleNextDay();
+        result.current.handleNext();
       });
 
+      const nextDay = addDays(currentDate, 1);
       expect(mockUpdateFilter).toHaveBeenCalledWith(
         "dateFrom",
-        addDays(currentDate, 1)
+        startOfDay(nextDay)
       );
       expect(mockUpdateFilter).toHaveBeenCalledWith(
         "dateTo",
-        addDays(currentDate, 1)
+        endOfDay(nextDay)
+      );
+    });
+
+    it("should advance by 1 week when view is week", () => {
+      const currentDate = new Date("2024-06-15");
+      mockFilters = { dateFrom: currentDate, dateTo: currentDate };
+
+      const { result } = renderHook(() => useEventToolbar());
+
+      act(() => {
+        result.current.changeView("week");
+      });
+
+      vi.clearAllMocks();
+
+      act(() => {
+        result.current.handleNext();
+      });
+
+      const nextWeek = addWeeks(currentDate, 1);
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateFrom",
+        startOfWeek(nextWeek, { weekStartsOn: 1 })
+      );
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateTo",
+        endOfWeek(nextWeek, { weekStartsOn: 1 })
+      );
+    });
+
+    it("should advance by 1 month when view is month", () => {
+      const currentDate = new Date("2024-06-15");
+      mockFilters = { dateFrom: currentDate, dateTo: currentDate };
+
+      const { result } = renderHook(() => useEventToolbar());
+
+      act(() => {
+        result.current.changeView("month");
+      });
+
+      vi.clearAllMocks();
+
+      act(() => {
+        result.current.handleNext();
+      });
+
+      const nextMonth = addMonths(currentDate, 1);
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateFrom",
+        startOfMonth(nextMonth)
+      );
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateTo",
+        endOfMonth(nextMonth)
       );
     });
 
@@ -100,7 +218,7 @@ describe("useEventToolbar", () => {
       const { result } = renderHook(() => useEventToolbar());
 
       act(() => {
-        result.current.handleNextDay();
+        result.current.handleNext();
       });
 
       expect(toast.error).toHaveBeenCalledWith("toast-error-select-date", {
@@ -108,59 +226,92 @@ describe("useEventToolbar", () => {
       });
     });
 
-    it("should only update dateFrom if dateTo is null", () => {
-      const currentDate = new Date("2024-06-15");
-      mockFilters = { dateFrom: currentDate, dateTo: null };
+    it("should not update filters when validation fails", () => {
+      mockFilters = { dateFrom: null, dateTo: null };
 
       const { result } = renderHook(() => useEventToolbar());
 
       act(() => {
-        result.current.handleNextDay();
+        result.current.handleNext();
       });
 
-      expect(mockUpdateFilter).toHaveBeenCalledWith(
-        "dateFrom",
-        addDays(currentDate, 1)
-      );
-      expect(mockUpdateFilter).toHaveBeenCalledTimes(1);
-    });
-
-    it("should only update dateTo if dateFrom is null", () => {
-      const currentDate = new Date("2024-06-15");
-      mockFilters = { dateFrom: null, dateTo: currentDate };
-
-      const { result } = renderHook(() => useEventToolbar());
-
-      act(() => {
-        result.current.handleNextDay();
-      });
-
-      expect(mockUpdateFilter).toHaveBeenCalledWith(
-        "dateTo",
-        addDays(currentDate, 1)
-      );
-      expect(mockUpdateFilter).toHaveBeenCalledTimes(1);
+      expect(mockUpdateFilter).not.toHaveBeenCalled();
     });
   });
 
-  describe("handlePreviousDay", () => {
-    it("should go back 1 day for both dates", () => {
+  describe("handlePrevious", () => {
+    it("should go back 1 day when view is day", () => {
       const currentDate = new Date("2024-06-15");
       mockFilters = { dateFrom: currentDate, dateTo: currentDate };
 
       const { result } = renderHook(() => useEventToolbar());
 
       act(() => {
-        result.current.handlePreviousDay();
+        result.current.handlePrevious();
       });
 
+      const prevDay = addDays(currentDate, -1);
       expect(mockUpdateFilter).toHaveBeenCalledWith(
         "dateFrom",
-        addDays(currentDate, -1)
+        startOfDay(prevDay)
       );
       expect(mockUpdateFilter).toHaveBeenCalledWith(
         "dateTo",
-        addDays(currentDate, -1)
+        endOfDay(prevDay)
+      );
+    });
+
+    it("should go back 1 week when view is week", () => {
+      const currentDate = new Date("2024-06-15");
+      mockFilters = { dateFrom: currentDate, dateTo: currentDate };
+
+      const { result } = renderHook(() => useEventToolbar());
+
+      act(() => {
+        result.current.changeView("week");
+      });
+
+      vi.clearAllMocks();
+
+      act(() => {
+        result.current.handlePrevious();
+      });
+
+      const prevWeek = addWeeks(currentDate, -1);
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateFrom",
+        startOfWeek(prevWeek, { weekStartsOn: 1 })
+      );
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateTo",
+        endOfWeek(prevWeek, { weekStartsOn: 1 })
+      );
+    });
+
+    it("should go back 1 month when view is month", () => {
+      const currentDate = new Date("2024-06-15");
+      mockFilters = { dateFrom: currentDate, dateTo: currentDate };
+
+      const { result } = renderHook(() => useEventToolbar());
+
+      act(() => {
+        result.current.changeView("month");
+      });
+
+      vi.clearAllMocks();
+
+      act(() => {
+        result.current.handlePrevious();
+      });
+
+      const prevMonth = addMonths(currentDate, -1);
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateFrom",
+        startOfMonth(prevMonth)
+      );
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateTo",
+        endOfMonth(prevMonth)
       );
     });
 
@@ -170,7 +321,7 @@ describe("useEventToolbar", () => {
       const { result } = renderHook(() => useEventToolbar());
 
       act(() => {
-        result.current.handlePreviousDay();
+        result.current.handlePrevious();
       });
 
       expect(toast.error).toHaveBeenCalledWith("toast-error-select-date", {
@@ -185,23 +336,119 @@ describe("useEventToolbar", () => {
       const { result } = renderHook(() => useEventToolbar());
 
       act(() => {
-        result.current.handlePreviousDay();
+        result.current.handlePrevious();
       });
 
-      const expectedDate = new Date("2024-05-31");
-      expect(mockUpdateFilter).toHaveBeenCalledWith("dateFrom", expectedDate);
+      const prevDay = addDays(currentDate, -1);
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateFrom",
+        startOfDay(prevDay)
+      );
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateTo",
+        endOfDay(prevDay)
+      );
     });
   });
 
-  describe("setCurrentMonthRange", () => {
-    it("should set date range to current month", () => {
+  describe("changeView", () => {
+    it("should change view to month and update date range", () => {
       const currentDate = new Date("2024-06-15");
       mockFilters = { dateFrom: currentDate, dateTo: currentDate };
 
       const { result } = renderHook(() => useEventToolbar());
 
       act(() => {
-        result.current.setCurrentMonthRange();
+        result.current.changeView("month");
+      });
+
+      expect(result.current.currentView).toBe("month");
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateFrom",
+        startOfMonth(currentDate)
+      );
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateTo",
+        endOfMonth(currentDate)
+      );
+    });
+
+    it("should change view to week and update date range", () => {
+      const currentDate = new Date("2024-06-15");
+      mockFilters = { dateFrom: currentDate, dateTo: currentDate };
+
+      const { result } = renderHook(() => useEventToolbar());
+
+      act(() => {
+        result.current.changeView("week");
+      });
+
+      expect(result.current.currentView).toBe("week");
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateFrom",
+        startOfWeek(currentDate, { weekStartsOn: 1 })
+      );
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateTo",
+        endOfWeek(currentDate, { weekStartsOn: 1 })
+      );
+    });
+
+    it("should change view to day and update date range", () => {
+      const currentDate = new Date("2024-06-15T12:30:00");
+      mockFilters = { dateFrom: currentDate, dateTo: currentDate };
+
+      const { result } = renderHook(() => useEventToolbar());
+
+      act(() => {
+        result.current.changeView("month");
+      });
+
+      vi.clearAllMocks();
+
+      act(() => {
+        result.current.changeView("day");
+      });
+
+      expect(result.current.currentView).toBe("day");
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateFrom",
+        startOfDay(currentDate)
+      );
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateTo",
+        endOfDay(currentDate)
+      );
+    });
+
+    it("should use current date when dateFrom is null", () => {
+      mockFilters = { dateFrom: null, dateTo: null };
+      const today = new Date("2024-06-15T12:00:00");
+
+      const { result } = renderHook(() => useEventToolbar());
+
+      act(() => {
+        result.current.changeView("month");
+      });
+
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateFrom",
+        startOfMonth(today)
+      );
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateTo",
+        endOfMonth(today)
+      );
+    });
+
+    it("should handle February correctly in month view", () => {
+      const currentDate = new Date("2024-02-15");
+      mockFilters = { dateFrom: currentDate, dateTo: currentDate };
+
+      const { result } = renderHook(() => useEventToolbar());
+
+      act(() => {
+        result.current.changeView("month");
       });
 
       expect(mockUpdateFilter).toHaveBeenCalledWith(
@@ -213,105 +460,76 @@ describe("useEventToolbar", () => {
         endOfMonth(currentDate)
       );
     });
-
-    it("should not update if dateFrom is null", () => {
-      mockFilters = { dateFrom: null, dateTo: null };
-
-      const { result } = renderHook(() => useEventToolbar());
-
-      act(() => {
-        result.current.setCurrentMonthRange();
-      });
-
-      expect(mockUpdateFilter).not.toHaveBeenCalled();
-    });
-
-    it("should handle February correctly", () => {
-      const currentDate = new Date("2024-02-15");
-      mockFilters = { dateFrom: currentDate, dateTo: currentDate };
-
-      const { result } = renderHook(() => useEventToolbar());
-
-      act(() => {
-        result.current.setCurrentMonthRange();
-      });
-
-      expect(mockUpdateFilter).toHaveBeenCalledWith(
-        "dateFrom",
-        new Date("2024-02-01T00:00:00")
-      );
-      expect(mockUpdateFilter).toHaveBeenCalledWith(
-        "dateTo",
-        endOfMonth(currentDate)
-      );
-    });
   });
 
-  describe("setCurrentWeekRange", () => {
-    it("should set date range to current week starting on Monday", () => {
+  describe("integration scenarios", () => {
+    it("should navigate correctly after changing view", () => {
       const currentDate = new Date("2024-06-15");
       mockFilters = { dateFrom: currentDate, dateTo: currentDate };
 
       const { result } = renderHook(() => useEventToolbar());
 
       act(() => {
-        result.current.setCurrentWeekRange();
+        result.current.changeView("month");
       });
 
+      vi.clearAllMocks();
+
+      act(() => {
+        result.current.handleNext();
+      });
+
+      const nextMonth = addMonths(currentDate, 1);
       expect(mockUpdateFilter).toHaveBeenCalledWith(
         "dateFrom",
-        startOfWeek(currentDate, { weekStartsOn: 1 })
+        startOfMonth(nextMonth)
       );
       expect(mockUpdateFilter).toHaveBeenCalledWith(
         "dateTo",
-        endOfWeek(currentDate, { weekStartsOn: 1 })
+        endOfMonth(nextMonth)
       );
     });
 
-    it("should not update if dateFrom is null", () => {
-      mockFilters = { dateFrom: null, dateTo: null };
-
-      const { result } = renderHook(() => useEventToolbar());
-
-      act(() => {
-        result.current.setCurrentWeekRange();
-      });
-
-      expect(mockUpdateFilter).not.toHaveBeenCalled();
-    });
-  });
-
-  describe("setCurrentDayRange", () => {
-    it("should set date range to current day", () => {
-      const currentDate = new Date("2024-06-15T12:30:00");
+    it("should maintain view state across multiple navigations", () => {
+      const currentDate = new Date("2024-06-15");
       mockFilters = { dateFrom: currentDate, dateTo: currentDate };
 
       const { result } = renderHook(() => useEventToolbar());
 
       act(() => {
-        result.current.setCurrentDayRange();
+        result.current.changeView("week");
       });
 
-      expect(mockUpdateFilter).toHaveBeenCalledWith(
-        "dateFrom",
-        startOfDay(currentDate)
-      );
-      expect(mockUpdateFilter).toHaveBeenCalledWith(
-        "dateTo",
-        endOfDay(currentDate)
-      );
+      expect(result.current.currentView).toBe("week");
+
+      act(() => {
+        result.current.handleNext();
+      });
+
+      expect(result.current.currentView).toBe("week");
+
+      act(() => {
+        result.current.handlePrevious();
+      });
+
+      expect(result.current.currentView).toBe("week");
     });
 
-    it("should not update if dateFrom is null", () => {
+    it("should use fallback date when filters are empty on setToday", () => {
       mockFilters = { dateFrom: null, dateTo: null };
+      const today = new Date("2024-06-15T12:00:00");
 
       const { result } = renderHook(() => useEventToolbar());
 
       act(() => {
-        result.current.setCurrentDayRange();
+        result.current.setToday();
       });
 
-      expect(mockUpdateFilter).not.toHaveBeenCalled();
+      expect(mockUpdateFilter).toHaveBeenCalledWith(
+        "dateFrom",
+        startOfDay(today)
+      );
+      expect(mockUpdateFilter).toHaveBeenCalledWith("dateTo", endOfDay(today));
     });
   });
 });

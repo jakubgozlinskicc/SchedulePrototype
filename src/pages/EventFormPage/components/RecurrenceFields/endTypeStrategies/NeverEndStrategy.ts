@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import type { IEndTypeStrategy, EndType } from "../RecurrenceFieldsTypes";
+import type { IEndTypeStrategy, EndType } from "../recurrenceFieldsTypes";
 
 export class NeverEndStrategy implements IEndTypeStrategy {
   readonly type: EndType = "never";

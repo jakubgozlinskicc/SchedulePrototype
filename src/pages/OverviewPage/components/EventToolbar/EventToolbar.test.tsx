@@ -5,13 +5,12 @@ import { EventToolbar } from "./EventToolbar";
 const mockNavigate = vi.fn();
 const mockUpdateFilter = vi.fn();
 const mockSetToday = vi.fn();
-const mockHandleNextDay = vi.fn();
-const mockHandlePreviousDay = vi.fn();
-const mockSetCurrentDayRange = vi.fn();
-const mockSetCurrentWeekRange = vi.fn();
-const mockSetCurrentMonthRange = vi.fn();
+const mockHandleNext = vi.fn();
+const mockHandlePrevious = vi.fn();
+const mockChangeView = vi.fn();
 
 let mockFilters = { searchQuery: "" };
+let mockCurrentView = "month";
 
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
@@ -32,12 +31,11 @@ vi.mock("../../context/useFiltersContext", () => ({
 
 vi.mock("./useEventToolbar/useEventToolbar", () => ({
   useEventToolbar: () => ({
+    currentView: mockCurrentView,
     setToday: mockSetToday,
-    handleNextDay: mockHandleNextDay,
-    handlePreviousDay: mockHandlePreviousDay,
-    setCurrentDayRange: mockSetCurrentDayRange,
-    setCurrentWeekRange: mockSetCurrentWeekRange,
-    setCurrentMonthRange: mockSetCurrentMonthRange,
+    handleNext: mockHandleNext,
+    handlePrevious: mockHandlePrevious,
+    changeView: mockChangeView,
   }),
 }));
 
@@ -55,6 +53,7 @@ describe("EventToolbar", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockFilters = { searchQuery: "" };
+    mockCurrentView = "month";
   });
 
   it("should render all toolbar elements", () => {
@@ -88,24 +87,24 @@ describe("EventToolbar", () => {
     expect(mockSetToday).toHaveBeenCalled();
   });
 
-  it("should call handlePreviousDay when left arrow button is clicked", () => {
+  it("should call handlePrevious when left arrow button is clicked", () => {
     const { container } = render(<EventToolbar />);
 
     const prevButton = container.querySelector(".fa-arrow-left")?.parentElement;
     if (prevButton) {
       fireEvent.click(prevButton);
-      expect(mockHandlePreviousDay).toHaveBeenCalled();
+      expect(mockHandlePrevious).toHaveBeenCalled();
     }
   });
 
-  it("should call handleNextDay when right arrow button is clicked", () => {
+  it("should call handleNext when right arrow button is clicked", () => {
     const { container } = render(<EventToolbar />);
 
     const nextButton =
       container.querySelector(".fa-arrow-right")?.parentElement;
     if (nextButton) {
       fireEvent.click(nextButton);
-      expect(mockHandleNextDay).toHaveBeenCalled();
+      expect(mockHandleNext).toHaveBeenCalled();
     }
   });
 
@@ -118,28 +117,28 @@ describe("EventToolbar", () => {
     expect(mockUpdateFilter).toHaveBeenCalledWith("searchQuery", "test query");
   });
 
-  it("should call setCurrentMonthRange when month button is clicked", () => {
+  it("should call changeView with 'month' when month button is clicked", () => {
     render(<EventToolbar />);
 
     fireEvent.click(screen.getByText("month"));
 
-    expect(mockSetCurrentMonthRange).toHaveBeenCalled();
+    expect(mockChangeView).toHaveBeenCalledWith("month");
   });
 
-  it("should call setCurrentWeekRange when week button is clicked", () => {
+  it("should call changeView with 'week' when week button is clicked", () => {
     render(<EventToolbar />);
 
     fireEvent.click(screen.getByText("week"));
 
-    expect(mockSetCurrentWeekRange).toHaveBeenCalled();
+    expect(mockChangeView).toHaveBeenCalledWith("week");
   });
 
-  it("should call setCurrentDayRange when day button is clicked", () => {
+  it("should call changeView with 'day' when day button is clicked", () => {
     render(<EventToolbar />);
 
     fireEvent.click(screen.getByText("day"));
 
-    expect(mockSetCurrentDayRange).toHaveBeenCalled();
+    expect(mockChangeView).toHaveBeenCalledWith("day");
   });
 
   it("should display current search query value", () => {

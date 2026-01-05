@@ -1,103 +1,73 @@
-import {
-  addDays,
-  endOfDay,
-  endOfMonth,
-  endOfWeek,
-  startOfDay,
-  startOfMonth,
-  startOfWeek,
-} from "date-fns";
+import { useState } from "react";
 import { useFiltersContext } from "../../../context/useFiltersContext";
+import { rangeChangeStrategyRegistry } from "./rangeChangeStrategies/rangeChangeStrategyRegistry";
+import type {
+  ViewOption,
+  DateRange,
+} from "./rangeChangeStrategies/rangeChangeTypes";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 export function useEventToolbar() {
   const { filters, updateFilter } = useFiltersContext();
   const { t } = useTranslation();
+  const [currentView, setCurrentView] = useState<ViewOption>("day");
+
+  const updateDateRange = ({ dateFrom, dateTo }: DateRange) => {
+    updateFilter("dateFrom", dateFrom);
+    updateFilter("dateTo", dateTo);
+  };
+
+  const getCurrentDate = (): Date => filters.dateFrom ?? new Date();
+
+  const validateDates = (): boolean => {
+    if (!filters.dateFrom && !filters.dateTo) {
+      toast.error(t("toast-error-select-date"), { id: "date-error" });
+      return false;
+    }
+    return true;
+  };
 
   const setToday = () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    updateFilter("dateFrom", today);
-    updateFilter("dateTo", today);
+    const range = rangeChangeStrategyRegistry.getCurrentRange(
+      currentView,
+      new Date()
+    );
+    updateDateRange(range);
   };
 
-  const toastDateError = () => {
-    if (!filters.dateFrom && !filters.dateTo) {
-      toast.error(t("toast-error-select-date"), {
-        id: "date-error",
-      });
-      return;
-    }
+  const handleNext = () => {
+    if (!validateDates()) return;
+    const range = rangeChangeStrategyRegistry.getNextRange(
+      currentView,
+      getCurrentDate()
+    );
+    updateDateRange(range);
   };
 
-  const handleNextDay = () => {
-    toastDateError();
-    if (filters.dateFrom) {
-      const nextFromDay = addDays(filters.dateFrom, 1);
-      updateFilter("dateFrom", nextFromDay);
-    }
-    if (filters.dateTo) {
-      const nextToDay = addDays(filters.dateTo, 1);
-      updateFilter("dateTo", nextToDay);
-    }
+  const handlePrevious = () => {
+    if (!validateDates()) return;
+    const range = rangeChangeStrategyRegistry.getPreviousRange(
+      currentView,
+      getCurrentDate()
+    );
+    updateDateRange(range);
   };
 
-  const handlePreviousDay = () => {
-    toastDateError();
-
-    if (filters.dateFrom) {
-      const nextFromDay = addDays(filters.dateFrom, -1);
-      updateFilter("dateFrom", nextFromDay);
-    }
-    if (filters.dateTo) {
-      const nextToDay = addDays(filters.dateTo, -1);
-      updateFilter("dateTo", nextToDay);
-    }
+  const changeView = (view: ViewOption) => {
+    setCurrentView(view);
+    const range = rangeChangeStrategyRegistry.getCurrentRange(
+      view,
+      getCurrentDate()
+    );
+    updateDateRange(range);
   };
 
-  const setCurrentMonthRange = () => {
-    toastDateError();
-    if (filters.dateFrom) {
-      const currentDate = filters.dateFrom;
-      const start = startOfMonth(currentDate);
-      const end = endOfMonth(currentDate);
-
-      updateFilter("dateFrom", start);
-      updateFilter("dateTo", end);
-    }
-  };
-
-  const setCurrentWeekRange = () => {
-    toastDateError();
-    if (filters.dateFrom) {
-      const currentDate = filters.dateFrom;
-      const start = startOfWeek(currentDate, { weekStartsOn: 1 });
-      const end = endOfWeek(currentDate, { weekStartsOn: 1 });
-
-      updateFilter("dateFrom", start);
-      updateFilter("dateTo", end);
-    }
-  };
-
-  const setCurrentDayRange = () => {
-    toastDateError();
-    if (filters.dateFrom) {
-      const currentDate = filters.dateFrom;
-      const start = startOfDay(currentDate);
-      const end = endOfDay(currentDate);
-
-      updateFilter("dateFrom", start);
-      updateFilter("dateTo", end);
-    }
-  };
   return {
+    currentView,
     setToday,
-    handleNextDay,
-    handlePreviousDay,
-    setCurrentDayRange,
-    setCurrentWeekRange,
-    setCurrentMonthRange,
+    handleNext,
+    handlePrevious,
+    changeView,
   };
 }
