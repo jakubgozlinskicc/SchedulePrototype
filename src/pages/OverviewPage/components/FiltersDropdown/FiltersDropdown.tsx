@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import "./FiltersDropdown.css";
 import { useFiltersContext } from "../../context/useFiltersContext";
 import { ColorSelect } from "./ColorSelect";
+import { useClickOutside } from "../../../../hooks/useClickOutside";
 
 export function FiltersDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,19 +12,7 @@ export function FiltersDropdown() {
     useFiltersContext();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  useClickOutside(dropdownRef, () => setIsOpen(false));
 
   const formatDateForInput = (date: Date | null): string => {
     if (!date) return "";
