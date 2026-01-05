@@ -1,11 +1,11 @@
-import { eventRepository } from "../../../../../../db/eventRepository";
+import type { IEventRepository } from "../../../../../../events/useEvents/IEventRepository";
 import { useReloadEvents } from "../../../../../../events/useEvents/useEventData/useReloadEvents/useReloadEvents";
 import { useEventDataContext } from "../../../../../../events/useEvents/useEventDataContext/useEventDataContext";
 import { useEventFormNavigation } from "../useEventFormNavigation/useEventFormNavigation";
 import { DeleteStrategyRegistry } from "../../../../../../events/useEvents/useEventData/useDeleteEvent/deleteStrategies/deleteStrategyRegistry";
 import { getDefaultEvent } from "../../../../../../utils/getDefaultEvent/getDefaultEvent";
 
-export function useEventFormDelete() {
+export function useEventFormDelete(eventRepository: IEventRepository) {
   const { eventData, setEventData } = useEventDataContext();
   const { reloadEvents } = useReloadEvents(eventRepository);
   const { goToOverview } = useEventFormNavigation();

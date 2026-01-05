@@ -1,4 +1,4 @@
-import { eventRepository } from "../../../../../../db/eventRepository";
+import type { IEventRepository } from "../../../../../../events/useEvents/IEventRepository";
 import { SubmitStrategyRegistry } from "../../../../../../events/useEvents/useEventData/useSubmitEvent/submitStrategies/SubmitStrategyRegistry";
 import { useReloadEvents } from "../../../../../../events/useEvents/useEventData/useReloadEvents/useReloadEvents";
 import { useEventFormNavigation } from "../useEventFormNavigation/useEventFormNavigation";
@@ -7,7 +7,7 @@ import { convertFormDataToEvent } from "../convertFormDataToEvent";
 import { useEventDataContext } from "../../../../../../events/useEvents/useEventDataContext/useEventDataContext";
 import { getDefaultEvent } from "../../../../../../utils/getDefaultEvent/getDefaultEvent";
 
-export function useEventFormSubmit() {
+export function useEventFormSubmit(eventRepository: IEventRepository) {
   const { reloadEvents } = useReloadEvents(eventRepository);
   const { goToOverview } = useEventFormNavigation();
   const { eventData, setEventData, isEditAll, setIsEditAll } =

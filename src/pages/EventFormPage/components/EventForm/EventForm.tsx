@@ -11,6 +11,7 @@ import { RecurrenceFields } from "../RecurrenceFields/RecurrenceFields";
 import "./EventForm.css";
 import { getRecurrenceDefaults } from "../getRecurrenceDefault";
 import { useEventFormSchema } from "./useEventForm/useEventFormSchema/useEventFormSchema";
+import { eventRepository } from "../../../../db/eventRepository";
 
 export function EventForm({ title, children }: EventFormProps) {
   const { t } = useTranslation();
@@ -59,8 +60,8 @@ export function EventForm({ title, children }: EventFormProps) {
   });
 
   const { handleCancel } = useEventFormNavigation();
-  const { onSubmit } = useEventFormSubmit();
-  const { handleDelete } = useEventFormDelete();
+  const { onSubmit } = useEventFormSubmit(eventRepository);
+  const { handleDelete } = useEventFormDelete(eventRepository);
 
   return (
     <FormProvider {...methods}>
