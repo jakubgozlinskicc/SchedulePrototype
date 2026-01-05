@@ -10,7 +10,7 @@ export interface EventFilters {
 
 export interface FiltersContextType {
   filters: EventFilters;
-  setFilters: React.Dispatch<React.SetStateAction<EventFilters>>;
+  activeFiltersCount: number;
   updateFilter: <K extends keyof EventFilters>(
     key: K,
     value: EventFilters[K]

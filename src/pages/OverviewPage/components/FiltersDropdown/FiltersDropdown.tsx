@@ -7,7 +7,8 @@ import { ColorSelect } from "./ColorSelect";
 export function FiltersDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { filters, updateFilter, resetFilters } = useFiltersContext();
+  const { filters, activeFiltersCount, updateFilter, resetFilters } =
+    useFiltersContext();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -23,14 +24,6 @@ export function FiltersDropdown() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  const activeFiltersCount = [
-    filters.searchQuery,
-    filters.showPastEvents,
-    filters.dateFrom,
-    filters.dateTo,
-    filters.colors.length > 0,
-  ].filter(Boolean).length;
 
   const formatDateForInput = (date: Date | null): string => {
     if (!date) return "";

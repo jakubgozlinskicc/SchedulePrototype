@@ -25,8 +25,17 @@ export function FiltersProvider({ children }: FiltersProviderProps) {
 
   const resetFilters = () => setFilters(defaultFilters);
 
+  const activeFiltersCount = [
+    filters.searchQuery,
+    filters.showPastEvents,
+    filters.dateFrom,
+    filters.dateTo,
+    filters.colors.length > 0,
+  ].filter(Boolean).length;
+
   const value = {
     filters,
+    activeFiltersCount,
     setFilters,
     updateFilter,
     resetFilters,
