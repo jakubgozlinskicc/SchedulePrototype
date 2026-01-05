@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import type { IEndTypeStrategy, EndType } from "../RecurrenceFieldsTypes";
+import type { IEndTypeStrategy, EndType } from "../recurrenceFieldsTypes";
 import { DateEndField } from "../components/DateEndField";
 
 export class DateEndStrategy implements IEndTypeStrategy {

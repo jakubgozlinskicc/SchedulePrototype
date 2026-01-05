@@ -1,4 +1,4 @@
-import type { IEndTypeStrategy, EndType } from "../RecurrenceFieldsTypes";
+import type { IEndTypeStrategy, EndType } from "../recurrenceFieldsTypes";
 import { CountEndStrategy } from "./CountEndStrategy";
 import { DateEndStrategy } from "./DateEndStrategy";
 import { NeverEndStrategy } from "./NeverEndStrategy";

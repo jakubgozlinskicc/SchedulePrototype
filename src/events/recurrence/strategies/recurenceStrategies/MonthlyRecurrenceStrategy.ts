@@ -1,4 +1,4 @@
-import { BaseRecurrenceStrategy } from "./BaseRecurrenceStartegy";
+import { BaseRecurrenceStrategy } from "./BaseRecurrenceStrategy";
 
 export class MonthlyRecurrenceStrategy extends BaseRecurrenceStrategy {
   canSupport(type: string): boolean {

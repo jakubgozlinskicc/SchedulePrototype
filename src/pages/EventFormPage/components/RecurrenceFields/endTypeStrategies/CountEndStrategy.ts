@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import type { IEndTypeStrategy, EndType } from "../RecurrenceFieldsTypes";
+import type { IEndTypeStrategy, EndType } from "../recurrenceFieldsTypes";
 import { CountEndField } from "../components/CountEndField";
 
 export class CountEndStrategy implements IEndTypeStrategy {
