@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import "./components/EventList/EventList.css";
 import "./components/FiltersDropdown/FiltersDropdown.css";
 import "./components/EventToolbar/EventToolbar.css";
@@ -12,9 +11,10 @@ import { useFiltersContext } from "./context/useFiltersContext";
 import { locales } from "../../utils/calendarLocalizer/calendarLocalizer";
 import { format } from "date-fns";
 import { EventToolbar } from "./components/EventToolbar/EventToolbar";
+import { TopControls } from "../../components/TopControls/TopControls";
+import { LanguageSelect } from "../../components/LanguageSelect/LanguageSelect";
 
 function OverviewPageContent() {
-  const navigate = useNavigate();
   const { currentLanguage, changeLanguage } = useTranslationContext();
   const { filters } = useFiltersContext();
   const { t } = useTranslation();
@@ -31,20 +31,16 @@ function OverviewPageContent() {
 
   return (
     <div className="overview-page">
-      <div className="top-controls">
-        <button className="overview-button" onClick={() => navigate("/")}>
-          Schedule <i className="fa-regular fa-calendar"></i>
-        </button>
-        <select
-          className="language-select"
-          value={currentLanguage}
+      <TopControls
+        buttonText="Schedule"
+        buttonIcon="fa-regular fa-calendar"
+        navigateTo="/"
+      >
+        <LanguageSelect
+          currentLanguage={currentLanguage}
           onChange={handleLanguageChange}
-          style={{ marginLeft: "10px", padding: "5px" }}
-        >
-          <option value="enUS">EN</option>
-          <option value="pl">PL</option>
-        </select>
-      </div>
+        />
+      </TopControls>
       <header className="overview-header">
         <h1>
           Overview
@@ -58,16 +54,13 @@ function OverviewPageContent() {
         <main className="overview-content">
           <h2>{t("events")}</h2>
           <div className="active-dates">
-            {filters.dateFrom && (
+            {filters.dateFrom && <h3>{formatDate(filters.dateFrom)}</h3>}
+            {filters.dateFrom && filters.dateTo && (
               <h3>
-                {t("date-from")}: {formatDate(filters.dateFrom)}
+                <i className="fa-solid fa-arrow-right"></i>
               </h3>
             )}
-            {filters.dateTo && (
-              <h3>
-                {t("date-to")}: {formatDate(filters.dateTo)}
-              </h3>
-            )}
+            {filters.dateTo && <h3>{formatDate(filters.dateTo)}</h3>}
           </div>
           <EventList />
         </main>

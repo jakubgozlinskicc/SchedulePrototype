@@ -21,7 +21,8 @@ import type { Language } from "../../contexts/translationContext/translationCont
 import { useTranslationContext } from "../../locales/useTranslationContext";
 import { useEventDataContext } from "../../events/useEvents/useEventDataContext/useEventDataContext";
 import { eventRepository } from "../../db/eventRepository";
-import { useNavigate } from "react-router-dom";
+import { TopControls } from "../../components/TopControls/TopControls";
+import { LanguageSelect } from "../../components/LanguageSelect/LanguageSelect";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
@@ -53,8 +54,6 @@ function SchedulePage() {
 
   const { handleEventDropResize } = useEventDropResize(eventRepository);
 
-  const navigate = useNavigate();
-
   const handleLanguageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -63,23 +62,16 @@ function SchedulePage() {
 
   return (
     <div className="schedule-page">
-      <div className="top-controls">
-        <button
-          className="overview-button"
-          onClick={() => navigate("/overview")}
-        >
-          Overview <i className="fa-solid fa-list"></i>
-        </button>
-        <select
-          className="language-select"
-          value={currentLanguage}
+      <TopControls
+        buttonText="Overview"
+        buttonIcon="fa-solid fa-list"
+        navigateTo="/overview"
+      >
+        <LanguageSelect
+          currentLanguage={currentLanguage}
           onChange={handleLanguageChange}
-          style={{ marginLeft: "10px", padding: "5px" }}
-        >
-          <option value="enUS">EN</option>
-          <option value="pl">PL</option>
-        </select>
-      </div>
+        />
+      </TopControls>
       <header className="schedule-header">
         <h1 className="schedule-title">
           Schedule

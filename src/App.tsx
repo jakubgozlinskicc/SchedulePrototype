@@ -1,4 +1,3 @@
-// App.tsx
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SchedulePage from "./pages/schedulePage/schedulePage";

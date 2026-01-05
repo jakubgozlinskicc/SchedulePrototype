@@ -1,0 +1,9 @@
+.language-select {
+  padding: 5px;
+  background-color: var(--primary);
+  font-weight: bold;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  cursor: pointer;
+}

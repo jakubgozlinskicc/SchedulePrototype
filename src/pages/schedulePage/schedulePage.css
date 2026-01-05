@@ -12,14 +12,6 @@
   margin-bottom: 16px;
   text-align: center;
 }
-.language-select {
-  background-color: var(--primary);
-  font-weight: bold;
-  border: none;
-  border-radius: var(--radius);
-  font-size: 0.9rem;
-  cursor: pointer;
-}
 
 .calendar-section {
   background-color: white;
@@ -36,30 +28,6 @@
   display: flex;
   border-radius: var(--radius-lg);
   overflow: hidden;
-}
-
-.top-controls {
-  top: 20px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 6px 10px;
-  gap: 10px;
-  outline: none;
-  position: absolute;
-  margin-left: 10px;
-}
-
-.overview-button {
-  padding: 8px 16px;
-  background-color: var(--primary);
-  border: none;
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: background-color 0.2s ease;
 }
 
 .overview-button:hover {

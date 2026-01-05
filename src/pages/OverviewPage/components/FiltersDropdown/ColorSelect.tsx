@@ -35,6 +35,10 @@ export function ColorSelect({ selectedColors, onChange }: ColorSelectProps) {
     }
   };
 
+  const resetColors = () => {
+    onChange([]);
+  };
+
   return (
     <div className="color-select">
       <button
@@ -84,6 +88,9 @@ export function ColorSelect({ selectedColors, onChange }: ColorSelectProps) {
               </span>
             </button>
           ))}
+          <button className="color-option" onClick={resetColors}>
+            <i className="fa-solid fa-xmark"></i>
+          </button>
         </div>
       </div>
     </div>
