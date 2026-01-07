@@ -6,7 +6,7 @@ export function EditEventForm() {
   const { t } = useTranslation();
 
   return (
-    <EventForm title={t("modal_edit_title")}>
+    <EventForm title={t("edit_title")}>
       {({ handleCancel, handleDelete }) => (
         <>
           <Button variant="danger" onClick={handleDelete}>

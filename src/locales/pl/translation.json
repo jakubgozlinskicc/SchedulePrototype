@@ -1,8 +1,8 @@
 {
   "events": "Wydarzenia",
   "form_edit_recurring_title": "Edytuj Powtarzające się wydarzenie",
-  "modal_edit_title": "Edytuj wydarzenie",
-  "modal_add_title": "Dodaj wydarzenie",
+  "edit_title": "Edytuj wydarzenie",
+  "add_title": "Dodaj wydarzenie",
   "btn_delete": "Usuń",
   "btn_cancel": "Anuluj",
   "btn_save_changes": "Zapisz zmiany",
@@ -73,5 +73,7 @@
   "title-required": "Tytuł wymagany",
   "title-min-length": "Tytuł musi mieć przynajmniej 3 znaki",
   "start-required": "Początek wymagany",
-  "end-required": "Koniec wymagany"
+  "end-required": "Koniec wymagany",
+
+  "error-event-not-found": "Błąd. Nie ma takiego wydarzenia"
 }

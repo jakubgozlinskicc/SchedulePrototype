@@ -1,8 +1,8 @@
 {
   "events": "Events",
   "form_edit_recurring_title": "Edit recurring event",
-  "modal_edit_title": "Edit event",
-  "modal_add_title": "Add event",
+  "edit_title": "Edit event",
+  "add_title": "Add event",
   "btn_delete": "Delete",
   "btn_cancel": "Cancel",
   "btn_save_changes": "Save Changes",
@@ -73,5 +73,7 @@
   "title-required": "Title required",
   "title-min-length": "Title must be at least 3 characters long",
   "start-required": "Start Required",
-  "end-required": "End Required"
+  "end-required": "End Required",
+
+  "error-event-not-found": "Error. Event not found"
 }

@@ -19,7 +19,7 @@ export function AddEventModal({
 
   return (
     <BaseEventModal
-      title={t("modal_add_title")}
+      title={t("add_title")}
       eventData={eventData}
       isShaking={isShaking}
       onChange={onChange}

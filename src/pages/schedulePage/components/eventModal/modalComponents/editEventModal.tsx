@@ -22,7 +22,7 @@ export function EditEventModal({
 
   return (
     <BaseEventModal
-      title={t("modal_edit_title")}
+      title={t("edit_title")}
       eventData={eventData}
       isShaking={isShaking}
       onChange={onChange}

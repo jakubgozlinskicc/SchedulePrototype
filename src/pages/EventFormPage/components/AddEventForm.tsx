@@ -6,7 +6,7 @@ export function AddEventForm() {
   const { t } = useTranslation();
 
   return (
-    <EventForm title={t("modal_add_title")}>
+    <EventForm title={t("add_title")}>
       {({ handleCancel }) => (
         <>
           <Button variant="secondary" onClick={handleCancel}>

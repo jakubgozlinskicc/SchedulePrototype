@@ -1,40 +1,56 @@
 import { useTranslation } from "react-i18next";
-import { useEventFormSchema } from "../../events/form/EventForm/useEventForm/useEventFormSchema/useEventFormSchema";
+import { useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useEventFormSchema } from "../../events/form/EventForm/useEventForm/useEventFormSchema/useEventFormSchema";
+import { useEventLoader } from "./useEventLoader";
 import { FormProvider, useForm } from "react-hook-form";
+import { toDateTimeLocal } from "../../utils/toDateTimeLocal/toDateTimeLocal";
+import { getRecurrenceDefaults } from "../EventFormPage/components/getRecurrenceDefault";
 import { useEventFormNavigation } from "../../events/form/EventForm/useEventForm/useEventFormNavigation/useEventFormNavigation";
 import { useEventFormSubmit } from "../../events/form/EventForm/useEventForm/useEventFormSubmit/useEventFormSubmit";
 import { eventRepository } from "../../db/eventRepository";
-import { EventFormFields } from "../../events/form/EventForm/EventFormFields";
 import { Button } from "../../components/Button/Button";
-import "../../events/form/EventForm/eventForm.css";
-import { toDateTimeLocal } from "../../utils/toDateTimeLocal/toDateTimeLocal";
+import { EventFormFields } from "../../events/form/EventForm/EventFormFields";
+import type { Event } from "../../db/scheduleDb";
 
-export function AddEventFormPage() {
+export function EditEventFormPage() {
+  const { id } = useParams();
+  const { t } = useTranslation();
+
+  const eventId = id ? parseInt(id, 10) : undefined;
+  const { event } = useEventLoader(eventId);
+
+  if (!event) {
+    return <div>{t("loading") || "Loading..."}</div>;
+  }
+
+  return <EditEventFormPageContent event={event} />;
+}
+
+function EditEventFormPageContent({ event }: { event: Event }) {
   const { t } = useTranslation();
   const { eventFormSchema } = useEventFormSchema();
+  const { handleCancel } = useEventFormNavigation();
 
   const methods = useForm({
     resolver: yupResolver(eventFormSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      start: toDateTimeLocal(new Date()),
-      end: toDateTimeLocal(new Date()),
-      color: "#0000FF",
-      recurrenceType: "none",
-      recurrenceEndType: "never",
+      title: event.title,
+      description: event.description ?? "",
+      start: toDateTimeLocal(event.start),
+      end: toDateTimeLocal(event.end),
+      color: event.color,
+      ...getRecurrenceDefaults(event),
     },
   });
 
-  const { handleCancel } = useEventFormNavigation();
-  const { onSubmit } = useEventFormSubmit(eventRepository);
+  const { onSubmit } = useEventFormSubmit(eventRepository, { event });
 
   return (
     <FormProvider {...methods}>
       <div className="event-form-page">
         <header className="event-form-header">
-          <h1>{t("add_title")}</h1>
+          <h1>{t("edit-title")}</h1>
         </header>
         <div className="form-wrapper">
           <main className="form-content">
@@ -49,8 +65,8 @@ export function AddEventFormPage() {
                   {t("btn_cancel")}
                 </Button>
                 <Button variant="primary" type="submit">
-                  <i className="fa-solid fa-calendar-plus"></i>
-                  {t("btn-add")}
+                  <i className="fa-solid fa-floppy-disk"></i>
+                  {t("btn_save") || t("btn-add")}
                 </Button>
               </div>
             </form>

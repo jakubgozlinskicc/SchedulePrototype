@@ -9,7 +9,6 @@ import { getRecurrenceDefaults } from "../getRecurrenceDefault";
 import { useEventFormSchema } from "../../../../events/form/EventForm/useEventForm/useEventFormSchema/useEventFormSchema";
 import { eventRepository } from "../../../../db/eventRepository";
 import type { EventFormProps } from "../../eventFormTypes";
-import "./EventForm.css";
 import { EventFormFields } from "../../../../events/form/EventForm/EventFormFields";
 
 export function EventForm({ title, children }: EventFormProps) {

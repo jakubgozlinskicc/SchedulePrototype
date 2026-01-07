@@ -54,7 +54,7 @@ export function EventList() {
                   </span>
                   <Button
                     variant="primary"
-                    onClick={() => handleEditClick(event)}
+                    onClick={() => navigate(`/event/edit/${event.id}`)}
                   >
                     <i className="fa-solid fa-pen-to-square"></i>
                     {t("edit")}
