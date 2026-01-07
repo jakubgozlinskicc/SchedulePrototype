@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import "./EventList.css";
 import { useEventDataContext } from "../../../../events/useEvents/useEventDataContext/useEventDataContext";
 import type { Event } from "../../../../db/scheduleDb";
+import { Button } from "../../../../components/Button/Button";
 
 export function EventList() {
   useLoadEvents(eventRepository);
@@ -54,16 +55,13 @@ export function EventList() {
                     )}
                     {event.title}
                   </span>
-                  <button
-                    className="nav-button"
+                  <Button
+                    variant="primary"
                     onClick={() => handleEditClick(event)}
                   >
-                    <i
-                      className="fa-solid fa-pen-to-square"
-                      style={{ marginRight: "8px" }}
-                    ></i>
+                    <i className="fa-solid fa-pen-to-square"></i>
                     {t("edit")}
-                  </button>
+                  </Button>
                 </div>
                 <div className="event-time">
                   {formatTime(event.start)} — {formatTime(event.end)}

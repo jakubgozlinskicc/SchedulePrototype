@@ -8,6 +8,7 @@ import { WeekStrip } from "./WeekStrip";
 import "./CustomToolbar.css";
 import "./DatePickerDropdown.css";
 import "./WeekStrip.css";
+import { Button } from "../../../../../components/Button/Button";
 
 type CustomToolbarProps<
   TEvent extends object = Event,
@@ -35,20 +36,19 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
       <div className="custom-toolbar">
         <div className="actions-buttons">
           {onAddEvent && (
-            <button className="nav-button" onClick={onAddEvent}>
+            <Button variant="primary" onClick={onAddEvent}>
               {t("btn-add")} <i className="fa-solid fa-calendar-plus"></i>
-            </button>
+            </Button>
           )}
-          <button className="nav-button" onClick={() => onNavigate("TODAY")}>
+          <Button variant="primary" onClick={() => onNavigate("TODAY")}>
             {t("today")}
-          </button>
+          </Button>
         </div>
 
         <div className="nav-buttons">
-          <button className="nav-button" onClick={() => onNavigate("PREV")}>
+          <Button variant="primary" onClick={() => onNavigate("PREV")}>
             <i className="fa-solid fa-arrow-left"></i>
-          </button>
-
+          </Button>
           <div className="date-picker-container" ref={datePickerRef}>
             <button
               className="toolbar-label-button"
@@ -69,22 +69,21 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
               />
             )}
           </div>
-
-          <button className="nav-button" onClick={() => onNavigate("NEXT")}>
+          <Button variant="primary" onClick={() => onNavigate("NEXT")}>
             <i className="fa-solid fa-arrow-right"></i>
-          </button>
+          </Button>
         </div>
 
         <div className="view-buttons">
-          <button className="view-button" onClick={() => onView("month")}>
+          <Button variant="secondary" onClick={() => onView("month")}>
             {t("month")}
-          </button>
-          <button className="view-button" onClick={() => onView("week")}>
+          </Button>
+          <Button variant="secondary" onClick={() => onView("week")}>
             {t("week")}
-          </button>
-          <button className="view-button" onClick={() => onView("day")}>
+          </Button>
+          <Button variant="secondary" onClick={() => onView("day")}>
             {t("day")}
-          </button>
+          </Button>
         </div>
       </div>
 

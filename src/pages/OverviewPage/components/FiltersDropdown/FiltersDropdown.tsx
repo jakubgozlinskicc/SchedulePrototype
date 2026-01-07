@@ -4,6 +4,7 @@ import "./FiltersDropdown.css";
 import { useFiltersContext } from "../../context/useFiltersContext";
 import { ColorSelect } from "./ColorSelect";
 import { useClickOutside } from "../../../../hooks/useClickOutside";
+import { Button } from "../../../../components/Button/Button";
 
 export function FiltersDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,14 +32,13 @@ export function FiltersDropdown() {
 
   return (
     <div className="filters-dropdown" ref={dropdownRef}>
-      <button className="filters-toggle-btn" onClick={() => setIsOpen(!isOpen)}>
+      <Button variant="secondary" onClick={() => setIsOpen(!isOpen)}>
         {t("filters")}
         <i className="fa-solid fa-filter"></i>
         {activeFiltersCount > 0 && (
           <span className="filters-badge">{activeFiltersCount}</span>
         )}
-      </button>
-
+      </Button>
       <div className={`filters-panel ${isOpen ? "open" : ""}`}>
         <div className="filter-group">
           <label className="filter-label">
@@ -97,11 +97,10 @@ export function FiltersDropdown() {
             onChange={(colors) => updateFilter("colors", colors)}
           />
         </div>
-
-        <button onClick={resetFilters} className="reset-filters-btn">
+        <Button variant="danger" onClick={resetFilters}>
           {t("reset-filters")}
-          <i className="fa-solid fa-toilet" style={{ marginLeft: "8px" }}></i>
-        </button>
+          <i className="fa-solid fa-toilet"></i>
+        </Button>
       </div>
     </div>
   );

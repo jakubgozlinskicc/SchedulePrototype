@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { EventForm } from "./EventForm/EventForm";
+import { Button } from "../../../components/Button/Button";
 
 export function AddEventForm() {
   const { t } = useTranslation();
@@ -8,21 +9,14 @@ export function AddEventForm() {
     <EventForm title={t("modal_add_title")}>
       {({ handleCancel }) => (
         <>
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={handleCancel}
-          >
-            <i className="fa-solid fa-xmark" style={{ marginRight: "8px" }}></i>
+          <Button variant="secondary" onClick={handleCancel}>
+            <i className="fa-solid fa-xmark"></i>
             {t("btn_cancel")}
-          </button>
-          <button type="submit" className="btn btn-primary">
-            <i
-              className="fa-solid fa-calendar-plus"
-              style={{ marginRight: "8px" }}
-            ></i>
+          </Button>
+          <Button variant="primary" onClick={handleCancel}>
+            <i className="fa-solid fa-calendar-plus"></i>
             {t("btn-add")}
-          </button>
+          </Button>
         </>
       )}
     </EventForm>

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./TopControls.module.css";
+import { Button } from "../Button/Button";
 
 interface TopControlsProps {
   buttonText: string;
@@ -18,12 +19,9 @@ export function TopControls({
 
   return (
     <div className={styles["topControls"]}>
-      <button
-        className={styles["overviewButton"]}
-        onClick={() => navigate(navigateTo)}
-      >
+      <Button variant="primary" onClick={() => navigate(navigateTo)}>
         {buttonText} <i className={buttonIcon}></i>
-      </button>
+      </Button>
       {children}
     </div>
   );

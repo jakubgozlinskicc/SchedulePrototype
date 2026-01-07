@@ -1,3 +1,4 @@
+import { Button } from "../../../../components/Button/Button";
 import "./Pagination.css";
 
 interface PaginationProps {
@@ -41,25 +42,26 @@ export function Pagination({
   return (
     <div className="pagination">
       <div className="pagination-controls">
-        <button onClick={onPrevious} disabled={!hasPrevious}>
+        <Button variant="primary" onClick={onPrevious} disabled={!hasPrevious}>
           <i className="fa-solid fa-arrow-left"></i>
-        </button>
+        </Button>
         {getPages().map((page, i) =>
           page === "..." ? (
             <span key={`ellipsis-${i}`}>...</span>
           ) : (
-            <button
+            <Button
               key={page}
+              variant="secondary"
+              isActive={page === currentPage}
               onClick={() => onPageChange(page)}
-              className={page === currentPage ? "active" : ""}
             >
               {page}
-            </button>
+            </Button>
           )
         )}
-        <button onClick={onNext} disabled={!hasNext}>
+        <Button variant="primary" onClick={onNext} disabled={!hasNext}>
           <i className="fa-solid fa-arrow-right"></i>
-        </button>
+        </Button>
       </div>
     </div>
   );

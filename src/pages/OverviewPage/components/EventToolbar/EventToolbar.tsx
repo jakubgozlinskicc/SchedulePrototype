@@ -4,6 +4,7 @@ import { useFiltersContext } from "../../context/useFiltersContext";
 import { useEventToolbar } from "./useEventToolbar/useEventToolbar";
 import { useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import { Button } from "../../../../components/Button/Button";
 
 export function EventToolbar() {
   const { t } = useTranslation();
@@ -18,21 +19,18 @@ export function EventToolbar() {
       <div className="event-toolbar">
         <div className="toolbar-left-side">
           <div className="actions-buttons">
-            <button
-              className="nav-button"
-              onClick={() => navigate("/event/add")}
-            >
+            <Button variant="primary" onClick={() => navigate("/event/add")}>
               {t("btn-add")} <i className="fa-solid fa-calendar-plus"></i>
-            </button>
-            <button className="nav-button" onClick={setToday}>
+            </Button>
+            <Button variant="primary" onClick={setToday}>
               {t("today")}
-            </button>
-            <button className="nav-button" onClick={handlePrevious}>
+            </Button>
+            <Button variant="primary" onClick={handlePrevious}>
               <i className="fa-solid fa-arrow-left"></i>
-            </button>
-            <button className="nav-button" onClick={handleNext}>
+            </Button>
+            <Button variant="primary" onClick={handleNext}>
               <i className="fa-solid fa-arrow-right"></i>
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -52,28 +50,27 @@ export function EventToolbar() {
 
         <div className="toolbar-right-side">
           <div className="view-buttons">
-            <button
-              className={`view-button ${
-                currentView === "month" ? "active" : ""
-              }`}
+            <Button
+              variant="secondary"
               onClick={() => changeView("month")}
+              isActive={currentView === "month"}
             >
               {t("month")}
-            </button>
-            <button
-              className={`view-button ${
-                currentView === "week" ? "active" : ""
-              }`}
+            </Button>
+            <Button
+              variant="secondary"
               onClick={() => changeView("week")}
+              isActive={currentView === "week"}
             >
               {t("week")}
-            </button>
-            <button
-              className={`view-button ${currentView === "day" ? "active" : ""}`}
+            </Button>
+            <Button
+              variant="secondary"
               onClick={() => changeView("day")}
+              isActive={currentView === "day"}
             >
               {t("day")}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
