@@ -1,6 +1,6 @@
-import type { Event } from "../../../../../db/scheduleDb";
+import type { Event } from "../../../../db/scheduleDb";
 import type { EventFormData } from "../eventFormSchema";
-import type { RecurrenceRule } from "../../../../../events/recurrence/recurrenceTypes";
+import type { RecurrenceRule } from "../../../recurrence/recurrenceTypes";
 
 function buildRecurrenceRule(data: EventFormData): RecurrenceRule | undefined {
   const rule: RecurrenceRule = {

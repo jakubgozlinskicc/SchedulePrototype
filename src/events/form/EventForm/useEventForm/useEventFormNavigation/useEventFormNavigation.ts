@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useEventDataContext } from "../../../../../../events/useEvents/useEventDataContext/useEventDataContext";
-import { getDefaultEvent } from "../../../../../../utils/getDefaultEvent/getDefaultEvent";
+import { useEventDataContext } from "../../../../useEvents/useEventDataContext/useEventDataContext";
+import { getDefaultEvent } from "../../../../../utils/getDefaultEvent/getDefaultEvent";
 
 export function useEventFormNavigation() {
   const navigate = useNavigate();

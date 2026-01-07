@@ -1,9 +1,9 @@
-import type { IEventRepository } from "../../../../../../events/useEvents/IEventRepository";
-import { useReloadEvents } from "../../../../../../events/useEvents/useEventData/useReloadEvents/useReloadEvents";
-import { useEventDataContext } from "../../../../../../events/useEvents/useEventDataContext/useEventDataContext";
+import type { IEventRepository } from "../../../../useEvents/IEventRepository";
+import { useReloadEvents } from "../../../../useEvents/useEventData/useReloadEvents/useReloadEvents";
+import { useEventDataContext } from "../../../../useEvents/useEventDataContext/useEventDataContext";
 import { useEventFormNavigation } from "../useEventFormNavigation/useEventFormNavigation";
-import { DeleteStrategyRegistry } from "../../../../../../events/useEvents/useEventData/useDeleteEvent/deleteStrategies/deleteStrategyRegistry";
-import { getDefaultEvent } from "../../../../../../utils/getDefaultEvent/getDefaultEvent";
+import { DeleteStrategyRegistry } from "../../../../useEvents/useEventData/useDeleteEvent/deleteStrategies/deleteStrategyRegistry";
+import { getDefaultEvent } from "../../../../../utils/getDefaultEvent/getDefaultEvent";
 
 export function useEventFormDelete(eventRepository: IEventRepository) {
   const { eventData, setEventData } = useEventDataContext();
