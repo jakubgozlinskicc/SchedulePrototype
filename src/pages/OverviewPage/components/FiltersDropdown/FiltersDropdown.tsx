@@ -5,6 +5,7 @@ import { useFiltersContext } from "../../context/useFiltersContext";
 import { ColorSelect } from "./ColorSelect";
 import { useClickOutside } from "../../../../hooks/useClickOutside";
 import { Button } from "../../../../components/Button/Button";
+import { createDateChangeHandler, formatDateForInput } from "./dateFormaters";
 
 export function FiltersDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,20 +16,11 @@ export function FiltersDropdown() {
 
   useClickOutside(dropdownRef, () => setIsOpen(false));
 
-  const formatDateForInput = (date: Date | null): string => {
-    if (!date) return "";
-    return date.toISOString().split("T")[0];
-  };
-
-  const handleDateFromChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    updateFilter("dateFrom", value ? new Date(value) : null);
-  };
-
-  const handleDateToChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    updateFilter("dateTo", value ? new Date(value) : null);
-  };
+  const handleDateFromChange = createDateChangeHandler(
+    updateFilter,
+    "dateFrom"
+  );
+  const handleDateToChange = createDateChangeHandler(updateFilter, "dateTo");
 
   return (
     <div className="filters-dropdown" ref={dropdownRef}>
