@@ -7,7 +7,7 @@ export function useEventFormNavigation() {
   const { setEventData } = useEventDataContext();
   const goToOverview = () => navigate("/overview");
   const handleCancel = () => {
-    setEventData(getDefaultEvent);
+    setEventData(getDefaultEvent());
     navigate("/overview");
   };
 

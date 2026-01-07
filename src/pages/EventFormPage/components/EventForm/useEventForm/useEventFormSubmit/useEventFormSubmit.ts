@@ -22,7 +22,7 @@ export function useEventFormSubmit(eventRepository: IEventRepository) {
       console.log(event);
       await reloadEvents();
       setIsEditAll(false);
-      setEventData(getDefaultEvent);
+      setEventData(getDefaultEvent());
       goToOverview();
     } catch (error) {
       console.error("Error saving event:", error);

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useTranslationContext } from "../../../../../../locales/useTranslationContext";
 import { locales } from "../../../../../../utils/calendarLocalizer/calendarLocalizer";
 import type { Event } from "../../../../../../db/scheduleDb";
+import { resetTime } from "../useFilteredEvents/resetTime";
 
 interface GroupedEvents {
   dateKey: string;
@@ -14,12 +15,6 @@ export function useGroupedEvents(events: Event[]) {
   const { t } = useTranslation();
   const { currentLanguage } = useTranslationContext();
   const locale = locales[currentLanguage];
-
-  const resetTime = (d: Date) => {
-    const copy = new Date(d);
-    copy.setHours(0, 0, 0, 0);
-    return copy;
-  };
 
   const formatDayHeader = (date: Date): string => {
     const today = resetTime(new Date());

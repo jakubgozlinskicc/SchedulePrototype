@@ -18,7 +18,7 @@ export function useEventFormDelete(eventRepository: IEventRepository) {
         isEditAll: false,
       });
       await reloadEvents();
-      setEventData(getDefaultEvent);
+      setEventData(getDefaultEvent());
       goToOverview();
     } catch (error) {
       console.error("Error deleting event:", error);

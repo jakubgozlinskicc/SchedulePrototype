@@ -12,7 +12,7 @@ import { locales } from "../../utils/calendarLocalizer/calendarLocalizer";
 import { format } from "date-fns";
 import { EventToolbar } from "./components/EventToolbar/EventToolbar";
 import { TopControls } from "../../components/TopControls/TopControls";
-import { LanguageSelect } from "../../components/LanguageSelect/LanguageSelect";
+import { LanguageSelector } from "../../components/LanguageSelector/LanguageSelector";
 
 function OverviewPageContent() {
   const { currentLanguage, changeLanguage } = useTranslationContext();
@@ -36,10 +36,13 @@ function OverviewPageContent() {
         buttonIcon="fa-regular fa-calendar"
         navigateTo="/"
       >
-        <LanguageSelect
+        <LanguageSelector
           currentLanguage={currentLanguage}
           onChange={handleLanguageChange}
-        />
+        >
+          <option value="enUS">EN</option>
+          <option value="pl">PL</option>
+        </LanguageSelector>
       </TopControls>
       <header className="overview-header">
         <h1>
