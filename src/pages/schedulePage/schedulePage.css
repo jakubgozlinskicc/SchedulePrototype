@@ -30,45 +30,6 @@
   overflow: hidden;
 }
 
-.overview-button:hover {
-  background-color: var(--primary-hover);
-}
-
-.btn {
-  border: none;
-  border-radius: var(--radius);
-  padding: 6px 10px;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: var(--primary);
-}
-
-.btn-primary:hover {
-  background-color: var(--primary-hover);
-}
-
-.btn-secondary {
-  background-color: #e5e7eb;
-  color: #111827;
-}
-
-.btn-secondary:hover {
-  background-color: #d1d5db;
-  color: #111827;
-}
-
-.btn-delete {
-  background-color: #dc2626;
-  color: #fff;
-}
-
-.btn-delete:hover {
-  background-color: #bd1616;
-}
-
 .schedule-title {
   margin: 0;
 }
@@ -141,6 +102,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
+  transition: 0.2s;
 }
 .rbc-date-cell .rbc-button-link:hover {
   background-color: var(--primary);

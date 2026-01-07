@@ -20,32 +20,3 @@
   gap: 6px;
   font-weight: 500;
 }
-
-.nav-button,
-.view-button {
-  padding: 6px 12px;
-  border: none;
-  border-radius: var(--radius);
-  font-size: 0.85rem;
-  cursor: pointer;
-}
-
-.nav-button {
-  background: var(--primary);
-}
-
-.nav-button:hover {
-  background: var(--primary-hover);
-}
-
-.view-button {
-  background: var(--gray-300);
-}
-
-.view-button:hover {
-  background: var(--gray-400);
-}
-
-.view-button.active {
-  background-color: var(--gray-600);
-}
