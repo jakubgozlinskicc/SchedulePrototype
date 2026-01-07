@@ -54,7 +54,9 @@
 }
 
 .filter-label {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 600;
   margin-bottom: 6px;
   color: #333;

@@ -20,10 +20,7 @@ export function EditRecurringEventForm() {
             {t("btn_cancel")}
           </Button>
           <Button variant="primary">
-            <i
-              className="fa-solid fa-floppy-disk"
-              style={{ marginRight: "8px" }}
-            ></i>
+            <i className="fa-solid fa-floppy-disk"></i>
             {t("btn_save_changes")}
           </Button>
         </>

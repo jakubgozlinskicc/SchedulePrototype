@@ -23,10 +23,7 @@ export function BaseEventModal({
         <form onSubmit={onSubmit} className="modal-form">
           <div className="form-field">
             <label className="event-form-label">
-              <i
-                className="fa-solid fa-pen-to-square"
-                style={{ marginRight: "8px" }}
-              ></i>
+              <i className="fa-solid fa-pen-to-square"></i>
               {t("title")}
             </label>
             <input
@@ -42,10 +39,7 @@ export function BaseEventModal({
 
           <div className="form-field">
             <label className="event-form-label">
-              <i
-                className="fa-solid fa-bars-staggered"
-                style={{ marginRight: "8px" }}
-              ></i>
+              <i className="fa-solid fa-bars-staggered"></i>
               {t("description")}
             </label>
             <textarea
@@ -58,10 +52,7 @@ export function BaseEventModal({
 
           <div className="form-field">
             <label className="event-form-label">
-              <i
-                className="fa-solid fa-hourglass-start"
-                style={{ marginRight: "8px" }}
-              ></i>
+              <i className="fa-solid fa-hourglass-start"></i>
               {t("start-date")}
             </label>
             <input
@@ -76,10 +67,7 @@ export function BaseEventModal({
 
           <div className="form-field">
             <label className="event-form-label">
-              <i
-                className="fa-solid fa-hourglass-end"
-                style={{ marginRight: "8px" }}
-              ></i>
+              <i className="fa-solid fa-hourglass-end"></i>
               {t("end-date")}
             </label>
             <input
@@ -94,10 +82,7 @@ export function BaseEventModal({
 
           <div className="form-field">
             <label className="event-form-label">
-              <i
-                className="fa-solid fa-palette"
-                style={{ marginRight: "8px" }}
-              ></i>
+              <i className="fa-solid fa-palette"></i>
               {t("color")}
             </label>
             <input
@@ -111,10 +96,7 @@ export function BaseEventModal({
 
           <div className="form-field">
             <label className="event-form-label">
-              <i
-                className="fa-solid fa-repeat"
-                style={{ marginRight: "8px" }}
-              ></i>
+              <i className="fa-solid fa-repeat"></i>
               {t("recurrence-type")}
             </label>
             <select

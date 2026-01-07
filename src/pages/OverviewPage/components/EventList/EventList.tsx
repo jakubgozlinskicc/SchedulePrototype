@@ -48,10 +48,7 @@ export function EventList() {
                 <div className="event-header">
                   <span className="event-title">
                     {(!event.id || event.recurrenceRule?.type !== "none") && (
-                      <i
-                        className="fa-solid fa-repeat"
-                        style={{ marginRight: "8px" }}
-                      ></i>
+                      <i className="fa-solid fa-repeat"></i>
                     )}
                     {event.title}
                   </span>

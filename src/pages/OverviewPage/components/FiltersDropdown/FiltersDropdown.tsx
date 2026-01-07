@@ -34,10 +34,7 @@ export function FiltersDropdown() {
       <div className={`filters-panel ${isOpen ? "open" : ""}`}>
         <div className="filter-group">
           <label className="filter-label">
-            <i
-              className="fa-solid fa-hourglass-start"
-              style={{ marginRight: "8px" }}
-            ></i>
+            <i className="fa-solid fa-hourglass-start"></i>
             {t("date-from")}
           </label>
           <input
@@ -50,10 +47,7 @@ export function FiltersDropdown() {
 
         <div className="filter-group">
           <label className="filter-label">
-            <i
-              className="fa-solid fa-hourglass-end"
-              style={{ marginRight: "8px" }}
-            ></i>
+            <i className="fa-solid fa-hourglass-end"></i>
             {t("date-to")}
           </label>
           <input
@@ -78,10 +72,7 @@ export function FiltersDropdown() {
 
         <div className="filter-group">
           <label className="filter-label">
-            <i
-              className="fa-solid fa-palette"
-              style={{ marginRight: "8px" }}
-            ></i>
+            <i className="fa-solid fa-palette"></i>
             {t("colors")}
           </label>
           <ColorSelect

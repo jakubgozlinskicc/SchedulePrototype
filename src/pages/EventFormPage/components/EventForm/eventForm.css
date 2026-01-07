@@ -56,6 +56,9 @@
   font-size: 0.875rem;
   font-weight: 600;
   color: #374151;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .event-form-input,
