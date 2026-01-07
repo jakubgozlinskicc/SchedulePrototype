@@ -72,15 +72,7 @@ export function EventList() {
         </div>
       ))}
 
-      <Pagination
-        currentPage={pagination.currentPage}
-        totalPages={pagination.totalPages}
-        onPageChange={pagination.goToPage}
-        onNext={pagination.goToNextPage}
-        onPrevious={pagination.goToPreviousPage}
-        hasNext={pagination.hasNextPage}
-        hasPrevious={pagination.hasPreviousPage}
-      />
+      <Pagination {...pagination} />
     </div>
   );
 }

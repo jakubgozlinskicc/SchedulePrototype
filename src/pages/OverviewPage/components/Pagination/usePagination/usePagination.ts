@@ -16,6 +16,7 @@ export function usePagination({
     Math.max(MIN_ITEMS_PER_PAGE, itemsPerPage),
     MAX_ITEMS_PER_PAGE
   );
+
   const [requestedPage, setRequestedPage] = useState(1);
 
   const totalPages = Math.max(1, Math.ceil(totalItems / safeItemsPerPage));
@@ -27,13 +28,13 @@ export function usePagination({
     currentPage,
     totalPages,
     totalItems,
-    hasNextPage: currentPage < totalPages,
-    hasPreviousPage: currentPage > 1,
+    hasNext: currentPage < totalPages,
+    hasPrevious: currentPage > 1,
     startIndex,
     endIndex,
-    goToPage: (page: number) => setRequestedPage(page),
-    goToNextPage: () => setRequestedPage((p) => p + 1),
-    goToPreviousPage: () => setRequestedPage((p) => p - 1),
+    onPageChange: (page: number) => setRequestedPage(page),
+    onNext: () => setRequestedPage((p) => p + 1),
+    onPrevious: () => setRequestedPage((p) => p - 1),
     goToFirstPage: () => setRequestedPage(1),
     goToLastPage: () => setRequestedPage(totalPages),
     reset: () => setRequestedPage(1),
