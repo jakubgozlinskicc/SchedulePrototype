@@ -22,7 +22,7 @@ import { useTranslationContext } from "../../locales/useTranslationContext";
 import { useEventDataContext } from "../../events/useEvents/useEventDataContext/useEventDataContext";
 import { eventRepository } from "../../db/eventRepository";
 import { TopControls } from "../../components/TopControls/TopControls";
-import { LanguageSelector } from "../../components/LanguageSelector/LanguageSelector";
+import { Selector } from "../../components/Selector/Selector";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
@@ -67,13 +67,13 @@ function SchedulePage() {
         buttonIcon="fa-solid fa-list"
         navigateTo="/overview"
       >
-        <LanguageSelector
+        <Selector
           currentLanguage={currentLanguage}
           onChange={handleLanguageChange}
         >
           <option value="enUS">EN</option>
           <option value="pl">PL</option>
-        </LanguageSelector>
+        </Selector>
       </TopControls>
       <header className="schedule-header">
         <h1 className="schedule-title">

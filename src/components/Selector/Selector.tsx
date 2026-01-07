@@ -1,17 +1,17 @@
 import type { ReactNode } from "react";
-import styles from "./LanguageSelector.module.css";
+import styles from "./Selector.module.css";
 
-interface LanguageSelectorProps {
+interface SelectorProps {
   currentLanguage: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   children: ReactNode;
 }
 
-export function LanguageSelector({
+export function Selector({
   currentLanguage,
   onChange,
   children,
-}: LanguageSelectorProps) {
+}: SelectorProps) {
   return (
     <select
       className={styles.languageSelector}
