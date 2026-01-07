@@ -30,10 +30,6 @@
   background-color: var(--gray-300);
 }
 
-.secondary:focus {
-  background-color: var(--gray-600);
-}
-
 .secondary:hover:not(:disabled) {
   background-color: var(--gray-400);
 }
@@ -47,8 +43,12 @@
   background-color: #b91c1c;
 }
 
-.active {
+.secondary.active {
   background-color: var(--gray-600);
+}
+
+.primary.active {
+  background-color: var(--primary-hover);
 }
 
 .active:hover:not(:disabled) {

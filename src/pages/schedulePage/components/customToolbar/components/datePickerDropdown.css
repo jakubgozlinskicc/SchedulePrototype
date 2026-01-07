@@ -11,6 +11,7 @@
   border: 1px solid transparent;
   border-radius: var(--radius);
   cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .toolbar-label-button:hover {

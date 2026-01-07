@@ -19,7 +19,6 @@ export function useEventFormSubmit(eventRepository: IEventRepository) {
       await SubmitStrategyRegistry.executeSubmit(event, eventRepository, {
         isEditAll,
       });
-      console.log(event);
       await reloadEvents();
       setIsEditAll(false);
       setEventData(getDefaultEvent());
