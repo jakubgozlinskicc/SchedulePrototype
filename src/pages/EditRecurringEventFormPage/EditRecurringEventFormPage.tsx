@@ -14,7 +14,8 @@ import { useRecurringEventLoader } from "./useRecurringEventLoader";
 import { useEventFormDelete } from "../../events/form/EventForm/useEventForm/useEventFormDelete/useEventFormDelete";
 import { RecurringEditCheckbox } from "./RecurringEditCheckbox/RecurringEditCheckbox";
 import { useRecurringEditCheckBox } from "./RecurringEditCheckbox/useRecurringEditCheckbox";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { DeleteEventConfirmation } from "../../events/form/DeleteEventConfirmation/DeleteEventConfirmation";
 
 export function EditRecurringEventFormPage() {
   const { parentId, occurrenceDate } = useParams<{
@@ -24,6 +25,7 @@ export function EditRecurringEventFormPage() {
   const { t } = useTranslation();
   const { eventFormSchema } = useEventFormSchema();
   const { isEditAll, handleChange } = useRecurringEditCheckBox();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const parsedParentId = parentId ? parseInt(parentId, 10) : undefined;
   const parsedDate = occurrenceDate
@@ -50,12 +52,14 @@ export function EditRecurringEventFormPage() {
   });
 
   const { handleCancel } = useEventFormNavigation();
-  const { handleDelete } = useEventFormDelete(eventRepository, {
-    event: loading ? undefined : event,
-  });
-  const { onSubmit } = useEventFormSubmit(eventRepository, {
-    event: loading ? undefined : event,
-  });
+  const { handleDelete } = useEventFormDelete(
+    eventRepository,
+    loading ? undefined : event
+  );
+  const { onSubmit } = useEventFormSubmit(
+    eventRepository,
+    loading ? undefined : event
+  );
 
   useEffect(() => {
     if (event && !loading) {
@@ -68,19 +72,21 @@ export function EditRecurringEventFormPage() {
         ...getRecurrenceDefaults(event),
       });
     }
-  }, [event?.id, loading, event, methods]);
+  }, [event, loading, methods]);
 
-  if (loading) {
-    return <div>{t("loading") || "Loading..."}</div>;
-  }
-
-  if (!event) {
-    return <div>{t("error-event-not-found")}</div>;
-  }
+  if (loading) return <div>{t("loading")}</div>;
+  if (!event) return <div>{t("error-event-not-found")}</div>;
 
   return (
     <FormProvider {...methods}>
       <div className="event-form-page">
+        {isDeleteModalOpen && (
+          <DeleteEventConfirmation
+            onClose={() => setIsDeleteModalOpen(false)}
+            onConfirmSingle={() => handleDelete(false)}
+            onConfirmAll={() => handleDelete(true)}
+          />
+        )}
         <header className="event-form-header">
           <h1>{t("edit_recurring_title")}</h1>
         </header>
@@ -98,7 +104,11 @@ export function EditRecurringEventFormPage() {
                   isEditAll={isEditAll}
                   onChange={handleChange}
                 />
-                <Button variant="danger" type="button" onClick={handleDelete}>
+                <Button
+                  variant="danger"
+                  type="button"
+                  onClick={() => setIsDeleteModalOpen(true)}
+                >
                   <i className="fa-solid fa-trash-can"></i>
                   {t("btn_delete")}
                 </Button>

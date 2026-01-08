@@ -12,6 +12,7 @@ import { eventRepository } from "../../db/eventRepository";
 import { Button } from "../../components/Button/Button";
 import { EventFormFields } from "../../events/form/EventForm/EventFormFields";
 import { useEventFormDelete } from "../../events/form/EventForm/useEventForm/useEventFormDelete/useEventFormDelete";
+import { useEffect } from "react";
 
 export function EditEventFormPage() {
   const { id } = useParams();
@@ -20,6 +21,7 @@ export function EditEventFormPage() {
 
   const eventId = id ? parseInt(id, 10) : undefined;
   const { event, loading } = useEventLoader(eventId, eventRepository);
+
   const methods = useForm({
     resolver: yupResolver(eventFormSchema),
     defaultValues: {
@@ -34,17 +36,17 @@ export function EditEventFormPage() {
   });
 
   const { handleCancel } = useEventFormNavigation();
-  const { handleDelete } = useEventFormDelete(eventRepository, {
-    event: loading ? undefined : event,
-  });
-  const { onSubmit } = useEventFormSubmit(eventRepository, {
-    event: loading ? undefined : event,
-  });
+  const { handleDelete } = useEventFormDelete(
+    eventRepository,
+    loading ? undefined : event
+  );
+  const { onSubmit } = useEventFormSubmit(
+    eventRepository,
+    loading ? undefined : event
+  );
 
-  if (event && !loading) {
-    const currentValues = methods.getValues();
-
-    if (currentValues.title === "" || currentValues.title !== event.title) {
+  useEffect(() => {
+    if (event && !loading) {
       methods.reset({
         title: event.title,
         description: event.description ?? "",
@@ -54,15 +56,10 @@ export function EditEventFormPage() {
         ...getRecurrenceDefaults(event),
       });
     }
-  }
+  }, [event, loading, methods]);
 
-  if (loading) {
-    return <div>{t("loading") || "Loading..."}</div>;
-  }
-
-  if (!event) {
-    return <div>{t("error-event-not-found")}</div>;
-  }
+  if (loading) return <div>{t("loading")}</div>;
+  if (!event) return <div>{t("error-event-not-found")}</div>;
 
   return (
     <FormProvider {...methods}>
@@ -78,7 +75,11 @@ export function EditEventFormPage() {
             >
               <EventFormFields />
               <div className="event-form-actions">
-                <Button variant="danger" type="button" onClick={handleDelete}>
+                <Button
+                  variant="danger"
+                  type="button"
+                  onClick={() => handleDelete(false)}
+                >
                   <i className="fa-solid fa-trash-can"></i>
                   {t("btn_delete")}
                 </Button>

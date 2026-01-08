@@ -40,10 +40,10 @@
   "recurrence-end-date-label": "Data zakończenia",
   "recurrence-count-label": "Liczba wystąpień",
 
-  "modal_recurring_title": "Edycja powtarzającego się wydarzenia",
-  "modal_recurring_prompt": "To jest powtarzające się wydarzenie. Co chcesz edytować?",
-  "btn_edit_single": "To wydarzenie",
-  "btn_edit_all": "Wszystkie wydarzenia",
+  "modal-recurring-title": "Edycja powtarzającego się wydarzenia",
+  "modal-recurring-prompt": "To jest powtarzające się wydarzenie. Co chcesz edytować?",
+  "btn-single": "To wydarzenie",
+  "btn-all": "Wszystkie wydarzenia",
   "edit": "Edytuj",
   "date-from": "Od daty",
   "date-to": "Do daty",
@@ -63,7 +63,7 @@
   "page": "Strona",
 
   "edit-all-ocurrences": "Edytuj wszystkie wystąpienia",
-  "edit_all_warning": "Zmiany zostaną zastosowane do wszystkich elementów tego zdarzenia cyklicznego!",
+  "edit-all-warning": "Zmiany zostaną zastosowane do wszystkich elementów tego zdarzenia cyklicznego!",
 
   "colors": "Kolory",
   "select-colors": "Wybierz kolory",
@@ -75,5 +75,7 @@
   "start-required": "Początek wymagany",
   "end-required": "Koniec wymagany",
 
-  "error-event-not-found": "Błąd. Nie ma takiego wydarzenia"
+  "error-event-not-found": "Błąd. Nie ma takiego wydarzenia",
+  "delete-recurring-event-title": "Usuwanie powtarzających się wydarzeń",
+  "delete-recurring-event-desc": "Co chcesz usunąć?"
 }

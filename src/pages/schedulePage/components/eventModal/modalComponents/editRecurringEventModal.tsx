@@ -30,10 +30,10 @@ export function EditRecurringEventModal({
     return (
       <div className="modal-backdrop">
         <div className="modal">
-          <h3 className="modal-title">{t("modal_recurring_title")}</h3>
+          <h3 className="modal-title">{t("modal-recurring-title")}</h3>
           <div className="modal-form">
             <p style={{ marginBottom: "20px" }}>
-              {t("modal_recurring_prompt")}
+              {t("modal-recurring-prompt")}
             </p>
             <div className="modal-actions">
               <Button variant="secondary" onClick={onClose}>
@@ -46,7 +46,7 @@ export function EditRecurringEventModal({
                   onEditSingle();
                 }}
               >
-                {t("btn_edit_single")}
+                {t("btn-single")}
               </Button>
               <Button
                 variant="primary"
@@ -55,7 +55,7 @@ export function EditRecurringEventModal({
                   onEditAll();
                 }}
               >
-                {t("btn_edit_all")}
+                {t("btn-all")}
               </Button>
             </div>
           </div>

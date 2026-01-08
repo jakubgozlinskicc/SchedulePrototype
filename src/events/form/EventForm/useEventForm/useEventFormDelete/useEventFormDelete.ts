@@ -4,20 +4,14 @@ import { useReloadEvents } from "../../../../useEvents/useEventData/useReloadEve
 import { useEventFormNavigation } from "../useEventFormNavigation/useEventFormNavigation";
 import { DeleteStrategyRegistry } from "../../../../useEvents/useEventData/useDeleteEvent/deleteStrategies/deleteStrategyRegistry";
 
-interface UseEventFormDeleteOptions {
-  event?: Event;
-  isEditAll?: boolean;
-}
-
 export function useEventFormDelete(
   eventRepository: IEventRepository,
-  options: UseEventFormDeleteOptions = {}
+  event?: Event
 ) {
   const { reloadEvents } = useReloadEvents(eventRepository);
   const { goToOverview } = useEventFormNavigation();
-  const { event, isEditAll = false } = options;
 
-  const handleDelete = async () => {
+  const handleDelete = async (isEditAll?: boolean) => {
     if (!event) return;
 
     try {

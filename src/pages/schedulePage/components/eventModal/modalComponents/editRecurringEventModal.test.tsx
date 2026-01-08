@@ -83,16 +83,16 @@ describe("EditRecurringEventModal", () => {
     it("should render choice view initially", () => {
       renderComponent();
 
-      expect(screen.getByText("modal_recurring_title")).toBeInTheDocument();
-      expect(screen.getByText("modal_recurring_prompt")).toBeInTheDocument();
+      expect(screen.getByText("modal-recurring-title")).toBeInTheDocument();
+      expect(screen.getByText("modal-recurring-prompt")).toBeInTheDocument();
     });
 
     it("should render cancel, edit single and edit all buttons", () => {
       renderComponent();
 
       expect(screen.getByText("btn_cancel")).toBeInTheDocument();
-      expect(screen.getByText("btn_edit_single")).toBeInTheDocument();
-      expect(screen.getByText("btn_edit_all")).toBeInTheDocument();
+      expect(screen.getByText("btn-single")).toBeInTheDocument();
+      expect(screen.getByText("btn-all")).toBeInTheDocument();
     });
 
     it("should call onClose when cancel button is clicked", () => {
@@ -106,7 +106,7 @@ describe("EditRecurringEventModal", () => {
     it("should call onEditSingle and switch to edit view when edit single is clicked", () => {
       renderComponent();
 
-      fireEvent.click(screen.getByText("btn_edit_single"));
+      fireEvent.click(screen.getByText("btn-single"));
 
       expect(mockOnEditSingle).toHaveBeenCalledTimes(1);
       expect(screen.getByTestId("base-event-modal")).toBeInTheDocument();
@@ -115,7 +115,7 @@ describe("EditRecurringEventModal", () => {
     it("should call onEditAll and switch to edit view when edit all is clicked", () => {
       renderComponent();
 
-      fireEvent.click(screen.getByText("btn_edit_all"));
+      fireEvent.click(screen.getByText("btn-all"));
 
       expect(mockOnEditAll).toHaveBeenCalledTimes(1);
       expect(screen.getByTestId("base-event-modal")).toBeInTheDocument();
@@ -126,7 +126,7 @@ describe("EditRecurringEventModal", () => {
     it("should render BaseEventModal after selecting edit single", () => {
       renderComponent();
 
-      fireEvent.click(screen.getByText("btn_edit_single"));
+      fireEvent.click(screen.getByText("btn-single"));
 
       expect(screen.getByTestId("base-event-modal")).toBeInTheDocument();
       expect(screen.getByText("edit")).toBeInTheDocument();
@@ -135,7 +135,7 @@ describe("EditRecurringEventModal", () => {
     it("should render BaseEventModal after selecting edit all", () => {
       renderComponent();
 
-      fireEvent.click(screen.getByText("btn_edit_all"));
+      fireEvent.click(screen.getByText("btn-all"));
 
       expect(screen.getByTestId("base-event-modal")).toBeInTheDocument();
       expect(screen.getByText("edit")).toBeInTheDocument();
@@ -144,7 +144,7 @@ describe("EditRecurringEventModal", () => {
     it("should render delete, cancel and save buttons in edit view", () => {
       renderComponent();
 
-      fireEvent.click(screen.getByText("btn_edit_single"));
+      fireEvent.click(screen.getByText("btn-single"));
 
       expect(screen.getByText("btn_delete")).toBeInTheDocument();
       expect(screen.getByText("btn_cancel")).toBeInTheDocument();
@@ -154,7 +154,7 @@ describe("EditRecurringEventModal", () => {
     it("should call onRequestDelete when delete button is clicked", () => {
       renderComponent();
 
-      fireEvent.click(screen.getByText("btn_edit_single"));
+      fireEvent.click(screen.getByText("btn-single"));
       fireEvent.click(screen.getByText("btn_delete"));
 
       expect(mockOnRequestDelete).toHaveBeenCalledTimes(1);
@@ -163,7 +163,7 @@ describe("EditRecurringEventModal", () => {
     it("should call onClose when cancel button is clicked in edit view", () => {
       renderComponent();
 
-      fireEvent.click(screen.getByText("btn_edit_single"));
+      fireEvent.click(screen.getByText("btn-single"));
       fireEvent.click(screen.getByText("btn_cancel"));
 
       expect(mockOnClose).toHaveBeenCalledTimes(1);
@@ -172,13 +172,13 @@ describe("EditRecurringEventModal", () => {
     it("should not show choice view after switching to edit view", () => {
       renderComponent();
 
-      fireEvent.click(screen.getByText("btn_edit_single"));
+      fireEvent.click(screen.getByText("btn-single"));
 
       expect(
-        screen.queryByText("modal_recurring_title")
+        screen.queryByText("modal-recurring-title")
       ).not.toBeInTheDocument();
       expect(
-        screen.queryByText("modal_recurring_prompt")
+        screen.queryByText("modal-recurring-prompt")
       ).not.toBeInTheDocument();
     });
   });
