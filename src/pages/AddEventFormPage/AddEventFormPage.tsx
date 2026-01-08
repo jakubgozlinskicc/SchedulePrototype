@@ -39,7 +39,7 @@ export function AddEventFormPage() {
         <div className="form-wrapper">
           <main className="form-content">
             <form
-              onSubmit={methods.handleSubmit(onSubmit)}
+              onSubmit={methods.handleSubmit((data) => onSubmit(data))}
               className="event-form"
             >
               <EventFormFields />

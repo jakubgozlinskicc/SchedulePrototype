@@ -33,5 +33,6 @@ export const createEventFormSchema = (t: (key: string) => string) =>
     recurrenceCount: yup.number().optional(),
   });
 
-const baseSchema = createEventFormSchema((key) => key);
-export type EventFormData = yup.InferType<typeof baseSchema>;
+export type EventFormData = yup.InferType<
+  ReturnType<typeof createEventFormSchema>
+>;

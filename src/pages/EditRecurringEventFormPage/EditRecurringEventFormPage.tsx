@@ -14,6 +14,7 @@ import { useRecurringEventLoader } from "./useRecurringEventLoader";
 import { useEventFormDelete } from "../../events/form/EventForm/useEventForm/useEventFormDelete/useEventFormDelete";
 import { RecurringEditCheckbox } from "./RecurringEditCheckbox/RecurringEditCheckbox";
 import { useRecurringEditCheckBox } from "./RecurringEditCheckbox/useRecurringEditCheckbox";
+import { useEffect } from "react";
 
 export function EditRecurringEventFormPage() {
   const { parentId, occurrenceDate } = useParams<{
@@ -54,13 +55,10 @@ export function EditRecurringEventFormPage() {
   });
   const { onSubmit } = useEventFormSubmit(eventRepository, {
     event: loading ? undefined : event,
-    isEditAll,
   });
 
-  if (event && !loading) {
-    const currentValues = methods.getValues();
-
-    if (currentValues.title === "" || currentValues.title !== event.title) {
+  useEffect(() => {
+    if (event && !loading) {
       methods.reset({
         title: event.title,
         description: event.description ?? "",
@@ -70,7 +68,7 @@ export function EditRecurringEventFormPage() {
         ...getRecurrenceDefaults(event),
       });
     }
-  }
+  }, [event?.id, loading, event, methods]);
 
   if (loading) {
     return <div>{t("loading") || "Loading..."}</div>;
@@ -89,7 +87,9 @@ export function EditRecurringEventFormPage() {
         <div className="form-wrapper">
           <main className="form-content">
             <form
-              onSubmit={methods.handleSubmit(onSubmit)}
+              onSubmit={methods.handleSubmit((data) =>
+                onSubmit(data, isEditAll)
+              )}
               className="event-form"
             >
               <EventFormFields />
