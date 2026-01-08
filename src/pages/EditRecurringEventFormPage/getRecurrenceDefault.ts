@@ -1,5 +1,5 @@
-import type { Event } from "../../../db/scheduleDb";
-import { toDateTimeLocal } from "../../../utils/toDateTimeLocal/toDateTimeLocal";
+import type { Event } from "../../db/scheduleDb";
+import { toDateTimeLocal } from "../../utils/toDateTimeLocal/toDateTimeLocal";
 
 export function getRecurrenceDefaults(eventData: Event | null) {
   const rule = eventData?.recurrenceRule;

@@ -23,7 +23,6 @@ export const SubmitStrategyRegistry = {
     if (!strategy) {
       throw new Error("No submit strategy found for event");
     }
-
     await strategy.execute(eventData, repository);
   },
 };

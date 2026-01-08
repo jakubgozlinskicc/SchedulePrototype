@@ -5,7 +5,6 @@ import { Pagination } from "../Pagination/Pagination";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import "./EventList.css";
-import { useEventDataContext } from "../../../../events/useEvents/useEventDataContext/useEventDataContext";
 import type { Event } from "../../../../db/scheduleDb";
 import { Button } from "../../../../components/Button/Button";
 
@@ -13,13 +12,18 @@ export function EventList() {
   useLoadEvents(eventRepository);
 
   const { groupedEvents, formatTime, pagination } = useEventList();
-  const { setEventData } = useEventDataContext();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleEditClick = (event: Event) => {
-    setEventData(event);
-    navigate("/event/edit");
+    const dateStr = encodeURIComponent(event.start.toISOString());
+    if (!!event.id && event.recurrenceRule?.type !== "none") {
+      navigate(`/recurring-event/edit/${event.id}/${dateStr}`);
+    } else if (!event.id) {
+      navigate(`/recurring-event/edit/${event.recurringEventId}/${dateStr}`);
+    } else if (event.id) {
+      navigate(`/event/edit/${event.id}`);
+    }
   };
 
   if (groupedEvents.length === 0) {
@@ -54,7 +58,7 @@ export function EventList() {
                   </span>
                   <Button
                     variant="primary"
-                    onClick={() => navigate(`/event/edit/${event.id}`)}
+                    onClick={() => handleEditClick(event)}
                   >
                     <i className="fa-solid fa-pen-to-square"></i>
                     {t("edit")}

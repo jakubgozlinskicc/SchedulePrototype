@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { EventForm } from "../EventForm/EventForm";
-import { RecurringEditCheckbox } from "./RecurringEditCheckbox/RecurringEditCheckbox";
+import { RecurringEditCheckbox } from "../../../EditRecurringEventFormPage/RecurringEditCheckbox/RecurringEditCheckbox";
 import { Button } from "../../../../components/Button/Button";
 
 export function EditRecurringEventForm() {

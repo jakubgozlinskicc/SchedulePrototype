@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { useRecurringEdit } from "../../../../../events/useEvents/useEventData/useRecurringEdit/useRecurringEdit";
-import { eventRepository } from "../../../../../db/eventRepository";
-import { useEventDataContext } from "../../../../../events/useEvents/useEventDataContext/useEventDataContext";
+import { useRecurringEdit } from "../../../events/useEvents/useEventData/useRecurringEdit/useRecurringEdit";
+import { eventRepository } from "../../../db/eventRepository";
+import { useEventDataContext } from "../../../events/useEvents/useEventDataContext/useEventDataContext";
 
 export function RecurringEditCheckbox() {
   const { t } = useTranslation();

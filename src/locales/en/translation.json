@@ -1,6 +1,6 @@
 {
   "events": "Events",
-  "form_edit_recurring_title": "Edit recurring event",
+  "edit_recurring_title": "Edit recurring event",
   "edit_title": "Edit event",
   "add_title": "Add event",
   "btn_delete": "Delete",

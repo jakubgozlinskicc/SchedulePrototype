@@ -5,7 +5,7 @@ import { useEventFormSubmit } from "../../../../events/form/EventForm/useEventFo
 import { useEventFormNavigation } from "../../../../events/form/EventForm/useEventForm/useEventFormNavigation/useEventFormNavigation";
 import { useEventFormDelete } from "../../../../events/form/EventForm/useEventForm/useEventFormDelete/useEventFormDelete";
 import { toDateTimeLocal } from "../../../../utils/toDateTimeLocal/toDateTimeLocal";
-import { getRecurrenceDefaults } from "../getRecurrenceDefault";
+import { getRecurrenceDefaults } from "../../../EditRecurringEventFormPage/getRecurrenceDefault";
 import { useEventFormSchema } from "../../../../events/form/EventForm/useEventForm/useEventFormSchema/useEventFormSchema";
 import { eventRepository } from "../../../../db/eventRepository";
 import type { EventFormProps } from "../../eventFormTypes";

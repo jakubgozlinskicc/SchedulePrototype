@@ -2,24 +2,36 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEventFormSchema } from "../../events/form/EventForm/useEventForm/useEventFormSchema/useEventFormSchema";
-import { useEventLoader } from "./useEventLoader";
 import { FormProvider, useForm } from "react-hook-form";
 import { toDateTimeLocal } from "../../utils/toDateTimeLocal/toDateTimeLocal";
-import { getRecurrenceDefaults } from "../EditRecurringEventFormPage/getRecurrenceDefault";
+import { getRecurrenceDefaults } from "./getRecurrenceDefault";
 import { useEventFormNavigation } from "../../events/form/EventForm/useEventForm/useEventFormNavigation/useEventFormNavigation";
 import { useEventFormSubmit } from "../../events/form/EventForm/useEventForm/useEventFormSubmit/useEventFormSubmit";
 import { eventRepository } from "../../db/eventRepository";
 import { Button } from "../../components/Button/Button";
 import { EventFormFields } from "../../events/form/EventForm/EventFormFields";
+import { useRecurringEventLoader } from "./useRecurringEventLoader";
 import { useEventFormDelete } from "../../events/form/EventForm/useEventForm/useEventFormDelete/useEventFormDelete";
+import { RecurringEditCheckbox } from "./RecurringEditCheckbox/RecurringEditCheckbox";
 
-export function EditEventFormPage() {
-  const { id } = useParams();
+export function EditRecurringEventFormPage() {
+  const { parentId, occurrenceDate } = useParams<{
+    parentId: string;
+    occurrenceDate: string;
+  }>();
   const { t } = useTranslation();
   const { eventFormSchema } = useEventFormSchema();
 
-  const eventId = id ? parseInt(id, 10) : undefined;
-  const { event, loading } = useEventLoader(eventId, eventRepository);
+  const parsedParentId = parentId ? parseInt(parentId, 10) : undefined;
+  const parsedDate = occurrenceDate
+    ? new Date(decodeURIComponent(occurrenceDate))
+    : undefined;
+
+  const { event, loading } = useRecurringEventLoader(
+    parsedParentId,
+    parsedDate,
+    eventRepository
+  );
 
   const methods = useForm({
     resolver: yupResolver(eventFormSchema),
@@ -69,7 +81,7 @@ export function EditEventFormPage() {
     <FormProvider {...methods}>
       <div className="event-form-page">
         <header className="event-form-header">
-          <h1>{t("edit_title")}</h1>
+          <h1>{t("edit_recurring_title")}</h1>
         </header>
         <div className="form-wrapper">
           <main className="form-content">
@@ -79,6 +91,7 @@ export function EditEventFormPage() {
             >
               <EventFormFields />
               <div className="event-form-actions">
+                <RecurringEditCheckbox />
                 <Button variant="danger" type="button" onClick={handleDelete}>
                   <i className="fa-solid fa-trash-can"></i>
                   {t("btn_delete")}

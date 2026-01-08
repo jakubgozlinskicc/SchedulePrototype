@@ -24,7 +24,6 @@ export const DeleteStrategyRegistry = {
     if (!strategy) {
       throw new Error("No delete strategy found for event");
     }
-
     await strategy.execute(eventData, repository);
   },
 };

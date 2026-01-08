@@ -1,25 +1,40 @@
-import { use } from "react";
+import { useEffect, useState } from "react";
 import type { Event } from "../../db/scheduleDb";
-import { eventRepository } from "../../db/eventRepository";
+import type { IEventRepository } from "../../events/useEvents/IEventRepository";
 
-const eventPromiseCache = new Map<number, Promise<Event | undefined>>();
+export function useEventLoader(
+  eventId: number | undefined,
+  repository: IEventRepository
+) {
+  const [event, setEvent] = useState<Event | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(true);
 
-function getEventPromise(eventId: number): Promise<Event | undefined> {
-  const cached = eventPromiseCache.get(eventId);
-  if (cached) {
-    return cached;
-  }
+  useEffect(() => {
+    let cancelled = false;
 
-  const promise = eventRepository.getEventById(eventId);
-  eventPromiseCache.set(eventId, promise);
-  return promise;
-}
+    async function load() {
+      if (!eventId) {
+        if (!cancelled) {
+          setEvent(undefined);
+          setIsLoading(false);
+        }
+        return;
+      }
 
-export function useEventLoader(eventId: number | undefined) {
-  if (eventId === undefined) {
-    return { event: undefined };
-  }
+      const event = await repository.getEventById(eventId);
 
-  const event = use(getEventPromise(eventId));
-  return { event };
+      if (!cancelled) {
+        setEvent(event);
+        setIsLoading(false);
+      }
+    }
+
+    load();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [eventId, repository]);
+
+  return { event, loading: isLoading };
 }

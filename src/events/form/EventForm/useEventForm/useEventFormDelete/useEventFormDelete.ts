@@ -1,27 +1,33 @@
 import type { IEventRepository } from "../../../../useEvents/IEventRepository";
+import type { Event } from "../../../../../db/scheduleDb";
 import { useReloadEvents } from "../../../../useEvents/useEventData/useReloadEvents/useReloadEvents";
-import { useEventDataContext } from "../../../../useEvents/useEventDataContext/useEventDataContext";
 import { useEventFormNavigation } from "../useEventFormNavigation/useEventFormNavigation";
 import { DeleteStrategyRegistry } from "../../../../useEvents/useEventData/useDeleteEvent/deleteStrategies/deleteStrategyRegistry";
-import { getDefaultEvent } from "../../../../../utils/getDefaultEvent/getDefaultEvent";
 
-export function useEventFormDelete(eventRepository: IEventRepository) {
-  const { eventData, setEventData } = useEventDataContext();
+interface UseEventFormDeleteOptions {
+  event?: Event;
+  isEditAll?: boolean;
+}
+
+export function useEventFormDelete(
+  eventRepository: IEventRepository,
+  options: UseEventFormDeleteOptions = {}
+) {
   const { reloadEvents } = useReloadEvents(eventRepository);
   const { goToOverview } = useEventFormNavigation();
+  const { event, isEditAll = false } = options;
 
   const handleDelete = async () => {
-    if (!eventData?.id) return;
+    if (!event) return;
 
     try {
-      await DeleteStrategyRegistry.executeDelete(eventData, eventRepository, {
-        isEditAll: false,
+      await DeleteStrategyRegistry.executeDelete(event, eventRepository, {
+        isEditAll,
       });
       await reloadEvents();
-      setEventData(getDefaultEvent());
       goToOverview();
     } catch (error) {
-      console.error("Error deleting event:", error);
+      console.error(error);
     }
   };
 
