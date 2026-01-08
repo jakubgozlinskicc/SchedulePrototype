@@ -20,7 +20,6 @@ export function EditEventFormPage() {
 
   const eventId = id ? parseInt(id, 10) : undefined;
   const { event, loading } = useEventLoader(eventId, eventRepository);
-
   const methods = useForm({
     resolver: yupResolver(eventFormSchema),
     defaultValues: {

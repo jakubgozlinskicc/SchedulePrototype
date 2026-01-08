@@ -13,6 +13,7 @@ import { EventFormFields } from "../../events/form/EventForm/EventFormFields";
 import { useRecurringEventLoader } from "./useRecurringEventLoader";
 import { useEventFormDelete } from "../../events/form/EventForm/useEventForm/useEventFormDelete/useEventFormDelete";
 import { RecurringEditCheckbox } from "./RecurringEditCheckbox/RecurringEditCheckbox";
+import { useRecurringEditCheckBox } from "./RecurringEditCheckbox/useRecurringEditCheckbox";
 
 export function EditRecurringEventFormPage() {
   const { parentId, occurrenceDate } = useParams<{
@@ -21,6 +22,7 @@ export function EditRecurringEventFormPage() {
   }>();
   const { t } = useTranslation();
   const { eventFormSchema } = useEventFormSchema();
+  const { isEditAll, handleChange } = useRecurringEditCheckBox();
 
   const parsedParentId = parentId ? parseInt(parentId, 10) : undefined;
   const parsedDate = occurrenceDate
@@ -52,6 +54,7 @@ export function EditRecurringEventFormPage() {
   });
   const { onSubmit } = useEventFormSubmit(eventRepository, {
     event: loading ? undefined : event,
+    isEditAll,
   });
 
   if (event && !loading) {
@@ -91,7 +94,10 @@ export function EditRecurringEventFormPage() {
             >
               <EventFormFields />
               <div className="event-form-actions">
-                <RecurringEditCheckbox />
+                <RecurringEditCheckbox
+                  isEditAll={isEditAll}
+                  onChange={handleChange}
+                />
                 <Button variant="danger" type="button" onClick={handleDelete}>
                   <i className="fa-solid fa-trash-can"></i>
                   {t("btn_delete")}
