@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import "./EventList.css";
 import type { Event } from "../../../../db/scheduleDb";
 import { Button } from "../../../../components/Button/Button";
+import { DeleteEventConfirmation } from "../../../../events/form/DeleteEventConfirmation/DeleteEventConfirmation";
+import { useEventDelete } from "./useEventList/useEventDelete/useEventDelete";
 
 export function EventList() {
   useLoadEvents(eventRepository);
@@ -14,6 +16,15 @@ export function EventList() {
   const { groupedEvents, formatTime, pagination } = useEventList();
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const {
+    eventToDelete,
+    isRecurringEvent,
+    handleDeleteClick,
+    handleDeleteSingle,
+    handleDeleteAll,
+    handleCancelDelete,
+  } = useEventDelete(eventRepository);
 
   const handleEditClick = (event: Event) => {
     const dateStr = encodeURIComponent(event.start.toISOString());
@@ -36,13 +47,23 @@ export function EventList() {
 
   return (
     <div className="events-list">
+      {eventToDelete && (
+        <DeleteEventConfirmation
+          onClose={handleCancelDelete}
+          onConfirmSingle={handleDeleteSingle}
+          onConfirmAll={handleDeleteAll}
+        />
+      )}
+
       {groupedEvents.map((group) => (
         <div key={group.dateKey} className="day-group">
           <div className="day-header">{group.dateLabel}</div>
 
           {group.events.map((event) => (
             <div
-              key={event.id}
+              key={
+                event.id || `${event.recurringEventId}-${event.start.getTime()}`
+              }
               className="event-item"
               style={{
                 borderColor: event.color,
@@ -51,18 +72,27 @@ export function EventList() {
               <div className="event-content">
                 <div className="event-header">
                   <span className="event-title">
-                    {(!event.id || event.recurrenceRule?.type !== "none") && (
+                    {isRecurringEvent(event) && (
                       <i className="fa-solid fa-repeat"></i>
                     )}
                     {event.title}
                   </span>
-                  <Button
-                    variant="primary"
-                    onClick={() => handleEditClick(event)}
-                  >
-                    <i className="fa-solid fa-pen-to-square"></i>
-                    {t("edit")}
-                  </Button>
+                  <div className="event-actions">
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDeleteClick(event)}
+                    >
+                      <i className="fa-solid fa-trash-can"></i>
+                      {t("btn_delete")}
+                    </Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => handleEditClick(event)}
+                    >
+                      <i className="fa-solid fa-pen-to-square"></i>
+                      {t("edit")}
+                    </Button>
+                  </div>
                 </div>
                 <div className="event-time">
                   {formatTime(event.start)} — {formatTime(event.end)}

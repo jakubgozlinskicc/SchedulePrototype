@@ -30,6 +30,11 @@
   margin-bottom: 8px;
 }
 
+.event-actions {
+  display: flex;
+  gap: 10px;
+}
+
 .event-title {
   font-weight: 600;
   font-size: 1.1rem;

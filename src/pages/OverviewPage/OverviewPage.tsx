@@ -3,7 +3,6 @@ import "./components/FiltersDropdown/FiltersDropdown.css";
 import "./components/EventToolbar/EventToolbar.css";
 import "./OverviewPage.css";
 import { useTranslationContext } from "../../locales/useTranslationContext";
-import type { Language } from "../../contexts/translationContext/translationContext";
 import { EventList } from "./components/EventList/EventList";
 import { useTranslation } from "react-i18next";
 import { FiltersProvider } from "./context/FiltersProvider";
@@ -12,20 +11,13 @@ import { locales } from "../../utils/calendarLocalizer/calendarLocalizer";
 import { format } from "date-fns";
 import { EventToolbar } from "./components/EventToolbar/EventToolbar";
 import { TopControls } from "../../components/TopControls/TopControls";
-import { Selector } from "../../components/Selector/Selector";
 
 function OverviewPageContent() {
-  const { currentLanguage, changeLanguage } = useTranslationContext();
+  const { currentLanguage } = useTranslationContext();
   const { filters } = useFiltersContext();
   const { t } = useTranslation();
 
   const locale = locales[currentLanguage];
-
-  const handleLanguageChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    changeLanguage(event.target.value as Language);
-  };
 
   const formatDate = (date: Date) => format(date, "d MMM yyyy", { locale });
 
@@ -35,15 +27,7 @@ function OverviewPageContent() {
         buttonText="Schedule"
         buttonIcon="fa-regular fa-calendar"
         navigateTo="/"
-      >
-        <Selector
-          currentLanguage={currentLanguage}
-          onChange={handleLanguageChange}
-        >
-          <option value="enUS">EN</option>
-          <option value="pl">PL</option>
-        </Selector>
-      </TopControls>
+      ></TopControls>
       <header className="overview-header">
         <h1>
           Overview

@@ -17,12 +17,9 @@ import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { CustomToolbar } from "./components/customToolbar/components/customToolbar";
 import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter/calendarEventPropGetter";
 import { useAddEvent } from "../../events/useEvents/useEventData/useAddEvent/useAddEvent";
-import type { Language } from "../../contexts/translationContext/translationContext";
-import { useTranslationContext } from "../../locales/useTranslationContext";
 import { useEventDataContext } from "../../events/useEvents/useEventDataContext/useEventDataContext";
 import { eventRepository } from "../../db/eventRepository";
 import { TopControls } from "../../components/TopControls/TopControls";
-import { Selector } from "../../components/Selector/Selector";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
@@ -31,8 +28,6 @@ function SchedulePage() {
   const [view, setView] = useState<View>("month");
 
   const { events } = useEventDataContext();
-
-  const { currentLanguage, changeLanguage } = useTranslationContext();
 
   const { localizer, formats } = useCalendarLocale();
 
@@ -54,27 +49,13 @@ function SchedulePage() {
 
   const { handleEventDropResize } = useEventDropResize(eventRepository);
 
-  const handleLanguageChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    changeLanguage(event.target.value as Language);
-  };
-
   return (
     <div className="schedule-page">
       <TopControls
         buttonText="Overview"
         buttonIcon="fa-solid fa-list"
         navigateTo="/overview"
-      >
-        <Selector
-          currentLanguage={currentLanguage}
-          onChange={handleLanguageChange}
-        >
-          <option value="enUS">EN</option>
-          <option value="pl">PL</option>
-        </Selector>
-      </TopControls>
+      ></TopControls>
       <header className="schedule-header">
         <h1 className="schedule-title">
           Schedule

@@ -19,13 +19,10 @@ export const SubmitStrategyRegistry = {
     repository: IEventRepository,
     options?: EditOptions
   ): Promise<void> {
-    console.log(eventData);
-    console.log(options);
     const strategy = strategies.find((s) => s.canExecute(eventData, options));
     if (!strategy) {
       throw new Error("No submit strategy found for event");
     }
-    console.log(strategy);
     await strategy.execute(eventData, repository);
   },
 };

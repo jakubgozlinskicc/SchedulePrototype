@@ -1,4 +1,4 @@
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useFormState } from "react-hook-form";
 import type { TextareaHTMLAttributes } from "react";
 import styles from "./FormTextArea.module.css";
 
@@ -12,10 +12,8 @@ export function FormTextArea({
   className = "",
   ...rest
 }: FormTextAreaProps) {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { register, control } = useFormContext();
+  const { errors } = useFormState({ control, name });
   const error = errors[name];
 
   return (

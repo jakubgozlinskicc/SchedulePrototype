@@ -1,12 +1,28 @@
 import { NavLink } from "react-router-dom";
 import "./Nav.css";
 import { useNavigateToAddEvent } from "./useNavigation/useNavigateToAddEvent/useNavigateToAddEvent";
+import { useTranslationContext } from "../../locales/useTranslationContext";
+import type { Language } from "../../contexts/translationContext/translationContext";
+import { Selector } from "../Selector/Selector";
 
 const Nav = () => {
   const { handleAddEventClick } = useNavigateToAddEvent();
+  const { currentLanguage, changeLanguage } = useTranslationContext();
 
+  const handleLanguageChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    changeLanguage(event.target.value as Language);
+  };
   return (
     <nav className="sidebar">
+      <Selector
+        currentLanguage={currentLanguage}
+        onChange={handleLanguageChange}
+      >
+        <option value="enUS">EN</option>
+        <option value="pl">PL</option>
+      </Selector>
       <ul className="sidebar-links">
         <li>
           <NavLink

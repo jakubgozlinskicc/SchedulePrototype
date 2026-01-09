@@ -1,4 +1,4 @@
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useFormState } from "react-hook-form";
 import type { SelectHTMLAttributes } from "react";
 import styles from "../FormInput/FormInput.module.css";
 
@@ -18,10 +18,8 @@ export function FormSelect({
   className = "",
   ...rest
 }: FormSelectProps) {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { register, control } = useFormContext();
+  const { errors } = useFormState({ control, name });
   const error = errors[name];
 
   return (

@@ -1,4 +1,4 @@
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useFormState } from "react-hook-form";
 import type { InputHTMLAttributes } from "react";
 import styles from "./FormInput.module.css";
 
@@ -7,10 +7,8 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export function FormInput({ name, className = "", ...rest }: FormInputProps) {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { register, control } = useFormContext();
+  const { errors } = useFormState({ control, name });
   const error = errors[name];
 
   return (

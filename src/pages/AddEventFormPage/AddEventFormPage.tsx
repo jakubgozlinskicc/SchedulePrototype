@@ -16,6 +16,7 @@ export function AddEventFormPage() {
 
   const methods = useForm({
     resolver: yupResolver(eventFormSchema),
+    mode: "onBlur",
     defaultValues: {
       title: "",
       description: "",
