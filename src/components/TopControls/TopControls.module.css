@@ -1,0 +1,27 @@
+.topControls {
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 6px 10px;
+  gap: 10px;
+  outline: none;
+  position: absolute;
+  margin-left: 10px;
+}
+
+.overviewButton {
+  padding: 8px 16px;
+  background-color: var(--primary);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.overviewButton:hover {
+  background-color: var(--primary-hover);
+}

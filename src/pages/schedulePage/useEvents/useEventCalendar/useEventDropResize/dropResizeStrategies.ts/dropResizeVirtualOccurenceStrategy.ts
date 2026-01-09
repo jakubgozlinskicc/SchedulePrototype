@@ -1,5 +1,5 @@
 import type { Event } from "../../../../../../db/scheduleDb";
-import type { IEventRepository } from "../../../IEventRepository";
+import type { IEventRepository } from "../../../../../../events/useEvents/IEventRepository";
 import type { IDropResizeStrategy } from "./dropResizeStrategyTypes";
 
 export class DropResizeVirtualOccurrenceStrategy

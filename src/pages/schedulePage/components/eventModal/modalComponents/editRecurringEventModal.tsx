@@ -2,6 +2,7 @@ import type { EventModalProps } from "../eventModalTypes";
 import { BaseEventModal } from "./baseEventModal";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { Button } from "../../../../../components/Button/Button";
 
 type EditRecurringEventModalProps = Pick<
   EventModalProps,
@@ -29,39 +30,33 @@ export function EditRecurringEventModal({
     return (
       <div className="modal-backdrop">
         <div className="modal">
-          <h3 className="modal-title">{t("modal_recurring_title")}</h3>
+          <h3 className="modal-title">{t("modal-recurring-title")}</h3>
           <div className="modal-form">
             <p style={{ marginBottom: "20px" }}>
-              {t("modal_recurring_prompt")}
+              {t("modal-recurring-prompt")}
             </p>
             <div className="modal-actions">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={onClose}
-              >
+              <Button variant="secondary" onClick={onClose}>
                 {t("btn_cancel")}
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
+              </Button>
+              <Button
+                variant="primary"
                 onClick={() => {
                   setShowChoice(false);
                   onEditSingle();
                 }}
               >
-                {t("btn_edit_single")}
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
+                {t("btn-single")}
+              </Button>
+              <Button
+                variant="primary"
                 onClick={() => {
                   setShowChoice(false);
                   onEditAll();
                 }}
               >
-                {t("btn_edit_all")}
-              </button>
+                {t("btn-all")}
+              </Button>
             </div>
           </div>
         </div>
@@ -78,19 +73,18 @@ export function EditRecurringEventModal({
       onClose={onClose}
       onSubmit={onSubmit}
     >
-      <button
-        type="button"
-        className="btn btn-delete"
-        onClick={onRequestDelete}
-      >
+      <Button variant="danger" onClick={onRequestDelete}>
+        <i className="fa-solid fa-trash-can"></i>
         {t("btn_delete")}
-      </button>
-      <button type="button" className="btn btn-secondary" onClick={onClose}>
+      </Button>
+      <Button variant="secondary" onClick={onClose}>
+        <i className="fa-solid fa-xmark"></i>
         {t("btn_cancel")}
-      </button>
-      <button type="submit" className="btn btn-primary">
+      </Button>
+      <Button variant="primary" onClick={onSubmit}>
+        <i className="fa-solid fa-floppy-disk"></i>
         {t("btn_save_changes")}
-      </button>
+      </Button>
     </BaseEventModal>
   );
 }

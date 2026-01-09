@@ -1,17 +1,23 @@
 import "./App.css";
-import SchedulePage from "./pages/schedulePage/schedulePage";
-import { EventDataProvider } from "./pages/schedulePage/eventContext/eventDataProvider";
+import { BrowserRouter } from "react-router-dom";
 import { TranslationProvider } from "./contexts/translationContext/translationProvider";
+import { EventDataProvider } from "./events/eventContext/eventDataProvider";
+import Nav from "./components/Nav/Nav";
+import { AppRoutes } from "./AppRoutes";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <TranslationProvider>
         <EventDataProvider>
-          <SchedulePage />
+          <Nav />
+          <main className="main-content">
+            <AppRoutes />
+          </main>
         </EventDataProvider>
       </TranslationProvider>
-    </>
+    </BrowserRouter>
   );
 }
+
 export default App;

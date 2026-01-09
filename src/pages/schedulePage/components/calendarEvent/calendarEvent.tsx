@@ -33,6 +33,9 @@ export function CalendarEvent({ event }: CalendarEventProps) {
           } as React.CSSProperties
         }
       >
+        {(!event.id || event.recurrenceRule?.type !== "none") && (
+          <i className="fa-solid fa-repeat" style={{ marginRight: "8px" }}></i>
+        )}
         {event.title}
       </div>
       {isHovering &&

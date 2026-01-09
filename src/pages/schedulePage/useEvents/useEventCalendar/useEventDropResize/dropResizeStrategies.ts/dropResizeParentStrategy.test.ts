@@ -1,16 +1,16 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { DropResizeParentStrategy } from "./dropResizeParentStrategy";
-import type { IEventRepository } from "../../../IEventRepository";
+import type { IEventRepository } from "../../../../../../events/useEvents/IEventRepository";
 import type { Event } from "../../../../../../db/scheduleDb";
 
 vi.mock(
-  "../../../useEventComponents/useRecurringEdit/setNewParentEvent",
+  "../../../../../../events/useEvents/useEventData/useRecurringEdit/setNewParentEvent",
   () => ({
     setNewParentEvent: vi.fn().mockResolvedValue(undefined),
   })
 );
 
-import { setNewParentEvent } from "../../../useEventComponents/useRecurringEdit/setNewParentEvent";
+import { setNewParentEvent } from "../../../../../../events/useEvents/useEventData/useRecurringEdit/setNewParentEvent";
 
 describe("dropResizeParentStrategy", () => {
   let strategy: DropResizeParentStrategy;

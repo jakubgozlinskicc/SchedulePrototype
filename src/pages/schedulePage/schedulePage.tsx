@@ -5,9 +5,9 @@ import { useEventDropResize } from "./useEvents/useEventCalendar/useEventDropRes
 import { useSelectEvent } from "./useEvents/useEventCalendar/useSelectEvent/useSelectEvent";
 import { useSelectSlot } from "./useEvents/useEventCalendar/useSelectSlot/useSelectSlot";
 import { useCalendarLocale } from "./useEvents/useEventCalendar/useCalendarLocale/useCalendarLocale";
-import { useLoadEvents } from "./useEvents/useEventData/useLoadEvents/useLoadEvents";
-import { useDeleteEvent } from "./useEvents/useEventData/useDeleteEvent/useDeleteEvent";
-import { useSubmitEvent } from "./useEvents/useEventData/useSubmitEvent/useSubmitEvent";
+import { useLoadEvents } from "../../events/useEvents/useEventData/useLoadEvents/useLoadEvents";
+import { useDeleteEvent } from "../../events/useEvents/useEventData/useDeleteEvent/useDeleteEvent";
+import { useSubmitEvent } from "../../events/useEvents/useEventData/useSubmitEvent/useSubmitEvent";
 import { EventModal } from "./components/eventModal/eventModal";
 import { CalendarEvent } from "./components/calendarEvent/calendarEvent";
 import { useState } from "react";
@@ -16,11 +16,10 @@ import { Calendar, Views, type View } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { CustomToolbar } from "./components/customToolbar/components/customToolbar";
 import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter/calendarEventPropGetter";
-import { useAddEvent } from "./useEvents/useEventData/useAddEvent/useAddEvent";
-import type { Language } from "../../contexts/translationContext/translationContext";
-import { useTranslationContext } from "../../locales/useTranslationContext";
-import { useEventDataContext } from "./useEvents/useEventDataContext/useEventDataContext";
+import { useAddEvent } from "../../events/useEvents/useEventData/useAddEvent/useAddEvent";
+import { useEventDataContext } from "../../events/useEvents/useEventDataContext/useEventDataContext";
 import { eventRepository } from "../../db/eventRepository";
+import { TopControls } from "../../components/TopControls/TopControls";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
@@ -29,8 +28,6 @@ function SchedulePage() {
   const [view, setView] = useState<View>("month");
 
   const { events } = useEventDataContext();
-
-  const { currentLanguage, changeLanguage } = useTranslationContext();
 
   const { localizer, formats } = useCalendarLocale();
 
@@ -52,25 +49,21 @@ function SchedulePage() {
 
   const { handleEventDropResize } = useEventDropResize(eventRepository);
 
-  const handleLanguageChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    changeLanguage(event.target.value as Language);
-  };
-
   return (
     <div className="schedule-page">
-      <select
-        className="language-select"
-        value={currentLanguage}
-        onChange={handleLanguageChange}
-        style={{ marginLeft: "10px", padding: "5px" }}
-      >
-        <option value="enUS">EN</option>
-        <option value="pl">PL</option>
-      </select>
+      <TopControls
+        buttonText="Overview"
+        buttonIcon="fa-solid fa-list"
+        navigateTo="/overview"
+      ></TopControls>
       <header className="schedule-header">
-        <h1 className="schedule-title">Schedule</h1>
+        <h1 className="schedule-title">
+          Schedule
+          <i
+            className="fa-regular fa-calendar"
+            style={{ marginLeft: "8px" }}
+          ></i>
+        </h1>
       </header>
       <section className="calendar-section">
         <DnDCalendar
@@ -101,7 +94,7 @@ function SchedulePage() {
           onSelectEvent={handleSelectEvent}
           onEventDrop={handleEventDropResize}
           onEventResize={handleEventDropResize}
-          style={{ height: "80vh", width: "80%" }}
+          style={{ height: "80vh", width: "100%" }}
         />
       </section>
 

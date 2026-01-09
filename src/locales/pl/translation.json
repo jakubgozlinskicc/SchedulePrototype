@@ -1,6 +1,8 @@
 {
-  "modal_edit_title": "Edytuj wydarzenie",
-  "modal_add_title": "Dodaj wydarzenie",
+  "events": "Wydarzenia",
+  "edit_recurring_title": "Edytuj Powtarzające się wydarzenie",
+  "edit_title": "Edytuj wydarzenie",
+  "add_title": "Dodaj wydarzenie",
   "btn_delete": "Usuń",
   "btn_cancel": "Anuluj",
   "btn_save_changes": "Zapisz zmiany",
@@ -11,6 +13,7 @@
   "end-date": "Koniec",
   "color": "Kolor",
   "today": "Dzisiaj",
+  "tomorrow": "Jutro",
   "month": "Miesiąc",
   "week": "Tydzień",
   "day": "Dzień",
@@ -37,9 +40,49 @@
   "recurrence-end-date-label": "Data zakończenia",
   "recurrence-count-label": "Liczba wystąpień",
 
-  "modal_recurring_title": "Edycja powtarzającego się wydarzenia",
-  "modal_recurring_prompt": "To jest powtarzające się wydarzenie. Co chcesz edytować?",
-  "btn_edit_single": "To wydarzenie",
-  "btn_edit_all": "Wszystkie wydarzenia",
-  "edit": "Edytuj"
+  "modal-recurring-title": "Edycja powtarzającego się wydarzenia",
+  "modal-recurring-prompt": "To jest powtarzające się wydarzenie. Co chcesz edytować?",
+  "btn-single": "To wydarzenie",
+  "btn-all": "Wszystkie wydarzenia",
+  "edit": "Edytuj",
+  "date-from": "Od daty",
+  "date-to": "Do daty",
+  "filters": "Filtry",
+  "search": "Szukaj",
+  "search-placeholder": "Szukaj wydarzeń...",
+  "show-past-events": "Pokaż przeszłe wydarzenia",
+  "reset-filters": "Resetuj filtry",
+  "no-upcoming-events": "Brak nadchodzących wydarzeń",
+
+  "errors-title-message": "Tytuł wymagany",
+  "errors-start-message": "Początek wymagany",
+  "errors-end-message": "Koniec wymagany",
+
+  "toast-error-select-date": "Musisz wybrać przynajmniej jedną datę.",
+
+  "page": "Strona",
+
+  "edit-all-ocurrences": "Edytuj wszystkie wystąpienia",
+  "edit-all-warning": "Zmiany zostaną zastosowane do wszystkich elementów tego zdarzenia cyklicznego!",
+
+  "colors": "Kolory",
+  "select-colors": "Wybierz kolory",
+  "colors-selected": "Wybrano",
+  "clear-colors": "Wyczyść kolory",
+
+  "title-required": "Tytuł wymagany",
+  "title-min-length": "Tytuł musi mieć przynajmniej 3 znaki",
+  "start-required": "Początek wymagany",
+  "start-must-be-before-end": "Data rozpoczęcia musi być przed datą zakończenia",
+  "end-required": "Koniec wymagany",
+  "end-must-be-after-start": "Data zakończenia musi być późniejsza niż rozpoczęcia",
+  "recurrence-end-date-required": "Data zakończenia powtarzania jest wymagana",
+  "recurrence-count-required": "Liczba powtórzeń jest wymagana",
+  "recurrence-count-min": "Liczba powtórzeń musi wynosić co najmniej 2",
+  "recurrence-count-max": "Liczba powtórzeń nie może przekraczać 365",
+  "recurrence-end-date-must-be-two-days-after-start": "Data zakończenia powtarzania musi być co najmniej 2 dni po dacie rozpoczęcia",
+
+  "error-event-not-found": "Błąd. Nie ma takiego wydarzenia",
+  "delete-recurring-event-title": "Usuwanie powtarzających się wydarzeń",
+  "delete-recurring-event-desc": "Co chcesz usunąć?"
 }

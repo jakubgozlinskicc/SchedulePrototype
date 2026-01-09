@@ -1,0 +1,130 @@
+.event-form-page {
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding-bottom: 40px;
+  width: 100%;
+}
+
+.event-form-header {
+  padding: 10px;
+  margin-bottom: 30px;
+  text-align: center;
+  width: 100%;
+}
+
+.event-form-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.form-wrapper {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+.form-content {
+  width: 100%;
+  background-color: white;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.event-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.event-form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.event-form-input,
+.event-form-textarea {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  color: #1f2937;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+}
+
+.event-form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.event-form-input:focus,
+.event-form-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.event-form-input:hover:not(:focus),
+.event-form-textarea:hover:not(:focus) {
+  border-color: #9ca3af;
+}
+
+.event-form-color-picker {
+  width: 60px;
+  height: 40px;
+  padding: 2px;
+  border: 2px solid #d1d5db;
+  border-radius: var(--radius);
+  background: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.event-form-color-picker:hover {
+  border-color: #9ca3af;
+}
+
+.event-form-error {
+  font-size: 0.8rem;
+  color: #dc2626;
+  font-weight: 500;
+}
+
+.event-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.event-form-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  color: #6b7280;
+  font-size: 1rem;
+}

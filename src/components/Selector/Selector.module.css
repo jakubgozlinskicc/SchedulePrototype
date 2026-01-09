@@ -1,0 +1,14 @@
+.languageSelector {
+  padding: 5px;
+  background-color: var(--primary-hover);
+  font-weight: bold;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.languageSelector:hover {
+  background-color: black;
+  color: white;
+}

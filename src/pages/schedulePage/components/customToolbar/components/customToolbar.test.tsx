@@ -92,15 +92,14 @@ describe("CustomToolbar", () => {
   });
 
   it("should render toolbar with all buttons", () => {
-    render(<CustomToolbar {...mockProps} />);
-
+    const { container } = render(<CustomToolbar {...mockProps} />);
     expect(screen.getByText("Add")).toBeInTheDocument();
     expect(screen.getByText("Today")).toBeInTheDocument();
     expect(screen.getByText("Month")).toBeInTheDocument();
     expect(screen.getByText("Week")).toBeInTheDocument();
     expect(screen.getByText("Day")).toBeInTheDocument();
-    expect(screen.getByText("←")).toBeInTheDocument();
-    expect(screen.getByText("→")).toBeInTheDocument();
+    expect(container.querySelector(".fa-arrow-left")).toBeInTheDocument();
+    expect(container.querySelector(".fa-arrow-right")).toBeInTheDocument();
   });
 
   it("should render label", () => {
@@ -129,17 +128,19 @@ describe("CustomToolbar", () => {
   });
 
   it("should call onNavigate with PREV when left arrow is clicked", () => {
-    render(<CustomToolbar {...mockProps} />);
+    const { container } = render(<CustomToolbar {...mockProps} />);
 
-    fireEvent.click(screen.getByText("←"));
+    const leftArrow = container.querySelector(".fa-arrow-left");
+    fireEvent.click(leftArrow!);
 
     expect(mockProps.onNavigate).toHaveBeenCalledWith("PREV");
   });
 
   it("should call onNavigate with NEXT when right arrow is clicked", () => {
-    render(<CustomToolbar {...mockProps} />);
+    const { container } = render(<CustomToolbar {...mockProps} />);
 
-    fireEvent.click(screen.getByText("→"));
+    const rightArrow = container.querySelector(".fa-arrow-right");
+    fireEvent.click(rightArrow!);
 
     expect(mockProps.onNavigate).toHaveBeenCalledWith("NEXT");
   });
@@ -258,8 +259,8 @@ describe("CustomToolbar", () => {
   });
 
   it("should render calendar icon", () => {
-    render(<CustomToolbar {...mockProps} />);
+    const { container } = render(<CustomToolbar {...mockProps} />);
 
-    expect(screen.getByText("📅")).toBeInTheDocument();
+    expect(container.querySelector(".fa-calendar")).toBeInTheDocument();
   });
 });

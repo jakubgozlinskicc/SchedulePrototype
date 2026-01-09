@@ -34,7 +34,7 @@ describe("EditEventModal", () => {
 
   it("It should render edit event modal with correct title", () => {
     render(<EditEventModal {...mockProps} />);
-    expect(screen.getByText("modal_edit_title")).toBeInTheDocument();
+    expect(screen.getByText("edit_title")).toBeInTheDocument();
   });
 
   it("It should render delete, cancel and save changes buttons", () => {

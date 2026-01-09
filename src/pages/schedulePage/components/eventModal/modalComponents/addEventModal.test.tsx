@@ -32,7 +32,7 @@ describe("AddEventModal", () => {
 
   it("It should render add event modal with correct title", () => {
     render(<AddEventModal {...mockProps} />);
-    expect(screen.getByText("modal_add_title")).toBeInTheDocument();
+    expect(screen.getByText("add_title")).toBeInTheDocument();
   });
 
   it("It should render cancel and add buttons", () => {
