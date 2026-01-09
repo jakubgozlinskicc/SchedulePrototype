@@ -1,30 +1,36 @@
-import { type FormEvent } from "react";
-import { useEventDataContext } from "../../useEventDataContext/useEventDataContext";
-import { useReloadEvents } from "../useReloadEvents/useReloadEvents";
-import { SubmitStrategyRegistry } from "./submitStrategies/SubmitStrategyRegistry";
 import type { IEventRepository } from "../../IEventRepository";
+import type { Event } from "../../../../db/scheduleDb";
+import { SubmitStrategyRegistry } from "./submitStrategies/SubmitStrategyRegistry";
+import { useReloadEvents } from "../useReloadEvents/useReloadEvents";
+import type { EventFormData } from "../../../../events/form/EventForm/eventFormSchema";
+import { convertFormDataToEvent } from "../../../../events/form/EventForm/useEventForm/convertFormDataToEvent";
+import { useEventDataContext } from "../../useEventDataContext/useEventDataContext";
 
 export function useSubmitEvent(
   closeModal: () => void,
-  repository: IEventRepository
+  repository: IEventRepository,
+  event?: Event
 ) {
-  const { eventData, isEditAll, setIsEditAll } = useEventDataContext();
   const { reloadEvents } = useReloadEvents(repository);
+  const { isEditAll } = useEventDataContext();
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
+  const onSubmit = async (data: EventFormData) => {
     try {
-      await SubmitStrategyRegistry.executeSubmit(eventData, repository, {
+      console.log("data:", data);
+      const eventToSave = convertFormDataToEvent(data, event);
+      console.log("Event to save:", eventToSave);
+      console.log("isEditAll:", isEditAll);
+
+      await SubmitStrategyRegistry.executeSubmit(eventToSave, repository, {
         isEditAll,
       });
+
       await reloadEvents();
-      setIsEditAll(false);
       closeModal();
     } catch (error) {
-      console.error("Error during saving events:", error);
+      console.error("Error saving event:", error);
     }
   };
 
-  return { handleSubmit };
+  return { onSubmit };
 }

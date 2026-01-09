@@ -1,7 +1,8 @@
 import { addDays } from "date-fns";
 import * as yup from "yup";
+import type { RecurrenceType } from "../../recurrence/recurrenceTypes";
 
-const recurrenceTypes = [
+const recurrenceTypes: RecurrenceType[] = [
   "none",
   "daily",
   "weekly",
@@ -52,6 +53,7 @@ export const createEventFormSchema = (t: (key: string) => string) =>
 
     recurrenceEndDate: yup
       .string()
+      .nullable()
       .when(["recurrenceType", "recurrenceEndType"], {
         is: (type: string, endType: string) =>
           type !== "none" && endType === "date",
@@ -72,6 +74,7 @@ export const createEventFormSchema = (t: (key: string) => string) =>
 
     recurrenceCount: yup
       .number()
+      .nullable()
       .transform((val, orig) => (orig === "" ? undefined : val))
       .when(["recurrenceType", "recurrenceEndType"], {
         is: (type: string, endType: string) =>

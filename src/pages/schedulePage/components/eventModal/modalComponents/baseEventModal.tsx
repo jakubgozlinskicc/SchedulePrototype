@@ -1,126 +1,70 @@
-import type { BaseEventModalProps } from "../eventModalTypes";
+import { FormProvider, useForm } from "react-hook-form";
+import { useEventFormSchema } from "../../../../../events/form/EventForm/useEventForm/useEventFormSchema/useEventFormSchema";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { toDateTimeLocal } from "../../../../../utils/toDateTimeLocal/toDateTimeLocal";
-import { useTranslation } from "react-i18next";
-import { RecurrenceFields } from "./recurrenceFields/recurrenceFields";
+import { getRecurrenceDefaults } from "../../../../EditRecurringEventFormPage/getRecurrenceDefault";
+import { EventFormFields } from "../../../../../events/form/EventForm/EventFormFields";
+import type { Event } from "../../../../../db/scheduleDb";
+import type { EventFormData } from "../../../../../events/form/EventForm/eventFormSchema";
+
+interface BaseEventModalProps {
+  title: string;
+  eventData?: Event;
+  onSubmit: (data: EventFormData) => void | Promise<void>;
+  children: React.ReactNode;
+}
+
+const getDefaultValues = (eventData?: Event) => {
+  if (eventData) {
+    return {
+      title: eventData.title,
+      description: eventData.description ?? "",
+      start: toDateTimeLocal(eventData.start),
+      end: toDateTimeLocal(eventData.end),
+      color: eventData.color ?? "#0000FF",
+      ...getRecurrenceDefaults(eventData),
+    };
+  }
+
+  return {
+    title: "",
+    description: "",
+    start: toDateTimeLocal(new Date()),
+    end: toDateTimeLocal(new Date()),
+    color: "#0000FF",
+    recurrenceType: "none",
+    recurrenceEndType: "never",
+  };
+};
 
 export function BaseEventModal({
   title,
   eventData,
-  isShaking,
-  onChange,
   onSubmit,
   children,
 }: BaseEventModalProps) {
-  const { t } = useTranslation();
+  const { eventFormSchema } = useEventFormSchema();
 
-  const recurrenceType = eventData.recurrenceRule?.type ?? "none";
-
+  const methods = useForm({
+    resolver: yupResolver(eventFormSchema),
+    mode: "onBlur",
+    reValidateMode: "onChange",
+    defaultValues: getDefaultValues(eventData),
+  });
   return (
-    <div className="modal-backdrop">
-      <div className={`modal ${isShaking ? "shake" : ""}`}>
-        <h3 className="modal-title">{title}</h3>
-
-        <form onSubmit={onSubmit} className="modal-form">
-          <div className="form-field">
-            <label className="event-form-label">
-              <i className="fa-solid fa-pen-to-square"></i>
-              {t("title")}
-            </label>
-            <input
-              id="title"
-              type="text"
-              name="title"
-              value={eventData.title}
-              onChange={onChange}
-              className="form-input"
-              required
-            />
-          </div>
-
-          <div className="form-field">
-            <label className="event-form-label">
-              <i className="fa-solid fa-bars-staggered"></i>
-              {t("description")}
-            </label>
-            <textarea
-              name="description"
-              value={eventData.description}
-              onChange={onChange}
-              className="form-textarea"
-            />
-          </div>
-
-          <div className="form-field">
-            <label className="event-form-label">
-              <i className="fa-solid fa-hourglass-start"></i>
-              {t("start-date")}
-            </label>
-            <input
-              type="datetime-local"
-              name="start"
-              value={toDateTimeLocal(eventData.start)}
-              onChange={onChange}
-              className="form-input"
-              required
-            />
-          </div>
-
-          <div className="form-field">
-            <label className="event-form-label">
-              <i className="fa-solid fa-hourglass-end"></i>
-              {t("end-date")}
-            </label>
-            <input
-              type="datetime-local"
-              name="end"
-              value={toDateTimeLocal(eventData.end)}
-              onChange={onChange}
-              className="form-input"
-              required
-            />
-          </div>
-
-          <div className="form-field">
-            <label className="event-form-label">
-              <i className="fa-solid fa-palette"></i>
-              {t("color")}
-            </label>
-            <input
-              type="color"
-              name="color"
-              value={eventData.color}
-              onChange={onChange}
-              className="color-input"
-            />
-          </div>
-
-          <div className="form-field">
-            <label className="event-form-label">
-              <i className="fa-solid fa-repeat"></i>
-              {t("recurrence-type")}
-            </label>
-            <select
-              name="recurrenceType"
-              value={recurrenceType}
-              onChange={onChange}
-              className="form-input"
-            >
-              <option value="none">{t("recurrence-none")}</option>
-              <option value="daily">{t("recurrence-daily")}</option>
-              <option value="weekly">{t("recurrence-weekly")}</option>
-              <option value="monthly">{t("recurrence-monthly")}</option>
-              <option value="yearly">{t("recurrence-yearly")}</option>
-            </select>
-          </div>
-
-          <RecurrenceFields
-            recurrenceRule={eventData.recurrenceRule}
-            onChange={onChange}
-          />
-
-          <div className="modal-actions">{children}</div>
-        </form>
+    <FormProvider {...methods}>
+      <div className="modal-backdrop">
+        <div className="modal">
+          <h3 className="modal-title">{title}</h3>
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className="modal-form"
+          >
+            <EventFormFields />
+            <div className="modal-actions">{children}</div>
+          </form>
+        </div>
       </div>
-    </div>
+    </FormProvider>
   );
 }

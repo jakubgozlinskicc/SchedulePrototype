@@ -1,21 +1,31 @@
 import type { Event } from "../../db/scheduleDb";
+import type { RecurrenceType } from "../../events/recurrence/recurrenceTypes";
 import { toDateTimeLocal } from "../../utils/toDateTimeLocal/toDateTimeLocal";
 
-export function getRecurrenceDefaults(eventData: Event | null) {
+export interface RecurrenceFormFields {
+  recurrenceType: RecurrenceType;
+  recurrenceEndType: "never" | "date" | "count";
+  recurrenceEndDate: string | null | undefined;
+  recurrenceCount: number | null | undefined;
+}
+
+export function getRecurrenceDefaults(
+  eventData: Event | null
+): RecurrenceFormFields {
   const rule = eventData?.recurrenceRule;
 
   if (!rule || rule.type === "none") {
     return {
-      recurrenceType: "none" as const,
-      recurrenceEndType: "never" as const,
-      recurrenceEndDate: undefined,
-      recurrenceCount: undefined,
+      recurrenceType: "none",
+      recurrenceEndType: "never",
+      recurrenceEndDate: null,
+      recurrenceCount: null,
     };
   }
 
   let recurrenceEndType: "never" | "date" | "count" = "never";
-  let recurrenceEndDate: string | undefined = undefined;
-  let recurrenceCount: number | undefined = undefined;
+  let recurrenceEndDate: string | null = null;
+  let recurrenceCount: number | null = null;
 
   if (rule.endDate) {
     recurrenceEndType = "date";
@@ -26,7 +36,7 @@ export function getRecurrenceDefaults(eventData: Event | null) {
   }
 
   return {
-    recurrenceType: rule.type,
+    recurrenceType: rule.type as RecurrenceType,
     recurrenceEndType,
     recurrenceEndDate,
     recurrenceCount,

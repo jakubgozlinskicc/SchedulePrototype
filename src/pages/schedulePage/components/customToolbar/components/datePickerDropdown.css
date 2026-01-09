@@ -105,7 +105,7 @@
 
 .date-picker-dropdown .react-datepicker__day--today {
   font-weight: bold;
-  color: var(--primary);
+  color: var(--primary-hover);
 }
 
 .date-picker-dropdown .react-datepicker__day--selected,
@@ -113,6 +113,7 @@
 .date-picker-dropdown .react-datepicker__month-text--selected,
 .date-picker-dropdown .react-datepicker__month-text--keyboard-selected {
   background: var(--primary);
+  color: black;
 }
 
 .date-picker-dropdown .react-datepicker__day--selected:hover,

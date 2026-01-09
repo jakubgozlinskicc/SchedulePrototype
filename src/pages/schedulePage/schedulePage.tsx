@@ -1,13 +1,11 @@
 import "./schedulePage.css";
 import { useEventModal } from "./useEvents/useEventComponents/useEventModal/useEventModal";
-import { useEventUpdate } from "./useEvents/useEventComponents/useEventUpdate/useEventUpdate";
 import { useEventDropResize } from "./useEvents/useEventCalendar/useEventDropResize/useEventDropResize";
 import { useSelectEvent } from "./useEvents/useEventCalendar/useSelectEvent/useSelectEvent";
 import { useSelectSlot } from "./useEvents/useEventCalendar/useSelectSlot/useSelectSlot";
 import { useCalendarLocale } from "./useEvents/useEventCalendar/useCalendarLocale/useCalendarLocale";
 import { useLoadEvents } from "../../events/useEvents/useEventData/useLoadEvents/useLoadEvents";
 import { useDeleteEvent } from "../../events/useEvents/useEventData/useDeleteEvent/useDeleteEvent";
-import { useSubmitEvent } from "../../events/useEvents/useEventData/useSubmitEvent/useSubmitEvent";
 import { EventModal } from "./components/eventModal/eventModal";
 import { CalendarEvent } from "./components/calendarEvent/calendarEvent";
 import { useState } from "react";
@@ -28,25 +26,15 @@ function SchedulePage() {
   const [view, setView] = useState<View>("month");
 
   const { events } = useEventDataContext();
-
   const { localizer, formats } = useCalendarLocale();
-
   const { isModalOpen, openModal, closeModal } = useEventModal();
-
-  const { handleSelectEvent } = useSelectEvent(openModal);
 
   useLoadEvents(eventRepository);
 
   const { deleteCurrentEvent } = useDeleteEvent(closeModal, eventRepository);
-
-  const { handleSubmit } = useSubmitEvent(closeModal, eventRepository);
-
+  const { handleSelectEvent } = useSelectEvent(openModal);
   const { handleSelectSlot } = useSelectSlot(openModal);
-
   const { handleAddEvent } = useAddEvent(openModal);
-
-  const { isShaking, handleChange } = useEventUpdate();
-
   const { handleEventDropResize } = useEventDropResize(eventRepository);
 
   return (
@@ -55,7 +43,7 @@ function SchedulePage() {
         buttonText="Overview"
         buttonIcon="fa-solid fa-list"
         navigateTo="/overview"
-      ></TopControls>
+      />
       <header className="schedule-header">
         <h1 className="schedule-title">
           Schedule
@@ -101,10 +89,7 @@ function SchedulePage() {
       {isModalOpen && (
         <EventModal
           repository={eventRepository}
-          isShaking={isShaking}
-          onChange={handleChange}
           onClose={closeModal}
-          onSubmit={handleSubmit}
           onRequestDelete={deleteCurrentEvent}
         />
       )}

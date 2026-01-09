@@ -6,7 +6,7 @@ import { Button } from "../../../../../components/Button/Button";
 
 type EditRecurringEventModalProps = Pick<
   EventModalProps,
-  "eventData" | "isShaking" | "onChange" | "onClose" | "onSubmit"
+  "eventData" | "onClose" | "onSubmit"
 > & {
   onRequestDelete: NonNullable<EventModalProps["onRequestDelete"]>;
   onEditSingle: NonNullable<EventModalProps["onEditSingle"]>;
@@ -15,8 +15,6 @@ type EditRecurringEventModalProps = Pick<
 
 export function EditRecurringEventModal({
   eventData,
-  isShaking,
-  onChange,
   onClose,
   onSubmit,
   onRequestDelete,
@@ -36,10 +34,11 @@ export function EditRecurringEventModal({
               {t("modal-recurring-prompt")}
             </p>
             <div className="modal-actions">
-              <Button variant="secondary" onClick={onClose}>
+              <Button type="button" variant="secondary" onClick={onClose}>
                 {t("btn_cancel")}
               </Button>
               <Button
+                type="button"
                 variant="primary"
                 onClick={() => {
                   setShowChoice(false);
@@ -49,6 +48,7 @@ export function EditRecurringEventModal({
                 {t("btn-single")}
               </Button>
               <Button
+                type="button"
                 variant="primary"
                 onClick={() => {
                   setShowChoice(false);
@@ -65,23 +65,16 @@ export function EditRecurringEventModal({
   }
 
   return (
-    <BaseEventModal
-      title={t("edit")}
-      eventData={eventData}
-      isShaking={isShaking}
-      onChange={onChange}
-      onClose={onClose}
-      onSubmit={onSubmit}
-    >
-      <Button variant="danger" onClick={onRequestDelete}>
+    <BaseEventModal title={t("edit")} eventData={eventData} onSubmit={onSubmit}>
+      <Button type="button" variant="danger" onClick={onRequestDelete}>
         <i className="fa-solid fa-trash-can"></i>
         {t("btn_delete")}
       </Button>
-      <Button variant="secondary" onClick={onClose}>
+      <Button type="button" variant="secondary" onClick={onClose}>
         <i className="fa-solid fa-xmark"></i>
         {t("btn_cancel")}
       </Button>
-      <Button variant="primary" onClick={onSubmit}>
+      <Button type="submit" variant="primary">
         <i className="fa-solid fa-floppy-disk"></i>
         {t("btn_save_changes")}
       </Button>
