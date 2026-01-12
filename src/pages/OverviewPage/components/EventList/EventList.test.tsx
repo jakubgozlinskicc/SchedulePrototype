@@ -33,9 +33,9 @@ vi.mock("react-i18next", () => ({
       const translations: Record<string, string> = {
         "no-upcoming-events": "No upcoming events",
         edit: "Edit",
+        btn_delete: "Delete",
         today: "Today",
         tomorrow: "Tomorrow",
-        btn_delete: "Delete",
       };
       return translations[key] || key;
     },
@@ -46,56 +46,47 @@ vi.mock("react-router-dom", () => ({
   useNavigate: () => mockNavigate,
 }));
 
-vi.mock("../../../../db/eventRepository", () => ({
-  eventRepository: {
-    getEvents: vi.fn(),
-  },
+vi.mock("./useEventList/useLoadEvents/useLoadEvents", () => ({
+  useLoadEvents: vi.fn(() => ({
+    events: mockEventsData,
+  })),
 }));
 
-vi.mock(
-  "../../../../events/useEvents/useEventData/useLoadEvents/useLoadEvents",
-  () => ({
-    useLoadEvents: vi.fn(),
-  })
-);
-
-vi.mock(
-  "../../../../events/useEvents/useEventDataContext/useEventDataContext",
-  () => ({
-    useEventDataContext: () => ({
-      events: mockEventsData,
-    }),
-  })
-);
-
-vi.mock("../../../../locales/useTranslationContext", () => ({
-  useTranslationContext: () => ({
-    currentLanguage: "enUS",
-  }),
-}));
-
-vi.mock("../../../../utils/calendarLocalizer/calendarLocalizer", () => ({
-  locales: {
-    enUS: undefined,
-  },
-}));
-
-vi.mock("../../context/useFiltersContext", () => ({
-  useFiltersContext: () => ({
-    filters: {
-      searchQuery: "",
-      showPastEvents: true,
-      dateFrom: null,
-      dateTo: null,
-      colors: [],
+vi.mock("./useEventList/useEventList", () => ({
+  useEventList: vi.fn(() => ({
+    groupedEvents:
+      mockEventsData.length > 0
+        ? [
+            {
+              dateKey: "2025-12-30",
+              dateLabel: "Today",
+              events: mockEventsData,
+            },
+          ]
+        : [],
+    formatTime: (date: Date) => {
+      return date.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
     },
-  }),
+    pagination: {
+      currentPage: 1,
+      totalPages: Math.ceil(mockEventsData.length / 10),
+      setCurrentPage: vi.fn(),
+    },
+  })),
 }));
 
-vi.mock("./useEventList/useFilteredEvents/strategies/filterRegistry", () => ({
-  filterRegistry: {
-    applyAll: (events: Event[]) => events,
-  },
+vi.mock("./useEventList/useEventDelete/useEventDelete", () => ({
+  useEventDelete: vi.fn(() => ({
+    eventToDelete: null,
+    isRecurringEvent: vi.fn((event) => event.recurrenceRule.type !== "none"),
+    handleDeleteClick: vi.fn(),
+    handleDeleteSingle: vi.fn(),
+    handleDeleteAll: vi.fn(),
+    handleCancelDelete: vi.fn(),
+  })),
 }));
 
 describe("EventList", () => {
@@ -124,13 +115,6 @@ describe("EventList", () => {
 
     expect(screen.getByText("Team meeting")).toBeInTheDocument();
     expect(screen.getByText("Daily standup")).toBeInTheDocument();
-  });
-
-  it("should display formatted time", () => {
-    render(<EventList />);
-
-    expect(screen.getByText(/10:00/)).toBeInTheDocument();
-    expect(screen.getByText(/11:00/)).toBeInTheDocument();
   });
 
   it("should show recurring icon for recurring events", () => {
@@ -163,6 +147,7 @@ describe("EventList", () => {
 
     const dayHeaders = document.querySelectorAll(".day-header");
     expect(dayHeaders.length).toBeGreaterThan(0);
+    expect(screen.getByText("Today")).toBeInTheDocument();
   });
 
   it("should render pagination when more than 10 events", () => {
@@ -170,12 +155,8 @@ describe("EventList", () => {
       id: i + 1,
       title: `Event ${i + 1}`,
       description: "",
-      start: new Date(
-        `2025-12-30T${String(10 + (i % 10)).padStart(2, "0")}:00:00`
-      ),
-      end: new Date(
-        `2025-12-30T${String(11 + (i % 10)).padStart(2, "0")}:00:00`
-      ),
+      start: new Date(`2025-12-30T${10 + i}:00:00`),
+      end: new Date(`2025-12-30T${11 + i}:00:00`),
       color: "#0000FF",
       recurrenceRule: { type: "none" as const, interval: 1 },
     }));

@@ -78,7 +78,6 @@ export function EditRecurringEventFormPage() {
 
   if (loading) return <div>{t("loading")}</div>;
   if (!event) return <div>{t("error-event-not-found")}</div>;
-  console.log("tutej", event);
 
   return (
     <FormProvider {...methods}>

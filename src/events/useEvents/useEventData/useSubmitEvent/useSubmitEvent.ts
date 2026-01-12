@@ -16,9 +16,7 @@ export function useSubmitEvent(
 
   const onSubmit = async (data: EventFormData) => {
     try {
-      console.log("tam:", data);
       const eventToSave = convertFormDataToEvent(data, event);
-      console.log("Po konwercie:", eventToSave);
 
       await SubmitStrategyRegistry.executeSubmit(eventToSave, repository, {
         isEditAll,

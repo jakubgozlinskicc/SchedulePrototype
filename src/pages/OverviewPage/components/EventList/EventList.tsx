@@ -1,5 +1,4 @@
 import { eventRepository } from "../../../../db/eventRepository";
-import { useLoadEvents } from "../../../../events/useEvents/useEventData/useLoadEvents/useLoadEvents";
 import { useEventList } from "./useEventList/useEventList";
 import { Pagination } from "../Pagination/Pagination";
 import { useTranslation } from "react-i18next";
@@ -9,11 +8,12 @@ import type { Event } from "../../../../db/scheduleDb";
 import { Button } from "../../../../components/Button/Button";
 import { DeleteEventConfirmation } from "../../../../events/form/DeleteEventConfirmation/DeleteEventConfirmation";
 import { useEventDelete } from "./useEventList/useEventDelete/useEventDelete";
+import { useLoadEvents } from "./useEventList/useLoadEvents/useLoadEvents";
 
 export function EventList() {
-  useLoadEvents(eventRepository);
+  const { events } = useLoadEvents(eventRepository);
 
-  const { groupedEvents, formatTime, pagination } = useEventList();
+  const { groupedEvents, formatTime, pagination } = useEventList(events);
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -46,67 +46,69 @@ export function EventList() {
   }
 
   return (
-    <div className="events-list">
-      {eventToDelete && (
-        <DeleteEventConfirmation
-          onClose={handleCancelDelete}
-          onConfirmSingle={handleDeleteSingle}
-          onConfirmAll={handleDeleteAll}
-        />
-      )}
+    <>
+      <div className="events-list">
+        {eventToDelete && (
+          <DeleteEventConfirmation
+            onClose={handleCancelDelete}
+            onConfirmSingle={handleDeleteSingle}
+            onConfirmAll={handleDeleteAll}
+          />
+        )}
 
-      {groupedEvents.map((group) => (
-        <div key={group.dateKey} className="day-group">
-          <div className="day-header">{group.dateLabel}</div>
+        {groupedEvents.map((group) => (
+          <div key={group.dateKey} className="day-group">
+            <div className="day-header">{group.dateLabel}</div>
 
-          {group.events.map((event) => (
-            <div
-              key={
-                event.id || `${event.recurringEventId}-${event.start.getTime()}`
-              }
-              className="event-item"
-              style={{
-                borderColor: event.color,
-              }}
-            >
-              <div className="event-content">
-                <div className="event-header">
-                  <span className="event-title">
-                    {isRecurringEvent(event) && (
-                      <i className="fa-solid fa-repeat"></i>
-                    )}
-                    {event.title}
-                  </span>
-                  <div className="event-actions">
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDeleteClick(event)}
-                    >
-                      <i className="fa-solid fa-trash-can"></i>
-                      {t("btn_delete")}
-                    </Button>
-                    <Button
-                      variant="primary"
-                      onClick={() => handleEditClick(event)}
-                    >
-                      <i className="fa-solid fa-pen-to-square"></i>
-                      {t("edit")}
-                    </Button>
+            {group.events.map((event) => (
+              <div
+                key={
+                  event.id ||
+                  `${event.recurringEventId}-${event.start.getTime()}`
+                }
+                className="event-item"
+                style={{
+                  borderColor: event.color,
+                }}
+              >
+                <div className="event-content">
+                  <div className="event-header">
+                    <span className="event-title">
+                      {isRecurringEvent(event) && (
+                        <i className="fa-solid fa-repeat"></i>
+                      )}
+                      {event.title}
+                    </span>
+                    <div className="event-actions">
+                      <Button
+                        variant="danger"
+                        onClick={() => handleDeleteClick(event)}
+                      >
+                        <i className="fa-solid fa-trash-can"></i>
+                        {t("btn_delete")}
+                      </Button>
+                      <Button
+                        variant="primary"
+                        onClick={() => handleEditClick(event)}
+                      >
+                        <i className="fa-solid fa-pen-to-square"></i>
+                        {t("edit")}
+                      </Button>
+                    </div>
                   </div>
+                  <div className="event-time">
+                    {formatTime(event.start)} — {formatTime(event.end)}
+                  </div>
+                  {event.description && (
+                    <div className="event-description">{event.description}</div>
+                  )}
                 </div>
-                <div className="event-time">
-                  {formatTime(event.start)} — {formatTime(event.end)}
-                </div>
-                {event.description && (
-                  <div className="event-description">{event.description}</div>
-                )}
               </div>
-            </div>
-          ))}
-        </div>
-      ))}
-
+            ))}
+          </div>
+        ))}
+      </div>
       <Pagination {...pagination} />
-    </div>
+    </>
   );
 }

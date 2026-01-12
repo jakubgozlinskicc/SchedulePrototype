@@ -16,38 +16,27 @@ const mockEvents: Event[] = [
     id: 2,
     title: "Lunch",
     description: "Lunch break",
-    start: new Date("2025-12-31T12:00:00"),
-    end: new Date("2025-12-31T13:00:00"),
+    start: new Date("2025-12-29T12:00:00"),
+    end: new Date("2025-12-29T13:00:00"),
     color: "#FF0000",
   },
 ];
 
-const mockFilters = {
-  searchQuery: "",
-  showPastEvents: true,
-  dateFrom: null,
-  dateTo: null,
-  colors: [],
-};
-
-vi.mock(
-  "../../../../../../events/useEvents/useEventDataContext/useEventDataContext",
-  () => ({
-    useEventDataContext: () => ({
-      events: mockEvents,
-    }),
-  })
-);
-
 vi.mock("../../../../context/useFiltersContext", () => ({
-  useFiltersContext: () => ({
-    filters: mockFilters,
-  }),
+  useFiltersContext: vi.fn(() => ({
+    filters: {
+      searchQuery: "",
+      showPastEvents: true,
+      dateFrom: null,
+      dateTo: null,
+      colors: [],
+    },
+  })),
 }));
 
 vi.mock("./strategies/filterRegistry", () => ({
   filterRegistry: {
-    applyAll: (events: Event[]) => events,
+    applyAll: vi.fn((events) => events),
   },
 }));
 
@@ -57,21 +46,22 @@ describe("useFilteredEvents", () => {
   });
 
   it("should return all events when no filters applied", () => {
-    const { result } = renderHook(() => useFilteredEvents());
+    const { result } = renderHook(() => useFilteredEvents(mockEvents));
 
     expect(result.current.filteredEvents).toHaveLength(2);
   });
 
   it("should sort events by start date", () => {
-    const { result } = renderHook(() => useFilteredEvents());
+    const { result } = renderHook(() => useFilteredEvents(mockEvents));
 
+    expect(result.current.filteredEvents[0].title).toBe("Lunch");
     expect(result.current.filteredEvents[0].start.getTime()).toBeLessThan(
       result.current.filteredEvents[1].start.getTime()
     );
   });
 
   it("should return filters object", () => {
-    const { result } = renderHook(() => useFilteredEvents());
+    const { result } = renderHook(() => useFilteredEvents(mockEvents));
 
     expect(result.current.filters).toBeDefined();
     expect(result.current.filters).toHaveProperty("searchQuery");

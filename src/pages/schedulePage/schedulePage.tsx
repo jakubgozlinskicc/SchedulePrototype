@@ -18,10 +18,11 @@ import { useAddEvent } from "../../events/useEvents/useEventData/useAddEvent/use
 import { useEventDataContext } from "../../events/useEvents/useEventDataContext/useEventDataContext";
 import { eventRepository } from "../../db/eventRepository";
 import { TopControls } from "../../components/TopControls/TopControls";
+import { EventDataProvider } from "../../events/eventContext/eventDataProvider";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
-function SchedulePage() {
+function SchedulePageContent() {
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState<View>("month");
 
@@ -94,6 +95,14 @@ function SchedulePage() {
         />
       )}
     </div>
+  );
+}
+
+function SchedulePage() {
+  return (
+    <EventDataProvider>
+      <SchedulePageContent />
+    </EventDataProvider>
   );
 }
 

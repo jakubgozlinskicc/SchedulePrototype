@@ -1,9 +1,8 @@
-import { useEventDataContext } from "../../../../../../events/useEvents/useEventDataContext/useEventDataContext";
 import { useFiltersContext } from "../../../../context/useFiltersContext";
 import { filterRegistry } from "./strategies/filterRegistry";
+import type { Event } from "../../../../../../db/scheduleDb";
 
-export function useFilteredEvents() {
-  const { events } = useEventDataContext();
+export function useFilteredEvents(events: Event[]) {
   const { filters } = useFiltersContext();
 
   const filtered = filterRegistry

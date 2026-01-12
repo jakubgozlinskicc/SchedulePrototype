@@ -125,7 +125,7 @@ describe("EditRecurringEventModal", () => {
       fireEvent.click(screen.getByText("btn-single"));
 
       expect(screen.getByTestId("base-event-modal")).toBeInTheDocument();
-      expect(screen.getByText("edit")).toBeInTheDocument();
+      expect(screen.getByText("edit-recurring")).toBeInTheDocument();
     });
 
     it("should render BaseEventModal after selecting edit all", () => {
@@ -134,7 +134,7 @@ describe("EditRecurringEventModal", () => {
       fireEvent.click(screen.getByText("btn-all"));
 
       expect(screen.getByTestId("base-event-modal")).toBeInTheDocument();
-      expect(screen.getByText("edit")).toBeInTheDocument();
+      expect(screen.getByText("edit-recurring")).toBeInTheDocument();
     });
 
     it("should render delete, cancel and save buttons in edit view", () => {

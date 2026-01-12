@@ -2,9 +2,10 @@ import { useEffect, useRef } from "react";
 import { useFilteredEvents } from "./useFilteredEvents/useFilteredEvents";
 import { useGroupedEvents } from "./useGroupedEvents/useGroupedEvents";
 import { usePagination } from "../../Pagination/usePagination/usePagination";
+import type { Event } from "../../../../../db/scheduleDb";
 
-export function useEventList() {
-  const { filteredEvents, filters } = useFilteredEvents();
+export function useEventList(events: Event[]) {
+  const { filteredEvents, filters } = useFilteredEvents(events);
   const ITEMS_PER_PAGE = 10;
 
   const pagination = usePagination({

@@ -65,7 +65,11 @@ export function EditRecurringEventModal({
   }
 
   return (
-    <BaseEventModal title={t("edit")} eventData={eventData} onSubmit={onSubmit}>
+    <BaseEventModal
+      title={t("edit-recurring")}
+      eventData={eventData}
+      onSubmit={onSubmit}
+    >
       <Button type="button" variant="danger" onClick={onRequestDelete}>
         <i className="fa-solid fa-trash-can"></i>
         {t("btn_delete")}
