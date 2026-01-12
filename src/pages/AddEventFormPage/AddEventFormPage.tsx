@@ -24,6 +24,7 @@ export function AddEventFormPage() {
       end: toDateTimeLocal(new Date()),
       color: "#0000FF",
       recurrenceType: "none",
+      recurrenceInterval: 1,
       recurrenceEndType: "never",
     },
   });

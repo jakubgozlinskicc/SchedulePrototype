@@ -39,6 +39,19 @@ export const createEventFormSchema = (t: (key: string) => string) =>
 
     color: yup.string().defined().default("#0000FF"),
 
+    recurrenceInterval: yup
+      .number()
+      .transform((val, orig) => (orig === "" ? undefined : val))
+      .when("recurrenceType", {
+        is: (type: string) => type !== "none",
+        then: (schema) =>
+          schema
+            .required(t("recurrence-interval-required"))
+            .min(1, t("recurrence-interval-min"))
+            .max(100, t("recurrence-interval-max")),
+        otherwise: (schema) => schema.optional().default(1),
+      }),
+
     recurrenceType: yup
       .string()
       .oneOf(recurrenceTypes)

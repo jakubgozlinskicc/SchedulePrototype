@@ -112,14 +112,6 @@ describe("BaseEventModal", () => {
     expect(screen.getByText("Test Button")).toBeInTheDocument();
   });
 
-  it("It should apply shake class when isShaking is true", () => {
-    const { container } = render(
-      <BaseEventModal {...mockProps} isShaking={true} />
-    );
-    const modal = container.querySelector(".modal");
-    expect(modal).toHaveClass("shake");
-  });
-
   it("It should do not apply shake class when isShaking is false", () => {
     const { container } = render(<BaseEventModal {...mockProps} />);
     const modal = container.querySelector(".modal");

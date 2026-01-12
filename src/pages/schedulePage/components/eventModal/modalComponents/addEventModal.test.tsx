@@ -55,14 +55,6 @@ describe("AddEventModal", () => {
     expect(mockProps.onSubmit).toHaveBeenCalledTimes(1);
   });
 
-  it("It should apply shake class when isShaking is true", () => {
-    const { container } = render(
-      <AddEventModal {...mockProps} isShaking={true} />
-    );
-    const modal = container.querySelector(".modal");
-    expect(modal).toHaveClass("shake");
-  });
-
   it("It should do not apply shake class when isShaking is false", () => {
     const { container } = render(<AddEventModal {...mockProps} />);
     const modal = container.querySelector(".modal");

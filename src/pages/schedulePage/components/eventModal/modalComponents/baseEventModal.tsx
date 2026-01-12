@@ -33,6 +33,7 @@ const getDefaultValues = (eventData?: Event) => {
     end: toDateTimeLocal(new Date()),
     color: "#0000FF",
     recurrenceType: "none" as const,
+    recurrenceInterval: 1,
     recurrenceEndType: "never" as const,
     recurrenceEndDate: undefined,
     recurrenceCount: undefined,

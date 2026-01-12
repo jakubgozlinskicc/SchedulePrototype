@@ -4,6 +4,7 @@ import { toDateTimeLocal } from "../../utils/toDateTimeLocal/toDateTimeLocal";
 
 export interface RecurrenceFormFields {
   recurrenceType: RecurrenceType;
+  recurrenceInterval: number;
   recurrenceEndType: "never" | "date" | "count";
   recurrenceEndDate: string | null | undefined;
   recurrenceCount: number | null | undefined;
@@ -17,6 +18,7 @@ export function getRecurrenceDefaults(
   if (!rule || rule.type === "none") {
     return {
       recurrenceType: "none",
+      recurrenceInterval: 1,
       recurrenceEndType: "never",
       recurrenceEndDate: null,
       recurrenceCount: null,
@@ -37,6 +39,7 @@ export function getRecurrenceDefaults(
 
   return {
     recurrenceType: rule.type as RecurrenceType,
+    recurrenceInterval: rule.interval ?? 1,
     recurrenceEndType,
     recurrenceEndDate,
     recurrenceCount,

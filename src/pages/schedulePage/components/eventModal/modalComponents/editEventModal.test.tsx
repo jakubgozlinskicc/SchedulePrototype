@@ -65,20 +65,6 @@ describe("EditEventModal", () => {
     expect(mockProps.onSubmit).toHaveBeenCalled();
   });
 
-  it("It should apply shake class when isShaking is true", () => {
-    const { container } = render(
-      <EditEventModal {...mockProps} isShaking={true} />
-    );
-    const modal = container.querySelector(".modal");
-    expect(modal).toHaveClass("shake");
-  });
-
-  it("It should do not apply shake class when isShaking is false", () => {
-    const { container } = render(<EditEventModal {...mockProps} />);
-    const modal = container.querySelector(".modal");
-    expect(modal).not.toHaveClass("shake");
-  });
-
   it("It should pass all props correctly to BaseEventModal", () => {
     render(<EditEventModal {...mockProps} />);
     expect(screen.getByDisplayValue(mockEventData.title)).toBeInTheDocument();

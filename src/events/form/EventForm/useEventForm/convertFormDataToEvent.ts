@@ -5,7 +5,7 @@ import type { RecurrenceRule } from "../../../recurrence/recurrenceTypes";
 function buildRecurrenceRule(data: EventFormData): RecurrenceRule | undefined {
   const rule: RecurrenceRule = {
     type: data.recurrenceType,
-    interval: 1,
+    interval: data.recurrenceInterval ?? 1,
   };
 
   if (data.recurrenceEndType === "date" && data.recurrenceEndDate) {

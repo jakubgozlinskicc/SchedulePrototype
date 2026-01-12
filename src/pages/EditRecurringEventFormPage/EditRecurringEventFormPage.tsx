@@ -48,6 +48,7 @@ export function EditRecurringEventFormPage() {
       end: "",
       color: "#0000FF",
       recurrenceType: "none",
+      recurrenceInterval: 1,
       recurrenceEndType: "never",
     },
   });
