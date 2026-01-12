@@ -35,7 +35,6 @@ vi.mock("./baseEventModal", () => ({
 
 describe("EditRecurringEventModal", () => {
   let mockEventData: Event;
-  let mockOnChange: () => void;
   let mockOnClose: () => void;
   let mockOnSubmit: () => void;
   let mockOnRequestDelete: () => void;
@@ -55,7 +54,6 @@ describe("EditRecurringEventModal", () => {
       recurrenceRule: { type: "daily", interval: 1 },
     };
 
-    mockOnChange = vi.fn();
     mockOnClose = vi.fn();
     mockOnSubmit = vi.fn();
     mockOnRequestDelete = vi.fn();
@@ -67,8 +65,6 @@ describe("EditRecurringEventModal", () => {
     return render(
       <EditRecurringEventModal
         eventData={mockEventData}
-        isShaking={false}
-        onChange={mockOnChange}
         onClose={mockOnClose}
         onSubmit={mockOnSubmit}
         onRequestDelete={mockOnRequestDelete}

@@ -1,165 +1,253 @@
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { EventModal } from "./eventModal";
+import type { IEventRepository } from "../../../../events/useEvents/IEventRepository";
 import type { Event } from "../../../../db/scheduleDb";
-import { EventModalStrategyRegistry } from "./modalStrategy/modalRegistry";
-import { vi, describe, beforeEach, it, expect } from "vitest";
-let mockEventData: Event;
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
-  }),
-}));
+const mockOnSubmit = vi.fn();
+const mockHandleEditSingle = vi.fn();
+const mockHandleEditAll = vi.fn();
+
+let mockEventData: Event | null = null;
 
 vi.mock(
   "../../../../events/useEvents/useEventDataContext/useEventDataContext",
   () => ({
     useEventDataContext: () => ({
       eventData: mockEventData,
-      setEventData: vi.fn(),
     }),
   })
 );
 
+vi.mock(
+  "../../../../events/useEvents/useEventData/useSubmitEvent/useSubmitEvent",
+  () => ({
+    useSubmitEvent: () => ({
+      onSubmit: mockOnSubmit,
+    }),
+  })
+);
+
+vi.mock(
+  "../../../../events/useEvents/useEventData/useRecurringEdit/useRecurringEdit",
+  () => ({
+    useRecurringEdit: () => ({
+      handleEditSingle: mockHandleEditSingle,
+      handleEditAll: mockHandleEditAll,
+    }),
+  })
+);
+
+const mockRender = vi
+  .fn()
+  .mockReturnValue(<div data-testid="modal-content">Modal Content</div>);
+
 vi.mock("./modalStrategy/modalRegistry", () => ({
   EventModalStrategyRegistry: {
-    provideRenderer: vi.fn(),
+    provideRenderer: vi.fn().mockReturnValue({
+      render: (props: unknown) => mockRender(props),
+    }),
   },
 }));
 
+import { EventModalStrategyRegistry } from "./modalStrategy/modalRegistry";
+
 describe("EventModal", () => {
-  const mockEventDataWithoutId: Event = {
-    title: "New Event",
-    description: "New Description",
-    start: new Date("2024-01-01T10:00"),
-    end: new Date("2024-01-01T11:00"),
-    color: "#3b82f6",
-  };
-
-  const mockEventDataWithId: Event = {
-    id: 1,
-    title: "Existing Event",
-    description: "Existing Description",
-    start: new Date("2024-01-01T10:00"),
-    end: new Date("2024-01-01T11:00"),
-    color: "#3b82f6",
-  };
-
-  const mockProps = {
-    isShaking: false,
-    onChange: vi.fn(),
-    onClose: vi.fn(),
-    onSubmit: vi.fn(),
-    onRequestDelete: vi.fn(),
-    onEditAll: vi.fn(),
-    onEditSingle: vi.fn(),
-  };
+  let mockRepository: IEventRepository;
+  let mockOnClose: () => void;
+  let mockOnRequestDelete: () => void;
 
   beforeEach(() => {
     vi.clearAllMocks();
-    mockEventData = mockEventDataWithoutId;
+
+    mockRepository = {
+      addEvent: vi.fn().mockResolvedValue(1),
+      getEvents: vi.fn().mockResolvedValue([]),
+      getEventById: vi.fn().mockResolvedValue(undefined),
+      editEvent: vi.fn().mockResolvedValue(undefined),
+      deleteEvent: vi.fn().mockResolvedValue(undefined),
+      clearEvents: vi.fn().mockResolvedValue(undefined),
+    };
+
+    mockOnClose = vi.fn();
+    mockOnRequestDelete = vi.fn();
+
+    mockEventData = {
+      id: 1,
+      title: "Test Event",
+      description: "Test Description",
+      start: new Date("2025-12-10T10:00:00"),
+      end: new Date("2025-12-10T11:00:00"),
+      color: "#0000FF",
+    };
+
+    mockRender.mockReturnValue(
+      <div data-testid="modal-content">Modal Content</div>
+    );
   });
 
-  it("It should call EventModalStrategyRegistry.provideRenderer with eventData", () => {
-    const mockRenderer = {
-      render: vi.fn().mockReturnValue(<div>Mock Modal</div>),
-    };
-    vi.mocked(EventModalStrategyRegistry.provideRenderer).mockReturnValue(
-      mockRenderer
+  it("should render modal content from strategy", () => {
+    render(
+      <EventModal
+        repository={mockRepository}
+        onClose={mockOnClose}
+        onRequestDelete={mockOnRequestDelete}
+      />
     );
 
-    mockEventData = mockEventDataWithoutId;
+    expect(screen.getByTestId("modal-content")).toBeInTheDocument();
+  });
 
-    render(<EventModal {...mockProps} />);
+  it("should call provideRenderer with eventData", () => {
+    render(<EventModal repository={mockRepository} onClose={mockOnClose} />);
 
     expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledWith(
-      mockEventDataWithoutId
+      mockEventData
     );
   });
 
-  it("It should render the result of strategy render method", () => {
-    const mockRenderer = {
-      render: vi.fn().mockReturnValue(<div>Test Content</div>),
-    };
-    vi.mocked(EventModalStrategyRegistry.provideRenderer).mockReturnValue(
-      mockRenderer
+  it("should pass eventData to renderer", () => {
+    render(<EventModal repository={mockRepository} onClose={mockOnClose} />);
+
+    expect(mockRender).toHaveBeenCalledWith(
+      expect.objectContaining({
+        eventData: mockEventData,
+      })
     );
-
-    mockEventData = mockEventDataWithoutId;
-
-    render(<EventModal {...mockProps} />);
-
-    expect(screen.getByText("Test Content")).toBeInTheDocument();
   });
 
-  it("It should use same renderer instance when eventData hasn't changed", () => {
-    const mockRenderer = {
-      render: vi.fn().mockReturnValue(<div>Mock Modal</div>),
-    };
-    vi.mocked(EventModalStrategyRegistry.provideRenderer).mockReturnValue(
-      mockRenderer
+  it("should pass onClose to renderer", () => {
+    render(<EventModal repository={mockRepository} onClose={mockOnClose} />);
+
+    expect(mockRender).toHaveBeenCalledWith(
+      expect.objectContaining({
+        onClose: mockOnClose,
+      })
     );
-
-    mockEventData = mockEventDataWithoutId;
-
-    const { rerender } = render(<EventModal {...mockProps} />);
-
-    const firstRenderArgs = mockRenderer.render.mock.calls[0];
-
-    rerender(<EventModal {...mockProps} isShaking={true} />);
-
-    const lastRenderArgs =
-      mockRenderer.render.mock.calls[mockRenderer.render.mock.calls.length - 1];
-
-    expect(lastRenderArgs[0].eventData).toEqual(firstRenderArgs[0].eventData);
-    expect(screen.getByText("Mock Modal")).toBeInTheDocument();
   });
 
-  it("It should re-fetch renderer when eventData changes", () => {
-    const mockRenderer = {
-      render: vi.fn().mockReturnValue(<div>Mock Modal</div>),
-    };
-    vi.mocked(EventModalStrategyRegistry.provideRenderer).mockReturnValue(
-      mockRenderer
+  it("should pass onSubmit to renderer", () => {
+    render(<EventModal repository={mockRepository} onClose={mockOnClose} />);
+
+    expect(mockRender).toHaveBeenCalledWith(
+      expect.objectContaining({
+        onSubmit: mockOnSubmit,
+      })
     );
-
-    mockEventData = mockEventDataWithoutId;
-
-    const { rerender } = render(<EventModal {...mockProps} />);
-
-    expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledTimes(1);
-
-    mockEventData = mockEventDataWithId;
-
-    rerender(<EventModal {...mockProps} />);
-
-    expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledTimes(2);
   });
 
-  it("It should handle different event types correctly", () => {
-    const mockRendererAdd = {
-      render: vi.fn().mockReturnValue(<div>Add Modal</div>),
-    };
-    const mockRendererEdit = {
-      render: vi.fn().mockReturnValue(<div>Edit Modal</div>),
-    };
-
-    vi.mocked(EventModalStrategyRegistry.provideRenderer).mockReturnValueOnce(
-      mockRendererAdd
+  it("should pass onRequestDelete to renderer when provided", () => {
+    render(
+      <EventModal
+        repository={mockRepository}
+        onClose={mockOnClose}
+        onRequestDelete={mockOnRequestDelete}
+      />
     );
 
-    mockEventData = mockEventDataWithoutId;
+    expect(mockRender).toHaveBeenCalledWith(
+      expect.objectContaining({
+        onRequestDelete: mockOnRequestDelete,
+      })
+    );
+  });
 
-    const { rerender } = render(<EventModal {...mockProps} />);
-    expect(screen.getByText("Add Modal")).toBeInTheDocument();
+  it("should pass onEditSingle to renderer", () => {
+    render(<EventModal repository={mockRepository} onClose={mockOnClose} />);
 
-    vi.mocked(EventModalStrategyRegistry.provideRenderer).mockReturnValueOnce(
-      mockRendererEdit
+    expect(mockRender).toHaveBeenCalledWith(
+      expect.objectContaining({
+        onEditSingle: mockHandleEditSingle,
+      })
+    );
+  });
+
+  it("should pass onEditAll to renderer", () => {
+    render(<EventModal repository={mockRepository} onClose={mockOnClose} />);
+
+    expect(mockRender).toHaveBeenCalledWith(
+      expect.objectContaining({
+        onEditAll: mockHandleEditAll,
+      })
+    );
+  });
+
+  it("should render without onRequestDelete", () => {
+    render(<EventModal repository={mockRepository} onClose={mockOnClose} />);
+
+    expect(mockRender).toHaveBeenCalledWith(
+      expect.objectContaining({
+        onRequestDelete: undefined,
+      })
+    );
+  });
+
+  it("should handle null eventData", () => {
+    mockEventData = null;
+
+    render(<EventModal repository={mockRepository} onClose={mockOnClose} />);
+
+    expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledWith(
+      null
+    );
+  });
+
+  it("should render recurring event modal", () => {
+    mockEventData = {
+      id: 1,
+      title: "Recurring Event",
+      description: "Test",
+      start: new Date("2025-12-10T10:00:00"),
+      end: new Date("2025-12-10T11:00:00"),
+      color: "#0000FF",
+      recurrenceRule: { type: "daily", interval: 1 },
+    };
+
+    render(<EventModal repository={mockRepository} onClose={mockOnClose} />);
+
+    expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledWith(
+      expect.objectContaining({
+        recurrenceRule: { type: "daily", interval: 1 },
+      })
+    );
+  });
+
+  it("should render virtual occurrence modal", () => {
+    mockEventData = {
+      title: "Virtual Occurrence",
+      description: "Test",
+      start: new Date("2025-12-10T10:00:00"),
+      end: new Date("2025-12-10T11:00:00"),
+      color: "#0000FF",
+      recurringEventId: 5,
+    };
+
+    render(<EventModal repository={mockRepository} onClose={mockOnClose} />);
+
+    expect(EventModalStrategyRegistry.provideRenderer).toHaveBeenCalledWith(
+      expect.objectContaining({
+        recurringEventId: 5,
+      })
+    );
+  });
+
+  it("should pass all props to renderer in single call", () => {
+    render(
+      <EventModal
+        repository={mockRepository}
+        onClose={mockOnClose}
+        onRequestDelete={mockOnRequestDelete}
+      />
     );
 
-    mockEventData = mockEventDataWithId;
-
-    rerender(<EventModal {...mockProps} />);
-    expect(screen.getByText("Edit Modal")).toBeInTheDocument();
+    expect(mockRender).toHaveBeenCalledTimes(1);
+    expect(mockRender).toHaveBeenCalledWith({
+      eventData: mockEventData,
+      onClose: mockOnClose,
+      onSubmit: mockOnSubmit,
+      onRequestDelete: mockOnRequestDelete,
+      onEditSingle: mockHandleEditSingle,
+      onEditAll: mockHandleEditAll,
+    });
   });
 });

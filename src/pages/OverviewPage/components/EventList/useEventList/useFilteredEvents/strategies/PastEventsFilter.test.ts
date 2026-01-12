@@ -45,63 +45,63 @@ describe("PastEventsFilter", () => {
   describe("apply", () => {
     it("should return true for future events", () => {
       const event = createEvent(new Date("2024-06-20T10:00:00"));
-      expect(pastEventsFilter.apply(event, createFilters(false))).toBe(true);
+      expect(pastEventsFilter.apply(event)).toBe(true);
     });
 
     it("should return true for today's events", () => {
       const event = createEvent(new Date("2024-06-15T10:00:00"));
-      expect(pastEventsFilter.apply(event, createFilters(false))).toBe(true);
+      expect(pastEventsFilter.apply(event)).toBe(true);
     });
 
     it("should return false for past events", () => {
       const event = createEvent(new Date("2024-06-14T10:00:00"));
-      expect(pastEventsFilter.apply(event, createFilters(false))).toBe(false);
+      expect(pastEventsFilter.apply(event)).toBe(false);
     });
 
     it("should compare by date only, not time", () => {
       const event = createEvent(new Date("2024-06-15T00:00:00"));
-      expect(pastEventsFilter.apply(event, createFilters(false))).toBe(true);
+      expect(pastEventsFilter.apply(event)).toBe(true);
     });
 
     it("should return true for event at end of today", () => {
       const event = createEvent(new Date("2024-06-15T23:59:59"));
-      expect(pastEventsFilter.apply(event, createFilters(false))).toBe(true);
+      expect(pastEventsFilter.apply(event)).toBe(true);
     });
 
     it("should return false for yesterday's event", () => {
       const event = createEvent(new Date("2024-06-14T23:59:59"));
-      expect(pastEventsFilter.apply(event, createFilters(false))).toBe(false);
+      expect(pastEventsFilter.apply(event)).toBe(false);
     });
 
     it("should handle events far in the future", () => {
       const event = createEvent(new Date("2025-12-31T10:00:00"));
-      expect(pastEventsFilter.apply(event, createFilters(false))).toBe(true);
+      expect(pastEventsFilter.apply(event)).toBe(true);
     });
 
     it("should handle events far in the past", () => {
       const event = createEvent(new Date("2020-01-01T10:00:00"));
-      expect(pastEventsFilter.apply(event, createFilters(false))).toBe(false);
+      expect(pastEventsFilter.apply(event)).toBe(false);
     });
 
     it("should return true for tomorrow's event", () => {
       const event = createEvent(new Date("2024-06-16T00:00:00"));
-      expect(pastEventsFilter.apply(event, createFilters(false))).toBe(true);
+      expect(pastEventsFilter.apply(event)).toBe(true);
     });
 
     it("should handle event at exact midnight today", () => {
       const event = createEvent(new Date("2024-06-15T00:00:00"));
-      expect(pastEventsFilter.apply(event, createFilters(false))).toBe(true);
+      expect(pastEventsFilter.apply(event)).toBe(true);
     });
 
     it("should handle event at exact midnight yesterday", () => {
       const event = createEvent(new Date("2024-06-14T00:00:00"));
-      expect(pastEventsFilter.apply(event, createFilters(false))).toBe(false);
+      expect(pastEventsFilter.apply(event)).toBe(false);
     });
 
     it("should handle new year boundary", () => {
       vi.setSystemTime(new Date("2024-01-01T12:00:00"));
       const event = createEvent(new Date("2023-12-31T23:59:59"));
-      expect(pastEventsFilter.apply(event, createFilters(false))).toBe(false);
+      expect(pastEventsFilter.apply(event)).toBe(false);
     });
   });
 });
