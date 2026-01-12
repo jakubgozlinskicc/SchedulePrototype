@@ -32,8 +32,10 @@ const getDefaultValues = (eventData?: Event) => {
     start: toDateTimeLocal(new Date()),
     end: toDateTimeLocal(new Date()),
     color: "#0000FF",
-    recurrenceType: "none",
-    recurrenceEndType: "never",
+    recurrenceType: "none" as const,
+    recurrenceEndType: "never" as const,
+    recurrenceEndDate: undefined,
+    recurrenceCount: undefined,
   };
 };
 
@@ -51,6 +53,8 @@ export function BaseEventModal({
     reValidateMode: "onChange",
     defaultValues: getDefaultValues(eventData),
   });
+  console.log("tutej", eventData);
+
   return (
     <FormProvider {...methods}>
       <div className="modal-backdrop">

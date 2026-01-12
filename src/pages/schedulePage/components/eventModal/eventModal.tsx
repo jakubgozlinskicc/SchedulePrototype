@@ -19,11 +19,7 @@ export function EventModal({
   const { handleEditSingle, handleEditAll } = useRecurringEdit(repository);
   const { eventData } = useEventDataContext();
 
-  const { onSubmit } = useSubmitEvent(
-    onClose,
-    repository,
-    eventData.id ? eventData : undefined
-  );
+  const { onSubmit } = useSubmitEvent(onClose, repository, eventData);
 
   const renderer = EventModalStrategyRegistry.provideRenderer(eventData);
 

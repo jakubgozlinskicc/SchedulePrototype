@@ -12,18 +12,18 @@ export function useSubmitEvent(
   event?: Event
 ) {
   const { reloadEvents } = useReloadEvents(repository);
-  const { isEditAll } = useEventDataContext();
+  const { isEditAll, setIsEditAll } = useEventDataContext();
 
   const onSubmit = async (data: EventFormData) => {
     try {
-      console.log("data:", data);
+      console.log("tam:", data);
       const eventToSave = convertFormDataToEvent(data, event);
-      console.log("Event to save:", eventToSave);
-      console.log("isEditAll:", isEditAll);
+      console.log("Po konwercie:", eventToSave);
 
       await SubmitStrategyRegistry.executeSubmit(eventToSave, repository, {
         isEditAll,
       });
+      setIsEditAll(false);
 
       await reloadEvents();
       closeModal();

@@ -11,6 +11,27 @@ export class SubmitAllRecurringEventsStrategy implements ISubmitStrategy {
   async execute(eventData: Event, repository: IEventRepository): Promise<void> {
     const parentId = eventData.recurringEventId ?? eventData.id;
 
-    await repository.editEvent(parentId!, eventData);
+    const parentEvent = await repository.getEventById(parentId!);
+
+    if (!parentEvent) {
+      throw new Error("Parent event not found");
+    }
+
+    const newStart = new Date(parentEvent.start);
+    newStart.setHours(eventData.start.getHours());
+    newStart.setMinutes(eventData.start.getMinutes());
+
+    const newEnd = new Date(parentEvent.end);
+    newEnd.setHours(eventData.end.getHours());
+    newEnd.setMinutes(eventData.end.getMinutes());
+
+    await repository.editEvent(parentId!, {
+      title: eventData.title,
+      description: eventData.description,
+      color: eventData.color,
+      recurrenceRule: eventData.recurrenceRule,
+      start: newStart,
+      end: newEnd,
+    });
   }
 }
