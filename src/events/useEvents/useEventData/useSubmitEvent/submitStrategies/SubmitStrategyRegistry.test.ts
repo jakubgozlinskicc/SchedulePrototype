@@ -99,6 +99,16 @@ describe("SubmitStrategyRegistry", () => {
     });
 
     it("should use SubmitAllRecurringEventsStrategy when isEditAll is true", async () => {
+      const parentEvent: Event = {
+        id: 10,
+        title: "Parent event",
+        description: "Test",
+        start: new Date("2025-12-01T09:00:00"),
+        end: new Date("2025-12-01T10:00:00"),
+        color: "#0000FF",
+        recurrenceRule: { type: "weekly", interval: 1 },
+      };
+
       const eventData: Event = {
         id: 10,
         title: "Updated Recurring Event",
@@ -109,14 +119,32 @@ describe("SubmitStrategyRegistry", () => {
         recurrenceRule: { type: "weekly", interval: 1 },
       };
 
+      mockRepository.getEventById = vi.fn().mockResolvedValue(parentEvent);
+
       await SubmitStrategyRegistry.executeSubmit(eventData, mockRepository, {
         isEditAll: true,
       });
 
-      expect(mockRepository.editEvent).toHaveBeenCalledWith(10, eventData);
+      expect(mockRepository.getEventById).toHaveBeenCalledWith(10);
+      expect(mockRepository.editEvent).toHaveBeenCalledWith(
+        10,
+        expect.objectContaining({
+          title: "Updated Recurring Event",
+        })
+      );
     });
 
     it("should use SubmitAllRecurringEventsStrategy for virtual occurrence with isEditAll true", async () => {
+      const parentEvent: Event = {
+        id: 5,
+        title: "Parent event",
+        description: "Test",
+        start: new Date("2025-12-01T09:00:00"),
+        end: new Date("2025-12-01T10:00:00"),
+        color: "#0000FF",
+        recurrenceRule: { type: "daily", interval: 1 },
+      };
+
       const eventData: Event = {
         id: 15,
         title: "Updated occurrence",
@@ -128,11 +156,17 @@ describe("SubmitStrategyRegistry", () => {
         recurrenceRule: { type: "none", interval: 1 },
       };
 
+      mockRepository.getEventById = vi.fn().mockResolvedValue(parentEvent);
+
       await SubmitStrategyRegistry.executeSubmit(eventData, mockRepository, {
         isEditAll: true,
       });
 
-      expect(mockRepository.editEvent).toHaveBeenCalledWith(5, eventData);
+      expect(mockRepository.getEventById).toHaveBeenCalledWith(5);
+      expect(mockRepository.editEvent).toHaveBeenCalledWith(
+        5,
+        expect.any(Object)
+      );
     });
   });
 });

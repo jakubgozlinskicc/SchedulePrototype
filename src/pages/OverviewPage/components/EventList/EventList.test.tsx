@@ -25,7 +25,6 @@ const mockEvents: Event[] = [
 ];
 
 let mockEventsData = mockEvents;
-const mockSetEventData = vi.fn();
 const mockNavigate = vi.fn();
 
 vi.mock("react-i18next", () => ({
@@ -36,6 +35,7 @@ vi.mock("react-i18next", () => ({
         edit: "Edit",
         today: "Today",
         tomorrow: "Tomorrow",
+        btn_delete: "Delete",
       };
       return translations[key] || key;
     },
@@ -64,7 +64,6 @@ vi.mock(
   () => ({
     useEventDataContext: () => ({
       events: mockEventsData,
-      setEventData: mockSetEventData,
     }),
   })
 );
@@ -85,12 +84,18 @@ vi.mock("../../context/useFiltersContext", () => ({
   useFiltersContext: () => ({
     filters: {
       searchQuery: "",
-      showPastEvents: false,
+      showPastEvents: true,
       dateFrom: null,
       dateTo: null,
       colors: [],
     },
   }),
+}));
+
+vi.mock("./useEventList/useFilteredEvents/strategies/filterRegistry", () => ({
+  filterRegistry: {
+    applyAll: (events: Event[]) => events,
+  },
 }));
 
 describe("EventList", () => {
@@ -144,14 +149,13 @@ describe("EventList", () => {
     expect(firstEvent.style.borderColor).toBe("rgb(0, 0, 255)");
   });
 
-  it("should call setEventData and navigate when edit button clicked", () => {
+  it("should call navigate when edit button clicked", () => {
     render(<EventList />);
 
     const editButtons = screen.getAllByText("Edit");
     fireEvent.click(editButtons[0]);
 
-    expect(mockSetEventData).toHaveBeenCalledWith(mockEvents[0]);
-    expect(mockNavigate).toHaveBeenCalledWith("/event/edit");
+    expect(mockNavigate).toHaveBeenCalledWith("/event/edit/1");
   });
 
   it("should render day headers", () => {
@@ -166,8 +170,12 @@ describe("EventList", () => {
       id: i + 1,
       title: `Event ${i + 1}`,
       description: "",
-      start: new Date(`2025-12-30T${10 + i}:00:00`),
-      end: new Date(`2025-12-30T${11 + i}:00:00`),
+      start: new Date(
+        `2025-12-30T${String(10 + (i % 10)).padStart(2, "0")}:00:00`
+      ),
+      end: new Date(
+        `2025-12-30T${String(11 + (i % 10)).padStart(2, "0")}:00:00`
+      ),
       color: "#0000FF",
       recurrenceRule: { type: "none" as const, interval: 1 },
     }));

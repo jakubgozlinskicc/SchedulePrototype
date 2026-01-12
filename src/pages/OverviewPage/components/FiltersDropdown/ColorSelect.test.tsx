@@ -51,7 +51,7 @@ describe("ColorSelect", () => {
     fireEvent.click(screen.getByText("select-colors"));
 
     const colorOptions = document.querySelectorAll(".color-option");
-    expect(colorOptions.length).toBe(13);
+    expect(colorOptions.length).toBe(14);
   });
 
   it("should add color when unselected color is clicked", () => {

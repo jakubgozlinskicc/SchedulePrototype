@@ -65,6 +65,6 @@ describe("useEventList", () => {
 
     expect(result.current.pagination).toHaveProperty("currentPage");
     expect(result.current.pagination).toHaveProperty("totalPages");
-    expect(result.current.pagination).toHaveProperty("goToPage");
+    expect(result.current.pagination).toHaveProperty("onPageChange");
   });
 });

@@ -46,7 +46,7 @@ describe("usePagination", () => {
     );
 
     act(() => {
-      result.current.goToPage(3);
+      result.current.onPageChange(3);
     });
 
     expect(result.current.currentPage).toBe(3);
@@ -60,7 +60,7 @@ describe("usePagination", () => {
     );
 
     act(() => {
-      result.current.goToNextPage();
+      result.current.onNext();
     });
 
     expect(result.current.currentPage).toBe(2);
@@ -72,8 +72,11 @@ describe("usePagination", () => {
     );
 
     act(() => {
-      result.current.goToPage(3);
-      result.current.goToPreviousPage();
+      result.current.onPageChange(3);
+    });
+
+    act(() => {
+      result.current.onPrevious();
     });
 
     expect(result.current.currentPage).toBe(2);
@@ -85,7 +88,10 @@ describe("usePagination", () => {
     );
 
     act(() => {
-      result.current.goToPage(5);
+      result.current.onPageChange(5);
+    });
+
+    act(() => {
       result.current.goToFirstPage();
     });
 
@@ -110,39 +116,42 @@ describe("usePagination", () => {
     );
 
     act(() => {
-      result.current.goToPage(5);
+      result.current.onPageChange(5);
+    });
+
+    act(() => {
       result.current.reset();
     });
 
     expect(result.current.currentPage).toBe(1);
   });
 
-  it("should report hasNextPage correctly", () => {
+  it("should report hasNext correctly", () => {
     const { result } = renderHook(() =>
       usePagination({ totalItems: 25, itemsPerPage: 10 })
     );
 
-    expect(result.current.hasNextPage).toBe(true);
+    expect(result.current.hasNext).toBe(true);
 
     act(() => {
       result.current.goToLastPage();
     });
 
-    expect(result.current.hasNextPage).toBe(false);
+    expect(result.current.hasNext).toBe(false);
   });
 
-  it("should report hasPreviousPage correctly", () => {
+  it("should report hasPrevious correctly", () => {
     const { result } = renderHook(() =>
       usePagination({ totalItems: 25, itemsPerPage: 10 })
     );
 
-    expect(result.current.hasPreviousPage).toBe(false);
+    expect(result.current.hasPrevious).toBe(false);
 
     act(() => {
-      result.current.goToNextPage();
+      result.current.onNext();
     });
 
-    expect(result.current.hasPreviousPage).toBe(true);
+    expect(result.current.hasPrevious).toBe(true);
   });
 
   it("should clamp page to valid range", () => {
@@ -151,13 +160,13 @@ describe("usePagination", () => {
     );
 
     act(() => {
-      result.current.goToPage(100);
+      result.current.onPageChange(100);
     });
 
     expect(result.current.currentPage).toBe(3);
 
     act(() => {
-      result.current.goToPage(-5);
+      result.current.onPageChange(-5);
     });
 
     expect(result.current.currentPage).toBe(1);

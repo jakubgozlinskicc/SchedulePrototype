@@ -4,10 +4,18 @@ import { MemoryRouter } from "react-router-dom";
 import Nav from "./Nav";
 
 const mockHandleAddEventClick = vi.fn();
+const mockChangeLanguage = vi.fn();
 
 vi.mock("./useNavigation/useNavigateToAddEvent/useNavigateToAddEvent", () => ({
   useNavigateToAddEvent: () => ({
     handleAddEventClick: mockHandleAddEventClick,
+  }),
+}));
+
+vi.mock("../../locales/useTranslationContext", () => ({
+  useTranslationContext: () => ({
+    currentLanguage: "enUS",
+    changeLanguage: mockChangeLanguage,
   }),
 }));
 

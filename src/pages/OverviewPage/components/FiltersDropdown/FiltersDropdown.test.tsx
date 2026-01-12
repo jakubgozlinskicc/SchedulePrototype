@@ -13,6 +13,8 @@ let mockFilters = {
   colors: [] as string[],
 };
 
+let mockActiveFiltersCount = 0;
+
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string) => key,
@@ -22,6 +24,7 @@ vi.mock("react-i18next", () => ({
 vi.mock("../../context/useFiltersContext", () => ({
   useFiltersContext: () => ({
     filters: mockFilters,
+    activeFiltersCount: mockActiveFiltersCount,
     updateFilter: mockUpdateFilter,
     resetFilters: mockResetFilters,
   }),
@@ -52,6 +55,7 @@ describe("FiltersDropdown", () => {
       dateTo: null,
       colors: [],
     };
+    mockActiveFiltersCount = 0;
   });
 
   it("should render filters toggle button", () => {
@@ -75,12 +79,7 @@ describe("FiltersDropdown", () => {
   });
 
   it("should show active filters count badge when filters are active", () => {
-    mockFilters = {
-      ...mockFilters,
-      searchQuery: "test",
-      showPastEvents: true,
-      dateFrom: new Date(),
-    };
+    mockActiveFiltersCount = 3;
 
     render(<FiltersDropdown />);
 
@@ -190,10 +189,7 @@ describe("FiltersDropdown", () => {
   });
 
   it("should count colors as active filter when colors are selected", () => {
-    mockFilters = {
-      ...mockFilters,
-      colors: ["red", "blue"],
-    };
+    mockActiveFiltersCount = 1;
 
     render(<FiltersDropdown />);
 

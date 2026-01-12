@@ -5,7 +5,7 @@ import { useEventFormSchema } from "../../events/form/EventForm/useEventForm/use
 import { useEventLoader } from "./useEventLoader";
 import { FormProvider, useForm } from "react-hook-form";
 import { toDateTimeLocal } from "../../utils/toDateTimeLocal/toDateTimeLocal";
-import { getRecurrenceDefaults } from "../EditRecurringEventFormPage/getRecurrenceDefault";
+import { getRecurrenceDefaults } from "../EditRecurringEventFormPage/getRecurrenceDefaults";
 import { useEventFormNavigation } from "../../events/form/EventForm/useEventForm/useEventFormNavigation/useEventFormNavigation";
 import { useEventFormSubmit } from "../../events/form/EventForm/useEventForm/useEventFormSubmit/useEventFormSubmit";
 import { eventRepository } from "../../db/eventRepository";

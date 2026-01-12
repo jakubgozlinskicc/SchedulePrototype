@@ -24,7 +24,7 @@ const mockEvents: Event[] = [
 
 const mockFilters = {
   searchQuery: "",
-  showPastEvents: false,
+  showPastEvents: true,
   dateFrom: null,
   dateTo: null,
   colors: [],
@@ -43,6 +43,12 @@ vi.mock("../../../../context/useFiltersContext", () => ({
   useFiltersContext: () => ({
     filters: mockFilters,
   }),
+}));
+
+vi.mock("./strategies/filterRegistry", () => ({
+  filterRegistry: {
+    applyAll: (events: Event[]) => events,
+  },
 }));
 
 describe("useFilteredEvents", () => {

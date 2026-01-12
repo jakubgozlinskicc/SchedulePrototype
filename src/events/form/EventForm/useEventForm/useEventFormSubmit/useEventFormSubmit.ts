@@ -18,9 +18,7 @@ export function useEventFormSubmit(
     currentIsEditAll: boolean = false
   ) => {
     try {
-      console.log("tam:", data);
       const eventToSave = convertFormDataToEvent(data, event);
-      console.log("Po konwercie:", eventToSave);
 
       await SubmitStrategyRegistry.executeSubmit(eventToSave, eventRepository, {
         isEditAll: currentIsEditAll,

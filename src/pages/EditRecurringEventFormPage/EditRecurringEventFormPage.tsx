@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEventFormSchema } from "../../events/form/EventForm/useEventForm/useEventFormSchema/useEventFormSchema";
 import { FormProvider, useForm } from "react-hook-form";
 import { toDateTimeLocal } from "../../utils/toDateTimeLocal/toDateTimeLocal";
-import { getRecurrenceDefaults } from "./getRecurrenceDefault";
+import { getRecurrenceDefaults } from "./getRecurrenceDefaults";
 import { useEventFormNavigation } from "../../events/form/EventForm/useEventForm/useEventFormNavigation/useEventFormNavigation";
 import { useEventFormSubmit } from "../../events/form/EventForm/useEventForm/useEventFormSubmit/useEventFormSubmit";
 import { eventRepository } from "../../db/eventRepository";

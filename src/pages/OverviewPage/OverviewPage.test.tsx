@@ -2,8 +2,6 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import OverviewPage from "./OverviewPage";
-import { TranslationProvider } from "../../contexts/translationContext/translationProvider";
-import { EventDataProvider } from "../../events/eventContext/eventDataProvider";
 
 const mockNavigate = vi.fn();
 const mockChangeLanguage = vi.fn();
@@ -32,14 +30,41 @@ vi.mock("../../locales/useTranslationContext", () => ({
   }),
 }));
 
+vi.mock(
+  "../../events/useEvents/useEventDataContext/useEventDataContext",
+  () => ({
+    useEventDataContext: () => ({
+      events: [],
+    }),
+  })
+);
+
+vi.mock(
+  "./components/EventList/useEventList/useFilteredEvents/strategies/filterRegistry",
+  () => ({
+    filterRegistry: {
+      applyAll: () => [],
+    },
+  })
+);
+
+vi.mock("../../db/eventRepository", () => ({
+  eventRepository: {
+    getEvents: vi.fn().mockResolvedValue([]),
+  },
+}));
+
+vi.mock(
+  "../../events/useEvents/useEventData/useLoadEvents/useLoadEvents",
+  () => ({
+    useLoadEvents: vi.fn(),
+  })
+);
+
 const renderOverviewPage = () => {
   return render(
     <BrowserRouter>
-      <TranslationProvider>
-        <EventDataProvider>
-          <OverviewPage />
-        </EventDataProvider>
-      </TranslationProvider>
+      <OverviewPage />
     </BrowserRouter>
   );
 };
@@ -65,13 +90,6 @@ describe("OverviewPage", () => {
     expect(container.querySelector(".fa-list")).toBeInTheDocument();
   });
 
-  it("should render language select with options", () => {
-    renderOverviewPage();
-    expect(screen.getByRole("combobox")).toBeInTheDocument();
-    expect(screen.getByText("EN")).toBeInTheDocument();
-    expect(screen.getByText("PL")).toBeInTheDocument();
-  });
-
   it("should render events section", () => {
     renderOverviewPage();
     expect(screen.getByText("events")).toBeInTheDocument();
@@ -81,13 +99,6 @@ describe("OverviewPage", () => {
     renderOverviewPage();
     fireEvent.click(screen.getByText("Schedule"));
     expect(mockNavigate).toHaveBeenCalledWith("/");
-  });
-
-  it("should call changeLanguage when selecting different option", () => {
-    renderOverviewPage();
-    const select = screen.getByRole("combobox");
-    fireEvent.change(select, { target: { value: "pl" } });
-    expect(mockChangeLanguage).toHaveBeenCalledWith("pl");
   });
 
   it("should not display date filters when not set", () => {

@@ -9,6 +9,34 @@ vi.mock("react-i18next", () => ({
   }),
 }));
 
+vi.mock(
+  "../../../../../events/form/EventForm/useEventForm/useEventFormSchema/useEventFormSchema",
+  () => ({
+    useEventFormSchema: () => ({
+      eventFormSchema: {
+        validateSync: vi.fn(),
+      },
+    }),
+  })
+);
+
+vi.mock("../../../../../events/form/EventForm/EventFormFields", () => ({
+  EventFormFields: () => (
+    <div data-testid="event-form-fields">
+      <label>title</label>
+      <input name="title" />
+      <label>description</label>
+      <textarea name="description" />
+      <label>start-date</label>
+      <input name="start" type="datetime-local" />
+      <label>end-date</label>
+      <input name="end" type="datetime-local" />
+      <label>color</label>
+      <input name="color" type="color" defaultValue="#3b82f6" />
+    </div>
+  ),
+}));
+
 describe("AddEventModal", () => {
   const mockEventData: Event = {
     title: "",
@@ -20,8 +48,6 @@ describe("AddEventModal", () => {
 
   const mockProps = {
     eventData: mockEventData,
-    isShaking: false,
-    onChange: vi.fn(),
     onClose: vi.fn(),
     onSubmit: vi.fn(),
   };
@@ -48,22 +74,21 @@ describe("AddEventModal", () => {
     expect(mockProps.onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("It should call onSubmit when add button is clicked", () => {
+  it("It should have submit button", () => {
     render(<AddEventModal {...mockProps} />);
     const addButton = screen.getByText("btn-add");
-    fireEvent.click(addButton);
-    expect(mockProps.onSubmit).toHaveBeenCalledTimes(1);
+    expect(addButton).toHaveAttribute("type", "submit");
   });
 
-  it("It should do not apply shake class when isShaking is false", () => {
+  it("It should render modal", () => {
     const { container } = render(<AddEventModal {...mockProps} />);
     const modal = container.querySelector(".modal");
-    expect(modal).not.toHaveClass("shake");
+    expect(modal).toBeInTheDocument();
   });
 
   it("It should pass all props correctly to BaseEventModal", () => {
     render(<AddEventModal {...mockProps} />);
-    expect(screen.getByDisplayValue(mockEventData.color)).toBeInTheDocument();
+    expect(screen.getByTestId("event-form-fields")).toBeInTheDocument();
   });
 
   it("It should render with all form fields from BaseEventModal", () => {

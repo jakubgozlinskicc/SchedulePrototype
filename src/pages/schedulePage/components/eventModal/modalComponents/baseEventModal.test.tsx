@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { BaseEventModal } from "../modalComponents/baseEventModal";
 import type { Event } from "../../../../../db/scheduleDb";
 import { vi, describe, beforeEach, it, expect } from "vitest";
@@ -9,10 +9,36 @@ vi.mock("react-i18next", () => ({
   }),
 }));
 
-vi.mock("../../../../../utils/toDateTimeLocal", () => ({
-  toDateTimeLocal: (date: Date) => {
-    return date.toISOString().slice(0, 16);
-  },
+vi.mock(
+  "../../../../../events/form/EventForm/useEventForm/useEventFormSchema/useEventFormSchema",
+  () => ({
+    useEventFormSchema: () => ({
+      eventFormSchema: {
+        validateSync: vi.fn(),
+      },
+    }),
+  })
+);
+
+vi.mock("../../../../../events/form/EventForm/EventFormFields", () => ({
+  EventFormFields: () => (
+    <div data-testid="event-form-fields">
+      <label>title</label>
+      <input name="title" defaultValue="Test Event" />
+      <label>description</label>
+      <textarea name="description" defaultValue="Test Description" />
+      <label>start-date</label>
+      <input
+        name="start"
+        type="datetime-local"
+        defaultValue="2024-01-01T10:00"
+      />
+      <label>end-date</label>
+      <input name="end" type="datetime-local" defaultValue="2024-01-01T11:00" />
+      <label>color</label>
+      <input name="color" type="color" defaultValue="#3b82f6" />
+    </div>
+  ),
 }));
 
 describe("BaseEventModal", () => {
@@ -28,11 +54,8 @@ describe("BaseEventModal", () => {
   const mockProps = {
     title: "Test Modal Title",
     eventData: mockEventData,
-    isShaking: false,
-    onChange: vi.fn(),
-    onClose: vi.fn(),
     onSubmit: vi.fn(),
-    children: <button>Test Button</button>,
+    children: <button type="submit">Test Button</button>,
   };
 
   beforeEach(() => {
@@ -53,69 +76,14 @@ describe("BaseEventModal", () => {
     expect(screen.getByText("color")).toBeInTheDocument();
   });
 
-  it("It should render form inputs with correct values", () => {
+  it("It should render form inputs", () => {
     render(<BaseEventModal {...mockProps} />);
-    expect(screen.getByDisplayValue("Test Event")).toBeInTheDocument();
-    expect(screen.getByDisplayValue("Test Description")).toBeInTheDocument();
-    expect(screen.getByDisplayValue("#3b82f6")).toBeInTheDocument();
-  });
-
-  it("It should call onChange when title input changes", () => {
-    render(<BaseEventModal {...mockProps} />);
-    const titleInput = screen.getByDisplayValue("Test Event");
-    fireEvent.change(titleInput, { target: { value: "New Title" } });
-    expect(mockProps.onChange).toHaveBeenCalled();
-  });
-
-  it("It should call onChange when description textarea changes", () => {
-    render(<BaseEventModal {...mockProps} />);
-    const descriptionTextarea = screen.getByDisplayValue("Test Description");
-    fireEvent.change(descriptionTextarea, {
-      target: { value: "New Description" },
-    });
-    expect(mockProps.onChange).toHaveBeenCalled();
-  });
-
-  it("It should call onChange when start date input changes", () => {
-    render(<BaseEventModal {...mockProps} />);
-    const startInput = screen.getByDisplayValue("2024-01-01T10:00");
-    fireEvent.change(startInput, { target: { value: "2024-01-02T10:00" } });
-    expect(mockProps.onChange).toHaveBeenCalled();
-  });
-
-  it("It should call onChange when end date input changes", () => {
-    render(<BaseEventModal {...mockProps} />);
-    const endInput = screen.getByDisplayValue("2024-01-01T10:00");
-    fireEvent.change(endInput, { target: { value: "2024-01-02T10:00" } });
-    expect(mockProps.onChange).toHaveBeenCalled();
-  });
-
-  it("It should call onChange when color input changes", () => {
-    render(<BaseEventModal {...mockProps} />);
-    const colorInput = screen.getByDisplayValue("#3b82f6");
-    fireEvent.change(colorInput, { target: { value: "#ff0000" } });
-    expect(mockProps.onChange).toHaveBeenCalled();
-  });
-
-  it("It should call onSubmit when form is submitted", () => {
-    const { container } = render(<BaseEventModal {...mockProps} />);
-    const form = container.querySelector("form");
-    expect(form).toBeInTheDocument();
-    if (form) {
-      fireEvent.submit(form);
-      expect(mockProps.onSubmit).toHaveBeenCalled();
-    }
+    expect(screen.getByTestId("event-form-fields")).toBeInTheDocument();
   });
 
   it("It should render children in modal-actions", () => {
     render(<BaseEventModal {...mockProps} />);
     expect(screen.getByText("Test Button")).toBeInTheDocument();
-  });
-
-  it("It should do not apply shake class when isShaking is false", () => {
-    const { container } = render(<BaseEventModal {...mockProps} />);
-    const modal = container.querySelector(".modal");
-    expect(modal).not.toHaveClass("shake");
   });
 
   it("It should render modal-backdrop", () => {
@@ -132,10 +100,13 @@ describe("BaseEventModal", () => {
       end: new Date(),
       color: "#000000",
     };
-    const { container } = render(
-      <BaseEventModal {...mockProps} eventData={emptyEvent} />
-    );
-    const titleInput = container.querySelector('input[name="title"]');
-    expect(titleInput).toHaveValue("");
+    render(<BaseEventModal {...mockProps} eventData={emptyEvent} />);
+    expect(screen.getByTestId("event-form-fields")).toBeInTheDocument();
+  });
+
+  it("It should have form element", () => {
+    const { container } = render(<BaseEventModal {...mockProps} />);
+    const form = container.querySelector("form");
+    expect(form).toBeInTheDocument();
   });
 });

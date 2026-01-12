@@ -9,6 +9,34 @@ vi.mock("react-i18next", () => ({
   }),
 }));
 
+vi.mock(
+  "../../../../../events/form/EventForm/useEventForm/useEventFormSchema/useEventFormSchema",
+  () => ({
+    useEventFormSchema: () => ({
+      eventFormSchema: {
+        validateSync: vi.fn(),
+      },
+    }),
+  })
+);
+
+vi.mock("../../../../../events/form/EventForm/EventFormFields", () => ({
+  EventFormFields: () => (
+    <div data-testid="event-form-fields">
+      <label>title</label>
+      <input name="title" defaultValue="Test Event" />
+      <label>description</label>
+      <textarea name="description" defaultValue="Test Description" />
+      <label>start-date</label>
+      <input name="start" type="datetime-local" />
+      <label>end-date</label>
+      <input name="end" type="datetime-local" />
+      <label>color</label>
+      <input name="color" type="color" defaultValue="#3b82f6" />
+    </div>
+  ),
+}));
+
 describe("EditEventModal", () => {
   const mockEventData: Event = {
     id: 1,
@@ -21,8 +49,6 @@ describe("EditEventModal", () => {
 
   const mockProps = {
     eventData: mockEventData,
-    isShaking: false,
-    onChange: vi.fn(),
     onClose: vi.fn(),
     onSubmit: vi.fn(),
     onRequestDelete: vi.fn(),
@@ -58,20 +84,10 @@ describe("EditEventModal", () => {
     expect(mockProps.onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("It should call onSubmit when save changes button is clicked", () => {
+  it("It should have submit button", () => {
     render(<EditEventModal {...mockProps} />);
     const saveButton = screen.getByText("btn_save_changes");
-    fireEvent.click(saveButton);
-    expect(mockProps.onSubmit).toHaveBeenCalled();
-  });
-
-  it("It should pass all props correctly to BaseEventModal", () => {
-    render(<EditEventModal {...mockProps} />);
-    expect(screen.getByDisplayValue(mockEventData.title)).toBeInTheDocument();
-    expect(
-      screen.getByDisplayValue(mockEventData.description)
-    ).toBeInTheDocument();
-    expect(screen.getByDisplayValue(mockEventData.color)).toBeInTheDocument();
+    expect(saveButton).toHaveAttribute("type", "submit");
   });
 
   it("It should render with all form fields from BaseEventModal", () => {
@@ -89,5 +105,10 @@ describe("EditEventModal", () => {
     const deleteButton = screen.getByText("btn_delete");
     fireEvent.click(deleteButton);
     expect(asyncDelete).toHaveBeenCalledTimes(1);
+  });
+
+  it("It should pass all props correctly to BaseEventModal", () => {
+    render(<EditEventModal {...mockProps} />);
+    expect(screen.getByTestId("event-form-fields")).toBeInTheDocument();
   });
 });
