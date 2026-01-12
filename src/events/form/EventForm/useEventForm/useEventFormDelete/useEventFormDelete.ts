@@ -1,8 +1,8 @@
 import type { IEventRepository } from "../../../../useEvents/IEventRepository";
 import type { Event } from "../../../../../db/scheduleDb";
-import { useReloadEvents } from "../../../../useEvents/useEventData/useReloadEvents/useReloadEvents";
 import { useEventFormNavigation } from "../useEventFormNavigation/useEventFormNavigation";
 import { DeleteStrategyRegistry } from "../../../../useEvents/useEventData/useDeleteEvent/deleteStrategies/deleteStrategyRegistry";
+import { useReloadEvents } from "../../../../../pages/OverviewPage/components/EventList/useEventList/useReloadEvents/useReloadEvents";
 
 export function useEventFormDelete(
   eventRepository: IEventRepository,

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { Event } from "../../../../../../db/scheduleDb";
 import type { IEventRepository } from "../../../../../../events/useEvents/IEventRepository";
-import { useReloadEvents } from "../../../../../../events/useEvents/useEventData/useReloadEvents/useReloadEvents";
 import { DeleteStrategyRegistry } from "../../../../../../events/useEvents/useEventData/useDeleteEvent/deleteStrategies/deleteStrategyRegistry";
+import { useReloadEvents } from "../useReloadEvents/useReloadEvents";
 
 export function useEventDelete(eventRepository: IEventRepository) {
   const [eventToDelete, setEventToDelete] = useState<Event | null>(null);

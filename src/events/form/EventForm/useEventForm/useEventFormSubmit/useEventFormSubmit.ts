@@ -1,10 +1,10 @@
 import type { IEventRepository } from "../../../../useEvents/IEventRepository";
 import type { Event } from "../../../../../db/scheduleDb";
 import { SubmitStrategyRegistry } from "../../../../useEvents/useEventData/useSubmitEvent/submitStrategies/SubmitStrategyRegistry";
-import { useReloadEvents } from "../../../../useEvents/useEventData/useReloadEvents/useReloadEvents";
 import { useEventFormNavigation } from "../useEventFormNavigation/useEventFormNavigation";
 import type { EventFormData } from "../../eventFormSchema";
 import { convertFormDataToEvent } from "../convertFormDataToEvent";
+import { useReloadEvents } from "../../../../../pages/OverviewPage/components/EventList/useEventList/useReloadEvents/useReloadEvents";
 
 export function useEventFormSubmit(
   eventRepository: IEventRepository,
