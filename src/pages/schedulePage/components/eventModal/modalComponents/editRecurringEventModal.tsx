@@ -75,8 +75,8 @@ export function EditRecurringEventModal({
       {isDeleteModalOpen && (
         <DeleteEventConfirmation
           onClose={() => setIsDeleteModalOpen(false)}
-          onConfirmSingle={() => onRequestDelete({ isEditAll: false })}
-          onConfirmAll={() => onRequestDelete({ isEditAll: true })}
+          onConfirmSingle={() => onRequestDelete({ isDeleteAll: false })}
+          onConfirmAll={() => onRequestDelete({ isDeleteAll: true })}
         />
       )}
       <Button

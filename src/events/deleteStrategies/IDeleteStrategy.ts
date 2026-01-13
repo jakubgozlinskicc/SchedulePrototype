@@ -7,5 +7,5 @@ export interface IDeleteStrategy {
 }
 
 export type DeleteOptions = {
-  isEditAll?: boolean;
+  isDeleteAll?: boolean;
 };

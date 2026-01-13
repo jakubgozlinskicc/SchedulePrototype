@@ -7,7 +7,7 @@ export class DeleteAllRecurringEventsStrategy implements IDeleteStrategy {
     const isRecurring =
       eventData.recurrenceRule?.type !== "none" || !!eventData.recurringEventId;
 
-    return isRecurring && options?.isEditAll === true;
+    return isRecurring && options?.isDeleteAll === true;
   }
 
   async execute(eventData: Event, repository: IEventRepository): Promise<void> {

@@ -11,12 +11,12 @@ export function useEventFormDelete(
   const { reloadEvents } = useReloadEvents(eventRepository);
   const { goToOverview } = useEventFormNavigation();
 
-  const handleDelete = async (isEditAll?: boolean) => {
+  const handleDelete = async (isDeleteAll?: boolean) => {
     if (!event) return;
 
     try {
       await DeleteStrategyRegistry.executeDelete(event, eventRepository, {
-        isEditAll,
+        isDeleteAll,
       });
       await reloadEvents();
       goToOverview();

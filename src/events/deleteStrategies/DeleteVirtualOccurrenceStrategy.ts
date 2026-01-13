@@ -7,7 +7,7 @@ export class DeleteVirtualOccurrenceStrategy implements IDeleteStrategy {
     return (
       !eventData.id &&
       !!eventData.recurringEventId &&
-      options?.isEditAll === false
+      options?.isDeleteAll === false
     );
   }
 

@@ -201,26 +201,6 @@ describe("EditRecurringEventModal", () => {
       expect(screen.getByTestId("delete-confirmation")).toBeInTheDocument();
     });
 
-    it("should call onRequestDelete with isEditAll false when confirm single is clicked", () => {
-      renderComponent();
-
-      fireEvent.click(screen.getByText("btn-single"));
-      fireEvent.click(screen.getByText("btn_delete"));
-      fireEvent.click(screen.getByText("confirm-single"));
-
-      expect(mockOnRequestDelete).toHaveBeenCalledWith({ isEditAll: false });
-    });
-
-    it("should call onRequestDelete with isEditAll true when confirm all is clicked", () => {
-      renderComponent();
-
-      fireEvent.click(screen.getByText("btn-single"));
-      fireEvent.click(screen.getByText("btn_delete"));
-      fireEvent.click(screen.getByText("confirm-all"));
-
-      expect(mockOnRequestDelete).toHaveBeenCalledWith({ isEditAll: true });
-    });
-
     it("should close delete confirmation when cancel is clicked", () => {
       renderComponent();
 

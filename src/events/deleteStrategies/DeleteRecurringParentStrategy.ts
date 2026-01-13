@@ -8,7 +8,7 @@ export class DeleteRecurringParentStrategy implements IDeleteStrategy {
     return (
       !!eventData.id &&
       eventData.recurrenceRule?.type !== "none" &&
-      options?.isEditAll === false
+      options?.isDeleteAll === false
     );
   }
 

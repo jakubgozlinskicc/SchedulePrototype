@@ -114,7 +114,7 @@ describe("useEventDelete", () => {
       expect(DeleteStrategyRegistry.executeDelete).toHaveBeenCalledWith(
         mockSingleEvent,
         mockRepository,
-        { isEditAll: false }
+        { isDeleteAll: false }
       );
       expect(mockReloadEvents).toHaveBeenCalled();
       expect(result.current.eventToDelete).toBeNull();
@@ -138,7 +138,7 @@ describe("useEventDelete", () => {
       expect(DeleteStrategyRegistry.executeDelete).toHaveBeenCalledWith(
         mockRecurringEvent,
         mockRepository,
-        { isEditAll: false }
+        { isDeleteAll: false }
       );
       expect(mockReloadEvents).toHaveBeenCalled();
       expect(result.current.eventToDelete).toBeNull();
@@ -174,7 +174,7 @@ describe("useEventDelete", () => {
       expect(DeleteStrategyRegistry.executeDelete).toHaveBeenCalledWith(
         mockRecurringEvent,
         mockRepository,
-        { isEditAll: true }
+        { isDeleteAll: true }
       );
       expect(mockReloadEvents).toHaveBeenCalled();
       expect(result.current.eventToDelete).toBeNull();

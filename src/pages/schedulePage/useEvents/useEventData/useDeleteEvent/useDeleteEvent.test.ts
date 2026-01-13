@@ -63,28 +63,28 @@ describe("useDeleteEvent", () => {
     );
 
     await act(async () => {
-      await result.current.deleteCurrentEvent({ isEditAll: false });
+      await result.current.deleteCurrentEvent({ isDeleteAll: false });
     });
 
     expect(DeleteStrategyRegistry.executeDelete).toHaveBeenCalledWith(
       mockEventData,
       mockRepository,
-      { isEditAll: false }
+      { isDeleteAll: false }
     );
   });
 
-  it("should pass isEditAll option to strategy registry", async () => {
+  it("should pass isDeleteAll option to strategy registry", async () => {
     const { result } = renderHook(() =>
       useDeleteEvent(mockCloseModal, mockRepository)
     );
 
     await act(async () => {
-      await result.current.deleteCurrentEvent({ isEditAll: true });
+      await result.current.deleteCurrentEvent({ isDeleteAll: true });
     });
     expect(DeleteStrategyRegistry.executeDelete).toHaveBeenCalledWith(
       mockEventData,
       mockRepository,
-      { isEditAll: true }
+      { isDeleteAll: true }
     );
   });
 

@@ -20,7 +20,7 @@ describe("DeleteAllRecurringEventsStrategy", () => {
   });
 
   describe("canExecute", () => {
-    it("should return true for recurring parent event with isEditAll true", () => {
+    it("should return true for recurring parent event with isDeleteAll true", () => {
       const eventData: Event = {
         id: 1,
         title: "Recurring event",
@@ -34,10 +34,10 @@ describe("DeleteAllRecurringEventsStrategy", () => {
         },
       };
 
-      expect(strategy.canExecute(eventData, { isEditAll: true })).toBe(true);
+      expect(strategy.canExecute(eventData, { isDeleteAll: true })).toBe(true);
     });
 
-    it("should return true for virtual occurrence with isEditAll true", () => {
+    it("should return true for virtual occurrence with isDeleteAll true", () => {
       const eventData: Event = {
         title: "Virtual occurrence",
         description: "Test",
@@ -51,10 +51,10 @@ describe("DeleteAllRecurringEventsStrategy", () => {
         },
       };
 
-      expect(strategy.canExecute(eventData, { isEditAll: true })).toBe(true);
+      expect(strategy.canExecute(eventData, { isDeleteAll: true })).toBe(true);
     });
 
-    it("should return false when isEditAll is false", () => {
+    it("should return false when isDeleteAll is false", () => {
       const eventData: Event = {
         id: 1,
         title: "Recurring event",
@@ -68,7 +68,9 @@ describe("DeleteAllRecurringEventsStrategy", () => {
         },
       };
 
-      expect(strategy.canExecute(eventData, { isEditAll: false })).toBe(false);
+      expect(strategy.canExecute(eventData, { isDeleteAll: false })).toBe(
+        false
+      );
     });
 
     it("should return false for non-recurring event", () => {
@@ -85,7 +87,7 @@ describe("DeleteAllRecurringEventsStrategy", () => {
         },
       };
 
-      expect(strategy.canExecute(eventData, { isEditAll: true })).toBe(false);
+      expect(strategy.canExecute(eventData, { isDeleteAll: true })).toBe(false);
     });
 
     it("should return false when options is undefined", () => {

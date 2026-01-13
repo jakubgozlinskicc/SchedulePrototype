@@ -21,10 +21,10 @@ export function useEventDelete(
     }
   };
 
-  const handleDeleteSingle = async (event: Event, isEditAll = false) => {
+  const handleDeleteSingle = async (event: Event, isDeleteAll = false) => {
     try {
       await DeleteStrategyRegistry.executeDelete(event, eventRepository, {
-        isEditAll,
+        isDeleteAll,
       });
       await reloadEvents();
       setEventToDelete(null);
