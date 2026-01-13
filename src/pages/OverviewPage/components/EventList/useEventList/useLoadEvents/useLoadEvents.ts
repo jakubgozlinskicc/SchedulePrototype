@@ -13,7 +13,6 @@ export function useLoadEvents(repository: IEventRepository) {
         console.error("Error during loading events:", error);
       }
     };
-    console.log("s");
     void load();
   }, [reloadEvents]);
 

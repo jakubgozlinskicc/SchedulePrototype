@@ -9,7 +9,7 @@ const mockReloadEvents = vi.fn();
 const mockGoToOverview = vi.fn();
 
 vi.mock(
-  "../../../../useEvents/useEventData/useReloadEvents/useReloadEvents",
+  "../../../../../pages/OverviewPage/components/EventList/useEventList/useReloadEvents/useReloadEvents",
   () => ({
     useReloadEvents: () => ({
       reloadEvents: mockReloadEvents,
@@ -151,9 +151,9 @@ describe("useEventFormSubmit", () => {
   });
 
   it("should not call reloadEvents or goToOverview on error", async () => {
-    (
-      SubmitStrategyRegistry.executeSubmit as ReturnType<typeof vi.fn>
-    ).mockRejectedValueOnce(new Error("Submit failed"));
+    vi.mocked(SubmitStrategyRegistry.executeSubmit).mockRejectedValueOnce(
+      new Error("Submit failed")
+    );
 
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
@@ -171,9 +171,9 @@ describe("useEventFormSubmit", () => {
 
   it("should log error on failure", async () => {
     const error = new Error("Submit failed");
-    (
-      SubmitStrategyRegistry.executeSubmit as ReturnType<typeof vi.fn>
-    ).mockRejectedValueOnce(error);
+    vi.mocked(SubmitStrategyRegistry.executeSubmit).mockRejectedValueOnce(
+      error
+    );
 
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
