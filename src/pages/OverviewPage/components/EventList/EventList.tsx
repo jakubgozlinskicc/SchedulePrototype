@@ -11,7 +11,7 @@ import { useEventDelete } from "./useEventList/useEventDelete/useEventDelete";
 import { useLoadEvents } from "./useEventList/useLoadEvents/useLoadEvents";
 
 export function EventList() {
-  const { events } = useLoadEvents(eventRepository);
+  const { events, reloadEvents } = useLoadEvents(eventRepository);
 
   const { groupedEvents, formatTime, pagination } = useEventList(events);
   const { t } = useTranslation();
@@ -24,7 +24,7 @@ export function EventList() {
     handleDeleteSingle,
     handleDeleteAll,
     handleCancelDelete,
-  } = useEventDelete(eventRepository);
+  } = useEventDelete(eventRepository, reloadEvents);
 
   const handleEditClick = (event: Event) => {
     const dateStr = encodeURIComponent(event.start.toISOString());

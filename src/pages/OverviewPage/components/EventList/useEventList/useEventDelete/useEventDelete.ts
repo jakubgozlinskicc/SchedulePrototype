@@ -2,11 +2,12 @@ import { useState } from "react";
 import type { Event } from "../../../../../../db/scheduleDb";
 import type { IEventRepository } from "../../../../../../events/useEvents/IEventRepository";
 import { DeleteStrategyRegistry } from "../../../../../../events/useEvents/useEventData/useDeleteEvent/deleteStrategies/deleteStrategyRegistry";
-import { useReloadEvents } from "../useReloadEvents/useReloadEvents";
 
-export function useEventDelete(eventRepository: IEventRepository) {
+export function useEventDelete(
+  eventRepository: IEventRepository,
+  reloadEvents: () => Promise<void>
+) {
   const [eventToDelete, setEventToDelete] = useState<Event | null>(null);
-  const { reloadEvents } = useReloadEvents(eventRepository);
 
   const isRecurringEvent = (event: Event) => {
     return (!!event.id && event.recurrenceRule?.type !== "none") || !event.id;
