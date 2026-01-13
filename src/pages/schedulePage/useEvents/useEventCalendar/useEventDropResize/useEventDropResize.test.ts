@@ -2,19 +2,16 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useEventDropResize } from "./useEventDropResize";
 import type { Event } from "../../../../../db/scheduleDb";
-import type { IEventRepository } from "../../../../../events/useEvents/IEventRepository";
 import { DropResizeStrategyRegistry } from "./dropResizeStrategies.ts/dropResizeStrategyRegistry";
+import type { IEventRepository } from "../../../../../events/IEventRepository";
 
 const mockReloadEvents = vi.fn();
 
-vi.mock(
-  "../../../../../events/useEvents/useEventData/useReloadEvents/useReloadEvents",
-  () => ({
-    useReloadEvents: () => ({
-      reloadEvents: mockReloadEvents,
-    }),
-  })
-);
+vi.mock("../../useEventData/useReloadEvents/useReloadEvents", () => ({
+  useReloadEvents: () => ({
+    reloadEvents: mockReloadEvents,
+  }),
+}));
 
 vi.mock("./dropResizeStrategies.ts/dropResizeStrategyRegistry", () => ({
   DropResizeStrategyRegistry: {

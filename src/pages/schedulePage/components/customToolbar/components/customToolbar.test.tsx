@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { CustomToolbar } from "./customToolbar";
+import { CustomToolbar } from "./CustomToolbar";
 import type { ToolbarProps } from "react-big-calendar";
 import type { Event } from "../../../../../db/scheduleDb";
 

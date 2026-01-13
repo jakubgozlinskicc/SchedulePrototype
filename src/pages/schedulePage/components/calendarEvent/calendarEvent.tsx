@@ -3,7 +3,7 @@ import { useHover } from "usehooks-ts";
 import { createPortal } from "react-dom";
 import type { Event } from "../../../../db/scheduleDb";
 import { getTextColor } from "../../../../utils/getTextColor/getTextColor";
-import { EventHover } from "../eventHover/eventHover";
+import { EventHover } from "../EventHover/EventHover";
 
 interface CalendarEventProps {
   event: Event;

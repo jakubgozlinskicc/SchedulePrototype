@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useEventDelete } from "./useEventDelete";
-import type { IEventRepository } from "../../../../../../events/useEvents/IEventRepository";
 import type { Event } from "../../../../../../db/scheduleDb";
-import { DeleteStrategyRegistry } from "../../../../../../events/useEvents/useEventData/useDeleteEvent/deleteStrategies/deleteStrategyRegistry";
+import { DeleteStrategyRegistry } from "../../../../../../events/deleteStrategies/deleteStrategyRegistry";
+import type { IEventRepository } from "../../../../../../events/IEventRepository";
 
 vi.mock(
-  "../../../../../../events/useEvents/useEventData/useDeleteEvent/deleteStrategies/deleteStrategyRegistry",
+  "../../../../../../events/deleteStrategies/deleteStrategyRegistry",
   () => ({
     DeleteStrategyRegistry: {
       executeDelete: vi.fn().mockResolvedValue(undefined),

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { EditRecurringEventModal } from "./editRecurringEventModal";
+import { EditRecurringEventModal } from "./EditRecurringEventModal";
 import type { Event } from "../../../../../db/scheduleDb";
 
 vi.mock("react-i18next", () => ({

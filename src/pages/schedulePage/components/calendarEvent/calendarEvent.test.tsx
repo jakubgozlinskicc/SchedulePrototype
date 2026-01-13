@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { CalendarEvent } from "./calendarEvent";
+import { CalendarEvent } from "./CalendarEvent";
 import type { Event } from "../../../../db/scheduleDb";
 
 const mockIsHovering = vi.fn(() => false);

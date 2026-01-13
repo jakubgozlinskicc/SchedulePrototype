@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useEventFormSubmit } from "./useEventFormSubmit";
-import type { IEventRepository } from "../../../../useEvents/IEventRepository";
 import type { Event } from "../../../../../db/scheduleDb";
 import type { EventFormData } from "../../eventFormSchema";
+import type { IEventRepository } from "../../../../IEventRepository";
 
 const mockReloadEvents = vi.fn();
 const mockGoToOverview = vi.fn();
@@ -23,16 +23,13 @@ vi.mock("../useEventFormNavigation/useEventFormNavigation", () => ({
   }),
 }));
 
-vi.mock(
-  "../../../../useEvents/useEventData/useSubmitEvent/submitStrategies/SubmitStrategyRegistry",
-  () => ({
-    SubmitStrategyRegistry: {
-      executeSubmit: vi.fn().mockResolvedValue(undefined),
-    },
-  })
-);
+vi.mock("../../../../submitStrategies/SubmitStrategyRegistry", () => ({
+  SubmitStrategyRegistry: {
+    executeSubmit: vi.fn().mockResolvedValue(undefined),
+  },
+}));
 
-import { SubmitStrategyRegistry } from "../../../../useEvents/useEventData/useSubmitEvent/submitStrategies/SubmitStrategyRegistry";
+import { SubmitStrategyRegistry } from "../../../../submitStrategies/SubmitStrategyRegistry";
 
 describe("useEventFormSubmit", () => {
   let mockRepository: IEventRepository;

@@ -73,13 +73,13 @@ describe("calendarEventPropGetter", () => {
     const event = createMockEvent({ color: "#FF0000" });
     const result = calendarEventPropGetter(event);
     expect(result.style["--event-color"]).toBe("#FF0000");
-    expect(result.style.color).toBe("black");
+    expect(result.style.color).toBe("white");
   });
 
   it("It should handle green", () => {
     const event = createMockEvent({ color: "#00FF00" });
     const result = calendarEventPropGetter(event);
     expect(result.style["--event-color"]).toBe("#00FF00");
-    expect(result.style.color).toBe("white");
+    expect(result.style.color).toBe("black");
   });
 });

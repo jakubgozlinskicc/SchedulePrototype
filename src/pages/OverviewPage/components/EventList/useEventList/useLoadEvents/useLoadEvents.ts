@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import type { IEventRepository } from "../../../../../../events/useEvents/IEventRepository";
 import { useReloadEvents } from "../useReloadEvents/useReloadEvents";
+import type { IEventRepository } from "../../../../../../events/IEventRepository";
 
 export function useLoadEvents(repository: IEventRepository) {
   const { events, reloadEvents } = useReloadEvents(repository);

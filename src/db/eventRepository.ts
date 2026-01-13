@@ -1,4 +1,4 @@
-import type { IEventRepository } from "../events/useEvents/IEventRepository";
+import type { IEventRepository } from "../events/IEventRepository";
 import { db } from "./scheduleDb";
 import type { Event } from "./scheduleDb";
 

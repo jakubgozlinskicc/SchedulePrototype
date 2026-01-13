@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import type { Event } from "../../db/scheduleDb";
-import type { IEventRepository } from "../../events/useEvents/IEventRepository";
-import { getDefaultDateRange } from "../../events/useEvents/useEventData/useReloadEvents/dateRange";
-import { expandRecurringEvent } from "../../events/useEvents/useEventData/useReloadEvents/occurenceExpander";
+import { getDefaultDateRange } from "../../events/reloadUtils/dateRange";
+import { expandRecurringEvent } from "../../events/reloadUtils/occurenceExpander";
+import type { IEventRepository } from "../../events/IEventRepository";
 
 export function useRecurringEventLoader(
   parentId: number | undefined,

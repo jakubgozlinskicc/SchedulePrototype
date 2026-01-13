@@ -2,7 +2,7 @@ import type { Event } from "../../../../../../db/scheduleDb";
 import type { EventModalProps } from "../../eventModalTypes";
 import type { ReactNode } from "react";
 import type { IEventModalStrategy } from "../../eventModalTypes";
-import { AddEventModal } from "../../modalComponents/addEventModal";
+import { AddEventModal } from "../../modalComponents/AddEventModal";
 
 export class AddEventStrategy implements IEventModalStrategy {
   canSupport(eventData: Event): boolean {

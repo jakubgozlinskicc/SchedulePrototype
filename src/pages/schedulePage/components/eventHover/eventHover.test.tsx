@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { EventHover } from "./eventHover";
+import { EventHover } from "./EventHover";
 import type { Event } from "../../../../db/scheduleDb";
 import { vi, describe, beforeEach, it, expect } from "vitest";
 

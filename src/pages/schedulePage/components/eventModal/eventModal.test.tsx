@@ -1,35 +1,28 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { EventModal } from "./eventModal";
-import type { IEventRepository } from "../../../../events/useEvents/IEventRepository";
+import { EventModal } from "./EventModal";
 import type { Event } from "../../../../db/scheduleDb";
+import type { IEventRepository } from "../../../../events/IEventRepository";
 
 const mockOnSubmit = vi.fn();
 const mockHandleEditSingle = vi.fn();
 const mockHandleEditAll = vi.fn();
 
 let mockEventData: Event | null = null;
+vi.mock("../../useEvents/useEventDataContext/useEventDataContext", () => ({
+  useEventDataContext: () => ({
+    eventData: mockEventData,
+  }),
+}));
+
+vi.mock("../../useEvents/useEventData/useSubmitEvent/useSubmitEvent", () => ({
+  useSubmitEvent: () => ({
+    onSubmit: mockOnSubmit,
+  }),
+}));
 
 vi.mock(
-  "../../../../events/useEvents/useEventDataContext/useEventDataContext",
-  () => ({
-    useEventDataContext: () => ({
-      eventData: mockEventData,
-    }),
-  })
-);
-
-vi.mock(
-  "../../../../events/useEvents/useEventData/useSubmitEvent/useSubmitEvent",
-  () => ({
-    useSubmitEvent: () => ({
-      onSubmit: mockOnSubmit,
-    }),
-  })
-);
-
-vi.mock(
-  "../../../../events/useEvents/useEventData/useRecurringEdit/useRecurringEdit",
+  "../../useEvents/useEventData/useRecurringEdit/useRecurringEdit",
   () => ({
     useRecurringEdit: () => ({
       handleEditSingle: mockHandleEditSingle,

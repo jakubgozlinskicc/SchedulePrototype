@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import SchedulePage from "./pages/schedulePage/schedulePage";
+import SchedulePage from "./pages/SchedulePage/SchedulePage";
 import OverviewPage from "./pages/OverviewPage/OverviewPage";
 import { PageTransition } from "./components/PageTransition/PageTransition";
 import { AddEventFormPage } from "./pages/AddEventFormPage/AddEventFormPage";

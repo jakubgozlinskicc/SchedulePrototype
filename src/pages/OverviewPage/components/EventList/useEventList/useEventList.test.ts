@@ -48,20 +48,20 @@ describe("useEventList", () => {
   });
 
   it("should return grouped events", () => {
-    const { result } = renderHook(() => useEventList());
+    const { result } = renderHook(() => useEventList(mockEvents));
 
     expect(result.current.groupedEvents).toHaveLength(1);
     expect(result.current.groupedEvents[0].events).toEqual(mockEvents);
   });
 
   it("should return formatTime function", () => {
-    const { result } = renderHook(() => useEventList());
+    const { result } = renderHook(() => useEventList(mockEvents));
 
     expect(typeof result.current.formatTime).toBe("function");
   });
 
   it("should return pagination object", () => {
-    const { result } = renderHook(() => useEventList());
+    const { result } = renderHook(() => useEventList(mockEvents));
 
     expect(result.current.pagination).toHaveProperty("currentPage");
     expect(result.current.pagination).toHaveProperty("totalPages");

@@ -1,5 +1,5 @@
 import type { EventModalProps } from "../eventModalTypes";
-import { BaseEventModal } from "./baseEventModal";
+import { BaseEventModal } from "./BaseEventModal";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Button } from "../../../../../components/Button/Button";

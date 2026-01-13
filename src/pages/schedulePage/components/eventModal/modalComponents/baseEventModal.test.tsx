@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { BaseEventModal } from "../modalComponents/baseEventModal";
+import { BaseEventModal } from "./BaseEventModal";
 import type { Event } from "../../../../../db/scheduleDb";
 import { vi, describe, beforeEach, it, expect } from "vitest";
 

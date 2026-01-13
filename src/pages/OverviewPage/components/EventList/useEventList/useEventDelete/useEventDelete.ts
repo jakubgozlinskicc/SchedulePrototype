@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Event } from "../../../../../../db/scheduleDb";
-import type { IEventRepository } from "../../../../../../events/useEvents/IEventRepository";
-import { DeleteStrategyRegistry } from "../../../../../../events/useEvents/useEventData/useDeleteEvent/deleteStrategies/deleteStrategyRegistry";
+import { DeleteStrategyRegistry } from "../../../../../../events/deleteStrategies/deleteStrategyRegistry";
+import type { IEventRepository } from "../../../../../../events/IEventRepository";
 
 export function useEventDelete(
   eventRepository: IEventRepository,

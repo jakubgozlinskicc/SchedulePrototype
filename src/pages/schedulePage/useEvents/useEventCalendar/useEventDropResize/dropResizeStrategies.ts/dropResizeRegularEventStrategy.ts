@@ -1,6 +1,6 @@
 import type { IDropResizeStrategy } from "./dropResizeStrategyTypes";
 import type { Event } from "../../../../../../db/scheduleDb";
-import type { IEventRepository } from "../../../../../../events/useEvents/IEventRepository";
+import type { IEventRepository } from "../../../../../../events/IEventRepository";
 
 export class DropResizeRegularEventStrategy implements IDropResizeStrategy {
   canExecute(eventData: Event): boolean {

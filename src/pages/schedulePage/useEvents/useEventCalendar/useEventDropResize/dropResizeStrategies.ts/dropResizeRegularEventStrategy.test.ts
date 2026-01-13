@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { DropResizeRegularEventStrategy } from "./dropResizeRegularEventStrategy";
 import type { Event } from "../../../../../../db/scheduleDb";
-import type { IEventRepository } from "../../../../../../events/useEvents/IEventRepository";
+import type { IEventRepository } from "../../../../../../events/IEventRepository";
 
 describe("DropResizeRegularEventStrategy", () => {
   let strategy: DropResizeRegularEventStrategy;

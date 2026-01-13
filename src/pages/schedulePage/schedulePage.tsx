@@ -1,24 +1,24 @@
-import "./schedulePage.css";
+import "./SchedulePage.css";
 import { useEventModal } from "./useEvents/useEventComponents/useEventModal/useEventModal";
 import { useEventDropResize } from "./useEvents/useEventCalendar/useEventDropResize/useEventDropResize";
 import { useSelectEvent } from "./useEvents/useEventCalendar/useSelectEvent/useSelectEvent";
 import { useSelectSlot } from "./useEvents/useEventCalendar/useSelectSlot/useSelectSlot";
 import { useCalendarLocale } from "./useEvents/useEventCalendar/useCalendarLocale/useCalendarLocale";
-import { useLoadEvents } from "../../events/useEvents/useEventData/useLoadEvents/useLoadEvents";
-import { useDeleteEvent } from "../../events/useEvents/useEventData/useDeleteEvent/useDeleteEvent";
-import { EventModal } from "./components/eventModal/eventModal";
-import { CalendarEvent } from "./components/calendarEvent/calendarEvent";
+import { useLoadEvents } from "./useEvents/useEventData/useLoadEvents/useLoadEvents";
+import { useDeleteEvent } from "./useEvents/useEventData/useDeleteEvent/useDeleteEvent";
+import { EventModal } from "./components/EventModal/EventModal";
+import { CalendarEvent } from "./components/CalendarEvent/CalendarEvent";
 import { useState } from "react";
 import type { Event } from "../../db/scheduleDb";
 import { Calendar, Views, type View } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
-import { CustomToolbar } from "./components/customToolbar/components/customToolbar";
+import { CustomToolbar } from "./components/CustomToolbar/components/CustomToolbar";
 import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter/calendarEventPropGetter";
-import { useAddEvent } from "../../events/useEvents/useEventData/useAddEvent/useAddEvent";
-import { useEventDataContext } from "../../events/useEvents/useEventDataContext/useEventDataContext";
+import { useAddEvent } from "./useEvents/useEventData/useAddEvent/useAddEvent";
+import { useEventDataContext } from "./useEvents/useEventDataContext/useEventDataContext";
 import { eventRepository } from "../../db/eventRepository";
 import { TopControls } from "../../components/TopControls/TopControls";
-import { EventDataProvider } from "../../events/eventContext/eventDataProvider";
+import { EventDataProvider } from "./eventContext/eventDataProvider";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
 
