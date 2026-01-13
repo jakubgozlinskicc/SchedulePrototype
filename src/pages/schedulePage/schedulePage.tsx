@@ -1,5 +1,5 @@
 import "./SchedulePage.css";
-import { useEventModal } from "./useEvents/useEventComponents/useEventModal/useEventModal";
+import { useEventModal } from "./components/EventModal/useEventModal/useEventModal";
 import { useEventDropResize } from "./useEvents/useEventCalendar/useEventDropResize/useEventDropResize";
 import { useSelectEvent } from "./useEvents/useEventCalendar/useSelectEvent/useSelectEvent";
 import { useSelectSlot } from "./useEvents/useEventCalendar/useSelectSlot/useSelectSlot";
