@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { DateRangeFilter } from "./DateRangeFilter";
+import { DateRangeFilter } from "./dateRangeFilter";
 import type { Event } from "../../../../../../../db/scheduleDb";
 import type { EventFilters } from "../../../../../context/filtersContext";
 

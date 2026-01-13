@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { ColorFilter } from "./ColorFilter";
+import { ColorFilter } from "./colorFilter";
 import type { Event } from "../../../../../../../db/scheduleDb";
 import type { EventFilters } from "../../../../../context/filtersContext";
 

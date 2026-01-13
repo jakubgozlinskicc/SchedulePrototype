@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Event } from "../../db/scheduleDb";
-import { DeleteRegularEventStrategy } from "./DeleteRegularEventStrategy";
+import { DeleteRegularEventStrategy } from "./deleteRegularEventStrategy";
 import type { IEventRepository } from "../IEventRepository";
 
 describe("DeleteRegularEventsStrategy", () => {

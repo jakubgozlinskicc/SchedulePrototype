@@ -31,7 +31,7 @@ vi.mock(
   })
 );
 
-import { SubmitStrategyRegistry } from "../../../../../events/submitStrategies/SubmitStrategyRegistry";
+import { SubmitStrategyRegistry } from "../../../../../events/submitStrategies/submitStrategyRegistry";
 
 describe("useSubmitEvent", () => {
   let mockRepository: IEventRepository;

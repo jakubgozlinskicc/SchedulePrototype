@@ -1,10 +1,10 @@
 import type { EventFilters } from "../../../../../context/filtersContext";
 import type { IFilterStrategy } from "./IFilterStrategy";
 import type { Event } from "../../../../../../../db/scheduleDb";
-import { DateRangeFilter } from "./DateRangeFilter";
-import { PastEventsFilter } from "./PastEventsFilter";
-import { SearchQuery } from "./SearchQuery";
-import { ColorFilter } from "./ColorFilter";
+import { DateRangeFilter } from "./dateRangeFilter";
+import { PastEventsFilter } from "./pastEventsFilter";
+import { SearchQuery } from "./searchQuery";
+import { ColorFilter } from "./colorFilter";
 
 const strategies: IFilterStrategy[] = [
   new DateRangeFilter(),

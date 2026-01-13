@@ -1,6 +1,6 @@
 import type { IEventRepository } from "../../../../../events/IEventRepository";
 import type { Event } from "../../../../../db/scheduleDb";
-import { SubmitStrategyRegistry } from "../../../../../events/submitStrategies/SubmitStrategyRegistry";
+import { SubmitStrategyRegistry } from "../../../../../events/submitStrategies/submitStrategyRegistry";
 import { useReloadEvents } from "../useReloadEvents/useReloadEvents";
 import type { EventFormData } from "../../../../../events/form/EventForm/eventFormSchema";
 import { convertFormDataToEvent } from "../../../../../events/form/EventForm/useEventForm/convertFormDataToEvent";

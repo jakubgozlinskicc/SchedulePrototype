@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { PastEventsFilter } from "./PastEventsFilter";
+import { PastEventsFilter } from "./pastEventsFilter";
 import type { Event } from "../../../../../../../db/scheduleDb";
 import type { EventFilters } from "../../../../../context/filtersContext";
 

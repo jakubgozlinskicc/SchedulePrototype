@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Event } from "../../db/scheduleDb";
-import { DeleteVirtualOccurrenceStrategy } from "./DeleteVirtualOccurrenceStrategy";
+import { DeleteVirtualOccurrenceStrategy } from "./deleteVirtualOccurrenceStrategy";
 import type { IEventRepository } from "../IEventRepository";
 
 describe("DeleteVirtualOccurrenceStrategy", () => {

@@ -1,11 +1,11 @@
-import { DayChangeStrategy } from "./DayChangeStrategy";
-import { MonthChangeStrategy } from "./MonthChangeStrategy";
+import { DayChangeStrategy } from "./dayChangeStrategy";
+import { MonthChangeStrategy } from "./monthChangeStrategy";
 import type {
   IRangeChangeStrategy,
   ViewOption,
   DateRange,
 } from "./rangeChangeTypes";
-import { WeekChangeStrategy } from "./WeekChangeStrategy";
+import { WeekChangeStrategy } from "./weekChangeStrategy";
 
 const strategies: IRangeChangeStrategy[] = [
   new MonthChangeStrategy(),

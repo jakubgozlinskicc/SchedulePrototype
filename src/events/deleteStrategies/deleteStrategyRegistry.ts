@@ -1,9 +1,9 @@
 import type { Event } from "../../db/scheduleDb";
 import type { IDeleteStrategy, DeleteOptions } from "./IDeleteStrategy";
-import { DeleteAllRecurringEventsStrategy } from "./DeleteAllRecurringEventsStrategy";
-import { DeleteRecurringParentStrategy } from "./DeleteRecurringParentStrategy";
-import { DeleteVirtualOccurrenceStrategy } from "./DeleteVirtualOccurrenceStrategy";
-import { DeleteRegularEventStrategy } from "./DeleteRegularEventStrategy";
+import { DeleteAllRecurringEventsStrategy } from "./deleteAllRecurringEventsStrategy";
+import { DeleteRecurringParentStrategy } from "./deleteRecurringParentStrategy";
+import { DeleteVirtualOccurrenceStrategy } from "./deleteVirtualOccurrenceStrategy";
+import { DeleteRegularEventStrategy } from "./deleteRegularEventStrategy";
 import type { IEventRepository } from "../IEventRepository";
 
 const strategies: IDeleteStrategy[] = [

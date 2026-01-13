@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { SubmitAllRecurringEventsStrategy } from "./SubmitAllRecurringEventsStrategy";
+import { SubmitAllRecurringEventsStrategy } from "./submitAllRecurringEventsStrategy";
 import type { Event } from "../../db/scheduleDb";
 import type { IEventRepository } from "../IEventRepository";
 

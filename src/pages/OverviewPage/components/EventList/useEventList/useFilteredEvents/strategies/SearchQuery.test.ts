@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { SearchQuery } from "./SearchQuery";
+import { SearchQuery } from "./searchQuery";
 import type { Event } from "../../../../../../../db/scheduleDb";
 import type { EventFilters } from "../../../../../context/filtersContext";
 

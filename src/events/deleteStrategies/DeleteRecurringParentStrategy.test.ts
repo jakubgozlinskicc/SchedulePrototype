@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { DeleteRecurringParentStrategy } from "./DeleteRecurringParentStrategy";
+import { DeleteRecurringParentStrategy } from "./deleteRecurringParentStrategy";
 import type { Event } from "../../db/scheduleDb";
 
 vi.mock("../recurringLogic/setNewParentEvent", () => ({

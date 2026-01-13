@@ -1,5 +1,5 @@
 import type { Event } from "../../../../../db/scheduleDb";
-import { SubmitStrategyRegistry } from "../../../../submitStrategies/SubmitStrategyRegistry";
+import { SubmitStrategyRegistry } from "../../../../submitStrategies/submitStrategyRegistry";
 import { useEventFormNavigation } from "../useEventFormNavigation/useEventFormNavigation";
 import type { EventFormData } from "../../eventFormSchema";
 import { convertFormDataToEvent } from "../convertFormDataToEvent";

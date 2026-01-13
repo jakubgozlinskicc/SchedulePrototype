@@ -29,7 +29,7 @@ vi.mock("../../../../submitStrategies/SubmitStrategyRegistry", () => ({
   },
 }));
 
-import { SubmitStrategyRegistry } from "../../../../submitStrategies/SubmitStrategyRegistry";
+import { SubmitStrategyRegistry } from "../../../../submitStrategies/submitStrategyRegistry";
 
 describe("useEventFormSubmit", () => {
   let mockRepository: IEventRepository;
