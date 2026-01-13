@@ -6,6 +6,7 @@ import { getRecurrenceDefaults } from "../../../../EditRecurringEventFormPage/ge
 import { EventFormFields } from "../../../../../events/form/EventForm/EventFormFields";
 import type { Event } from "../../../../../db/scheduleDb";
 import type { EventFormData } from "../../../../../events/form/EventForm/eventFormSchema";
+import { Modal } from "../../../../../components/Modal/Modal";
 
 interface BaseEventModalProps {
   title: string;
@@ -57,18 +58,13 @@ export function BaseEventModal({
 
   return (
     <FormProvider {...methods}>
-      <div className="modal-backdrop">
-        <div className="modal">
-          <h3 className="modal-title">{title}</h3>
-          <form
-            onSubmit={methods.handleSubmit(onSubmit)}
-            className="modal-form"
-          >
-            <EventFormFields />
-            <div className="modal-actions">{children}</div>
-          </form>
-        </div>
-      </div>
+      <Modal className="modal">
+        <h3 className="modal-title">{title}</h3>
+        <form onSubmit={methods.handleSubmit(onSubmit)} className="modal-form">
+          <EventFormFields />
+        </form>
+        <div className="modal-actions">{children}</div>
+      </Modal>
     </FormProvider>
   );
 }

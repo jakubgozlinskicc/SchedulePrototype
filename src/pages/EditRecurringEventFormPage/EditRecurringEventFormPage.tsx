@@ -15,7 +15,7 @@ import { useEventFormDelete } from "../../events/form/EventForm/useEventForm/use
 import { RecurringEditCheckbox } from "./RecurringEditCheckbox/RecurringEditCheckbox";
 import { useRecurringEditCheckBox } from "./RecurringEditCheckbox/useRecurringEditCheckbox";
 import { useEffect, useState } from "react";
-import { DeleteEventConfirmation } from "../../events/form/DeleteEventConfirmation/DeleteEventConfirmation";
+import { RecurringEventConfirmation } from "../../events/form/RecurringEventConfirmation/RecurringEventConfirmation";
 
 export function EditRecurringEventFormPage() {
   const { parentId, occurrenceDate } = useParams<{
@@ -83,7 +83,8 @@ export function EditRecurringEventFormPage() {
     <FormProvider {...methods}>
       <div className="event-form-page">
         {isDeleteModalOpen && (
-          <DeleteEventConfirmation
+          <RecurringEventConfirmation
+            variant="delete"
             onClose={() => setIsDeleteModalOpen(false)}
             onConfirmSingle={() => handleDelete(false)}
             onConfirmAll={() => handleDelete(true)}

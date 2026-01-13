@@ -2,6 +2,7 @@ import { Button } from "../../../../../components/Button/Button";
 import type { EventModalProps } from "../eventModalTypes";
 import { BaseEventModal } from "./BaseEventModal";
 import { useTranslation } from "react-i18next";
+import type { EventFormData } from "../../../../../events/form/EventForm/eventFormSchema";
 
 type EditEventModalProps = Pick<
   EventModalProps,
@@ -18,14 +19,17 @@ export function EditEventModal({
 }: EditEventModalProps) {
   const { t } = useTranslation();
 
+  const handleSubmit = (data: EventFormData) => {
+    onSubmit(data);
+  };
+
   return (
     <BaseEventModal
       title={t("edit_title")}
       eventData={eventData}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
     >
       <Button type="button" variant="danger" onClick={() => onRequestDelete()}>
-        {" "}
         <i className="fa-solid fa-trash-can"></i>
         {t("btn_delete")}
       </Button>

@@ -29,11 +29,11 @@ export function DeleteEventConfirmation({
             <i className="fa-solid fa-xmark"></i>
             {t("btn_cancel")}
           </Button>
-          <Button variant="danger" onClick={onConfirmSingle}>
+          <Button variant="danger" type="button" onClick={onConfirmSingle}>
             <i className="fa-solid fa-calendar-day"></i>
             {t("btn-single")}
           </Button>
-          <Button variant="danger" onClick={onConfirmAll}>
+          <Button variant="danger" type="button" onClick={onConfirmAll}>
             <i className="fa-solid fa-calendar-days"></i>
             {t("btn-all")}
           </Button>

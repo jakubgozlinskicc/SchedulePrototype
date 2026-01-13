@@ -4,7 +4,7 @@ import { SubmitStrategyRegistry } from "../../../../../events/submitStrategies/s
 import { useReloadEvents } from "../useReloadEvents/useReloadEvents";
 import type { EventFormData } from "../../../../../events/form/EventForm/eventFormSchema";
 import { convertFormDataToEvent } from "../../../../../events/form/EventForm/useEventForm/convertFormDataToEvent";
-import { useEventDataContext } from "../../useEventDataContext/useEventDataContext";
+import type { EditOptions } from "../../../../../events/submitStrategies/ISubmitStrategy";
 
 export function useSubmitEvent(
   closeModal: () => void,
@@ -12,16 +12,16 @@ export function useSubmitEvent(
   event?: Event
 ) {
   const { reloadEvents } = useReloadEvents(repository);
-  const { isEditAll, setIsEditAll } = useEventDataContext();
 
-  const onSubmit = async (data: EventFormData) => {
+  const onSubmit = async (data: EventFormData, options?: EditOptions) => {
     try {
       const eventToSave = convertFormDataToEvent(data, event);
 
-      await SubmitStrategyRegistry.executeSubmit(eventToSave, repository, {
-        isEditAll,
-      });
-      setIsEditAll(false);
+      await SubmitStrategyRegistry.executeSubmit(
+        eventToSave,
+        repository,
+        options
+      );
 
       await reloadEvents();
       closeModal();

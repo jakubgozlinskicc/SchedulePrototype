@@ -2,7 +2,6 @@ import { EventModalStrategyRegistry } from "./modalStrategy/modalRegistry";
 import "./eventModal.css";
 import { useEventDataContext } from "../../useEvents/useEventDataContext/useEventDataContext";
 import { useSubmitEvent } from "../../useEvents/useEventData/useSubmitEvent/useSubmitEvent";
-import { useRecurringEdit } from "../../useEvents/useEventData/useRecurringEdit/useRecurringEdit";
 import type { IEventRepository } from "../../../../events/IEventRepository";
 import type { DeleteOptions } from "../../../../events/deleteStrategies/IDeleteStrategy";
 
@@ -17,7 +16,6 @@ export function EventModal({
   onClose,
   onRequestDelete,
 }: EventModalComponentProps) {
-  const { handleEditSingle, handleEditAll } = useRecurringEdit(repository);
   const { eventData } = useEventDataContext();
 
   const { onSubmit } = useSubmitEvent(onClose, repository, eventData);
@@ -29,7 +27,5 @@ export function EventModal({
     onClose,
     onSubmit,
     onRequestDelete,
-    onEditSingle: handleEditSingle,
-    onEditAll: handleEditAll,
   });
 }
