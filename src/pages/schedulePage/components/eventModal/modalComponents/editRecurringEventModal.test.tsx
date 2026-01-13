@@ -9,6 +9,27 @@ vi.mock("react-i18next", () => ({
   }),
 }));
 
+vi.mock(
+  "../../../../../events/form/DeleteEventConfirmation/DeleteEventConfirmation",
+  () => ({
+    DeleteEventConfirmation: ({
+      onClose,
+      onConfirmSingle,
+      onConfirmAll,
+    }: {
+      onClose: () => void;
+      onConfirmSingle: () => void;
+      onConfirmAll: () => void;
+    }) => (
+      <div data-testid="delete-confirmation">
+        <button onClick={onClose}>cancel-delete</button>
+        <button onClick={onConfirmSingle}>confirm-single</button>
+        <button onClick={onConfirmAll}>confirm-all</button>
+      </div>
+    ),
+  })
+);
+
 vi.mock("./baseEventModal", () => ({
   BaseEventModal: ({
     title,
@@ -147,15 +168,6 @@ describe("EditRecurringEventModal", () => {
       expect(screen.getByText("btn_save_changes")).toBeInTheDocument();
     });
 
-    it("should call onRequestDelete when delete button is clicked", () => {
-      renderComponent();
-
-      fireEvent.click(screen.getByText("btn-single"));
-      fireEvent.click(screen.getByText("btn_delete"));
-
-      expect(mockOnRequestDelete).toHaveBeenCalledTimes(1);
-    });
-
     it("should call onClose when cancel button is clicked in edit view", () => {
       renderComponent();
 
@@ -175,6 +187,59 @@ describe("EditRecurringEventModal", () => {
       ).not.toBeInTheDocument();
       expect(
         screen.queryByText("modal-recurring-prompt")
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  describe("Delete confirmation", () => {
+    it("should open delete confirmation modal when delete button is clicked", () => {
+      renderComponent();
+
+      fireEvent.click(screen.getByText("btn-single"));
+      fireEvent.click(screen.getByText("btn_delete"));
+
+      expect(screen.getByTestId("delete-confirmation")).toBeInTheDocument();
+    });
+
+    it("should call onRequestDelete with isEditAll false when confirm single is clicked", () => {
+      renderComponent();
+
+      fireEvent.click(screen.getByText("btn-single"));
+      fireEvent.click(screen.getByText("btn_delete"));
+      fireEvent.click(screen.getByText("confirm-single"));
+
+      expect(mockOnRequestDelete).toHaveBeenCalledWith({ isEditAll: false });
+    });
+
+    it("should call onRequestDelete with isEditAll true when confirm all is clicked", () => {
+      renderComponent();
+
+      fireEvent.click(screen.getByText("btn-single"));
+      fireEvent.click(screen.getByText("btn_delete"));
+      fireEvent.click(screen.getByText("confirm-all"));
+
+      expect(mockOnRequestDelete).toHaveBeenCalledWith({ isEditAll: true });
+    });
+
+    it("should close delete confirmation when cancel is clicked", () => {
+      renderComponent();
+
+      fireEvent.click(screen.getByText("btn-single"));
+      fireEvent.click(screen.getByText("btn_delete"));
+      fireEvent.click(screen.getByText("cancel-delete"));
+
+      expect(
+        screen.queryByTestId("delete-confirmation")
+      ).not.toBeInTheDocument();
+    });
+
+    it("should not show delete confirmation initially in edit view", () => {
+      renderComponent();
+
+      fireEvent.click(screen.getByText("btn-single"));
+
+      expect(
+        screen.queryByTestId("delete-confirmation")
       ).not.toBeInTheDocument();
     });
   });

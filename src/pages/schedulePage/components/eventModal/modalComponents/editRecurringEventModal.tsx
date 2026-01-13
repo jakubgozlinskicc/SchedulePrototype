@@ -3,6 +3,7 @@ import { BaseEventModal } from "./BaseEventModal";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Button } from "../../../../../components/Button/Button";
+import { DeleteEventConfirmation } from "../../../../../events/form/DeleteEventConfirmation/DeleteEventConfirmation";
 
 type EditRecurringEventModalProps = Pick<
   EventModalProps,
@@ -23,6 +24,7 @@ export function EditRecurringEventModal({
 }: EditRecurringEventModalProps) {
   const { t } = useTranslation();
   const [showChoice, setShowChoice] = useState(true);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   if (showChoice) {
     return (
@@ -70,7 +72,18 @@ export function EditRecurringEventModal({
       eventData={eventData}
       onSubmit={onSubmit}
     >
-      <Button type="button" variant="danger" onClick={onRequestDelete}>
+      {isDeleteModalOpen && (
+        <DeleteEventConfirmation
+          onClose={() => setIsDeleteModalOpen(false)}
+          onConfirmSingle={() => onRequestDelete({ isEditAll: false })}
+          onConfirmAll={() => onRequestDelete({ isEditAll: true })}
+        />
+      )}
+      <Button
+        type="button"
+        variant="danger"
+        onClick={() => setIsDeleteModalOpen(true)}
+      >
         <i className="fa-solid fa-trash-can"></i>
         {t("btn_delete")}
       </Button>

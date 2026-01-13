@@ -6,15 +6,11 @@ import { DeleteStrategyRegistry } from "../../../../../events/deleteStrategies/d
 import type { IEventRepository } from "../../../../../events/IEventRepository";
 
 let mockEventData: Event;
-let mockIsDeleteAll: boolean;
 const mockReloadEvents = vi.fn();
-const mockSetIsDeleteAll = vi.fn();
 
 vi.mock("../../useEventDataContext/useEventDataContext", () => ({
   useEventDataContext: () => ({
     eventData: mockEventData,
-    isEditAll: mockIsDeleteAll,
-    setIsEditAll: mockSetIsDeleteAll,
   }),
 }));
 
@@ -41,7 +37,6 @@ describe("useDeleteEvent", () => {
     vi.clearAllMocks();
     mockCloseModal = vi.fn();
     mockReloadEvents.mockResolvedValue(undefined);
-    mockIsDeleteAll = false;
 
     mockRepository = {
       addEvent: vi.fn().mockResolvedValue(1),
@@ -68,7 +63,7 @@ describe("useDeleteEvent", () => {
     );
 
     await act(async () => {
-      await result.current.deleteCurrentEvent();
+      await result.current.deleteCurrentEvent({ isEditAll: false });
     });
 
     expect(DeleteStrategyRegistry.executeDelete).toHaveBeenCalledWith(
@@ -79,14 +74,12 @@ describe("useDeleteEvent", () => {
   });
 
   it("should pass isEditAll option to strategy registry", async () => {
-    mockIsDeleteAll = true;
-
     const { result } = renderHook(() =>
       useDeleteEvent(mockCloseModal, mockRepository)
     );
 
     await act(async () => {
-      await result.current.deleteCurrentEvent();
+      await result.current.deleteCurrentEvent({ isEditAll: true });
     });
     expect(DeleteStrategyRegistry.executeDelete).toHaveBeenCalledWith(
       mockEventData,
@@ -115,18 +108,6 @@ describe("useDeleteEvent", () => {
     });
 
     expect(mockCloseModal).toHaveBeenCalled();
-  });
-
-  it("should reset isEditAll to false after deletion", async () => {
-    mockIsDeleteAll = true;
-    const { result } = renderHook(() =>
-      useDeleteEvent(mockCloseModal, mockRepository)
-    );
-    await act(async () => {
-      await result.current.deleteCurrentEvent();
-    });
-
-    expect(mockSetIsDeleteAll).toHaveBeenCalledWith(false);
   });
 
   it("should not close modal when strategy throws error", async () => {

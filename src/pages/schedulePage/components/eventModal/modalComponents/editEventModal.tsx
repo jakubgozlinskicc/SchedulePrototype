@@ -24,7 +24,8 @@ export function EditEventModal({
       eventData={eventData}
       onSubmit={onSubmit}
     >
-      <Button type="button" variant="danger" onClick={onRequestDelete}>
+      <Button type="button" variant="danger" onClick={() => onRequestDelete()}>
+        {" "}
         <i className="fa-solid fa-trash-can"></i>
         {t("btn_delete")}
       </Button>

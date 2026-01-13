@@ -4,11 +4,12 @@ import { useEventDataContext } from "../../useEvents/useEventDataContext/useEven
 import { useSubmitEvent } from "../../useEvents/useEventData/useSubmitEvent/useSubmitEvent";
 import { useRecurringEdit } from "../../useEvents/useEventData/useRecurringEdit/useRecurringEdit";
 import type { IEventRepository } from "../../../../events/IEventRepository";
+import type { DeleteOptions } from "../../../../events/deleteStrategies/IDeleteStrategy";
 
 interface EventModalComponentProps {
   repository: IEventRepository;
   onClose: () => void;
-  onRequestDelete?: () => void | Promise<void>;
+  onRequestDelete?: (options?: DeleteOptions) => void | Promise<void>;
 }
 
 export function EventModal({

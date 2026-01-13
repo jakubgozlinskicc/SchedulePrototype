@@ -91,7 +91,7 @@ function SchedulePageContent() {
         <EventModal
           repository={eventRepository}
           onClose={closeModal}
-          onRequestDelete={deleteCurrentEvent}
+          onRequestDelete={(options) => deleteCurrentEvent(options)}
         />
       )}
     </div>
