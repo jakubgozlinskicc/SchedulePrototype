@@ -7,6 +7,8 @@
   "btn_cancel": "Anuluj",
   "btn_save_changes": "Zapisz zmiany",
   "btn-add": "Dodaj wydarzenie",
+  "btn-single": "To wydarzenie",
+  "btn-all": "Wszystkie wydarzenia",
   "title": "Tytuł",
   "description": "Opis",
   "start-date": "Początek",
@@ -42,8 +44,6 @@
 
   "modal-recurring-title": "Edycja powtarzającego się wydarzenia",
   "modal-recurring-prompt": "To jest powtarzające się wydarzenie. Co chcesz edytować?",
-  "btn-single": "To wydarzenie",
-  "btn-all": "Wszystkie wydarzenia",
   "edit": "Edytuj",
   "edit-recurring": "Edytuj wydarzenie cykliczne",
   "date-from": "Od daty",

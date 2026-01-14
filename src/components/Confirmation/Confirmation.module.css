@@ -1,28 +1,3 @@
-.backdrop {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-  animation: fadeIn 0.2s ease-out;
-}
-
-.modal {
-  background: white;
-  padding: 2.5rem;
-  border-radius: 20px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
 .icon {
   font-size: 2.5rem;
   margin-bottom: 1rem;
@@ -53,20 +28,20 @@
   flex-wrap: wrap;
 }
 
-.edit .icon {
-  color: var(--primary);
-}
-
-.edit .title {
-  border-color: var(--primary);
-}
-
 .delete .icon {
   color: #ff4d4f;
 }
 
 .delete .title {
   border-color: #ff4d4f;
+}
+
+.edit .icon {
+  color: var(--primary);
+}
+
+.edit .title {
+  border-color: var(--primary);
 }
 
 @keyframes fadeIn {

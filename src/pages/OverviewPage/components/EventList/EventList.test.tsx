@@ -77,6 +77,31 @@ vi.mock("./useEventList/useEventList", () => ({
     },
   })),
 }));
+vi.mock("../../../../components/Confirmation/Confirmation", () => ({
+  Confirmation: ({
+    variant,
+    titleKey,
+    buttons,
+  }: {
+    variant: string;
+    titleKey: string;
+    descKey: string;
+    buttons: Array<{
+      label: string;
+      variant: string;
+      onClick: () => void;
+    }>;
+  }) => (
+    <div data-testid={`confirmation-${variant}`}>
+      <span>{titleKey}</span>
+      {buttons.map((btn, index) => (
+        <button key={index} onClick={btn.onClick} data-variant={btn.variant}>
+          {btn.label}
+        </button>
+      ))}
+    </div>
+  ),
+}));
 
 vi.mock("./useEventList/useEventDelete/useEventDelete", () => ({
   useEventDelete: vi.fn(() => ({

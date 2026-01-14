@@ -7,8 +7,8 @@ import { useTranslation } from "react-i18next";
 import { createPortal } from "react-dom";
 import { Button } from "../../../../../../components/Button/Button";
 import type { EventFormData } from "../../../../../../events/form/EventForm/eventFormSchema";
-import { RecurringEventConfirmation } from "../../../../../../events/form/RecurringEventConfirmation/RecurringEventConfirmation";
 import { useRecurringEventEdit } from "./useRecurringEventEdit/useRecurringEventEdit";
+import { Confirmation } from "../../../../../../components/Confirmation/Confirmation";
 
 type EditRecurringEventModalProps = Pick<
   EventModalProps,
@@ -42,11 +42,30 @@ export function EditRecurringEventModal({
 
   if (isEditModalOpen) {
     return createPortal(
-      <RecurringEventConfirmation
+      <Confirmation
         variant="edit"
-        onClose={handleClose}
-        onConfirmSingle={confirmSingle}
-        onConfirmAll={confirmAll}
+        titleKey="modal-recurring-title"
+        descKey="modal-recurring-prompt"
+        buttons={[
+          {
+            label: "btn_cancel",
+            icon: "fa-solid fa-xmark",
+            variant: "secondary",
+            onClick: onClose,
+          },
+          {
+            label: "btn-single",
+            icon: "fa-solid fa-calendar-day",
+            variant: "primary",
+            onClick: confirmSingle,
+          },
+          {
+            label: "btn-all",
+            icon: "fa-solid fa-calendar-days",
+            variant: "primary",
+            onClick: confirmAll,
+          },
+        ]}
       />,
       document.body
     );
@@ -79,11 +98,30 @@ export function EditRecurringEventModal({
 
       {isDeleteModalOpen &&
         createPortal(
-          <RecurringEventConfirmation
+          <Confirmation
             variant="delete"
-            onClose={() => closeDeleteModal()}
-            onConfirmSingle={() => onRequestDelete({ isDeleteAll: false })}
-            onConfirmAll={() => onRequestDelete({ isDeleteAll: true })}
+            titleKey="modal-recurring-title"
+            descKey="modal-recurring-prompt"
+            buttons={[
+              {
+                label: "btn_cancel",
+                icon: "fa-solid fa-xmark",
+                variant: "secondary",
+                onClick: closeDeleteModal,
+              },
+              {
+                label: "btn-single",
+                icon: "fa-solid fa-calendar-day",
+                variant: "danger",
+                onClick: () => onRequestDelete({ isDeleteAll: false }),
+              },
+              {
+                label: "btn-all",
+                icon: "fa-solid fa-calendar-days",
+                variant: "danger",
+                onClick: () => onRequestDelete({ isDeleteAll: true }),
+              },
+            ]}
           />,
           document.body
         )}

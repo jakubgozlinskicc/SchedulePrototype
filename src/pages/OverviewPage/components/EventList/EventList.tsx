@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 import "./EventList.css";
 import type { Event } from "../../../../db/scheduleDb";
 import { Button } from "../../../../components/Button/Button";
-import { DeleteEventConfirmation } from "../../../../events/form/DeleteEventConfirmation/DeleteEventConfirmation";
 import { useEventDelete } from "./useEventList/useEventDelete/useEventDelete";
 import { useLoadEvents } from "./useEventList/useLoadEvents/useLoadEvents";
+import { Confirmation } from "../../../../components/Confirmation/Confirmation";
 
 export function EventList() {
   const { events, reloadEvents } = useLoadEvents(eventRepository);
@@ -49,10 +49,30 @@ export function EventList() {
     <>
       <div className="events-list">
         {eventToDelete && (
-          <DeleteEventConfirmation
-            onClose={handleCancelDelete}
-            onConfirmSingle={handleDeleteSingle}
-            onConfirmAll={handleDeleteAll}
+          <Confirmation
+            variant="delete"
+            titleKey="modal-recurring-title"
+            descKey="modal-recurring-prompt"
+            buttons={[
+              {
+                label: "btn_cancel",
+                icon: "fa-solid fa-xmark",
+                variant: "secondary",
+                onClick: handleCancelDelete,
+              },
+              {
+                label: "btn-single",
+                icon: "fa-solid fa-calendar-day",
+                variant: "danger",
+                onClick: handleDeleteSingle,
+              },
+              {
+                label: "btn-all",
+                icon: "fa-solid fa-calendar-days",
+                variant: "danger",
+                onClick: handleDeleteAll,
+              },
+            ]}
           />
         )}
 

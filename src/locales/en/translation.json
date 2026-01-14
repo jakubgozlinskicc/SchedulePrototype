@@ -7,6 +7,8 @@
   "btn_cancel": "Cancel",
   "btn_save_changes": "Save Changes",
   "btn-add": "Add event",
+  "btn-single": "This event only",
+  "btn-all": "All events in the series",
   "title": "Title",
   "description": "Description",
   "start-date": "Start",
@@ -42,8 +44,6 @@
 
   "modal-recurring-title": "Editing Recurring Event",
   "modal-recurring-prompt": "This is a recurring event. What do you want to edit?",
-  "btn-single": "This event only",
-  "btn-all": "All events in the series",
   "edit": "Edit",
   "edit-recurring": "Edit recurring event",
   "date-from": "From date",
