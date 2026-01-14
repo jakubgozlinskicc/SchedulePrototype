@@ -101,7 +101,7 @@ export function EditRecurringEventFormPage() {
               )}
               className="event-form"
             >
-              <EventFormFields />
+              <EventFormFields isRecurringEditSingle={!isEditAll} />
               <div className="event-form-actions">
                 <RecurringEditCheckbox
                   isEditAll={isEditAll}

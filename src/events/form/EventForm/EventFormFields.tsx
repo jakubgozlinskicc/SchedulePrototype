@@ -7,7 +7,12 @@ import { FormField } from "../../../components/Form/FormField/FormField";
 import { RecurrenceFields } from "../RecurrenceFields/RecurrenceFields";
 import { useWatch } from "react-hook-form";
 
-export function EventFormFields() {
+interface EventFormFieldsProps {
+  isRecurringEditSingle?: boolean;
+}
+export function EventFormFields({
+  isRecurringEditSingle,
+}: EventFormFieldsProps) {
   const { t } = useTranslation();
 
   const recurrenceType = useWatch({ name: "recurrenceType" });
@@ -58,26 +63,29 @@ export function EventFormFields() {
           className="event-form-color-picker"
         />
       </FormField>
+      {!isRecurringEditSingle && (
+        <>
+          <FormField>
+            <FormLabel>
+              <i className="fa-solid fa-repeat"></i>
+              {t("recurrence-type")}
+            </FormLabel>
+            <FormSelect
+              name="recurrenceType"
+              options={[
+                { value: "none", label: t("recurrence-none") },
+                { value: "daily", label: t("recurrence-daily") },
+                { value: "weekly", label: t("recurrence-weekly") },
+                { value: "monthly", label: t("recurrence-monthly") },
+                { value: "yearly", label: t("recurrence-yearly") },
+              ]}
+            />
+          </FormField>
 
-      <FormField>
-        <FormLabel>
-          <i className="fa-solid fa-repeat"></i>
-          {t("recurrence-type")}
-        </FormLabel>
-        <FormSelect
-          name="recurrenceType"
-          options={[
-            { value: "none", label: t("recurrence-none") },
-            { value: "daily", label: t("recurrence-daily") },
-            { value: "weekly", label: t("recurrence-weekly") },
-            { value: "monthly", label: t("recurrence-monthly") },
-            { value: "yearly", label: t("recurrence-yearly") },
-          ]}
-        />
-      </FormField>
-
-      {recurrenceType !== "none" && (
-        <RecurrenceFields recurrenceEndType={recurrenceEndType} />
+          {recurrenceType !== "none" && (
+            <RecurrenceFields recurrenceEndType={recurrenceEndType} />
+          )}
+        </>
       )}
     </>
   );

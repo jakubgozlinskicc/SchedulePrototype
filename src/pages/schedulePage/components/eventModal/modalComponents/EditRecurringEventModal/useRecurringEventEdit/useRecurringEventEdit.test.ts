@@ -23,10 +23,10 @@ describe("useRecurringEventEdit", () => {
       expect(result.current.isDeleteModalOpen).toBe(false);
     });
 
-    it("should have isEditAll set to null initially", () => {
+    it("should have isEditAll set to undefined initially", () => {
       const { result } = renderHook(() => useRecurringEventEdit(mockOnClose));
 
-      expect(result.current.isEditAll).toBeNull();
+      expect(result.current.isEditAll).toBeUndefined();
     });
   });
 
@@ -95,7 +95,7 @@ describe("useRecurringEventEdit", () => {
   });
 
   describe("handleClose", () => {
-    it("should reset isEditAll to null", () => {
+    it("should reset isEditAll to undefined", () => {
       const { result } = renderHook(() => useRecurringEventEdit(mockOnClose));
 
       act(() => {
@@ -106,7 +106,7 @@ describe("useRecurringEventEdit", () => {
         result.current.handleClose();
       });
 
-      expect(result.current.isEditAll).toBeNull();
+      expect(result.current.isEditAll).toBeUndefined();
     });
 
     it("should close edit modal", () => {
@@ -129,7 +129,7 @@ describe("useRecurringEventEdit", () => {
       expect(mockOnClose).toHaveBeenCalledTimes(1);
     });
 
-    it("should reset isEditAll from true to null", () => {
+    it("should reset isEditAll from true to undefined", () => {
       const { result } = renderHook(() => useRecurringEventEdit(mockOnClose));
 
       act(() => {
@@ -141,7 +141,7 @@ describe("useRecurringEventEdit", () => {
         result.current.handleClose();
       });
 
-      expect(result.current.isEditAll).toBeNull();
+      expect(result.current.isEditAll).toBeUndefined();
     });
   });
 

@@ -57,6 +57,7 @@ export function EditRecurringEventModal({
         title={t("edit_recurring_title")}
         eventData={eventData}
         onSubmit={handleFormSubmit}
+        isEditAll={isEditAll}
       >
         <Button
           type="button"

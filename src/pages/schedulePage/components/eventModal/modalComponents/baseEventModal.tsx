@@ -13,6 +13,7 @@ interface BaseEventModalProps {
   title: string;
   eventData?: Event;
   onSubmit: (data: EventFormData) => void | Promise<void>;
+  isEditAll?: boolean;
   children: React.ReactNode;
 }
 
@@ -46,10 +47,10 @@ export function BaseEventModal({
   title,
   eventData,
   onSubmit,
+  isEditAll,
   children,
 }: BaseEventModalProps) {
   const { eventFormSchema } = useEventFormSchema();
-
   const methods = useForm({
     resolver: yupResolver(eventFormSchema),
     mode: "onBlur",
@@ -66,7 +67,7 @@ export function BaseEventModal({
           onSubmit={methods.handleSubmit(onSubmit)}
           className="modal-form"
         >
-          <EventFormFields />
+          <EventFormFields isRecurringEditSingle={isEditAll === false} />
         </form>
         <div className="modal-actions">{children}</div>
       </Modal>

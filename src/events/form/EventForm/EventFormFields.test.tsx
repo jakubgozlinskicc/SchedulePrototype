@@ -166,4 +166,60 @@ describe("EventFormFields", () => {
     );
     expect(dateInputs).toHaveLength(2);
   });
+
+  it("should not render recurrence type select when isRecurringEditSingle is true", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields isRecurringEditSingle={true} />
+      </FormWrapper>
+    );
+
+    expect(screen.queryByText("recurrence-type")).not.toBeInTheDocument();
+    expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
+  });
+
+  it("should not render repeat icon when isRecurringEditSingle is true", () => {
+    const { container } = render(
+      <FormWrapper>
+        <EventFormFields isRecurringEditSingle={true} />
+      </FormWrapper>
+    );
+
+    expect(container.querySelector(".fa-repeat")).not.toBeInTheDocument();
+  });
+
+  it("should render basic fields when isRecurringEditSingle is true", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields isRecurringEditSingle={true} />
+      </FormWrapper>
+    );
+
+    expect(screen.getByText("title")).toBeInTheDocument();
+    expect(screen.getByText("description")).toBeInTheDocument();
+    expect(screen.getByText("start-date")).toBeInTheDocument();
+    expect(screen.getByText("end-date")).toBeInTheDocument();
+    expect(screen.getByText("color")).toBeInTheDocument();
+  });
+
+  it("should not render RecurrenceFields when isRecurringEditSingle is true even with recurrence type set", () => {
+    render(
+      <FormWrapper defaultValues={{ recurrenceType: "daily" }}>
+        <EventFormFields isRecurringEditSingle={true} />
+      </FormWrapper>
+    );
+
+    expect(screen.queryByText("recurrence-interval")).not.toBeInTheDocument();
+  });
+
+  it("should render recurrence fields when isRecurringEditSingle is false", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields isRecurringEditSingle={false} />
+      </FormWrapper>
+    );
+
+    expect(screen.getByText("recurrence-type")).toBeInTheDocument();
+    expect(screen.getByRole("combobox")).toBeInTheDocument();
+  });
 });

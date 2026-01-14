@@ -3,7 +3,7 @@ import { useState } from "react";
 export function useRecurringEventEdit(onClose: () => void) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(true);
-  const [isEditAll, setIsEditAll] = useState<boolean | null>(null);
+  const [isEditAll, setIsEditAll] = useState<boolean | undefined>(undefined);
 
   const confirmSingle = () => {
     setIsEditAll(false);
@@ -16,7 +16,7 @@ export function useRecurringEventEdit(onClose: () => void) {
   };
 
   const handleClose = () => {
-    setIsEditAll(null);
+    setIsEditAll(undefined);
     setIsEditModalOpen(false);
     onClose();
   };
