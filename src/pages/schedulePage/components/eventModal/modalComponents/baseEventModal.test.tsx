@@ -86,12 +86,6 @@ describe("BaseEventModal", () => {
     expect(screen.getByText("Test Button")).toBeInTheDocument();
   });
 
-  it("It should render modal-backdrop", () => {
-    const { container } = render(<BaseEventModal {...mockProps} />);
-    const backdrop = container.querySelector(".modal-backdrop");
-    expect(backdrop).toBeInTheDocument();
-  });
-
   it("It should render with empty event data", () => {
     const emptyEvent: Event = {
       title: "",

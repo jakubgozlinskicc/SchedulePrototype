@@ -5,8 +5,6 @@ import type { Event } from "../../../../db/scheduleDb";
 import type { IEventRepository } from "../../../../events/IEventRepository";
 
 const mockOnSubmit = vi.fn();
-const mockHandleEditSingle = vi.fn();
-const mockHandleEditAll = vi.fn();
 
 let mockEventData: Event | null = null;
 vi.mock("../../useEvents/useEventDataContext/useEventDataContext", () => ({
@@ -20,16 +18,6 @@ vi.mock("../../useEvents/useEventData/useSubmitEvent/useSubmitEvent", () => ({
     onSubmit: mockOnSubmit,
   }),
 }));
-
-vi.mock(
-  "../../useEvents/useEventData/useRecurringEdit/useRecurringEdit",
-  () => ({
-    useRecurringEdit: () => ({
-      handleEditSingle: mockHandleEditSingle,
-      handleEditAll: mockHandleEditAll,
-    }),
-  })
-);
 
 const mockRender = vi
   .fn()
@@ -145,26 +133,6 @@ describe("EventModal", () => {
     );
   });
 
-  it("should pass onEditSingle to renderer", () => {
-    render(<EventModal repository={mockRepository} onClose={mockOnClose} />);
-
-    expect(mockRender).toHaveBeenCalledWith(
-      expect.objectContaining({
-        onEditSingle: mockHandleEditSingle,
-      })
-    );
-  });
-
-  it("should pass onEditAll to renderer", () => {
-    render(<EventModal repository={mockRepository} onClose={mockOnClose} />);
-
-    expect(mockRender).toHaveBeenCalledWith(
-      expect.objectContaining({
-        onEditAll: mockHandleEditAll,
-      })
-    );
-  });
-
   it("should render without onRequestDelete", () => {
     render(<EventModal repository={mockRepository} onClose={mockOnClose} />);
 
@@ -239,8 +207,6 @@ describe("EventModal", () => {
       onClose: mockOnClose,
       onSubmit: mockOnSubmit,
       onRequestDelete: mockOnRequestDelete,
-      onEditSingle: mockHandleEditSingle,
-      onEditAll: mockHandleEditAll,
     });
   });
 });

@@ -3,12 +3,9 @@ import { DropResizeStrategyRegistry } from "./dropResizeStrategyRegistry";
 import type { Event } from "../../../../../../db/scheduleDb";
 import type { IEventRepository } from "../../../../../../events/IEventRepository";
 
-vi.mock(
-  "../../../useEventComponents/useRecurringEdit/setNewParentEvent",
-  () => ({
-    setNewParentEvent: vi.fn().mockResolvedValue(undefined),
-  })
-);
+vi.mock("../../../../../../events/recurringLogic/setNewParentEvent", () => ({
+  setNewParentEvent: vi.fn().mockResolvedValue(undefined),
+}));
 
 describe("DropResizeStrategyRegistry", () => {
   let mockRepository: IEventRepository;

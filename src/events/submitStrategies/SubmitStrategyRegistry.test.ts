@@ -3,7 +3,7 @@ import { SubmitStrategyRegistry } from "./submitStrategyRegistry";
 import type { Event } from "../../db/scheduleDb";
 import type { IEventRepository } from "../IEventRepository";
 
-vi.mock("../../useRecurringEdit/setNewParentEvent", () => ({
+vi.mock("../recurringLogic/setNewParentEvent", () => ({
   setNewParentEvent: vi.fn().mockResolvedValue(undefined),
 }));
 

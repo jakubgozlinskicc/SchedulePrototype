@@ -3,12 +3,9 @@ import { DeleteStrategyRegistry } from "./deleteStrategyRegistry";
 import type { Event } from "../../db/scheduleDb";
 import type { IEventRepository } from "../IEventRepository";
 
-vi.mock(
-  "../../../useEventComponents/useRecurringEdit/setNewParentEvent",
-  () => ({
-    setNewParentEvent: vi.fn().mockResolvedValue(undefined),
-  })
-);
+vi.mock("../recurringLogic/setNewParentEvent", () => ({
+  setNewParentEvent: vi.fn().mockResolvedValue(undefined),
+}));
 
 describe("DeleteStrategyRegistry", () => {
   let mockRepository: IEventRepository;

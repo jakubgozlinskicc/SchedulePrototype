@@ -1,8 +1,10 @@
 import type { Event } from "../../../../../../db/scheduleDb";
 import type { ReactNode } from "react";
-import type { EventModalProps } from "../../eventModalTypes";
-import type { IEventModalStrategy } from "../../eventModalTypes";
-import { EditRecurringEventModal } from "../../modalComponents/EditRecurringEventModal";
+import type {
+  EventModalProps,
+  IEventModalStrategy,
+} from "../../eventModalTypes";
+import { EditRecurringEventModal } from "../../modalComponents/EditRecurringEventModal/EditRecurringEventModal";
 
 export class EditRecurringEventStrategy implements IEventModalStrategy {
   canSupport(eventData: Event): boolean {
@@ -15,10 +17,10 @@ export class EditRecurringEventStrategy implements IEventModalStrategy {
   render(commonProps: EventModalProps): ReactNode {
     return (
       <EditRecurringEventModal
-        {...commonProps}
+        eventData={commonProps.eventData}
+        onClose={commonProps.onClose}
+        onSubmit={commonProps.onSubmit}
         onRequestDelete={commonProps.onRequestDelete ?? (() => {})}
-        onEditSingle={commonProps.onEditSingle ?? (() => {})}
-        onEditAll={commonProps.onEditAll ?? (() => {})}
       />
     );
   }

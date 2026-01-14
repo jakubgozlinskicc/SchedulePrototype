@@ -7,6 +7,7 @@ import { EventFormFields } from "../../../../../events/form/EventForm/EventFormF
 import type { Event } from "../../../../../db/scheduleDb";
 import type { EventFormData } from "../../../../../events/form/EventForm/eventFormSchema";
 import { Modal } from "../../../../../components/Modal/Modal";
+import { EVENT_MODAL_FORM_ID } from "../eventModalTypes";
 
 interface BaseEventModalProps {
   title: string;
@@ -60,7 +61,11 @@ export function BaseEventModal({
     <FormProvider {...methods}>
       <Modal className="modal">
         <h3 className="modal-title">{title}</h3>
-        <form onSubmit={methods.handleSubmit(onSubmit)} className="modal-form">
+        <form
+          id={EVENT_MODAL_FORM_ID}
+          onSubmit={methods.handleSubmit(onSubmit)}
+          className="modal-form"
+        >
           <EventFormFields />
         </form>
         <div className="modal-actions">{children}</div>

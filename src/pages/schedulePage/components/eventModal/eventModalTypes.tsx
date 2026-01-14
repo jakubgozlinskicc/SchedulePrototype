@@ -18,3 +18,5 @@ export interface IEventModalStrategy {
   canSupport: (eventData: Event) => boolean;
   render: (props: EventModalProps) => ReactNode;
 }
+
+export const EVENT_MODAL_FORM_ID = "event-modal-form";

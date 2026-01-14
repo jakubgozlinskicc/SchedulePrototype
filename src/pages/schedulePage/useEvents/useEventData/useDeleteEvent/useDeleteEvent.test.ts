@@ -7,10 +7,12 @@ import type { IEventRepository } from "../../../../../events/IEventRepository";
 
 let mockEventData: Event;
 const mockReloadEvents = vi.fn();
+const mockSetEventData = vi.fn();
 
 vi.mock("../../useEventDataContext/useEventDataContext", () => ({
   useEventDataContext: () => ({
     eventData: mockEventData,
+    setEventData: mockSetEventData,
   }),
 }));
 
@@ -28,6 +30,16 @@ vi.mock(
     },
   })
 );
+
+vi.mock("../../../../../utils/getDefaultEvent/getDefaultEvent", () => ({
+  getDefaultEvent: () => ({
+    title: "",
+    description: "",
+    start: new Date(),
+    end: new Date(),
+    color: "#0000FF",
+  }),
+}));
 
 describe("useDeleteEvent", () => {
   let mockRepository: IEventRepository;
@@ -81,6 +93,7 @@ describe("useDeleteEvent", () => {
     await act(async () => {
       await result.current.deleteCurrentEvent({ isDeleteAll: true });
     });
+
     expect(DeleteStrategyRegistry.executeDelete).toHaveBeenCalledWith(
       mockEventData,
       mockRepository,
@@ -92,6 +105,7 @@ describe("useDeleteEvent", () => {
     const { result } = renderHook(() =>
       useDeleteEvent(mockCloseModal, mockRepository)
     );
+
     await act(async () => {
       await result.current.deleteCurrentEvent();
     });
@@ -103,6 +117,7 @@ describe("useDeleteEvent", () => {
     const { result } = renderHook(() =>
       useDeleteEvent(mockCloseModal, mockRepository)
     );
+
     await act(async () => {
       await result.current.deleteCurrentEvent();
     });
@@ -133,6 +148,7 @@ describe("useDeleteEvent", () => {
 
     consoleSpy.mockRestore();
   });
+
   it("should not reload events when strategy throws error", async () => {
     (
       DeleteStrategyRegistry.executeDelete as ReturnType<typeof vi.fn>

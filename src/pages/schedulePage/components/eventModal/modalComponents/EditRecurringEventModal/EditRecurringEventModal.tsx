@@ -1,11 +1,14 @@
-import type { EventModalProps } from "../eventModalTypes";
-import { BaseEventModal } from "./BaseEventModal";
+import {
+  EVENT_MODAL_FORM_ID,
+  type EventModalProps,
+} from "../../eventModalTypes";
+import { BaseEventModal } from "../BaseEventModal";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
 import { createPortal } from "react-dom";
-import { Button } from "../../../../../components/Button/Button";
-import type { EventFormData } from "../../../../../events/form/EventForm/eventFormSchema";
-import { RecurringEventConfirmation } from "../../../../../events/form/RecurringEventConfirmation/RecurringEventConfirmation";
+import { Button } from "../../../../../../components/Button/Button";
+import type { EventFormData } from "../../../../../../events/form/EventForm/eventFormSchema";
+import { RecurringEventConfirmation } from "../../../../../../events/form/RecurringEventConfirmation/RecurringEventConfirmation";
+import { useRecurringEventEdit } from "./useRecurringEventEdit/useRecurringEventEdit";
 
 type EditRecurringEventModalProps = Pick<
   EventModalProps,
@@ -21,36 +24,29 @@ export function EditRecurringEventModal({
   onRequestDelete,
 }: EditRecurringEventModalProps) {
   const { t } = useTranslation();
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(true);
-  const [isEditAll, setIsEditAll] = useState<boolean | null>(null);
 
-  const handleConfirmSingle = () => {
-    setIsEditAll(false);
-    setIsEditModalOpen(false);
-  };
-
-  const handleConfirmAll = () => {
-    setIsEditAll(true);
-    setIsEditModalOpen(false);
-  };
+  const {
+    isEditModalOpen,
+    isDeleteModalOpen,
+    isEditAll,
+    confirmSingle,
+    confirmAll,
+    handleClose,
+    openDeleteModal,
+    closeDeleteModal,
+  } = useRecurringEventEdit(onClose);
 
   const handleFormSubmit = (data: EventFormData) => {
     onSubmit(data, { isEditAll: isEditAll! });
   };
 
-  const handleClose = () => {
-    setIsEditAll(null);
-    setIsEditModalOpen(false);
-    onClose();
-  };
   if (isEditModalOpen) {
     return createPortal(
       <RecurringEventConfirmation
         variant="edit"
         onClose={handleClose}
-        onConfirmSingle={handleConfirmSingle}
-        onConfirmAll={handleConfirmAll}
+        onConfirmSingle={confirmSingle}
+        onConfirmAll={confirmAll}
       />,
       document.body
     );
@@ -65,7 +61,7 @@ export function EditRecurringEventModal({
         <Button
           type="button"
           variant="danger"
-          onClick={() => setIsDeleteModalOpen(true)}
+          onClick={() => openDeleteModal()}
         >
           <i className="fa-solid fa-trash-can"></i>
           {t("btn_delete")}
@@ -74,7 +70,7 @@ export function EditRecurringEventModal({
           <i className="fa-solid fa-xmark"></i>
           {t("btn_cancel")}
         </Button>
-        <Button type="submit" variant="primary">
+        <Button type="submit" variant="primary" form={EVENT_MODAL_FORM_ID}>
           <i className="fa-solid fa-floppy-disk"></i>
           {t("btn_save_changes")}
         </Button>
@@ -84,7 +80,7 @@ export function EditRecurringEventModal({
         createPortal(
           <RecurringEventConfirmation
             variant="delete"
-            onClose={() => setIsDeleteModalOpen(false)}
+            onClose={() => closeDeleteModal()}
             onConfirmSingle={() => onRequestDelete({ isDeleteAll: false })}
             onConfirmAll={() => onRequestDelete({ isDeleteAll: true })}
           />,

@@ -1,5 +1,5 @@
 import { Button } from "../../../../../components/Button/Button";
-import type { EventModalProps } from "../eventModalTypes";
+import { EVENT_MODAL_FORM_ID, type EventModalProps } from "../eventModalTypes";
 import { BaseEventModal } from "./BaseEventModal";
 import { useTranslation } from "react-i18next";
 import type { EventFormData } from "../../../../../events/form/EventForm/eventFormSchema";
@@ -20,7 +20,7 @@ export function EditEventModal({
   const { t } = useTranslation();
 
   const handleSubmit = (data: EventFormData) => {
-    onSubmit(data);
+    onSubmit(data, { isEditAll: false });
   };
 
   return (
@@ -37,7 +37,7 @@ export function EditEventModal({
         <i className="fa-solid fa-xmark"></i>
         {t("btn_cancel")}
       </Button>
-      <Button type="submit" variant="primary">
+      <Button type="submit" variant="primary" form={EVENT_MODAL_FORM_ID}>
         <i className="fa-solid fa-floppy-disk"></i>
         {t("btn_save_changes")}
       </Button>

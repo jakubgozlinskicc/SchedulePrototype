@@ -1,5 +1,5 @@
 import { Button } from "../../../../../components/Button/Button";
-import type { EventModalProps } from "../eventModalTypes";
+import { EVENT_MODAL_FORM_ID, type EventModalProps } from "../eventModalTypes";
 import { BaseEventModal } from "./BaseEventModal";
 import { useTranslation } from "react-i18next";
 
@@ -25,7 +25,7 @@ export function AddEventModal({
         <i className="fa-solid fa-xmark"></i>
         {t("btn_cancel")}
       </Button>
-      <Button type="submit" variant="primary">
+      <Button type="submit" variant="primary" form={EVENT_MODAL_FORM_ID}>
         <i className="fa-solid fa-calendar-plus"></i>
         {t("btn-add")}
       </Button>
