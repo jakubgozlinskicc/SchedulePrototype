@@ -359,7 +359,7 @@ describe("Confirmation", () => {
     });
 
     it("should not render icon element when icon is not provided", () => {
-      const { container } = render(
+      render(
         <Confirmation
           variant="edit"
           titleKey="test-title"

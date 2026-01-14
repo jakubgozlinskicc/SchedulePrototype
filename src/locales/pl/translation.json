@@ -85,5 +85,8 @@
 
   "error-event-not-found": "Błąd. Nie ma takiego wydarzenia",
   "delete-recurring-event-title": "Usuwanie powtarzających się wydarzeń",
-  "delete-recurring-event-desc": "Co chcesz usunąć?"
+  "delete-recurring-event-desc": "Co chcesz usunąć?",
+
+  "delete-event-title": "Usuwanie wydarzenia",
+  "delete-event-desc": "Czy na pewno chcesz usunąć wydarzenie?"
 }

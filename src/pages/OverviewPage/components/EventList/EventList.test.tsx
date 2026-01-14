@@ -77,6 +77,7 @@ vi.mock("./useEventList/useEventList", () => ({
     },
   })),
 }));
+
 vi.mock("../../../../components/Confirmation/Confirmation", () => ({
   Confirmation: ({
     variant,

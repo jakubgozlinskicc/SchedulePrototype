@@ -15,7 +15,7 @@ import { useEventFormDelete } from "../../events/form/EventForm/useEventForm/use
 import { RecurringEditCheckbox } from "./RecurringEditCheckbox/RecurringEditCheckbox";
 import { useRecurringEditCheckBox } from "./RecurringEditCheckbox/useRecurringEditCheckbox";
 import { useEffect, useState } from "react";
-import { RecurringEventConfirmation } from "../../events/form/RecurringEventConfirmation/RecurringEventConfirmation";
+import { RecurringEventConfirmation } from "../../events/Confirmations/RecurringEventConfirmation/RecurringEventConfirmation";
 
 export function EditRecurringEventFormPage() {
   const { parentId, occurrenceDate } = useParams<{

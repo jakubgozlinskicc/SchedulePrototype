@@ -2,22 +2,24 @@ import { useState } from "react";
 import type { Event } from "../../../../../../db/scheduleDb";
 import { DeleteStrategyRegistry } from "../../../../../../events/deleteStrategies/deleteStrategyRegistry";
 import type { IEventRepository } from "../../../../../../events/IEventRepository";
+import { useDeleteConfirmation } from "../../../../../../hooks/useDeleteConfirmation/useDeleteConfirmation";
 
 export function useEventDelete(
   eventRepository: IEventRepository,
   reloadEvents: () => Promise<void>
 ) {
   const [eventToDelete, setEventToDelete] = useState<Event | null>(null);
+  const { isDeleteModalOpen, closeDeleteModal, openDeleteModal } =
+    useDeleteConfirmation();
 
   const isRecurringEvent = (event: Event) => {
     return (!!event.id && event.recurrenceRule?.type !== "none") || !event.id;
   };
 
   const handleDeleteClick = (event: Event) => {
-    if (isRecurringEvent(event)) {
-      setEventToDelete(event);
-    } else {
-      handleDeleteSingle(event);
+    setEventToDelete(event);
+    if (!isRecurringEvent(event)) {
+      openDeleteModal();
     }
   };
 
@@ -28,6 +30,7 @@ export function useEventDelete(
       });
       await reloadEvents();
       setEventToDelete(null);
+      closeDeleteModal();
     } catch (error) {
       console.error("Error deleting event:", error);
     }
@@ -44,11 +47,13 @@ export function useEventDelete(
 
   return {
     eventToDelete,
+    isDeleteModalOpen,
     isRecurringEvent,
     handleDeleteClick,
     handleDeleteSingle: () =>
       eventToDelete && handleDeleteSingle(eventToDelete, false),
     handleDeleteAll,
     handleCancelDelete,
+    closeDeleteModal,
   };
 }

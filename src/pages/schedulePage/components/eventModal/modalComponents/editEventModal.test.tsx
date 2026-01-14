@@ -37,6 +37,29 @@ vi.mock("../../../../../events/form/EventForm/EventFormFields", () => ({
   ),
 }));
 
+vi.mock(
+  "../../../../../events/Confirmations/RegularEventConfirmation/RegularEventConfirmation",
+  () => ({
+    RegularEventConfirmation: ({
+      onClose,
+      onConfirm,
+    }: {
+      variant: string;
+      onClose: () => void;
+      onConfirm: () => void;
+    }) => (
+      <div data-testid="delete-confirmation">
+        <button data-testid="confirm-cancel" onClick={onClose}>
+          Cancel
+        </button>
+        <button data-testid="confirm-delete" onClick={onConfirm}>
+          Delete
+        </button>
+      </div>
+    ),
+  })
+);
+
 describe("EditEventModal", () => {
   const mockEventData: Event = {
     id: 1,
@@ -58,39 +81,62 @@ describe("EditEventModal", () => {
     vi.clearAllMocks();
   });
 
-  it("It should render edit event modal with correct title", () => {
+  it("should render edit event modal with correct title", () => {
     render(<EditEventModal {...mockProps} />);
     expect(screen.getByText("edit_title")).toBeInTheDocument();
   });
 
-  it("It should render delete, cancel and save changes buttons", () => {
+  it("should render delete, cancel and save changes buttons", () => {
     render(<EditEventModal {...mockProps} />);
     expect(screen.getByText("btn_delete")).toBeInTheDocument();
     expect(screen.getByText("btn_cancel")).toBeInTheDocument();
     expect(screen.getByText("btn_save_changes")).toBeInTheDocument();
   });
 
-  it("It should call onRequestDelete when delete button is clicked", () => {
+  it("should open delete confirmation modal when delete button is clicked", () => {
     render(<EditEventModal {...mockProps} />);
     const deleteButton = screen.getByText("btn_delete");
+
+    expect(screen.queryByTestId("delete-confirmation")).not.toBeInTheDocument();
+
     fireEvent.click(deleteButton);
+
+    expect(screen.getByTestId("delete-confirmation")).toBeInTheDocument();
+  });
+
+  it("should call onRequestDelete when confirming deletion", () => {
+    render(<EditEventModal {...mockProps} />);
+
+    fireEvent.click(screen.getByText("btn_delete"));
+    fireEvent.click(screen.getByTestId("confirm-delete"));
+
     expect(mockProps.onRequestDelete).toHaveBeenCalledTimes(1);
   });
 
-  it("It should call onClose when cancel button is clicked", () => {
+  it("should close delete confirmation when cancel is clicked", () => {
+    render(<EditEventModal {...mockProps} />);
+
+    fireEvent.click(screen.getByText("btn_delete"));
+    expect(screen.getByTestId("delete-confirmation")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId("confirm-cancel"));
+    expect(screen.queryByTestId("delete-confirmation")).not.toBeInTheDocument();
+  });
+
+  it("should call onClose when cancel button is clicked", () => {
     render(<EditEventModal {...mockProps} />);
     const cancelButton = screen.getByText("btn_cancel");
     fireEvent.click(cancelButton);
     expect(mockProps.onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("It should have submit button", () => {
+  it("should have submit button with correct type", () => {
     render(<EditEventModal {...mockProps} />);
     const saveButton = screen.getByText("btn_save_changes");
     expect(saveButton).toHaveAttribute("type", "submit");
   });
 
-  it("It should render with all form fields from BaseEventModal", () => {
+  it("should render with all form fields from BaseEventModal", () => {
     render(<EditEventModal {...mockProps} />);
     expect(screen.getByText("title")).toBeInTheDocument();
     expect(screen.getByText("description")).toBeInTheDocument();
@@ -99,16 +145,13 @@ describe("EditEventModal", () => {
     expect(screen.getByText("color")).toBeInTheDocument();
   });
 
-  it("It should handle async onRequestDelete", async () => {
-    const asyncDelete = vi.fn().mockResolvedValue(undefined);
-    render(<EditEventModal {...mockProps} onRequestDelete={asyncDelete} />);
-    const deleteButton = screen.getByText("btn_delete");
-    fireEvent.click(deleteButton);
-    expect(asyncDelete).toHaveBeenCalledTimes(1);
-  });
-
-  it("It should pass all props correctly to BaseEventModal", () => {
+  it("should pass all props correctly to BaseEventModal", () => {
     render(<EditEventModal {...mockProps} />);
     expect(screen.getByTestId("event-form-fields")).toBeInTheDocument();
+  });
+
+  it("should not show delete confirmation initially", () => {
+    render(<EditEventModal {...mockProps} />);
+    expect(screen.queryByTestId("delete-confirmation")).not.toBeInTheDocument();
   });
 });

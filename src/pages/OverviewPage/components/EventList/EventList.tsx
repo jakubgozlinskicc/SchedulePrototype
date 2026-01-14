@@ -2,40 +2,32 @@ import { eventRepository } from "../../../../db/eventRepository";
 import { useEventList } from "./useEventList/useEventList";
 import { Pagination } from "../Pagination/Pagination";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import "./EventList.css";
-import type { Event } from "../../../../db/scheduleDb";
 import { Button } from "../../../../components/Button/Button";
 import { useEventDelete } from "./useEventList/useEventDelete/useEventDelete";
 import { useLoadEvents } from "./useEventList/useLoadEvents/useLoadEvents";
-import { Confirmation } from "../../../../components/Confirmation/Confirmation";
+import { RecurringEventConfirmation } from "../../../../events/Confirmations/RecurringEventConfirmation/RecurringEventConfirmation";
+import { RegularEventConfirmation } from "../../../../events/Confirmations/RegularEventConfirmation/RegularEventConfirmation";
+import { useEventNavigation } from "./useEventList/useEventNavigation/useEventNavigation";
 
 export function EventList() {
   const { events, reloadEvents } = useLoadEvents(eventRepository);
 
   const { groupedEvents, formatTime, pagination } = useEventList(events);
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   const {
     eventToDelete,
+    isDeleteModalOpen,
     isRecurringEvent,
     handleDeleteClick,
     handleDeleteSingle,
     handleDeleteAll,
     handleCancelDelete,
+    closeDeleteModal,
   } = useEventDelete(eventRepository, reloadEvents);
 
-  const handleEditClick = (event: Event) => {
-    const dateStr = encodeURIComponent(event.start.toISOString());
-    if (!!event.id && event.recurrenceRule?.type !== "none") {
-      navigate(`/recurring-event/edit/${event.id}/${dateStr}`);
-    } else if (!event.id) {
-      navigate(`/recurring-event/edit/${event.recurringEventId}/${dateStr}`);
-    } else if (event.id) {
-      navigate(`/event/edit/${event.id}`);
-    }
-  };
+  const { handleEditClick } = useEventNavigation();
 
   if (groupedEvents.length === 0) {
     return (
@@ -48,31 +40,20 @@ export function EventList() {
   return (
     <>
       <div className="events-list">
-        {eventToDelete && (
-          <Confirmation
+        {eventToDelete && isRecurringEvent(eventToDelete) && (
+          <RecurringEventConfirmation
             variant="delete"
-            titleKey="modal-recurring-title"
-            descKey="modal-recurring-prompt"
-            buttons={[
-              {
-                label: "btn_cancel",
-                icon: "fa-solid fa-xmark",
-                variant: "secondary",
-                onClick: handleCancelDelete,
-              },
-              {
-                label: "btn-single",
-                icon: "fa-solid fa-calendar-day",
-                variant: "danger",
-                onClick: handleDeleteSingle,
-              },
-              {
-                label: "btn-all",
-                icon: "fa-solid fa-calendar-days",
-                variant: "danger",
-                onClick: handleDeleteAll,
-              },
-            ]}
+            onClose={handleCancelDelete}
+            onConfirmSingle={handleDeleteSingle}
+            onConfirmAll={handleDeleteAll}
+          />
+        )}
+
+        {isDeleteModalOpen && (
+          <RegularEventConfirmation
+            variant="delete"
+            onClose={closeDeleteModal}
+            onConfirm={handleDeleteSingle}
           />
         )}
 

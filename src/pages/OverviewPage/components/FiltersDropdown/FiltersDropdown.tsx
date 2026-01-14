@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import "./FiltersDropdown.css";
 import { useFiltersContext } from "../../context/useFiltersContext";
 import { ColorSelect } from "./ColorSelect";
-import { useClickOutside } from "../../../../hooks/useClickOutside";
+import { useClickOutside } from "../../../../hooks/useClickOutside/useClickOutside";
 import { Button } from "../../../../components/Button/Button";
 import { createDateChangeHandler, formatDateForInput } from "./dateFormaters";
 

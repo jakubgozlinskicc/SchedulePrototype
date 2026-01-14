@@ -8,7 +8,7 @@ import { createPortal } from "react-dom";
 import { Button } from "../../../../../../components/Button/Button";
 import type { EventFormData } from "../../../../../../events/form/EventForm/eventFormSchema";
 import { useRecurringEventEdit } from "./useRecurringEventEdit/useRecurringEventEdit";
-import { Confirmation } from "../../../../../../components/Confirmation/Confirmation";
+import { RecurringEventConfirmation } from "../../../../../../events/Confirmations/RecurringEventConfirmation/RecurringEventConfirmation";
 
 type EditRecurringEventModalProps = Pick<
   EventModalProps,
@@ -42,30 +42,11 @@ export function EditRecurringEventModal({
 
   if (isEditModalOpen) {
     return createPortal(
-      <Confirmation
+      <RecurringEventConfirmation
         variant="edit"
-        titleKey="modal-recurring-title"
-        descKey="modal-recurring-prompt"
-        buttons={[
-          {
-            label: "btn_cancel",
-            icon: "fa-solid fa-xmark",
-            variant: "secondary",
-            onClick: onClose,
-          },
-          {
-            label: "btn-single",
-            icon: "fa-solid fa-calendar-day",
-            variant: "primary",
-            onClick: confirmSingle,
-          },
-          {
-            label: "btn-all",
-            icon: "fa-solid fa-calendar-days",
-            variant: "primary",
-            onClick: confirmAll,
-          },
-        ]}
+        onClose={onClose}
+        onConfirmSingle={confirmSingle}
+        onConfirmAll={confirmAll}
       />,
       document.body
     );
@@ -98,30 +79,11 @@ export function EditRecurringEventModal({
 
       {isDeleteModalOpen &&
         createPortal(
-          <Confirmation
+          <RecurringEventConfirmation
             variant="delete"
-            titleKey="modal-recurring-title"
-            descKey="modal-recurring-prompt"
-            buttons={[
-              {
-                label: "btn_cancel",
-                icon: "fa-solid fa-xmark",
-                variant: "secondary",
-                onClick: closeDeleteModal,
-              },
-              {
-                label: "btn-single",
-                icon: "fa-solid fa-calendar-day",
-                variant: "danger",
-                onClick: () => onRequestDelete({ isDeleteAll: false }),
-              },
-              {
-                label: "btn-all",
-                icon: "fa-solid fa-calendar-days",
-                variant: "danger",
-                onClick: () => onRequestDelete({ isDeleteAll: true }),
-              },
-            ]}
+            onClose={closeDeleteModal}
+            onConfirmSingle={() => onRequestDelete({ isDeleteAll: false })}
+            onConfirmAll={() => onRequestDelete({ isDeleteAll: true })}
           />,
           document.body
         )}

@@ -13,11 +13,16 @@ import { Button } from "../../components/Button/Button";
 import { EventFormFields } from "../../events/form/EventForm/EventFormFields";
 import { useEventFormDelete } from "../../events/form/EventForm/useEventForm/useEventFormDelete/useEventFormDelete";
 import { useEffect } from "react";
+import { useDeleteConfirmation } from "../../hooks/useDeleteConfirmation/useDeleteConfirmation";
+import { RegularEventConfirmation } from "../../events/Confirmations/RegularEventConfirmation/RegularEventConfirmation";
 
 export function EditEventFormPage() {
   const { id } = useParams();
   const { t } = useTranslation();
   const { eventFormSchema } = useEventFormSchema();
+
+  const { isDeleteModalOpen, openDeleteModal, closeDeleteModal } =
+    useDeleteConfirmation();
 
   const eventId = id ? parseInt(id, 10) : undefined;
   const { event, loading } = useEventLoader(eventId, eventRepository);
@@ -80,7 +85,7 @@ export function EditEventFormPage() {
                 <Button
                   variant="danger"
                   type="button"
-                  onClick={() => handleDelete(false)}
+                  onClick={openDeleteModal}
                 >
                   <i className="fa-solid fa-trash-can"></i>
                   {t("btn_delete")}
@@ -100,6 +105,13 @@ export function EditEventFormPage() {
               </div>
             </form>
           </main>
+          {isDeleteModalOpen && (
+            <RegularEventConfirmation
+              variant="delete"
+              onClose={closeDeleteModal}
+              onConfirm={() => handleDelete(false)}
+            />
+          )}
         </div>
       </div>
     </FormProvider>

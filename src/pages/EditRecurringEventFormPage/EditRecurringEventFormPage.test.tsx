@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { EditEventFormPage } from "./EditEventFormPage";
+import { EditRecurringEventFormPage } from "./EditRecurringEventFormPage";
 import type { Event } from "../../db/scheduleDb";
 
 const mockNavigate = vi.fn();
@@ -9,28 +9,31 @@ const mockOnSubmit = vi.fn();
 const mockHandleCancel = vi.fn();
 const mockHandleDelete = vi.fn();
 
-const mockEvent: Event = {
+const mockRecurringEvent: Event = {
   id: 1,
-  title: "Test Event",
+  title: "Recurring Event",
   description: "Test Description",
   start: new Date("2025-12-10T10:00:00"),
   end: new Date("2025-12-10T11:00:00"),
   color: "#0000FF",
   recurrenceRule: {
-    type: "none",
-    interval: 0,
+    type: "daily",
+    interval: 1,
   },
 };
 
 let mockLoading = false;
-let mockEventData: Event | undefined = mockEvent;
+let mockEventData: Event | undefined = mockRecurringEvent;
 
 vi.mock("react-router-dom", async () => {
   const actual = await vi.importActual("react-router-dom");
   return {
     ...actual,
     useNavigate: () => mockNavigate,
-    useParams: () => ({ id: "1" }),
+    useParams: () => ({
+      parentId: "1",
+      occurrenceDate: encodeURIComponent("2025-12-10T10:00:00"),
+    }),
   };
 });
 
@@ -51,8 +54,8 @@ vi.mock(
   })
 );
 
-vi.mock("./useEventLoader", () => ({
-  useEventLoader: () => ({
+vi.mock("./useRecurringEventLoader", () => ({
+  useRecurringEventLoader: () => ({
     event: mockEventData,
     loading: mockLoading,
   }),
@@ -86,26 +89,69 @@ vi.mock(
 );
 
 vi.mock("../../events/form/EventForm/EventFormFields", () => ({
-  EventFormFields: () => <div data-testid="event-form-fields">Form Fields</div>,
+  EventFormFields: ({
+    isRecurringEditSingle,
+  }: {
+    isRecurringEditSingle?: boolean;
+  }) => (
+    <div
+      data-testid="event-form-fields"
+      data-recurring-single={isRecurringEditSingle}
+    >
+      Form Fields
+    </div>
+  ),
+}));
+
+vi.mock("./RecurringEditCheckbox/RecurringEditCheckbox", () => ({
+  RecurringEditCheckbox: ({
+    isEditAll,
+    onChange,
+  }: {
+    isEditAll: boolean;
+    onChange: (checked: boolean) => void;
+  }) => (
+    <div data-testid="recurring-edit-checkbox">
+      <input
+        type="checkbox"
+        checked={isEditAll}
+        onChange={(e) => onChange(e.target.checked)}
+        data-testid="edit-all-checkbox"
+      />
+      <span>Edit all occurrences</span>
+    </div>
+  ),
+}));
+
+vi.mock("./RecurringEditCheckbox/useRecurringEditCheckbox", () => ({
+  useRecurringEditCheckBox: () => ({
+    isEditAll: false,
+    handleChange: vi.fn(),
+  }),
 }));
 
 vi.mock(
-  "../../events/Confirmations/RegularEventConfirmation/RegularEventConfirmation",
+  "../../events/Confirmations/RecurringEventConfirmation/RecurringEventConfirmation",
   () => ({
-    RegularEventConfirmation: ({
+    RecurringEventConfirmation: ({
       onClose,
-      onConfirm,
+      onConfirmSingle,
+      onConfirmAll,
     }: {
       variant: string;
       onClose: () => void;
-      onConfirm: () => void;
+      onConfirmSingle: () => void;
+      onConfirmAll: () => void;
     }) => (
       <div data-testid="delete-confirmation">
         <button data-testid="confirm-cancel" onClick={onClose}>
           Cancel
         </button>
-        <button data-testid="confirm-delete" onClick={onConfirm}>
-          Delete
+        <button data-testid="confirm-single" onClick={onConfirmSingle}>
+          Delete Single
+        </button>
+        <button data-testid="confirm-all" onClick={onConfirmAll}>
+          Delete All
         </button>
       </div>
     ),
@@ -120,68 +166,73 @@ vi.mock("../../components/Button/Button", () => ({
   ),
 }));
 
-const renderEditEventFormPage = () => {
+const renderEditRecurringEventFormPage = () => {
   return render(
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<EditEventFormPage />} />
+        <Route path="/" element={<EditRecurringEventFormPage />} />
       </Routes>
     </BrowserRouter>
   );
 };
 
-describe("EditEventFormPage", () => {
+describe("EditRecurringEventFormPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockLoading = false;
-    mockEventData = mockEvent;
+    mockEventData = mockRecurringEvent;
   });
 
   it("should render loading state when loading is true", () => {
     mockLoading = true;
-    renderEditEventFormPage();
+    renderEditRecurringEventFormPage();
     expect(screen.getByText("loading")).toBeInTheDocument();
   });
 
   it("should render error when event is not found", () => {
     mockEventData = undefined;
-    renderEditEventFormPage();
+    renderEditRecurringEventFormPage();
     expect(screen.getByText("error-event-not-found")).toBeInTheDocument();
   });
 
-  it("should render the edit event form header", () => {
-    renderEditEventFormPage();
-    expect(screen.getByText("edit_title")).toBeInTheDocument();
+  it("should render the edit recurring event form header", () => {
+    renderEditRecurringEventFormPage();
+    expect(screen.getByText("edit_recurring_title")).toBeInTheDocument();
   });
 
   it("should render EventFormFields component", () => {
-    renderEditEventFormPage();
+    renderEditRecurringEventFormPage();
     expect(screen.getByTestId("event-form-fields")).toBeInTheDocument();
   });
 
+  it("should render RecurringEditCheckbox component", () => {
+    renderEditRecurringEventFormPage();
+    expect(screen.getByTestId("recurring-edit-checkbox")).toBeInTheDocument();
+  });
+
   it("should render delete button", () => {
-    renderEditEventFormPage();
+    renderEditRecurringEventFormPage();
     const deleteButton = screen.getByTestId("button-danger");
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveTextContent("btn_delete");
   });
 
   it("should render cancel button", () => {
-    renderEditEventFormPage();
+    renderEditRecurringEventFormPage();
     const cancelButton = screen.getByTestId("button-secondary");
     expect(cancelButton).toBeInTheDocument();
     expect(cancelButton).toHaveTextContent("btn_cancel");
   });
 
   it("should render submit button with save changes text", () => {
-    renderEditEventFormPage();
+    renderEditRecurringEventFormPage();
     const submitButton = screen.getByTestId("button-primary");
     expect(submitButton).toBeInTheDocument();
     expect(submitButton).toHaveTextContent("btn_save_changes");
   });
 
   it("should open delete confirmation when delete button is clicked", () => {
-    renderEditEventFormPage();
+    renderEditRecurringEventFormPage();
 
     expect(screen.queryByTestId("delete-confirmation")).not.toBeInTheDocument();
 
@@ -192,7 +243,7 @@ describe("EditEventFormPage", () => {
   });
 
   it("should close delete confirmation when cancel is clicked", () => {
-    renderEditEventFormPage();
+    renderEditRecurringEventFormPage();
 
     fireEvent.click(screen.getByTestId("button-danger"));
     expect(screen.getByTestId("delete-confirmation")).toBeInTheDocument();
@@ -201,24 +252,33 @@ describe("EditEventFormPage", () => {
     expect(screen.queryByTestId("delete-confirmation")).not.toBeInTheDocument();
   });
 
-  it("should call handleDelete with false when confirming deletion", () => {
-    renderEditEventFormPage();
+  it("should call handleDelete with false when delete single is clicked", () => {
+    renderEditRecurringEventFormPage();
 
     fireEvent.click(screen.getByTestId("button-danger"));
-    fireEvent.click(screen.getByTestId("confirm-delete"));
+    fireEvent.click(screen.getByTestId("confirm-single"));
 
     expect(mockHandleDelete).toHaveBeenCalledWith(false);
   });
 
+  it("should call handleDelete with true when delete all is clicked", () => {
+    renderEditRecurringEventFormPage();
+
+    fireEvent.click(screen.getByTestId("button-danger"));
+    fireEvent.click(screen.getByTestId("confirm-all"));
+
+    expect(mockHandleDelete).toHaveBeenCalledWith(true);
+  });
+
   it("should call handleCancel when cancel button is clicked", () => {
-    renderEditEventFormPage();
+    renderEditRecurringEventFormPage();
     const cancelButton = screen.getByTestId("button-secondary");
     fireEvent.click(cancelButton);
     expect(mockHandleCancel).toHaveBeenCalledTimes(1);
   });
 
   it("should have correct form structure", () => {
-    const { container } = renderEditEventFormPage();
+    const { container } = renderEditRecurringEventFormPage();
     expect(container.querySelector(".event-form-page")).toBeInTheDocument();
     expect(container.querySelector(".event-form-header")).toBeInTheDocument();
     expect(container.querySelector(".form-wrapper")).toBeInTheDocument();
@@ -227,60 +287,60 @@ describe("EditEventFormPage", () => {
   });
 
   it("should have form actions section", () => {
-    const { container } = renderEditEventFormPage();
+    const { container } = renderEditRecurringEventFormPage();
     expect(container.querySelector(".event-form-actions")).toBeInTheDocument();
   });
 
   it("should render trash can icon in delete button", () => {
-    const { container } = renderEditEventFormPage();
+    const { container } = renderEditRecurringEventFormPage();
     const icon = container.querySelector(".fa-trash-can");
     expect(icon).toBeInTheDocument();
   });
 
   it("should render xmark icon in cancel button", () => {
-    const { container } = renderEditEventFormPage();
+    const { container } = renderEditRecurringEventFormPage();
     const icon = container.querySelector(".fa-xmark");
     expect(icon).toBeInTheDocument();
   });
 
   it("should render floppy disk icon in submit button", () => {
-    const { container } = renderEditEventFormPage();
+    const { container } = renderEditRecurringEventFormPage();
     const icon = container.querySelector(".fa-floppy-disk");
     expect(icon).toBeInTheDocument();
   });
 
   it("should have delete button with type button", () => {
-    renderEditEventFormPage();
+    renderEditRecurringEventFormPage();
     const deleteButton = screen.getByTestId("button-danger");
     expect(deleteButton).toHaveAttribute("type", "button");
   });
 
   it("should have cancel button with type button", () => {
-    renderEditEventFormPage();
+    renderEditRecurringEventFormPage();
     const cancelButton = screen.getByTestId("button-secondary");
     expect(cancelButton).toHaveAttribute("type", "button");
   });
 
   it("should have submit button with type submit", () => {
-    renderEditEventFormPage();
+    renderEditRecurringEventFormPage();
     const submitButton = screen.getByTestId("button-primary");
     expect(submitButton).toHaveAttribute("type", "submit");
   });
 
   it("should not render form when loading", () => {
     mockLoading = true;
-    const { container } = renderEditEventFormPage();
+    const { container } = renderEditRecurringEventFormPage();
     expect(container.querySelector(".event-form")).not.toBeInTheDocument();
   });
 
   it("should not render form when event is not found", () => {
     mockEventData = undefined;
-    const { container } = renderEditEventFormPage();
+    const { container } = renderEditRecurringEventFormPage();
     expect(container.querySelector(".event-form")).not.toBeInTheDocument();
   });
 
   it("should not show delete confirmation initially", () => {
-    renderEditEventFormPage();
+    renderEditRecurringEventFormPage();
     expect(screen.queryByTestId("delete-confirmation")).not.toBeInTheDocument();
   });
 });

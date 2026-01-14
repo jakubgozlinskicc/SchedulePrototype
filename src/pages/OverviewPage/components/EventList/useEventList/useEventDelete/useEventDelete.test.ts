@@ -61,6 +61,7 @@ describe("useEventDelete", () => {
     };
     mockReloadEvents = vi.fn().mockResolvedValue(undefined);
   });
+
   describe("isRecurringEvent", () => {
     it("should return false for single event", () => {
       const { result } = renderHook(() =>
@@ -90,7 +91,7 @@ describe("useEventDelete", () => {
   });
 
   describe("handleDeleteClick", () => {
-    it("should open confirmation for recurring event", () => {
+    it("should set eventToDelete for recurring event", () => {
       const { result } = renderHook(() =>
         useEventDelete(mockRepository, mockReloadEvents)
       );
@@ -100,24 +101,20 @@ describe("useEventDelete", () => {
       });
 
       expect(result.current.eventToDelete).toEqual(mockRecurringEvent);
+      expect(result.current.isDeleteModalOpen).toBe(false);
     });
 
-    it("should delete immediately for single event", async () => {
+    it("should set eventToDelete and open modal for single event", () => {
       const { result } = renderHook(() =>
         useEventDelete(mockRepository, mockReloadEvents)
       );
 
-      await act(async () => {
+      act(() => {
         result.current.handleDeleteClick(mockSingleEvent);
       });
 
-      expect(DeleteStrategyRegistry.executeDelete).toHaveBeenCalledWith(
-        mockSingleEvent,
-        mockRepository,
-        { isDeleteAll: false }
-      );
-      expect(mockReloadEvents).toHaveBeenCalled();
-      expect(result.current.eventToDelete).toBeNull();
+      expect(result.current.eventToDelete).toEqual(mockSingleEvent);
+      expect(result.current.isDeleteModalOpen).toBe(true);
     });
   });
 
@@ -154,6 +151,24 @@ describe("useEventDelete", () => {
       });
 
       expect(DeleteStrategyRegistry.executeDelete).not.toHaveBeenCalled();
+    });
+
+    it("should close delete modal after deletion", async () => {
+      const { result } = renderHook(() =>
+        useEventDelete(mockRepository, mockReloadEvents)
+      );
+
+      act(() => {
+        result.current.handleDeleteClick(mockSingleEvent);
+      });
+
+      expect(result.current.isDeleteModalOpen).toBe(true);
+
+      await act(async () => {
+        await result.current.handleDeleteSingle();
+      });
+
+      expect(result.current.isDeleteModalOpen).toBe(false);
     });
   });
 
@@ -213,6 +228,26 @@ describe("useEventDelete", () => {
     });
   });
 
+  describe("closeDeleteModal", () => {
+    it("should close delete modal", () => {
+      const { result } = renderHook(() =>
+        useEventDelete(mockRepository, mockReloadEvents)
+      );
+
+      act(() => {
+        result.current.handleDeleteClick(mockSingleEvent);
+      });
+
+      expect(result.current.isDeleteModalOpen).toBe(true);
+
+      act(() => {
+        result.current.closeDeleteModal();
+      });
+
+      expect(result.current.isDeleteModalOpen).toBe(false);
+    });
+  });
+
   describe("error handling", () => {
     it("should handle delete errors gracefully", async () => {
       const consoleErrorSpy = vi
@@ -226,8 +261,12 @@ describe("useEventDelete", () => {
         useEventDelete(mockRepository, mockReloadEvents)
       );
 
-      await act(async () => {
+      act(() => {
         result.current.handleDeleteClick(mockSingleEvent);
+      });
+
+      await act(async () => {
+        await result.current.handleDeleteSingle();
       });
 
       expect(consoleErrorSpy).toHaveBeenCalledWith(

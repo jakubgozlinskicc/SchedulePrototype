@@ -6,7 +6,6 @@
 .title {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
-  color: #1a1a1a;
   padding-bottom: 10px;
   width: 100%;
   border-bottom: 2px solid;
@@ -14,7 +13,7 @@
 
 .description {
   margin-bottom: 2rem;
-  color: #666;
+  color: var(--gray-900);
   font-size: 1.1rem;
   line-height: 1.6;
 }
@@ -37,7 +36,7 @@
 }
 
 .edit .icon {
-  color: var(--primary);
+  color: var(--primary-hover);
 }
 
 .edit .title {
