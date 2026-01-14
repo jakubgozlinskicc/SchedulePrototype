@@ -24,7 +24,11 @@ export abstract class BaseRecurrenceStrategy implements IRecurrenceStrategy {
     const maxOccurrences = rule.count ?? this.getDefaultMaxOccurrences();
 
     while (currentDate <= rangeEnd && count < maxOccurrences) {
-      if (rule.endDate && currentDate > rule.endDate) break;
+      if (rule.endDate) {
+        const endOfDay = new Date(rule.endDate);
+        endOfDay.setHours(23, 59, 59, 999);
+        if (currentDate > endOfDay) break;
+      }
 
       if (currentDate >= rangeStart) {
         const isFirstOccurrence = currentDate.getTime() === originalStartTime;
