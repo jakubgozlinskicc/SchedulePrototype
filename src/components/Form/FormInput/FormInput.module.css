@@ -9,8 +9,8 @@
   border: 1px solid var(--gray-300);
   border-radius: var(--radius);
   font-size: 0.95rem;
-  color: #1f2937;
-  background-color: #ffffff;
+  color: var(--main-text-color);
+  background-color: var(--secondary-background);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   font-family: inherit;
 }
@@ -27,6 +27,6 @@
 
 .formError {
   font-size: 0.8rem;
-  color: #dc2626;
+  color: var(--danger);
   font-weight: 500;
 }

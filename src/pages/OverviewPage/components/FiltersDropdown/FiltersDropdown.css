@@ -59,7 +59,7 @@
   gap: 8px;
   font-weight: 600;
   margin-bottom: 6px;
-  color: #333;
+  color: var(--main-text);
 }
 
 .filter-input {
@@ -95,15 +95,15 @@
 }
 
 .color-btn.active {
-  border-color: #333;
+  border-color: var(--main-text);
   box-shadow: 0 0 0 2px white, 0 0 0 4px #333;
 }
 
 .reset-filters-btn {
   width: 100%;
   padding: 8px;
-  background: #e74c3c;
-  color: white;
+  background: var(--danger);
+  color: var(--white);
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -111,7 +111,7 @@
 }
 
 .reset-filters-btn:hover {
-  background: #c0392b;
+  background: var(--danger-hover);
 }
 .filter-input[type="date"] {
   width: 100%;

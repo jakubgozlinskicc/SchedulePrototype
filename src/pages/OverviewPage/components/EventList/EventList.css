@@ -11,7 +11,7 @@
 }
 
 .event-item {
-  background-color: #f9f9f9e5;
+  background-color: var(--secondary-background);
   padding: 16px;
   border-radius: var(--radius);
   border-bottom: 1px solid;
@@ -21,7 +21,7 @@
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-soft);
 }
 
 .event-item:hover {
@@ -43,7 +43,7 @@
 .event-title {
   font-weight: 600;
   font-size: 1.1rem;
-  color: #333;
+  color: var(--main-text);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -51,13 +51,13 @@
 
 .event-time {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--description);
   margin-bottom: 6px;
 }
 
 .event-description {
   font-size: 0.9rem;
-  color: #1f1f1f;
+  color: var(--main-text);
   margin-top: 8px;
   padding-top: 8px;
   border-top: 1px solid #eee;

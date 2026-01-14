@@ -16,10 +16,6 @@
   transition: border-color 0.2s;
 }
 
-.color-select-toggle:hover {
-  border-color: var(--gray-400);
-}
-
 .color-select-arrow {
   transition: transform 0.2s;
 }
@@ -103,7 +99,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 14px;
-  color: black;
+  color: var(--main-text);
   opacity: 0;
 }
 

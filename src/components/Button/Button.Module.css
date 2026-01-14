@@ -31,30 +31,30 @@
 }
 
 .secondary {
-  background-color: var(--gray-300);
+  background-color: var(--secondary);
 }
 
 .secondary:hover:not(:disabled) {
-  background-color: var(--gray-400);
+  background-color: var(--secondary-hover);
 }
 
 .danger {
-  background-color: #dc2626;
+  background-color: var(--danger);
   color: var(--white);
 }
 
 .danger:hover:not(:disabled) {
-  background-color: #b91c1c;
+  background-color: var(--danger-hover);
 }
 
 .secondary.active {
-  background-color: var(--gray-600);
+  background-color: var(--secondary-active);
 }
 
 .primary.active {
   background-color: var(--primary-hover);
 }
 
-.active:hover:not(:disabled) {
-  background-color: var(--gray-900);
+.secondary.active:hover:not(:disabled) {
+  background-color: var(--secondary-active-hover);
 }

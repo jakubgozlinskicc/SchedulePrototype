@@ -9,6 +9,6 @@
 }
 
 .languageSelector:hover {
-  background-color: black;
-  color: white;
+  background-color: var(--main-text);
+  color: var(--secondary-text);
 }

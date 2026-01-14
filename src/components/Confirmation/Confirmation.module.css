@@ -13,7 +13,7 @@
 
 .description {
   margin-bottom: 2rem;
-  color: var(--gray-900);
+  color: var(--description);
   font-size: 1.1rem;
   line-height: 1.6;
 }
@@ -28,11 +28,11 @@
 }
 
 .delete .icon {
-  color: #ff4d4f;
+  color: var(--danger);
 }
 
 .delete .title {
-  border-color: #ff4d4f;
+  border-color: var(--danger);
 }
 
 .edit .icon {

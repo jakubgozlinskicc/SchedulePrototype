@@ -12,11 +12,12 @@
   border-radius: var(--radius);
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: 0.2s;
 }
 
 .toolbar-label-button:hover {
-  background: var(--gray-300);
-  border-color: var(--gray-400);
+  background: var(--secondary);
+  border-color: var(--secondary-hover);
 }
 
 .toolbar-label-button:focus {

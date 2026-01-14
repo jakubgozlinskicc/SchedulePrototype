@@ -60,7 +60,7 @@
 }
 
 .rbc-time-content {
-  background-color: #f7f9fcf1;
+  background-color: var(--secondary-background);
 }
 
 .rbc-time-view .rbc-event.colored-event {
