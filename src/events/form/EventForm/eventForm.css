@@ -7,19 +7,6 @@
   width: 100%;
 }
 
-.event-form-header {
-  padding: 10px;
-  margin-bottom: 30px;
-  text-align: center;
-  width: 100%;
-}
-
-.event-form-header h1 {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 700;
-}
-
 .form-wrapper {
   width: 90%;
   max-width: 800px;

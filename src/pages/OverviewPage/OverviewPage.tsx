@@ -11,6 +11,8 @@ import { locales } from "../../utils/calendarLocalizer/calendarLocalizer";
 import { format } from "date-fns";
 import { EventToolbar } from "./components/EventToolbar/EventToolbar";
 import { TopControls } from "../../components/TopControls/TopControls";
+import { ThemeSelector } from "../../components/ThemeSelector/ThemeSelector";
+import { PageHeader } from "../../components/PageHeader/PageHeader";
 
 function OverviewPageContent() {
   const { currentLanguage } = useTranslationContext();
@@ -27,13 +29,10 @@ function OverviewPageContent() {
         buttonText="Schedule"
         buttonIcon="fa-regular fa-calendar"
         navigateTo="/"
-      ></TopControls>
-      <header className="overview-header">
-        <h1>
-          Overview
-          <i className="fa-solid fa-list" style={{ marginLeft: "8px" }}></i>
-        </h1>
-      </header>
+      >
+        <ThemeSelector />
+      </TopControls>
+      <PageHeader title="Overview" icon="fa-solid fa-list" />
       <div className="overview-wrapper">
         <div className="overview-toolbar">
           <EventToolbar />

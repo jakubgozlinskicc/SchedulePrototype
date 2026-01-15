@@ -88,5 +88,14 @@
   "delete-recurring-event-desc": "Co chcesz usunąć?",
 
   "delete-event-title": "Usuwanie wydarzenia",
-  "delete-event-desc": "Czy na pewno chcesz usunąć wydarzenie?"
+  "delete-event-desc": "Czy na pewno chcesz usunąć wydarzenie?",
+
+  "violet": "Fioletowy",
+  "pink": "Różowy",
+  "green": "Zielony",
+  "blue": "Niebieski",
+  "cyan": "Cyjan",
+  "orange": "Pomarańczowy",
+  "peach": "Brzoskwiniowy",
+  "silver": "Srebrny"
 }

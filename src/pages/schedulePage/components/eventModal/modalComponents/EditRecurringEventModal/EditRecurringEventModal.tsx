@@ -64,7 +64,7 @@ export function EditRecurringEventModal({
           variant="danger"
           onClick={() => openDeleteModal()}
         >
-          <i className="fa-solid fa-trash-can"></i>
+          <i className="fa-regular fa-trash-can"></i>
           {t("btn_delete")}
         </Button>
         <Button type="button" variant="secondary" onClick={handleClose}>

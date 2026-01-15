@@ -502,7 +502,7 @@ describe("Confirmation", () => {
 describe("variantDefaults", () => {
   it("should have edit config with correct icon", () => {
     expect(variantDefaults.edit).toEqual({
-      icon: "fa-solid fa-pen-to-square",
+      icon: "fa-regular fa-pen-to-square",
     });
   });
 

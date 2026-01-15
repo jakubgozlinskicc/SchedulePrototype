@@ -15,6 +15,7 @@ import { useEventFormDelete } from "../../events/form/EventForm/useEventForm/use
 import { useEffect } from "react";
 import { useDeleteConfirmation } from "../../hooks/useDeleteConfirmation/useDeleteConfirmation";
 import { RegularEventConfirmation } from "../../events/Confirmations/RegularEventConfirmation/RegularEventConfirmation";
+import { PageHeader } from "../../components/PageHeader/PageHeader";
 
 export function EditEventFormPage() {
   const { id } = useParams();
@@ -71,9 +72,10 @@ export function EditEventFormPage() {
   return (
     <FormProvider {...methods}>
       <div className="event-form-page">
-        <header className="event-form-header">
-          <h1>{t("edit_title")}</h1>
-        </header>
+        <PageHeader
+          title={t("edit_title")}
+          icon="fa-regular fa-pen-to-square"
+        />
         <div className="form-wrapper">
           <main className="form-content">
             <form
@@ -87,7 +89,7 @@ export function EditEventFormPage() {
                   type="button"
                   onClick={openDeleteModal}
                 >
-                  <i className="fa-solid fa-trash-can"></i>
+                  <i className="fa-regular fa-trash-can"></i>
                   {t("btn_delete")}
                 </Button>
                 <Button

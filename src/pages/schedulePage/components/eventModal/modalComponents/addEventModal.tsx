@@ -26,7 +26,7 @@ export function AddEventModal({
         {t("btn_cancel")}
       </Button>
       <Button type="submit" variant="primary" form={EVENT_MODAL_FORM_ID}>
-        <i className="fa-solid fa-calendar-plus"></i>
+        <i className="fa-regular fa-calendar-plus"></i>
         {t("btn-add")}
       </Button>
     </BaseEventModal>

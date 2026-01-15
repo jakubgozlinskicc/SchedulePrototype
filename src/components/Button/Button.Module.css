@@ -35,7 +35,7 @@
 }
 
 .secondary:hover:not(:disabled) {
-  background-color: var(--secondary-hover);
+  background-color: var(--color-secondary-hover);
 }
 
 .danger {

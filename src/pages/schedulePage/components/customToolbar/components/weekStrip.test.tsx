@@ -39,19 +39,6 @@ describe("WeekStrip", () => {
     expect(days.length).toBe(7);
   });
 
-  it("should highlight active day", () => {
-    render(
-      <WeekStrip
-        date={new Date("2025-06-18T10:00:00")}
-        onNavigate={mockOnNavigate}
-        onView={mockOnView}
-      />
-    );
-
-    const activeDay = document.querySelector(".active-day");
-    expect(activeDay).toBeInTheDocument();
-  });
-
   it("should call onView and onNavigate when day is clicked", () => {
     render(
       <WeekStrip

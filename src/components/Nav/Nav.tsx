@@ -46,7 +46,7 @@ const Nav = () => {
             onClick={handleAddEventClick}
             className={({ isActive }) => (isActive ? "active" : "")}
           >
-            <i className="fa-solid fa-calendar-plus"></i>
+            <i className="fa-regular fa-calendar-plus"></i>
           </NavLink>
         </li>
       </ul>

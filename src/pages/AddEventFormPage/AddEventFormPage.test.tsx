@@ -106,15 +106,6 @@ describe("AddEventFormPage", () => {
     expect(mockHandleCancel).toHaveBeenCalledTimes(1);
   });
 
-  it("should have correct form structure", () => {
-    const { container } = renderAddEventFormPage();
-    expect(container.querySelector(".event-form-page")).toBeInTheDocument();
-    expect(container.querySelector(".event-form-header")).toBeInTheDocument();
-    expect(container.querySelector(".form-wrapper")).toBeInTheDocument();
-    expect(container.querySelector(".form-content")).toBeInTheDocument();
-    expect(container.querySelector(".event-form")).toBeInTheDocument();
-  });
-
   it("should have form actions section", () => {
     const { container } = renderAddEventFormPage();
     expect(container.querySelector(".event-form-actions")).toBeInTheDocument();

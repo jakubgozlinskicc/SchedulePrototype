@@ -31,21 +31,6 @@
   padding-bottom: 40px;
 }
 
-.overview-header {
-  padding: 10px;
-  align-items: center;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-.overview-header {
-  margin-bottom: 30px;
-}
-
-.overview-header h1 {
-  margin: 0;
-}
-
 .overview-content h2 {
   text-align: center;
   border-bottom: 2px solid var(--color-primary);

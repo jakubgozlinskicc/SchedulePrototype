@@ -20,7 +20,7 @@ export function TopControls({
   return (
     <div className={styles.topControls}>
       <Button variant="primary" onClick={() => navigate(navigateTo)}>
-        {buttonText} <i className={buttonIcon}></i>
+        <i className={buttonIcon}></i> {buttonText}
       </Button>
       {children}
     </div>

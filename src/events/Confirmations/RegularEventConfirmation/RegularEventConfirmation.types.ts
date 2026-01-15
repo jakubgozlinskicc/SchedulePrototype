@@ -23,6 +23,6 @@ export const variantConfig: Record<
     descKey: "delete-event-desc",
     confirmButtonVariant: "danger",
     confirmLabel: "btn_delete",
-    confirmIcon: "fa-solid fa-trash-can",
+    confirmIcon: "fa-regular fa-trash-can",
   },
 };

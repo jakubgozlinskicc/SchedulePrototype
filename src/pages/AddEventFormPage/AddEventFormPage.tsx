@@ -9,6 +9,7 @@ import { EventFormFields } from "../../events/form/EventForm/EventFormFields";
 import { Button } from "../../components/Button/Button";
 import "../../events/form/EventForm/eventForm.css";
 import { toDateTimeLocal } from "../../utils/toDateTimeLocal/toDateTimeLocal";
+import { PageHeader } from "../../components/PageHeader/PageHeader";
 
 export function AddEventFormPage() {
   const { t } = useTranslation();
@@ -35,9 +36,7 @@ export function AddEventFormPage() {
   return (
     <FormProvider {...methods}>
       <div className="event-form-page">
-        <header className="event-form-header">
-          <h1>{t("add_title")}</h1>
-        </header>
+        <PageHeader title={t("add_title")} icon="fa-regular fa-calendar-plus" />
         <div className="form-wrapper">
           <main className="form-content">
             <form
@@ -51,7 +50,7 @@ export function AddEventFormPage() {
                   {t("btn_cancel")}
                 </Button>
                 <Button variant="primary" type="submit">
-                  <i className="fa-solid fa-calendar-plus"></i>
+                  <i className="fa-regular fa-calendar-plus"></i>
                   {t("btn-add")}
                 </Button>
               </div>

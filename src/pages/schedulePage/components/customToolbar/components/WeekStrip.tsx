@@ -23,7 +23,7 @@ export const WeekStrip = ({ date, onNavigate, onView }: WeekStripProps) => {
       {days.map((day) => (
         <Button
           key={day.toISOString()}
-          variant="secondary"
+          variant="primary"
           isActive={isSameDay(day, date)}
           className="week-strip-day"
           onClick={() => {

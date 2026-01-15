@@ -16,6 +16,7 @@ import { RecurringEditCheckbox } from "./RecurringEditCheckbox/RecurringEditChec
 import { useRecurringEditCheckBox } from "./RecurringEditCheckbox/useRecurringEditCheckbox";
 import { useEffect, useState } from "react";
 import { RecurringEventConfirmation } from "../../events/Confirmations/RecurringEventConfirmation/RecurringEventConfirmation";
+import { PageHeader } from "../../components/PageHeader/PageHeader";
 
 export function EditRecurringEventFormPage() {
   const { parentId, occurrenceDate } = useParams<{
@@ -90,9 +91,10 @@ export function EditRecurringEventFormPage() {
             onConfirmAll={() => handleDelete(true)}
           />
         )}
-        <header className="event-form-header">
-          <h1>{t("edit_recurring_title")}</h1>
-        </header>
+        <PageHeader
+          title={t("edit_recurring_title")}
+          icon="fa-regular fa-pen-to-square"
+        />
         <div className="form-wrapper">
           <main className="form-content">
             <form
@@ -112,7 +114,7 @@ export function EditRecurringEventFormPage() {
                   type="button"
                   onClick={() => setIsDeleteModalOpen(true)}
                 >
-                  <i className="fa-solid fa-trash-can"></i>
+                  <i className="fa-regular fa-trash-can"></i>
                   {t("btn_delete")}
                 </Button>
                 <Button

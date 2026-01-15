@@ -37,7 +37,8 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
         <div className="actions-buttons">
           {onAddEvent && (
             <Button variant="primary" onClick={onAddEvent}>
-              {t("btn-add")} <i className="fa-solid fa-calendar-plus"></i>
+              <i className="fa-regular fa-calendar-plus"></i>
+              {t("btn-add")}
             </Button>
           )}
           <Button variant="primary" onClick={() => onNavigate("TODAY")}>
@@ -56,10 +57,10 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
               aria-expanded={isDatePickerOpen}
               aria-haspopup="dialog"
             >
-              <span className="toolbar-label">{label}</span>
               <span className="calendar-icon">
                 <i className="fa-solid fa-calendar"></i>
               </span>
+              <span className="toolbar-label">{label}</span>
             </button>
             {isDatePickerOpen && (
               <DatePickerComponent

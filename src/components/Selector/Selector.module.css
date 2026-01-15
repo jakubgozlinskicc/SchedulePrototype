@@ -6,6 +6,9 @@
   font-size: 0.9rem;
   cursor: pointer;
   transition: 0.2s;
+  border-radius: var(--radius-sm);
+  width: auto;
+  field-sizing: content;
 }
 
 .languageSelector:hover {

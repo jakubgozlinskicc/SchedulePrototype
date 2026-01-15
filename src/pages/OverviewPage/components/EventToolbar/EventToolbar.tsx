@@ -20,7 +20,8 @@ export function EventToolbar() {
         <div className="toolbar-left-side">
           <div className="actions-buttons">
             <Button variant="primary" onClick={() => navigate("/event/add")}>
-              {t("btn-add")} <i className="fa-solid fa-calendar-plus"></i>
+              <i className="fa-regular fa-calendar-plus"></i>
+              {t("btn-add")}
             </Button>
             <Button variant="primary" onClick={setToday}>
               {t("today")}

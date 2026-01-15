@@ -2,14 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-}
-
-.schedule-header {
-  padding: 10px;
-  align-items: center;
-  margin-bottom: 16px;
-  text-align: center;
 }
 
 .calendar-section {
@@ -35,11 +27,13 @@
 
 .rbc-time-header-cell .rbc-today {
   font-size: 14px;
+
   display: flex;
   align-items: center;
   justify-content: center;
   height: 36px;
 }
+
 .rbc-header {
   font-size: 14px;
   display: flex;
@@ -48,7 +42,15 @@
   height: 36px;
   background-color: var(--color-primary);
   border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.rbc-button-link {
+  font-weight: bold;
+}
+
+.rbc-button-link:hover {
+  background-color: var(--color-primary-hover);
 }
 
 .rbc-today {

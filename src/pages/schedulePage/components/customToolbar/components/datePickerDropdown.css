@@ -29,7 +29,7 @@
 
 .toolbar-label-button:hover {
   background: var(--color-secondary);
-  border-color: var(--secondary-hover);
+  border-color: var(--color-secondary-hover);
 }
 
 .toolbar-label-button:focus {
@@ -43,7 +43,7 @@
 }
 
 .calendar-icon {
-  font-size: 1rem;
+  font-size: 1.2rem;
   opacity: 0.7;
   color: var(--color-primary-hover);
 }
@@ -113,7 +113,7 @@
 }
 
 .date-picker-dropdown .react-datepicker__day:hover {
-  background: var(--color-bg-secondary);
+  background: var(--color-primary);
 }
 
 .date-picker-dropdown .react-datepicker__month-select,
@@ -174,5 +174,5 @@
 }
 
 .date-picker-dropdown .react-datepicker__day--outside-month:hover {
-  background: var(--secondary-hover);
+  background: var(--color-secondary-hover);
 }

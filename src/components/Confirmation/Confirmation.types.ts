@@ -16,6 +16,6 @@ export interface ConfirmationProps {
 }
 
 export const variantDefaults: Record<ConfirmationVariant, { icon: string }> = {
-  edit: { icon: "fa-solid fa-pen-to-square" },
+  edit: { icon: "fa-regular fa-pen-to-square" },
   delete: { icon: "fa-solid fa-circle-exclamation" },
 };

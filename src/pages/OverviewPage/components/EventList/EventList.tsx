@@ -85,14 +85,14 @@ export function EventList() {
                         variant="danger"
                         onClick={() => handleDeleteClick(event)}
                       >
-                        <i className="fa-solid fa-trash-can"></i>
+                        <i className="fa-regular fa-trash-can"></i>
                         {t("btn_delete")}
                       </Button>
                       <Button
                         variant="primary"
                         onClick={() => handleEditClick(event)}
                       >
-                        <i className="fa-solid fa-pen-to-square"></i>
+                        <i className="fa-regular fa-pen-to-square"></i>
                         {t("edit")}
                       </Button>
                     </div>

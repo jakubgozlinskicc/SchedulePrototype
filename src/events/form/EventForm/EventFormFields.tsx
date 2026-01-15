@@ -22,7 +22,7 @@ export function EventFormFields({
     <>
       <FormField>
         <FormLabel>
-          <i className="fa-solid fa-pen-to-square"></i>
+          <i className="fa-regular fa-pen-to-square"></i>
           {t("title")}
         </FormLabel>
         <FormInput name="title" type="text" />

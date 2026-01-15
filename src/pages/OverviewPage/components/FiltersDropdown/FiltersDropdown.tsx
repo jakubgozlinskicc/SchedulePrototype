@@ -25,8 +25,8 @@ export function FiltersDropdown() {
   return (
     <div className="filters-dropdown" ref={dropdownRef}>
       <Button variant="secondary" onClick={() => setIsOpen(!isOpen)}>
-        {t("filters")}
         <i className="fa-solid fa-filter"></i>
+        {t("filters")}
         {activeFiltersCount > 0 && (
           <span className="filters-badge">{activeFiltersCount}</span>
         )}
@@ -81,8 +81,8 @@ export function FiltersDropdown() {
           />
         </div>
         <Button variant="danger" onClick={resetFilters}>
-          {t("reset-filters")}
           <i className="fa-solid fa-toilet"></i>
+          {t("reset-filters")}
         </Button>
       </div>
     </div>
