@@ -1,9 +1,9 @@
 .event-hover {
   position: fixed;
   z-index: 10000;
-  background: #ffffff;
+  background: var(--secondary-background);
   border-radius: var(--radius-lg);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-soft);
   min-width: 260px;
   max-width: 360px;
   font-size: 14px;
@@ -77,9 +77,9 @@
 
 .hover-footer {
   padding: 9px 16px 11px;
-  background: #f7f7f7;
+  background: var(--primary-background);
   text-align: center;
-  border-top: 1px solid #e3e3e3;
+  border-top: 1px solid var(--border-primary);
   font-size: 14px;
   color: var(--description);
 }

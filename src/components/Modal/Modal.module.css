@@ -11,10 +11,10 @@
 }
 
 .modal {
-  background: white;
+  background: var(--secondary-background);
   padding: 2.5rem;
   border-radius: var(--radius);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow);
   max-width: 500px;
   width: auto;
   display: flex;

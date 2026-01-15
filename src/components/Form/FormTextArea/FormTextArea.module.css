@@ -1,6 +1,6 @@
 .formTextArea {
   padding: 10px 12px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border-light);
   border-radius: var(--radius);
   font-size: 0.95rem;
   background-color: var(--secondary-background);
@@ -8,14 +8,17 @@
   font-family: inherit;
   min-height: 120px;
   resize: vertical;
+
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .formTextArea:focus {
   outline: none;
   border-color: var(--primary-hover);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-form);
 }
 
 .formTextArea:hover:not(:focus) {
-  border: 1px solid var(--gray-300);
+  border: 1px solid var(--description);
 }

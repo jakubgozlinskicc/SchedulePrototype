@@ -2,22 +2,6 @@
   position: relative;
 }
 
-.filters-toggle-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: var(--gray-300);
-  border: 1px solid #ddd;
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-size: 0.95rem;
-}
-
-.filters-toggle-btn:hover {
-  background: var(--gray-400);
-}
-
 .filters-badge {
   background: var(--primary);
   font-size: 0.75rem;
@@ -29,12 +13,12 @@
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
-  background: white;
-  border: 1px solid #ddd;
+  background: var(--secondary-background);
+  border: 1px solid var(--border-primary);
   border-radius: var(--radius);
   padding: 16px;
   min-width: 280px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow);
   z-index: 100;
 
   opacity: 0;
@@ -65,7 +49,7 @@
 .filter-input {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-primary);
   border-radius: 4px;
   font-size: 0.9rem;
 }
@@ -96,7 +80,6 @@
 
 .color-btn.active {
   border-color: var(--main-text);
-  box-shadow: 0 0 0 2px white, 0 0 0 4px #333;
 }
 
 .reset-filters-btn {
@@ -116,7 +99,7 @@
 .filter-input[type="date"] {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-primary);
   border-radius: 4px;
   font-size: 0.9rem;
   cursor: pointer;
