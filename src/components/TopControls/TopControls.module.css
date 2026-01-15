@@ -13,9 +13,9 @@
 
 .overviewButton {
   padding: 8px 16px;
-  background-color: var(--primary);
+  background-color: var(--color-primary);
   border: none;
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
@@ -23,5 +23,5 @@
 }
 
 .overviewButton:hover {
-  background-color: var(--primary-hover);
+  background-color: var(--color-primary-hover);
 }

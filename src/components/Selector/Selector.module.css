@@ -1,6 +1,6 @@
 .languageSelector {
   padding: 5px;
-  background-color: var(--primary-hover);
+  background-color: var(--color-primary-hover);
   font-weight: bold;
   border: none;
   font-size: 0.9rem;
@@ -9,6 +9,6 @@
 }
 
 .languageSelector:hover {
-  background-color: var(--main-text);
-  color: var(--secondary-text);
+  background-color: var(--color-text-primary);
+  color: var(--color-text-secondary);
 }

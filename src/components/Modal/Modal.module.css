@@ -1,7 +1,7 @@
 .backdrop {
   position: fixed;
   inset: 0;
-  background-color: var(--backdrop-color);
+  background-color: var(--color-backdrop);
   backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
@@ -11,10 +11,10 @@
 }
 
 .modal {
-  background: var(--secondary-background);
+  background: var(--color-bg-secondary);
   padding: 2.5rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-xl);
   max-width: 500px;
   width: auto;
   display: flex;

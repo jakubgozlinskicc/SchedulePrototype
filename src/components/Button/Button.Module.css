@@ -5,16 +5,16 @@
   gap: 8px;
   padding: 6px 12px;
   border: none;
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   font-size: 0.85rem;
   cursor: pointer;
   font-weight: 600 !important;
   transition: 0.2s;
-  box-shadow: var(--shadow-button);
+  box-shadow: var(--shadow-sm);
 }
 
 .button:hover {
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-md);
 }
 
 .button:disabled {
@@ -23,15 +23,15 @@
 }
 
 .primary {
-  background-color: var(--primary);
+  background-color: var(--color-primary);
 }
 
 .primary:hover:not(:disabled) {
-  background-color: var(--primary-hover);
+  background-color: var(--color-primary-hover);
 }
 
 .secondary {
-  background-color: var(--secondary);
+  background-color: var(--color-secondary);
 }
 
 .secondary:hover:not(:disabled) {
@@ -39,22 +39,22 @@
 }
 
 .danger {
-  background-color: var(--danger);
-  color: var(--white);
+  background-color: var(--color-danger);
+  color: var(--color-bg-surface);
 }
 
 .danger:hover:not(:disabled) {
-  background-color: var(--danger-hover);
+  background-color: var(--color-danger-hover);
 }
 
 .secondary.active {
-  background-color: var(--secondary-active);
+  background-color: var(--color-secondary-active);
 }
 
 .primary.active {
-  background-color: var(--primary-hover);
+  background-color: var(--color-primary-hover);
 }
 
 .secondary.active:hover:not(:disabled) {
-  background-color: var(--secondary-active-hover);
+  background-color: var(--color-secondary-active-hover);
 }

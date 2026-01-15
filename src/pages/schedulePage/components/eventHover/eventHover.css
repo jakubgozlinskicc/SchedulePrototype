@@ -1,13 +1,13 @@
 .event-hover {
   position: fixed;
   z-index: 10000;
-  background: var(--secondary-background);
+  background: var(--color-bg-secondary);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-md);
   min-width: 260px;
   max-width: 360px;
   font-size: 14px;
-  color: var(--description);
+  color: var(--color-text-muted);
   pointer-events: none;
   overflow: hidden;
   animation: hoverFadeIn 0.15s ease-out;
@@ -40,7 +40,7 @@
 
 .hover {
   padding: 12px 16px 14px;
-  background: var(--secondary-background);
+  background: var(--color-bg-secondary);
 }
 
 .view-field {
@@ -58,7 +58,7 @@
 .view-label {
   font-weight: 600;
   flex-shrink: 0;
-  color: var(--main-text);
+  color: var(--color-text-primary);
 }
 
 .view-value {
@@ -79,9 +79,9 @@
   padding: 9px 16px 11px;
   background: var(--primary-background);
   text-align: center;
-  border-top: 1px solid var(--border-primary);
+  border-top: 1px solid var(--color-border-primary);
   font-size: 14px;
-  color: var(--description);
+  color: var(--color-text-muted);
 }
 
 @media (max-width: 768px) {

@@ -3,34 +3,43 @@
     sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  background-color: #f5f5f5;
-  --primary: #c1bef1;
-  --primary-hover: #9791e5;
-  --primary-transparent: rgba(89, 30, 253, 0.05);
-  --secondary: #e5e7eb;
-  --secondary-hover: #d1d5db;
-  --secondary-active: #bfc2c5;
-  --secondary-active-hover: #696b70;
-  --danger: #e71a1a;
-  --danger-hover: #b91c1c;
-  --description: #696b70;
-  --main-text: #000000;
-  --secondary-text: #ffffff;
-  --secondary-background: #ffffff;
-  --primary-background: #f5f5f5;
-  --backdrop-color: rgba(0, 0, 0, 0.4);
 
-  --border-primary: #e0e0e0;
-  --border-light: #bfc2c5;
+  --color-primary: #c1bef1;
+  --color-primary-hover: #9791e5;
+  --color-primary-transparent: rgba(89, 30, 253, 0.05);
 
-  --white: #fff;
-  --shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.2);
-  --shadow-button: 0 2px 8px rgba(0, 0, 0, 0.05);
-  --shadow-form: 0 0 0 3px rgba(0, 0, 0, 0.15);
-  --shadow-wrappers: 0 2px 10px rgba(0, 0, 0, 0.1);
-  --shadow-event-hover: 0 2px 8px rgba(0, 0, 0, 0.5);
+  --color-secondary: #e5e7eb;
+  --color-secondary-hover: #d1d5db;
+  --color-secondary-active: #bfc2c5;
+  --color-secondary-active-hover: #696b70;
 
-  --radius: 6px;
+  --color-danger: #e71a1a;
+  --color-danger-hover: #b91c1c;
+
+  --color-text-primary: #000000;
+  --color-text-secondary: #ffffff;
+  --color-text-muted: #696b70;
+
+  --color-bg-primary: #f5f5f5;
+  --color-bg-secondary: #ffffff;
+  --color-bg-surface: #ffffff;
+  --color-backdrop: rgba(0, 0, 0, 0.4);
+
+  --color-border-primary: #e0e0e0;
+  --color-border-light: #bfc2c5;
+
+  --shadow-xl: 0 10px 40px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-focus: 0 0 0 3px rgba(0, 0, 0, 0.15);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 2px 8px rgba(0, 0, 0, 0.5);
+
+  --radius-sm: 6px;
   --radius-lg: 12px;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
 }

@@ -11,9 +11,9 @@
 }
 
 .event-item {
-  background-color: var(--secondary-background);
+  background-color: var(--color-bg-secondary);
   padding: 16px;
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   border-bottom: 1px solid;
   border-left: 4px solid;
   border-right: 4px solid;
@@ -21,11 +21,11 @@
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 8px;
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-md);
 }
 
 .event-item:hover {
-  box-shadow: var(--shadow-event-hover);
+  box-shadow: var(--shadow-hover);
 }
 
 .event-header {
@@ -43,7 +43,7 @@
 .event-title {
   font-weight: 600;
   font-size: 1.1rem;
-  color: var(--main-text);
+  color: var(--color-text-primary);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -51,16 +51,16 @@
 
 .event-time {
   font-size: 0.9rem;
-  color: var(--description);
+  color: var(--color-text-muted);
   margin-bottom: 6px;
 }
 
 .event-description {
   font-size: 0.9rem;
-  color: var(--main-text);
+  color: var(--color-text-primary);
   margin-top: 8px;
   padding-top: 8px;
-  border-top: 1px solid var(--border-primary);
+  border-top: 1px solid var(--color-border-primary);
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap;
@@ -71,7 +71,7 @@
 .day-header {
   font-weight: bold;
   padding: 10px;
-  background-color: var(--primary);
-  border-radius: var(--radius);
+  background-color: var(--color-primary);
+  border-radius: var(--radius-sm);
   margin-bottom: 5px;
 }

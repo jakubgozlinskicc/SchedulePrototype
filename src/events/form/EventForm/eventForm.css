@@ -26,15 +26,15 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  box-shadow: var(--shadow-wrappers);
+  box-shadow: var(--shadow-card);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 1px solid var(--border-primary);
+  border: 1px solid var(--color-border-primary);
 }
 
 .form-content {
   width: 100%;
-  background-color: var(--secondary-background);
+  background-color: var(--color-bg-secondary);
   padding: 30px;
   box-sizing: border-box;
 }
@@ -47,15 +47,15 @@
 
 .event-form-input:hover:not(:focus),
 .event-form-textarea:hover:not(:focus) {
-  border-color: var(--primary);
+  border-color: var(--color-primary);
 }
 
 .event-form-color-picker {
   width: 60px;
   height: 40px;
   padding: 2px;
-  border: 2px solid var(--border-light);
-  border-radius: var(--radius);
+  border: 2px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
   background: none;
   cursor: pointer;
   transition: border-color 0.2s ease;
@@ -67,7 +67,7 @@
   gap: 12px;
   margin-top: 10px;
   padding-top: 20px;
-  border-top: 1px solid var(--border-light);
+  border-top: 1px solid var(--color-border-light);
 }
 
 .event-form-loading {
@@ -75,6 +75,6 @@
   justify-content: center;
   align-items: center;
   padding: 60px;
-  color: var(--description);
+  color: var(--color-text-muted);
   font-size: 1rem;
 }

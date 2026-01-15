@@ -3,7 +3,7 @@
 }
 
 .filters-badge {
-  background: var(--primary);
+  background: var(--color-primary);
   font-size: 0.75rem;
   padding: 2px 6px;
   border-radius: var(--radius-lg);
@@ -13,12 +13,12 @@
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
-  background: var(--secondary-background);
-  border: 1px solid var(--border-primary);
-  border-radius: var(--radius);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-sm);
   padding: 16px;
   min-width: 280px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-xl);
   z-index: 100;
 
   opacity: 0;
@@ -43,13 +43,13 @@
   gap: 8px;
   font-weight: 600;
   margin-bottom: 6px;
-  color: var(--main-text);
+  color: var(--color-text-primary);
 }
 
 .filter-input {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid var(--border-primary);
+  border: 1px solid var(--color-border-primary);
   border-radius: 4px;
   font-size: 0.9rem;
 }
@@ -79,14 +79,14 @@
 }
 
 .color-btn.active {
-  border-color: var(--main-text);
+  border-color: var(--color-text-primary);
 }
 
 .reset-filters-btn {
   width: 100%;
   padding: 8px;
-  background: var(--danger);
-  color: var(--white);
+  background: var(--color-danger);
+  color: var(--color-bg-surface);
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -94,12 +94,12 @@
 }
 
 .reset-filters-btn:hover {
-  background: var(--danger-hover);
+  background: var(--color-danger-hover);
 }
 .filter-input[type="date"] {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid var(--border-primary);
+  border: 1px solid var(--color-border-primary);
   border-radius: 4px;
   font-size: 0.9rem;
   cursor: pointer;

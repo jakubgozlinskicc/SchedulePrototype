@@ -13,8 +13,8 @@
 }
 
 .calendar-section {
-  background-color: var(--secondary-background);
-  box-shadow: var(--shadow-wrappers);
+  background-color: var(--color-bg-secondary);
+  box-shadow: var(--shadow-card);
   margin-top: 1rem;
   width: 80%;
   display: flex;
@@ -46,29 +46,29 @@
   align-items: center;
   justify-content: center;
   height: 36px;
-  background-color: var(--primary);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-soft);
+  background-color: var(--color-primary);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
 }
 
 .rbc-today {
-  background-color: var(--primary-transparent);
+  background-color: var(--color-primary-transparent);
 }
 
 .rbc-time-view {
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
 }
 
 .rbc-time-content {
-  background-color: var(--secondary-background);
+  background-color: var(--color-bg-secondary);
 }
 
 .rbc-time-view .rbc-event.colored-event {
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-md);
   overflow: hidden;
-  color: var(--main-text) !important;
+  color: var(--color-text-primary) !important;
   padding-left: 10px;
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   border: none;
   background: color-mix(in srgb, var(--event-color) 20%, transparent);
 }
@@ -90,7 +90,7 @@
 
 .rbc-month-view .rbc-event.colored-event {
   background-color: var(--event-color);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   border: none;
 }
 .rbc-date-cell .rbc-button-link {
@@ -104,5 +104,5 @@
   transition: 0.2s;
 }
 .rbc-date-cell .rbc-button-link:hover {
-  background-color: var(--primary);
+  background-color: var(--color-primary);
 }

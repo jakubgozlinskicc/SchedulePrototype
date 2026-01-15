@@ -6,11 +6,11 @@
 
 .formInput {
   padding: 10px 12px;
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
   font-size: 0.95rem;
   color: var(--main-text-color);
-  background-color: var(--secondary-background);
+  background-color: var(--color-bg-secondary);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   font-family: inherit;
 
@@ -20,16 +20,16 @@
 
 .formInput:focus {
   outline: none;
-  border-color: var(--primary-hover);
-  box-shadow: var(--shadow-form);
+  border-color: var(--color-primary-hover);
+  box-shadow: var(--shadow-focus);
 }
 
 .formInput:hover:not(:focus) {
-  border: 1px solid var(--description);
+  border: 1px solid var(--color-text-muted);
 }
 
 .formError {
   font-size: 0.8rem;
-  color: var(--danger);
+  color: var(--color-danger);
   font-weight: 500;
 }

@@ -1,7 +1,7 @@
 .modal {
-  background: var(--secondary-background);
+  background: var(--color-bg-secondary);
   padding: 20px;
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   width: 400px;
 }
 
@@ -11,8 +11,8 @@
 }
 
 .modal-form {
-  border-bottom: 2px solid var(--primary);
-  border-top: 2px solid var(--primary);
+  border-bottom: 2px solid var(--color-primary);
+  border-top: 2px solid var(--color-primary);
 
   display: flex;
   flex-direction: column;
