@@ -155,7 +155,7 @@ it("should render the schedule page", () => {
 
 it("should render page header with correct title", () => {
   render(<SchedulePage />);
-  expect(screen.getByText("Schedule")).toBeInTheDocument();
+  expect(screen.getByText("schedule")).toBeInTheDocument();
 });
 
 it("should render top controls component", () => {
@@ -165,7 +165,7 @@ it("should render top controls component", () => {
 
 it("should render overview button in top controls", () => {
   render(<SchedulePage />);
-  expect(screen.getByText("Overview")).toBeInTheDocument();
+  expect(screen.getByText("overview")).toBeInTheDocument();
 });
 
 it("should render theme selector inside top controls", () => {

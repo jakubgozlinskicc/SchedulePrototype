@@ -1,4 +1,7 @@
 {
+  "schedule": "Schedule",
+  "overview": "Overview",
+
   "events": "Events",
   "edit_recurring_title": "Edit recurring event",
   "edit_title": "Edit event",

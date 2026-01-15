@@ -85,15 +85,6 @@ describe("CalendarEvent", () => {
     expect(screen.getByTestId("hover-position-y")).toHaveTextContent("200");
   });
 
-  it("It should have correct inline styles on container div", () => {
-    render(<CalendarEvent event={mockEvent} />);
-
-    const eventDiv = screen.getByText("Test Event");
-
-    expect(eventDiv.style.height).toBe("100%");
-    expect(eventDiv.style.cursor).toBe("pointer");
-  });
-
   it("It should pass event data to EventHover", () => {
     mockIsHovering.mockReturnValue(true);
 

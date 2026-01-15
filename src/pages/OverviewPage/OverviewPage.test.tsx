@@ -95,7 +95,7 @@ describe("OverviewPage", () => {
 
     const buttons = screen.getAllByRole("button");
     const scheduleButton = buttons.find((button) =>
-      button.textContent?.includes("Schedule")
+      button.textContent?.includes("schedule")
     );
 
     expect(scheduleButton).toBeInTheDocument();
@@ -129,7 +129,7 @@ describe("OverviewPage", () => {
 
     const buttons = screen.getAllByRole("button");
     const scheduleButton = buttons.find((button) =>
-      button.textContent?.includes("Schedule")
+      button.textContent?.includes("schedule")
     );
 
     if (scheduleButton) {

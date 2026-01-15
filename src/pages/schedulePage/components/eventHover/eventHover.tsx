@@ -1,6 +1,5 @@
 import type { Event } from "../../../../db/scheduleDb";
 import "./eventHover.css";
-import { getTextColor } from "../../../../utils/getTextColor/getTextColor";
 import { useTranslation } from "react-i18next";
 
 interface EventHoverProps {
@@ -29,7 +28,6 @@ export function EventHover({ event, position }: EventHoverProps) {
     return { x: newX, y: newY };
   })();
 
-  const textColor = getTextColor(event.color);
   const { t } = useTranslation();
 
   return (
@@ -43,11 +41,12 @@ export function EventHover({ event, position }: EventHoverProps) {
     >
       <div
         className="hover-header"
-        style={{ backgroundColor: event.color, color: textColor }}
+        style={{
+          backgroundColor: `color-mix(in srgb, ${event.color} 25%, transparent)`,
+          borderColor: event.color,
+        }}
       >
-        <h3 className="hover-title" style={{ color: textColor }}>
-          {event.title}
-        </h3>
+        <h3 className="hover-title">{event.title}</h3>
       </div>
 
       <div className="hover">

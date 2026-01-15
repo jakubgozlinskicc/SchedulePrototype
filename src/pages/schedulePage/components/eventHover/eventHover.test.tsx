@@ -3,12 +3,6 @@ import { EventHover } from "./EventHover";
 import type { Event } from "../../../../db/scheduleDb";
 import { vi, describe, beforeEach, it, expect } from "vitest";
 
-vi.mock("../../../../utils/getTextColor/getTextColor", () => ({
-  getTextColor: vi.fn(() => "white"),
-}));
-
-import { getTextColor } from "../../../../utils/getTextColor/getTextColor";
-
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string) => key,
@@ -104,12 +98,9 @@ describe("EventHover", () => {
       <EventHover event={mockEvent} position={mockPosition} />
     );
     const header = container.querySelector(".hover-header");
-    expect(header).toHaveStyle({ backgroundColor: "#3b82f6" });
-  });
-
-  it("It should call getTextColor with event color", () => {
-    render(<EventHover event={mockEvent} position={mockPosition} />);
-    expect(getTextColor).toHaveBeenCalledWith("#3b82f6");
+    expect(header).toHaveStyle({
+      backgroundColor: `color-mix(in srgb, ${mockEvent.color} 25%, transparent)`,
+    });
   });
 
   it("It should use original position on initial render (element not yet in DOM)", () => {

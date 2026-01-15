@@ -43,13 +43,13 @@ function SchedulePageContent() {
   return (
     <div className="schedule-page">
       <TopControls
-        buttonText="Overview"
+        buttonText="overview"
         buttonIcon="fa-solid fa-list"
         navigateTo="/overview"
       >
         <ThemeSelector />
       </TopControls>
-      <PageHeader title="Schedule" icon="fa-regular fa-calendar" />
+      <PageHeader title="schedule" icon="fa-regular fa-calendar" />
       <section className="calendar-section">
         <DnDCalendar
           localizer={localizer}

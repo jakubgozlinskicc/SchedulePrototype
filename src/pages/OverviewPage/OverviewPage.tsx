@@ -26,13 +26,13 @@ function OverviewPageContent() {
   return (
     <div className="overview-page">
       <TopControls
-        buttonText="Schedule"
+        buttonText="schedule"
         buttonIcon="fa-regular fa-calendar"
         navigateTo="/"
       >
         <ThemeSelector />
       </TopControls>
-      <PageHeader title="Overview" icon="fa-solid fa-list" />
+      <PageHeader title="overview" icon="fa-solid fa-list" />
       <div className="overview-wrapper">
         <div className="overview-toolbar">
           <EventToolbar />

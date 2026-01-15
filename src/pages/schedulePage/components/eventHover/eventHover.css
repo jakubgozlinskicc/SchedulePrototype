@@ -26,6 +26,9 @@
 
 .hover-header {
   padding: 12px 16px;
+  background-color: color-mix(in srgb, var(--event-color) 25%, transparent);
+  border-left: solid 5px;
+  border-radius: var(--radius-sm);
 }
 
 .hover-title {
@@ -36,6 +39,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--color-text-primary);
 }
 
 .hover {

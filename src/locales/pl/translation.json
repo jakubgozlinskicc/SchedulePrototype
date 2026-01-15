@@ -1,4 +1,7 @@
 {
+  "schedule": "Harmonogram",
+  "overview": "Przegląd wydarzeń",
+
   "events": "Wydarzenia",
   "edit_recurring_title": "Edytuj Powtarzające się wydarzenie",
   "edit_title": "Edytuj wydarzenie",
