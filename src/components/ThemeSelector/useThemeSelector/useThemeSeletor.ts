@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { DEFAULT_THEME, STORAGE_KEY, THEMES } from "../ThemeSelector.types";
 
 const applyTheme = (themeKey: string): void => {
@@ -24,10 +24,21 @@ const getInitialTheme = (): string => {
 
 export const useThemeSelector = () => {
   const [currentTheme, setCurrentTheme] = useState<string>(getInitialTheme);
+  const [loaderTrigger, setLoaderTrigger] = useState(0);
+  const [loaderColor, setLoaderColor] = useState("");
+  const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     applyTheme(currentTheme);
   }, [currentTheme]);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const changeTheme = (themeKey: string): void => {
     if (!THEMES[themeKey]) {
@@ -35,14 +46,25 @@ export const useThemeSelector = () => {
       return;
     }
 
-    setCurrentTheme(themeKey);
-    applyTheme(themeKey);
-    localStorage.setItem(STORAGE_KEY, themeKey);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    setLoaderColor(THEMES[themeKey].primaryTransparent);
+    setLoaderTrigger((prev) => prev + 1);
+
+    timeoutRef.current = setTimeout(() => {
+      setCurrentTheme(themeKey);
+      applyTheme(themeKey);
+      localStorage.setItem(STORAGE_KEY, themeKey);
+    }, 400);
   };
 
   return {
     currentTheme,
     changeTheme,
     themes: THEMES,
+    loaderTrigger,
+    loaderColor,
   };
 };

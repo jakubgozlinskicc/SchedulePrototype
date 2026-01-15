@@ -7,7 +7,6 @@
 .calendar-section {
   background-color: var(--color-bg-secondary);
   box-shadow: var(--shadow-card);
-  margin-top: 1rem;
   width: 80%;
   display: flex;
   justify-content: center;
