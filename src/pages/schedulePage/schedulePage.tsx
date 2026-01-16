@@ -19,7 +19,6 @@ import { useEventDataContext } from "./useEvents/useEventDataContext/useEventDat
 import { eventRepository } from "../../db/eventRepository";
 import { TopControls } from "../../components/TopControls/TopControls";
 import { EventDataProvider } from "./eventContext/eventDataProvider";
-import { ThemeSelector } from "../../components/ThemeSelector/ThemeSelector";
 import { PageHeader } from "../../components/PageHeader/PageHeader";
 
 const DnDCalendar = withDragAndDrop<Event, object>(Calendar);
@@ -46,9 +45,7 @@ function SchedulePageContent() {
         buttonText="overview"
         buttonIcon="fa-solid fa-list"
         navigateTo="/overview"
-      >
-        <ThemeSelector />
-      </TopControls>
+      ></TopControls>
       <PageHeader title="schedule" icon="fa-regular fa-calendar" />
       <section className="calendar-section">
         <DnDCalendar

@@ -11,7 +11,6 @@ import { locales } from "../../utils/calendarLocalizer/calendarLocalizer";
 import { format } from "date-fns";
 import { EventToolbar } from "./components/EventToolbar/EventToolbar";
 import { TopControls } from "../../components/TopControls/TopControls";
-import { ThemeSelector } from "../../components/ThemeSelector/ThemeSelector";
 import { PageHeader } from "../../components/PageHeader/PageHeader";
 
 function OverviewPageContent() {
@@ -29,9 +28,7 @@ function OverviewPageContent() {
         buttonText="schedule"
         buttonIcon="fa-regular fa-calendar"
         navigateTo="/"
-      >
-        <ThemeSelector />
-      </TopControls>
+      ></TopControls>
       <PageHeader title="overview" icon="fa-solid fa-list" />
       <div className="overview-wrapper">
         <div className="overview-toolbar">

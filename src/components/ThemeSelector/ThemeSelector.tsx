@@ -1,27 +1,49 @@
-import { useTranslation } from "react-i18next";
-import { Selector } from "../Selector/Selector";
 import { ColorLoader } from "./ColorLoader/ColorLoader";
+import styles from "./ThemeSelector.module.css";
+import { Button } from "../Button/Button";
 import { useThemeSelector } from "./useThemeSelector/useThemeSeletor";
 
 export const ThemeSelector = () => {
-  const { currentTheme, changeTheme, themes, loaderTrigger, loaderColor } =
-    useThemeSelector();
-  const { t } = useTranslation();
-
-  const handleThemeChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-    changeTheme(e.target.value);
-  };
+  const {
+    isOpen,
+    setIsOpen,
+    currentTheme,
+    changeTheme,
+    themes,
+    loaderTrigger,
+    loaderColor,
+  } = useThemeSelector();
 
   return (
     <>
       <ColorLoader color={loaderColor} trigger={loaderTrigger} />
-      <Selector currentLanguage={currentTheme} onChange={handleThemeChange}>
-        {Object.entries(themes).map(([key, theme]) => (
-          <option key={key} value={key}>
-            {t(theme.name)}
-          </option>
-        ))}
-      </Selector>
+      <div className={styles.themeSelector}>
+        <Button variant="primary" onClick={() => setIsOpen(!isOpen)}>
+          <span
+            className={styles.currentDot}
+            style={{ backgroundColor: themes[currentTheme].primary }}
+          />
+        </Button>
+        <div className={`${styles.themeDropdown} ${isOpen ? styles.open : ""}`}>
+          <div className={styles.themeOptions}>
+            {Object.entries(themes).map(([key, theme]) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => changeTheme(key)}
+                className={`${styles.themeOption} ${
+                  currentTheme === key ? styles.selected : ""
+                }`}
+              >
+                <span
+                  className={styles.optionDot}
+                  style={{ backgroundColor: theme.primary }}
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
     </>
   );
 };

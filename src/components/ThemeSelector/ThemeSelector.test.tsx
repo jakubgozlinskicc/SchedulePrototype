@@ -4,41 +4,18 @@ import { ThemeSelector } from "./ThemeSelector";
 import { THEMES } from "./ThemeSelector.types";
 
 const mockChangeTheme = vi.fn();
+const mockSetIsOpen = vi.fn();
 
-vi.mock("./useThemeSelector/useThemeSeletor", () => ({
+vi.mock("./useThemeSelector/useThemeSeletor.ts", () => ({
   useThemeSelector: () => ({
     currentTheme: "pink",
     changeTheme: mockChangeTheme,
     themes: THEMES,
     loaderTrigger: 0,
     loaderColor: "",
+    isOpen: false,
+    setIsOpen: mockSetIsOpen,
   }),
-}));
-
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
-  }),
-}));
-
-vi.mock("../Selector/Selector", () => ({
-  Selector: ({
-    children,
-    currentLanguage,
-    onChange,
-  }: {
-    children: React.ReactNode;
-    currentLanguage: string;
-    onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  }) => (
-    <select
-      data-testid="theme-selector"
-      value={currentLanguage}
-      onChange={onChange}
-    >
-      {children}
-    </select>
-  ),
 }));
 
 vi.mock("./ColorLoader/ColorLoader", () => ({
@@ -47,68 +24,121 @@ vi.mock("./ColorLoader/ColorLoader", () => ({
   ),
 }));
 
+vi.mock("../Button/Button", () => ({
+  Button: ({
+    children,
+    onClick,
+    variant,
+  }: {
+    children: React.ReactNode;
+    onClick: () => void;
+    variant: string;
+  }) => (
+    <button
+      data-testid="toggle-button"
+      data-variant={variant}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  ),
+}));
+
 beforeEach(() => {
   vi.clearAllMocks();
 });
 
 describe("ThemeSelector", () => {
-  it("should render selector component", () => {
-    render(<ThemeSelector />);
-    expect(screen.getByTestId("theme-selector")).toBeInTheDocument();
-  });
-
   it("should render ColorLoader component", () => {
     render(<ThemeSelector />);
     expect(screen.getByTestId("color-loader")).toBeInTheDocument();
   });
 
-  it("should render all theme options", () => {
+  it("should render toggle button with primary variant", () => {
     render(<ThemeSelector />);
-    Object.keys(THEMES).forEach((themeKey) => {
-      expect(screen.getByText(THEMES[themeKey].name)).toBeInTheDocument();
-    });
+    const button = screen.getByTestId("toggle-button");
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveAttribute("data-variant", "primary");
   });
 
-  it("should render correct number of options", () => {
+  it("should display current theme color in toggle button", () => {
     render(<ThemeSelector />);
-    const options = screen.getAllByRole("option");
-    expect(options).toHaveLength(Object.keys(THEMES).length);
+    const dot = screen.getByTestId("toggle-button").querySelector("span");
+    expect(dot).toBeInTheDocument();
+    expect(dot).toHaveStyle({ backgroundColor: THEMES.pink.primary });
   });
 
-  it("should have correct current theme selected", () => {
+  it("should call setIsOpen with toggled value when toggle button is clicked", () => {
     render(<ThemeSelector />);
-    const selector = screen.getByTestId("theme-selector");
-    expect(selector).toHaveValue("pink");
+    const toggleButton = screen.getByTestId("toggle-button");
+
+    fireEvent.click(toggleButton);
+    expect(mockSetIsOpen).toHaveBeenCalledWith(true);
   });
 
-  it("should call changeTheme when option is selected", () => {
-    render(<ThemeSelector />);
-    const selector = screen.getByTestId("theme-selector");
-    fireEvent.change(selector, { target: { value: "blue" } });
-    expect(mockChangeTheme).toHaveBeenCalledWith("blue");
+  it("should render theme dropdown container", () => {
+    const { container } = render(<ThemeSelector />);
+    const dropdown = container.querySelector('[class*="themeDropdown"]');
+    expect(dropdown).toBeInTheDocument();
   });
 
-  it("should call changeTheme with correct value for each theme", () => {
+  it("should render all theme option buttons", () => {
     render(<ThemeSelector />);
-    const selector = screen.getByTestId("theme-selector");
+    const themeButtons = screen
+      .getAllByRole("button")
+      .filter((btn) => btn.getAttribute("type") === "button");
+    expect(themeButtons).toHaveLength(Object.keys(THEMES).length);
+  });
 
-    Object.keys(THEMES).forEach((themeKey) => {
-      fireEvent.change(selector, { target: { value: themeKey } });
+  it("should call changeTheme with correct key when theme option is clicked", () => {
+    render(<ThemeSelector />);
+    const themeButtons = screen
+      .getAllByRole("button")
+      .filter((btn) => btn.getAttribute("type") === "button");
+    const firstThemeKey = Object.keys(THEMES)[0];
+
+    fireEvent.click(themeButtons[0]);
+    expect(mockChangeTheme).toHaveBeenCalledWith(firstThemeKey);
+    expect(mockChangeTheme).toHaveBeenCalledTimes(1);
+  });
+
+  it("should call changeTheme for each theme option", () => {
+    render(<ThemeSelector />);
+    const themeButtons = screen
+      .getAllByRole("button")
+      .filter((btn) => btn.getAttribute("type") === "button");
+
+    Object.keys(THEMES).forEach((themeKey, index) => {
+      fireEvent.click(themeButtons[index]);
       expect(mockChangeTheme).toHaveBeenCalledWith(themeKey);
     });
   });
 
-  it("should translate theme names using t function", () => {
-    render(<ThemeSelector />);
-    Object.values(THEMES).forEach((theme) => {
-      expect(screen.getByText(theme.name)).toBeInTheDocument();
-    });
-  });
-
-  it("should pass loaderColor and loaderTrigger to ColorLoader", () => {
+  it("should pass loaderColor to ColorLoader", () => {
     render(<ThemeSelector />);
     const loader = screen.getByTestId("color-loader");
     expect(loader).toHaveAttribute("data-color", "");
+  });
+
+  it("should pass loaderTrigger to ColorLoader", () => {
+    render(<ThemeSelector />);
+    const loader = screen.getByTestId("color-loader");
     expect(loader).toHaveAttribute("data-trigger", "0");
+  });
+
+  it("should apply selected class to current theme option", () => {
+    render(<ThemeSelector />);
+    const themeButtons = screen
+      .getAllByRole("button")
+      .filter((btn) => btn.getAttribute("type") === "button");
+    const pinkButtonIndex = Object.keys(THEMES).indexOf("pink");
+
+    expect(themeButtons[pinkButtonIndex].className).toContain("selected");
+  });
+
+  it("should render theme options container", () => {
+    const { container } = render(<ThemeSelector />);
+    const optionsContainer = container.querySelector('[class*="themeOptions"]');
+    expect(optionsContainer).toBeInTheDocument();
   });
 });

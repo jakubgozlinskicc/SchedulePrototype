@@ -45,10 +45,6 @@ vi.mock("react-big-calendar/lib/addons/dragAndDrop", () => ({
   default: (Calendar: React.ComponentType) => Calendar,
 }));
 
-vi.mock("../../components/ThemeSelector/ThemeSelector", () => ({
-  ThemeSelector: () => <div data-testid="theme-selector">ThemeSelector</div>,
-}));
-
 vi.mock("../../components/PageHeader/PageHeader", () => ({
   PageHeader: ({ title, icon }: { title: string; icon?: string }) => (
     <header data-testid="page-header">
@@ -166,11 +162,6 @@ it("should render top controls component", () => {
 it("should render overview button in top controls", () => {
   render(<SchedulePage />);
   expect(screen.getByText("overview")).toBeInTheDocument();
-});
-
-it("should render theme selector inside top controls", () => {
-  render(<SchedulePage />);
-  expect(screen.getByTestId("theme-selector")).toBeInTheDocument();
 });
 
 it("should render calendar component", () => {

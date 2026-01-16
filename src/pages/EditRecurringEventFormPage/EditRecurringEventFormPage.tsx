@@ -17,6 +17,7 @@ import { useRecurringEditCheckBox } from "./RecurringEditCheckbox/useRecurringEd
 import { useEffect, useState } from "react";
 import { RecurringEventConfirmation } from "../../events/Confirmations/RecurringEventConfirmation/RecurringEventConfirmation";
 import { PageHeader } from "../../components/PageHeader/PageHeader";
+import { NotFound } from "../../components/NotFound/NotFound";
 
 export function EditRecurringEventFormPage() {
   const { parentId, occurrenceDate } = useParams<{
@@ -77,8 +78,8 @@ export function EditRecurringEventFormPage() {
     }
   }, [event, loading, methods]);
 
+  if (!event) return <NotFound navigateTo="/overview" />;
   if (loading) return <div>{t("loading")}</div>;
-  if (!event) return <div>{t("error-event-not-found")}</div>;
 
   return (
     <FormProvider {...methods}>

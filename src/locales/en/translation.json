@@ -100,5 +100,8 @@
   "cyan": "Cyan",
   "orange": "Orange",
   "peach": "Peach",
-  "silver": "Silver"
+  "silver": "Silver",
+
+  "go-back": "Go back",
+  "dont-mess-around": "Don't mess around, go back."
 }

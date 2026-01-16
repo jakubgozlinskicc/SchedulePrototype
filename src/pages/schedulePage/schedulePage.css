@@ -45,7 +45,7 @@
 }
 
 .rbc-time-header .rbc-header.rbc-today {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-hover);
   border: none;
   box-shadow: var(--shadow-md);
   transform: scale(1.05);
@@ -65,12 +65,14 @@
   background-color: var(--color-primary-hover);
 }
 
-.rbc-today {
+.rbc-month-view .rbc-today {
   background-color: color-mix(
     in srgb,
     var(--color-primary-transparent) 40%,
     transparent
   );
+  border: 1px solid var(--color-primary-hover);
+  box-shadow: var(--shadow-md);
 }
 
 .rbc-time-view .rbc-today {
@@ -133,4 +135,9 @@
 
 .rbc-month-view .rbc-date-cell.rbc-off-range .rbc-button-link:hover {
   background-color: var(--color-secondary-active);
+}
+
+.rbc-day-bg {
+  border-radius: var(--radius-lg);
+  border: solid 1px var(--color-border-light);
 }

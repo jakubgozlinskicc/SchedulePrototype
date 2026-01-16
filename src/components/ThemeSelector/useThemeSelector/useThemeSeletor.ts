@@ -26,6 +26,7 @@ export const useThemeSelector = () => {
   const [currentTheme, setCurrentTheme] = useState<string>(getInitialTheme);
   const [loaderTrigger, setLoaderTrigger] = useState(0);
   const [loaderColor, setLoaderColor] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
   const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -55,12 +56,14 @@ export const useThemeSelector = () => {
 
     timeoutRef.current = setTimeout(() => {
       setCurrentTheme(themeKey);
-      applyTheme(themeKey);
       localStorage.setItem(STORAGE_KEY, themeKey);
     }, 400);
+    setIsOpen(false);
   };
 
   return {
+    isOpen,
+    setIsOpen,
     currentTheme,
     changeTheme,
     themes: THEMES,

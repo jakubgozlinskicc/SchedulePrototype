@@ -100,5 +100,8 @@
   "cyan": "Cyjan",
   "orange": "Pomarańczowy",
   "peach": "Brzoskwiniowy",
-  "silver": "Srebrny"
+  "silver": "Srebrny",
+
+  "go-back": "Powrót",
+  "dont-mess-around": "Nie kombinuj, zawracaj."
 }

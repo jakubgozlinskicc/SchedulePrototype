@@ -4,6 +4,7 @@ import { useNavigateToAddEvent } from "./useNavigation/useNavigateToAddEvent/use
 import { useTranslationContext } from "../../locales/useTranslationContext";
 import type { Language } from "../../contexts/translationContext/translationContext";
 import { Selector } from "../Selector/Selector";
+import { ThemeSelector } from "../ThemeSelector/ThemeSelector";
 
 const Nav = () => {
   const { handleAddEventClick } = useNavigateToAddEvent();
@@ -23,6 +24,7 @@ const Nav = () => {
         <option value="enUS">EN</option>
         <option value="pl">PL</option>
       </Selector>
+      <ThemeSelector />
       <ul className="sidebar-links">
         <li>
           <NavLink

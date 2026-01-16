@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { useDeleteConfirmation } from "../../hooks/useDeleteConfirmation/useDeleteConfirmation";
 import { RegularEventConfirmation } from "../../events/Confirmations/RegularEventConfirmation/RegularEventConfirmation";
 import { PageHeader } from "../../components/PageHeader/PageHeader";
+import { NotFound } from "../../components/NotFound/NotFound";
 
 export function EditEventFormPage() {
   const { id } = useParams();
@@ -66,8 +67,8 @@ export function EditEventFormPage() {
     }
   }, [event, loading, methods]);
 
+  if (!event) return <NotFound navigateTo="/overview" />;
   if (loading) return <div>{t("loading")}</div>;
-  if (!event) return <div>{t("error-event-not-found")}</div>;
 
   return (
     <FormProvider {...methods}>
