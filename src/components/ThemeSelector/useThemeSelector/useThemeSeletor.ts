@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { DEFAULT_THEME, STORAGE_KEY, THEMES } from "../ThemeSelector.types";
+import { useClickOutside } from "../../../hooks/useClickOutside/useClickOutside";
 
 const applyTheme = (themeKey: string): void => {
   const theme = THEMES[themeKey];
@@ -27,7 +28,14 @@ export const useThemeSelector = () => {
   const [loaderTrigger, setLoaderTrigger] = useState(0);
   const [loaderColor, setLoaderColor] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const timeoutRef = useRef<number | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const closeDropdown = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  useClickOutside(containerRef, closeDropdown);
 
   useEffect(() => {
     applyTheme(currentTheme);
@@ -39,6 +47,10 @@ export const useThemeSelector = () => {
         clearTimeout(timeoutRef.current);
       }
     };
+  }, []);
+
+  const toggleOpen = useCallback(() => {
+    setIsOpen((prev) => !prev);
   }, []);
 
   const changeTheme = (themeKey: string): void => {
@@ -57,13 +69,14 @@ export const useThemeSelector = () => {
     timeoutRef.current = setTimeout(() => {
       setCurrentTheme(themeKey);
       localStorage.setItem(STORAGE_KEY, themeKey);
+      setIsOpen(false);
     }, 400);
-    setIsOpen(false);
   };
 
   return {
     isOpen,
-    setIsOpen,
+    toggleOpen,
+    containerRef,
     currentTheme,
     changeTheme,
     themes: THEMES,

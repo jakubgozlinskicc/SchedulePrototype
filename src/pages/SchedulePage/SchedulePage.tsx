@@ -17,7 +17,6 @@ import { calendarEventPropGetter } from "../../utils/calendarEventPropGetter/cal
 import { useAddEvent } from "./useEvents/useEventData/useAddEvent/useAddEvent";
 import { useEventDataContext } from "./useEvents/useEventDataContext/useEventDataContext";
 import { eventRepository } from "../../db/eventRepository";
-import { TopControls } from "../../components/TopControls/TopControls";
 import { EventDataProvider } from "./eventContext/eventDataProvider";
 import { PageHeader } from "../../components/PageHeader/PageHeader";
 
@@ -41,11 +40,6 @@ function SchedulePageContent() {
 
   return (
     <div className="schedule-page">
-      <TopControls
-        buttonText="overview"
-        buttonIcon="fa-solid fa-list"
-        navigateTo="/overview"
-      ></TopControls>
       <PageHeader title="schedule" icon="fa-regular fa-calendar" />
       <section className="calendar-section">
         <DnDCalendar

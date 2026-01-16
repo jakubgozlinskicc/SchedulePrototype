@@ -1,4 +1,3 @@
-import { addDays } from "date-fns";
 import * as yup from "yup";
 import type { RecurrenceType } from "../../recurrence/recurrenceTypes";
 
@@ -16,7 +15,9 @@ export const createEventFormSchema = (t: (key: string) => string) =>
     title: yup
       .string()
       .required(t("title-required"))
-      .min(3, t("title-min-length")),
+      .trim()
+      .min(3, t("title-min-length"))
+      .max(100, t("title-max-length")),
 
     description: yup.string().defined().default(""),
     start: yup
@@ -75,11 +76,11 @@ export const createEventFormSchema = (t: (key: string) => string) =>
             .required(t("recurrence-end-date-required"))
             .test(
               "is-after-start",
-              t("recurrence-end-date-must-be-two-days-after-start"),
+              t("recurrence-end-date-must-be-after-start"),
               function (value) {
                 const { start } = this.parent;
                 if (!start || !value) return true;
-                return new Date(value) > new Date(addDays(start, 1));
+                return new Date(value) > new Date(start);
               }
             ),
         otherwise: (schema) => schema.optional(),

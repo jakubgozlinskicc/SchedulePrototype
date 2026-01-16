@@ -6,7 +6,8 @@ import { useThemeSelector } from "./useThemeSelector/useThemeSeletor";
 export const ThemeSelector = () => {
   const {
     isOpen,
-    setIsOpen,
+    toggleOpen,
+    containerRef,
     currentTheme,
     changeTheme,
     themes,
@@ -17,8 +18,8 @@ export const ThemeSelector = () => {
   return (
     <>
       <ColorLoader color={loaderColor} trigger={loaderTrigger} />
-      <div className={styles.themeSelector}>
-        <Button variant="primary" onClick={() => setIsOpen(!isOpen)}>
+      <div ref={containerRef} className={styles.themeSelector}>
+        <Button variant="primary" onClick={toggleOpen}>
           <span
             className={styles.currentDot}
             style={{ backgroundColor: themes[currentTheme].primaryHover }}

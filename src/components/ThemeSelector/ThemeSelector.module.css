@@ -23,6 +23,8 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl);
   opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
   transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
 }
 
@@ -30,6 +32,7 @@
   opacity: 1;
   transform: translateX(-50%) translateY(0);
   visibility: visible;
+  pointer-events: auto;
 }
 
 .themeOptions {

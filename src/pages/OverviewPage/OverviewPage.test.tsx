@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import OverviewPage from "./OverviewPage";
 
@@ -41,17 +41,6 @@ vi.mock("./components/EventList/EventList", () => ({
 
 vi.mock("./components/EventToolbar/EventToolbar", () => ({
   EventToolbar: () => <div data-testid="event-toolbar">EventToolbar</div>,
-}));
-
-vi.mock("../../components/TopControls/TopControls", () => ({
-  TopControls: ({ buttonText, buttonIcon, navigateTo }: any) => (
-    <div data-testid="top-controls">
-      <button onClick={() => navigateTo && mockNavigate(navigateTo)}>
-        {buttonIcon && <i className={buttonIcon}></i>}
-        {buttonText}
-      </button>
-    </div>
-  ),
 }));
 
 vi.mock("./context/FiltersProvider", () => ({
@@ -117,26 +106,6 @@ describe("OverviewPage", () => {
   it("should render EventToolbar component", () => {
     renderOverviewPage();
     expect(screen.getByTestId("event-toolbar")).toBeInTheDocument();
-  });
-
-  it("should render TopControls component", () => {
-    renderOverviewPage();
-    expect(screen.getByTestId("top-controls")).toBeInTheDocument();
-  });
-
-  it("should navigate to schedule page when schedule button is clicked", () => {
-    renderOverviewPage();
-
-    const buttons = screen.getAllByRole("button");
-    const scheduleButton = buttons.find((button) =>
-      button.textContent?.includes("schedule")
-    );
-
-    if (scheduleButton) {
-      fireEvent.click(scheduleButton);
-    }
-
-    expect(mockNavigate).toHaveBeenCalledWith("/");
   });
 
   it("should not display date filters when not set", () => {

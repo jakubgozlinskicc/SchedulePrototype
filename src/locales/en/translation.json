@@ -76,6 +76,7 @@
 
   "title-required": "Title required",
   "title-min-length": "Title must be at least 3 characters long",
+  "title-max-length": "Title cannot exceed 100 characters",
   "start-required": "Start Required",
   "start-must-be-before-end": "Start date must be before end date",
   "end-required": "End Required",
@@ -84,7 +85,10 @@
   "recurrence-count-required": "Recurrence count required",
   "recurrence-count-min": "Recurrence count must be at least 2",
   "recurrence-count-max": "Recurrence count cannot exceed 365",
-  "recurrence-end-date-must-be-two-days-after-start": "Recurrence end date must be at least 2 days after start date",
+  "recurrence-end-date-must-be-after-start": "Recurrence end date must be after start date",
+  "recurrence-interval-required": "Recurrence interval is required",
+  "recurrence-interval-min": "Interval must be at least 1",
+  "recurrence-interval-max": "Interval cannot exceed 100",
 
   "error-event-not-found": "Error. Event not found",
   "delete-recurring-event-title": "Delete recurring events",

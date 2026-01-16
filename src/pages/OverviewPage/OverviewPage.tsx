@@ -10,7 +10,6 @@ import { useFiltersContext } from "./context/useFiltersContext";
 import { locales } from "../../utils/calendarLocalizer/calendarLocalizer";
 import { format } from "date-fns";
 import { EventToolbar } from "./components/EventToolbar/EventToolbar";
-import { TopControls } from "../../components/TopControls/TopControls";
 import { PageHeader } from "../../components/PageHeader/PageHeader";
 
 function OverviewPageContent() {
@@ -24,11 +23,6 @@ function OverviewPageContent() {
 
   return (
     <div className="overview-page">
-      <TopControls
-        buttonText="schedule"
-        buttonIcon="fa-regular fa-calendar"
-        navigateTo="/"
-      ></TopControls>
       <PageHeader title="overview" icon="fa-solid fa-list" />
       <div className="overview-wrapper">
         <div className="overview-toolbar">

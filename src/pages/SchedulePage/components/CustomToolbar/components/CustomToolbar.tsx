@@ -76,13 +76,25 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
         </div>
 
         <div className="view-buttons">
-          <Button variant="secondary" onClick={() => onView("month")}>
+          <Button
+            variant="secondary"
+            onClick={() => onView("month")}
+            isActive={view === "month"}
+          >
             {t("month")}
           </Button>
-          <Button variant="secondary" onClick={() => onView("week")}>
+          <Button
+            variant="secondary"
+            onClick={() => onView("week")}
+            isActive={view === "week"}
+          >
             {t("week")}
           </Button>
-          <Button variant="secondary" onClick={() => onView("day")}>
+          <Button
+            variant="secondary"
+            onClick={() => onView("day")}
+            isActive={view === "day"}
+          >
             {t("day")}
           </Button>
         </div>

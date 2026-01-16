@@ -86,12 +86,6 @@ describe("FiltersDropdown", () => {
     expect(screen.getByText("3")).toBeInTheDocument();
   });
 
-  it("should not show badge when no active filters", () => {
-    render(<FiltersDropdown />);
-
-    expect(document.querySelector(".filters-badge")).toBeNull();
-  });
-
   it("should update dateFrom when date input changes", () => {
     render(<FiltersDropdown />);
 

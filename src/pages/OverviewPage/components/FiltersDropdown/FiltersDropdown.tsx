@@ -27,9 +27,8 @@ export function FiltersDropdown() {
       <Button variant="secondary" onClick={() => setIsOpen(!isOpen)}>
         <i className="fa-solid fa-filter"></i>
         {t("filters")}
-        {activeFiltersCount > 0 && (
-          <span className="filters-badge">{activeFiltersCount}</span>
-        )}
+
+        <span className="filters-badge">{activeFiltersCount}</span>
       </Button>
       <div className={`filters-panel ${isOpen ? "open" : ""}`}>
         <div className="filter-group">

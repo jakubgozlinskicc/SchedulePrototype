@@ -76,6 +76,7 @@
 
   "title-required": "Tytuł wymagany",
   "title-min-length": "Tytuł musi mieć przynajmniej 3 znaki",
+  "title-max-length": "Tytuł nie może przekraczać 100 znaków",
   "start-required": "Początek wymagany",
   "start-must-be-before-end": "Data rozpoczęcia musi być przed datą zakończenia",
   "end-required": "Koniec wymagany",
@@ -84,7 +85,10 @@
   "recurrence-count-required": "Liczba powtórzeń jest wymagana",
   "recurrence-count-min": "Liczba powtórzeń musi wynosić co najmniej 2",
   "recurrence-count-max": "Liczba powtórzeń nie może przekraczać 365",
-  "recurrence-end-date-must-be-two-days-after-start": "Data zakończenia powtarzania musi być co najmniej 2 dni po dacie rozpoczęcia",
+  "recurrence-end-date-must-be-two-days-after-start": "Data zakończenia powtarzania musi być po dacie rozpoczęcia",
+  "recurrence-interval-required": "Interwał powtarzania jest wymagany",
+  "recurrence-interval-min": "Interwał musi wynosić co najmniej 1",
+  "recurrence-interval-max": "Interwał nie może przekraczać 100",
 
   "error-event-not-found": "Błąd. Nie ma takiego wydarzenia",
   "delete-recurring-event-title": "Usuwanie powtarzających się wydarzeń",

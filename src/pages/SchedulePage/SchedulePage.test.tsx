@@ -54,21 +54,6 @@ vi.mock("../../components/PageHeader/PageHeader", () => ({
   ),
 }));
 
-vi.mock("../../components/TopControls/TopControls", () => ({
-  TopControls: ({
-    children,
-    buttonText,
-  }: {
-    children: React.ReactNode;
-    buttonText: string;
-  }) => (
-    <div data-testid="top-controls">
-      <button>{buttonText}</button>
-      {children}
-    </div>
-  ),
-}));
-
 vi.mock("./components/EventModal/EventModal", () => ({
   EventModal: () => <div data-testid="event-modal">EventModal</div>,
 }));
@@ -152,16 +137,6 @@ it("should render the schedule page", () => {
 it("should render page header with correct title", () => {
   render(<SchedulePage />);
   expect(screen.getByText("schedule")).toBeInTheDocument();
-});
-
-it("should render top controls component", () => {
-  render(<SchedulePage />);
-  expect(screen.getByTestId("top-controls")).toBeInTheDocument();
-});
-
-it("should render overview button in top controls", () => {
-  render(<SchedulePage />);
-  expect(screen.getByText("overview")).toBeInTheDocument();
 });
 
 it("should render calendar component", () => {
