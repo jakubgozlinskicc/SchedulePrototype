@@ -6,6 +6,7 @@ import { FormSelect } from "../../../components/Form/FormSelect/FormSelect";
 import { FormField } from "../../../components/Form/FormField/FormField";
 import { RecurrenceFields } from "../RecurrenceFields/RecurrenceFields";
 import { useWatch } from "react-hook-form";
+import { FormDatePicker } from "../../../components/Form/FormDatePicker/FormDatePicker";
 
 interface EventFormFieldsProps {
   isRecurringEditSingle?: boolean;
@@ -41,7 +42,11 @@ export function EventFormFields({
           <i className="fa-solid fa-hourglass-start"></i>
           {t("start-date")}
         </FormLabel>
-        <FormInput name="start" type="datetime-local" />
+        <FormDatePicker
+          name="start"
+          showTimeSelect
+          placeholderText={t("select-start-date")}
+        />
       </FormField>
 
       <FormField>
@@ -49,7 +54,11 @@ export function EventFormFields({
           <i className="fa-solid fa-hourglass-end"></i>
           {t("end-date")}
         </FormLabel>
-        <FormInput name="end" type="datetime-local" />
+        <FormDatePicker
+          name="end"
+          showTimeSelect
+          placeholderText={t("select-end-date")}
+        />
       </FormField>
 
       <FormField>
