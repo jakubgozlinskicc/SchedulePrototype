@@ -21,7 +21,7 @@ export const ThemeSelector = () => {
         <Button variant="primary" onClick={() => setIsOpen(!isOpen)}>
           <span
             className={styles.currentDot}
-            style={{ backgroundColor: themes[currentTheme].primary }}
+            style={{ backgroundColor: themes[currentTheme].primaryHover }}
           />
         </Button>
         <div className={`${styles.themeDropdown} ${isOpen ? styles.open : ""}`}>
@@ -37,7 +37,7 @@ export const ThemeSelector = () => {
               >
                 <span
                   className={styles.optionDot}
-                  style={{ backgroundColor: theme.primary }}
+                  style={{ backgroundColor: theme.primaryHover }}
                 />
               </button>
             ))}

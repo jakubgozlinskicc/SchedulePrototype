@@ -57,6 +57,16 @@
 .rbc-button-link {
   font-weight: bold;
 }
+
+.rbc-show-more {
+  color: var(--color-text-primary);
+  transition: 0.2s;
+}
+
+.rbc-show-more:hover {
+  color: var(--color-primary-hover);
+}
+
 .rbc-date-cell .rbc-button-link {
   transition: 0.2s;
 }
@@ -99,6 +109,7 @@
 
 .rbc-event-label {
   font-weight: 500;
+  color: var(--color-text-muted);
 }
 
 .rbc-time-view .rbc-allday-cell {
@@ -118,7 +129,7 @@
   justify-content: center;
   align-items: center;
   background-color: var(--color-primary-transparent);
-  margin: 3px;
+  margin: 5px;
   width: 20px;
   height: 20px;
   border-radius: 25%;
@@ -137,7 +148,15 @@
   background-color: var(--color-secondary-active);
 }
 
-.rbc-day-bg {
+.rbc-month-view .rbc-day-bg {
   border-radius: var(--radius-lg);
-  border: solid 1px var(--color-border-light);
+  border: solid 1px var(--color-border-primary);
+}
+
+.rbc-month-row {
+  border-top: none !important;
+}
+
+.rbc-time-view .rbc-day-bg {
+  height: auto;
 }
