@@ -5,10 +5,12 @@ import { useTranslationContext } from "../../locales/useTranslationContext";
 import type { Language } from "../../contexts/translationContext/translationContext";
 import { Selector } from "../Selector/Selector";
 import { ThemeSelector } from "../ThemeSelector/ThemeSelector";
+import { useTranslation } from "react-i18next";
 
 const Nav = () => {
   const { handleAddEventClick } = useNavigateToAddEvent();
   const { currentLanguage, changeLanguage } = useTranslationContext();
+  const { t } = useTranslation();
 
   const handleLanguageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -30,6 +32,7 @@ const Nav = () => {
           <NavLink
             to="/"
             className={({ isActive }) => (isActive ? "active" : "")}
+            data-tooltip={t("schedule")}
           >
             <i className="fa-regular fa-calendar"></i>
           </NavLink>
@@ -38,6 +41,7 @@ const Nav = () => {
           <NavLink
             to="/overview"
             className={({ isActive }) => (isActive ? "active" : "")}
+            data-tooltip={t("overview")}
           >
             <i className="fa-solid fa-list"></i>
           </NavLink>
@@ -47,6 +51,7 @@ const Nav = () => {
             to="/event/add"
             onClick={handleAddEventClick}
             className={({ isActive }) => (isActive ? "active" : "")}
+            data-tooltip={t("add_title")}
           >
             <i className="fa-regular fa-calendar-plus"></i>
           </NavLink>

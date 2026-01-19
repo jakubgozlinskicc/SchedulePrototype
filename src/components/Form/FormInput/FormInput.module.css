@@ -1,7 +1,6 @@
 .inputWrapper {
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
 }
 
 .formInput {
@@ -13,9 +12,6 @@
   background-color: var(--color-bg-secondary);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   font-family: inherit;
-
-  margin-left: 5px;
-  margin-right: 5px;
 }
 
 .formInput:focus {

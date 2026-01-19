@@ -1,57 +1,42 @@
 import { useFormContext, useFormState, Controller } from "react-hook-form";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import styles from "./FormDatePicker.module.css";
+import type { ComponentProps } from "react";
+import styles from "../../DatePicker/DatePicker.module.css";
+import { DatePicker } from "../../DatePicker/DatePicker";
 
-interface FormDatePickerProps {
+interface FormDatePickerProps
+  extends Omit<
+    ComponentProps<typeof DatePicker>,
+    "value" | "onChange" | "error"
+  > {
   name: string;
-  showTimeSelect?: boolean;
-  dateFormat?: string;
-  placeholderText?: string;
-  className?: string;
-  minDate?: Date;
-  maxDate?: Date;
 }
 
 export function FormDatePicker({
   name,
-  showTimeSelect = false,
-  dateFormat = showTimeSelect ? "dd/MM/yyyy HH:mm" : "dd/MM/yyyy",
-  placeholderText,
-  className = "",
-  minDate,
-  maxDate,
+  variant = "date",
+  ...props
 }: FormDatePickerProps) {
   const { control } = useFormContext();
   const { errors } = useFormState({ control, name });
   const error = errors[name];
 
   return (
-    <div className={styles.datePickerWrapper}>
+    <div className={styles.field}>
       <Controller
         name={name}
         control={control}
         render={({ field: { onChange, value } }) => (
           <DatePicker
-            selected={value ? new Date(value) : null}
-            onChange={(date) => onChange(date)}
-            showTimeSelect={showTimeSelect}
-            timeFormat="HH:mm"
-            timeIntervals={15}
-            dateFormat={dateFormat}
-            placeholderText={placeholderText}
-            minDate={minDate}
-            maxDate={maxDate}
-            className={`${styles.datePicker} ${
-              error ? styles.datePickerError : ""
-            } ${className}`}
-            calendarClassName={styles.calendar}
-            timeCaption="Time"
+            value={value ? new Date(value) : null}
+            onChange={onChange}
+            variant={variant}
+            error={!!error}
+            {...props}
           />
         )}
       />
       {error?.message && (
-        <span className={styles.formError}>{String(error.message)}</span>
+        <span className={styles.errorMessage}>{String(error.message)}</span>
       )}
     </div>
   );

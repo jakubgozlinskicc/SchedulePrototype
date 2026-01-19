@@ -11,13 +11,13 @@
 }
 
 .modal-form {
+  padding: 10px;
   border-bottom: 2px solid var(--color-primary);
   border-top: 2px solid var(--color-primary);
 
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 100%;
   max-height: 70vh;
   overflow-y: auto;
   display: flex;

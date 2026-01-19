@@ -75,13 +75,12 @@ describe("useThemeSelector", () => {
     const { result } = renderHook(() => useThemeSelector());
 
     act(() => {
-      result.current.setIsOpen(true);
+      result.current.toggleOpen();
       result.current.changeTheme("green");
     });
 
     expect(result.current.loaderColor).toBe(THEMES.green.primaryTransparent);
     expect(result.current.loaderTrigger).toBe(1);
-    expect(result.current.isOpen).toBe(false);
   });
 
   it("should change theme and save to localStorage after timeout", () => {

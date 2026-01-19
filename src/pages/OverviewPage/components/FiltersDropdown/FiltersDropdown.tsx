@@ -5,7 +5,7 @@ import { useFiltersContext } from "../../context/useFiltersContext";
 import { ColorSelect } from "./ColorSelect";
 import { useClickOutside } from "../../../../hooks/useClickOutside/useClickOutside";
 import { Button } from "../../../../components/Button/Button";
-import { createDateChangeHandler, formatDateForInput } from "./dateFormaters";
+import { DatePicker } from "../../../../components/DatePicker/DatePicker";
 
 export function FiltersDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,20 +14,29 @@ export function FiltersDropdown() {
     useFiltersContext();
   const { t } = useTranslation();
 
-  useClickOutside(dropdownRef, () => setIsOpen(false));
+  useClickOutside(dropdownRef, (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
 
-  const handleDateFromChange = createDateChangeHandler(
-    updateFilter,
-    "dateFrom"
-  );
-  const handleDateToChange = createDateChangeHandler(updateFilter, "dateTo");
+    if (target.closest(".react-datepicker")) {
+      return;
+    }
+
+    setIsOpen(false);
+  });
+
+  const handleDateFromChange = (date: Date | null) => {
+    updateFilter("dateFrom", date);
+  };
+
+  const handleDateToChange = (date: Date | null) => {
+    updateFilter("dateTo", date);
+  };
 
   return (
     <div className="filters-dropdown" ref={dropdownRef}>
       <Button variant="secondary" onClick={() => setIsOpen(!isOpen)}>
         <i className="fa-solid fa-filter"></i>
         {t("filters")}
-
         <span className="filters-badge">{activeFiltersCount}</span>
       </Button>
       <div className={`filters-panel ${isOpen ? "open" : ""}`}>
@@ -36,11 +45,12 @@ export function FiltersDropdown() {
             <i className="fa-solid fa-hourglass-start"></i>
             {t("date-from")}
           </label>
-          <input
-            type="date"
-            value={formatDateForInput(filters.dateFrom)}
+          <DatePicker
+            value={filters.dateFrom}
             onChange={handleDateFromChange}
-            className="filter-input"
+            variant="date"
+            maxDate={filters.dateTo ?? undefined}
+            placeholderText={t("select-date-from")}
           />
         </div>
 
@@ -49,11 +59,12 @@ export function FiltersDropdown() {
             <i className="fa-solid fa-hourglass-end"></i>
             {t("date-to")}
           </label>
-          <input
-            type="date"
-            value={formatDateForInput(filters.dateTo)}
+          <DatePicker
+            value={filters.dateTo}
             onChange={handleDateToChange}
-            className="filter-input"
+            variant="date"
+            minDate={filters.dateFrom ?? undefined}
+            placeholderText={t("select-date-to")}
           />
         </div>
 

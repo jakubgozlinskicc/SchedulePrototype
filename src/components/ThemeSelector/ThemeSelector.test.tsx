@@ -4,17 +4,17 @@ import { ThemeSelector } from "./ThemeSelector";
 import { THEMES } from "./ThemeSelector.types";
 
 const mockChangeTheme = vi.fn();
-const mockSetIsOpen = vi.fn();
+const mockToggleOpen = vi.fn();
 
 vi.mock("./useThemeSelector/useThemeSeletor.ts", () => ({
   useThemeSelector: () => ({
     currentTheme: "pink",
     changeTheme: mockChangeTheme,
+    toggleOpen: mockToggleOpen,
     themes: THEMES,
     loaderTrigger: 0,
     loaderColor: "",
     isOpen: false,
-    setIsOpen: mockSetIsOpen,
   }),
 }));
 
@@ -65,15 +65,15 @@ describe("ThemeSelector", () => {
     render(<ThemeSelector />);
     const dot = screen.getByTestId("toggle-button").querySelector("span");
     expect(dot).toBeInTheDocument();
-    expect(dot).toHaveStyle({ backgroundColor: THEMES.pink.primary });
+    expect(dot).toHaveStyle({ backgroundColor: THEMES.pink.primaryHover });
   });
 
-  it("should call setIsOpen with toggled value when toggle button is clicked", () => {
+  it("should call toggleOpen when toggle button is clicked", () => {
     render(<ThemeSelector />);
     const toggleButton = screen.getByTestId("toggle-button");
 
     fireEvent.click(toggleButton);
-    expect(mockSetIsOpen).toHaveBeenCalledWith(true);
+    expect(mockToggleOpen).toHaveBeenCalledTimes(1);
   });
 
   it("should render theme dropdown container", () => {

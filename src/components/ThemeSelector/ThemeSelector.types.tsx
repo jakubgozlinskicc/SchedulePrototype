@@ -54,6 +54,12 @@ export const THEMES: Record<string, Theme> = {
     primaryHover: "#cbd5e1",
     primaryTransparent: "rgba(226, 232, 240, 0.5)",
   },
+  gold: {
+    name: "gold",
+    primary: "#fde68a",
+    primaryHover: "#facc15",
+    primaryTransparent: "rgba(253, 230, 138, 0.5)",
+  },
 };
 
 export const STORAGE_KEY = "selectedTheme";

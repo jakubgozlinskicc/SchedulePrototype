@@ -25,6 +25,7 @@ export function EventFormFields({
         <FormLabel>
           <i className="fa-regular fa-pen-to-square"></i>
           {t("title")}
+          <i className="fa-solid fa-asterisk"></i>
         </FormLabel>
         <FormInput name="title" type="text" />
       </FormField>
@@ -41,10 +42,11 @@ export function EventFormFields({
         <FormLabel>
           <i className="fa-solid fa-hourglass-start"></i>
           {t("start-date")}
+          <i className="fa-solid fa-asterisk"></i>
         </FormLabel>
         <FormDatePicker
           name="start"
-          showTimeSelect
+          variant="datetime"
           placeholderText={t("select-start-date")}
         />
       </FormField>
@@ -53,10 +55,11 @@ export function EventFormFields({
         <FormLabel>
           <i className="fa-solid fa-hourglass-end"></i>
           {t("end-date")}
+          <i className="fa-solid fa-asterisk"></i>
         </FormLabel>
         <FormDatePicker
           name="end"
-          showTimeSelect
+          variant="datetime"
           placeholderText={t("select-end-date")}
         />
       </FormField>

@@ -232,7 +232,7 @@ describe("createEventFormSchema", () => {
       ).rejects.toThrow("recurrence-end-date-required");
     });
 
-    it("should validate end date is after start + 1 day", async () => {
+    it("should validate end date is after start", async () => {
       const start = toDateTimeLocal(new Date());
       const endDate = toDateTimeLocal(new Date());
 
@@ -244,7 +244,7 @@ describe("createEventFormSchema", () => {
           recurrenceEndType: "date",
           recurrenceEndDate: endDate,
         })
-      ).rejects.toThrow("recurrence-end-date-must-be-two-days-after-start");
+      ).rejects.toThrow("recurrence-end-date-must-be-after-start");
     });
 
     it("should accept valid end date", async () => {

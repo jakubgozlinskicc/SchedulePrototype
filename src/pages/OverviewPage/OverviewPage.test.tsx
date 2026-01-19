@@ -79,17 +79,6 @@ describe("OverviewPage", () => {
     expect(header).toBeInTheDocument();
   });
 
-  it("should render schedule button with calendar icon", () => {
-    renderOverviewPage();
-
-    const buttons = screen.getAllByRole("button");
-    const scheduleButton = buttons.find((button) =>
-      button.textContent?.includes("schedule")
-    );
-
-    expect(scheduleButton).toBeInTheDocument();
-  });
-
   it("should render list icon", () => {
     renderOverviewPage();
 

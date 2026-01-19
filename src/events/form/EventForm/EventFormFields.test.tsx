@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { FormProvider, useForm } from "react-hook-form";
 import { EventFormFields } from "./EventFormFields";
+import { TranslationProvider } from "../../../contexts/translationContext/translationProvider";
 
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
@@ -29,7 +30,11 @@ function FormWrapper({
       ...defaultValues,
     },
   });
-  return <FormProvider {...methods}>{children}</FormProvider>;
+  return (
+    <TranslationProvider>
+      <FormProvider {...methods}>{children}</FormProvider>
+    </TranslationProvider>
+  );
 }
 
 describe("EventFormFields", () => {
@@ -154,17 +159,17 @@ describe("EventFormFields", () => {
     expect(colorInput).toBeInTheDocument();
   });
 
-  it("should render datetime-local inputs for start and end", () => {
+  it("should render date picker inputs for start and end", () => {
     render(
       <FormWrapper>
         <EventFormFields />
       </FormWrapper>
     );
 
-    const dateInputs = document.querySelectorAll(
-      'input[type="datetime-local"]'
-    );
-    expect(dateInputs).toHaveLength(2);
+    expect(
+      screen.getByPlaceholderText("select-start-date")
+    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("select-end-date")).toBeInTheDocument();
   });
 
   it("should not render recurrence type select when isRecurringEditSingle is true", () => {

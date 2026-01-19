@@ -20,14 +20,7 @@ export const createEventFormSchema = (t: (key: string) => string) =>
       .max(100, t("title-max-length")),
 
     description: yup.string().defined().default(""),
-    start: yup
-      .string()
-      .required(t("start-required"))
-      .test("is-before-end", t("start-must-be-before-end"), function (value) {
-        const { end } = this.parent;
-        if (!value || !end) return true;
-        return new Date(value) < new Date(end);
-      }),
+    start: yup.string().required(t("start-required")),
 
     end: yup
       .string()
