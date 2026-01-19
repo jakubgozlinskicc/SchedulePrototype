@@ -23,12 +23,19 @@ const getInitialTheme = (): string => {
   return DEFAULT_THEME;
 };
 
+const TRANSITION_DURATION = 1500;
+
+const enableGlobalTransition = (): void => {
+  document.documentElement.classList.add("theme-transitioning");
+
+  setTimeout(() => {
+    document.documentElement.classList.remove("theme-transitioning");
+  }, TRANSITION_DURATION);
+};
+
 export const useThemeSelector = () => {
   const [currentTheme, setCurrentTheme] = useState<string>(getInitialTheme);
-  const [loaderTrigger, setLoaderTrigger] = useState(0);
-  const [loaderColor, setLoaderColor] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const closeDropdown = useCallback(() => {
@@ -43,9 +50,7 @@ export const useThemeSelector = () => {
 
   useEffect(() => {
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+      document.documentElement.classList.remove("theme-transitioning");
     };
   }, []);
 
@@ -54,23 +59,12 @@ export const useThemeSelector = () => {
   }, []);
 
   const changeTheme = (themeKey: string): void => {
-    if (!THEMES[themeKey]) {
-      console.error(`Theme "${themeKey}" does not exist`);
-      return;
-    }
+    if (!THEMES[themeKey] || themeKey === currentTheme) return;
 
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-
-    setLoaderColor(THEMES[themeKey].primaryTransparent);
-    setLoaderTrigger((prev) => prev + 1);
-
-    timeoutRef.current = setTimeout(() => {
-      setCurrentTheme(themeKey);
-      localStorage.setItem(STORAGE_KEY, themeKey);
-      setIsOpen(false);
-    }, 400);
+    enableGlobalTransition();
+    setCurrentTheme(themeKey);
+    localStorage.setItem(STORAGE_KEY, themeKey);
+    setIsOpen(false);
   };
 
   return {
@@ -80,7 +74,5 @@ export const useThemeSelector = () => {
     currentTheme,
     changeTheme,
     themes: THEMES,
-    loaderTrigger,
-    loaderColor,
   };
 };

@@ -5,7 +5,7 @@ import type { IFilterStrategy } from "./IFilterStrategy";
 
 export class DateRangeFilter implements IFilterStrategy {
   isActive(filters: EventFilters): boolean {
-    return !!(filters.dateFrom && filters.dateTo);
+    return !!(filters.dateFrom || filters.dateTo);
   }
 
   apply(event: Event, filters: EventFilters): boolean {

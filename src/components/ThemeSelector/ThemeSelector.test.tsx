@@ -12,16 +12,8 @@ vi.mock("./useThemeSelector/useThemeSeletor.ts", () => ({
     changeTheme: mockChangeTheme,
     toggleOpen: mockToggleOpen,
     themes: THEMES,
-    loaderTrigger: 0,
-    loaderColor: "",
     isOpen: false,
   }),
-}));
-
-vi.mock("./ColorLoader/ColorLoader", () => ({
-  ColorLoader: ({ color, trigger }: { color: string; trigger: number }) => (
-    <div data-testid="color-loader" data-color={color} data-trigger={trigger} />
-  ),
 }));
 
 vi.mock("../Button/Button", () => ({
@@ -49,11 +41,6 @@ beforeEach(() => {
 });
 
 describe("ThemeSelector", () => {
-  it("should render ColorLoader component", () => {
-    render(<ThemeSelector />);
-    expect(screen.getByTestId("color-loader")).toBeInTheDocument();
-  });
-
   it("should render toggle button with primary variant", () => {
     render(<ThemeSelector />);
     const button = screen.getByTestId("toggle-button");
@@ -112,18 +99,6 @@ describe("ThemeSelector", () => {
       fireEvent.click(themeButtons[index]);
       expect(mockChangeTheme).toHaveBeenCalledWith(themeKey);
     });
-  });
-
-  it("should pass loaderColor to ColorLoader", () => {
-    render(<ThemeSelector />);
-    const loader = screen.getByTestId("color-loader");
-    expect(loader).toHaveAttribute("data-color", "");
-  });
-
-  it("should pass loaderTrigger to ColorLoader", () => {
-    render(<ThemeSelector />);
-    const loader = screen.getByTestId("color-loader");
-    expect(loader).toHaveAttribute("data-trigger", "0");
   });
 
   it("should apply selected class to current theme option", () => {

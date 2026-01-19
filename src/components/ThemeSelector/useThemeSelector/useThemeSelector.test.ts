@@ -21,6 +21,8 @@ describe("useThemeSelector", () => {
     });
 
     document.documentElement.style.setProperty = vi.fn();
+    document.documentElement.classList.add = vi.fn();
+    document.documentElement.classList.remove = vi.fn();
   });
 
   afterEach(() => {
@@ -48,8 +50,6 @@ describe("useThemeSelector", () => {
   it("should initialize state correctly", () => {
     const { result } = renderHook(() => useThemeSelector());
     expect(result.current.isOpen).toBe(false);
-    expect(result.current.loaderTrigger).toBe(0);
-    expect(result.current.loaderColor).toBe("");
     expect(result.current.themes).toEqual(THEMES);
   });
 
@@ -71,94 +71,113 @@ describe("useThemeSelector", () => {
     );
   });
 
-  it("should set loader state and close dropdown immediately", () => {
-    const { result } = renderHook(() => useThemeSelector());
-
-    act(() => {
-      result.current.toggleOpen();
-      result.current.changeTheme("green");
-    });
-
-    expect(result.current.loaderColor).toBe(THEMES.green.primaryTransparent);
-    expect(result.current.loaderTrigger).toBe(1);
-  });
-
-  it("should change theme and save to localStorage after timeout", () => {
-    const { result } = renderHook(() => useThemeSelector());
-
-    act(() => {
-      result.current.changeTheme("orange");
-    });
-
-    expect(result.current.currentTheme).toBe(DEFAULT_THEME);
-    expect(localStorage.setItem).not.toHaveBeenCalled();
-
-    act(() => {
-      vi.advanceTimersByTime(400);
-    });
-
-    expect(result.current.currentTheme).toBe("orange");
-    expect(localStorage.setItem).toHaveBeenCalledWith(STORAGE_KEY, "orange");
-  });
-
-  it("should apply CSS variables after timeout", () => {
+  it("should change theme immediately and save to localStorage", () => {
     const { result } = renderHook(() => useThemeSelector());
     vi.mocked(document.documentElement.style.setProperty).mockClear();
 
     act(() => {
       result.current.changeTheme("cyan");
-      vi.advanceTimersByTime(400);
     });
 
+    expect(result.current.currentTheme).toBe("cyan");
+    expect(localStorage.setItem).toHaveBeenCalledWith(STORAGE_KEY, "cyan");
     expect(document.documentElement.style.setProperty).toHaveBeenCalledWith(
       "--color-primary",
       THEMES.cyan.primary
     );
   });
 
-  it("should handle invalid theme", () => {
-    const consoleErrorSpy = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => {});
+  it("should enable global transition when changing theme", () => {
+    const { result } = renderHook(() => useThemeSelector());
+
+    act(() => {
+      result.current.changeTheme("cyan");
+    });
+
+    expect(document.documentElement.classList.add).toHaveBeenCalledWith(
+      "theme-transitioning"
+    );
+  });
+
+  it("should remove transition class after duration", () => {
+    const { result } = renderHook(() => useThemeSelector());
+
+    act(() => {
+      result.current.changeTheme("cyan");
+    });
+
+    act(() => {
+      vi.advanceTimersByTime(1500);
+    });
+
+    expect(document.documentElement.classList.remove).toHaveBeenCalledWith(
+      "theme-transitioning"
+    );
+  });
+
+  it("should not change theme when selecting same theme", () => {
+    const { result } = renderHook(() => useThemeSelector());
+    const initialTheme = result.current.currentTheme;
+
+    act(() => {
+      result.current.changeTheme(initialTheme);
+    });
+
+    expect(localStorage.setItem).not.toHaveBeenCalled();
+    expect(document.documentElement.classList.add).not.toHaveBeenCalledWith(
+      "theme-transitioning"
+    );
+  });
+
+  it("should not change theme when theme is invalid", () => {
     const { result } = renderHook(() => useThemeSelector());
     const initialTheme = result.current.currentTheme;
 
     act(() => {
       result.current.changeTheme("invalid-theme");
-      vi.advanceTimersByTime(400);
     });
 
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
-      'Theme "invalid-theme" does not exist'
-    );
     expect(result.current.currentTheme).toBe(initialTheme);
     expect(localStorage.setItem).not.toHaveBeenCalled();
-    consoleErrorSpy.mockRestore();
   });
 
-  it("should cancel previous timeout when changing rapidly", () => {
+  it("should close dropdown when changing theme", () => {
     const { result } = renderHook(() => useThemeSelector());
 
     act(() => {
-      result.current.changeTheme("green");
-      vi.advanceTimersByTime(200);
-      result.current.changeTheme("blue");
-      vi.advanceTimersByTime(400);
+      result.current.toggleOpen();
     });
+    expect(result.current.isOpen).toBe(true);
 
-    expect(result.current.currentTheme).toBe("blue");
-    expect(localStorage.setItem).toHaveBeenCalledTimes(1);
-  });
-});
-
-it("should clear timeout on unmount", () => {
-  const clearTimeoutSpy = vi.spyOn(window, "clearTimeout");
-  const { result, unmount } = renderHook(() => useThemeSelector());
-
-  act(() => {
-    result.current.changeTheme("green");
+    act(() => {
+      result.current.changeTheme("blue");
+    });
+    expect(result.current.isOpen).toBe(false);
   });
 
-  unmount();
-  expect(clearTimeoutSpy).toHaveBeenCalled();
+  it("should toggle dropdown open state", () => {
+    const { result } = renderHook(() => useThemeSelector());
+
+    expect(result.current.isOpen).toBe(false);
+
+    act(() => {
+      result.current.toggleOpen();
+    });
+    expect(result.current.isOpen).toBe(true);
+
+    act(() => {
+      result.current.toggleOpen();
+    });
+    expect(result.current.isOpen).toBe(false);
+  });
+
+  it("should remove transition class on unmount", () => {
+    const { unmount } = renderHook(() => useThemeSelector());
+
+    unmount();
+
+    expect(document.documentElement.classList.remove).toHaveBeenCalledWith(
+      "theme-transitioning"
+    );
+  });
 });

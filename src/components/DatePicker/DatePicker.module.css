@@ -3,6 +3,11 @@
   width: 100%;
 }
 
+.wrapper :global(.react-datepicker-wrapper) {
+  display: block;
+  width: 90%;
+}
+
 .input {
   width: 100%;
   padding: 0.75rem;
@@ -163,24 +168,6 @@
   font-weight: 600;
 }
 
-/* ============================================
-   DISABLED INPUT
-   ============================================ */
-.input:disabled {
-  background-color: var(--color-bg-tertiary, #2a2a2a);
-  color: var(--color-text-muted);
-  cursor: not-allowed;
-  opacity: 0.6;
-  border-color: var(--color-border-primary);
-}
-
-.input:disabled:hover {
-  border-color: var(--color-border-primary);
-}
-
-/* ============================================
-   DISABLED DAYS (poza zakresem minDate/maxDate)
-   ============================================ */
 :global(.react-datepicker__day--disabled) {
   color: var(--color-text-muted) !important;
   opacity: 0.4;
@@ -190,64 +177,4 @@
 :global(.react-datepicker__day--disabled:hover) {
   background-color: transparent !important;
   cursor: not-allowed !important;
-}
-
-/* ============================================
-   DISABLED TIME OPTIONS
-   ============================================ */
-:global(.react-datepicker__time-list-item--disabled) {
-  color: var(--color-text-muted) !important;
-  opacity: 0.4;
-  cursor: not-allowed !important;
-}
-
-:global(.react-datepicker__time-list-item--disabled:hover) {
-  background-color: transparent !important;
-  cursor: not-allowed !important;
-}
-
-/* ============================================
-   DISABLED MONTH/YEAR OPTIONS
-   ============================================ */
-:global(.react-datepicker__month-option--disabled),
-:global(.react-datepicker__year-option--disabled) {
-  color: var(--color-text-muted) !important;
-  opacity: 0.4;
-  cursor: not-allowed !important;
-}
-
-/* ============================================
-   DISABLED NAVIGATION (gdy brak poprzednich/następnych miesięcy)
-   ============================================ */
-:global(.react-datepicker__navigation--previous--disabled),
-:global(.react-datepicker__navigation--next--disabled) {
-  cursor: not-allowed !important;
-  opacity: 0.3;
-}
-
-:global(.react-datepicker__navigation--previous--disabled:hover),
-:global(.react-datepicker__navigation--next--disabled:hover) {
-  cursor: not-allowed !important;
-}
-
-:global(
-    .react-datepicker__navigation--previous--disabled
-      .react-datepicker__navigation-icon::before
-  ),
-:global(
-    .react-datepicker__navigation--next--disabled
-      .react-datepicker__navigation-icon::before
-  ) {
-  border-color: var(--color-text-muted) !important;
-}
-
-/* ============================================
-   DISABLED SELECT DROPDOWNS
-   ============================================ */
-:global(.react-datepicker__month-select:disabled),
-:global(.react-datepicker__year-select:disabled) {
-  background-color: var(--color-bg-tertiary, #2a2a2a);
-  color: var(--color-text-muted);
-  cursor: not-allowed;
-  opacity: 0.6;
 }

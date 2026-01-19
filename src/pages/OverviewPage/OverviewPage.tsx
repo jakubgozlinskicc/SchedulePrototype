@@ -31,13 +31,21 @@ function OverviewPageContent() {
         <main className="overview-content">
           <h2>{t("events")}</h2>
           <div className="active-dates">
-            {filters.dateFrom && <h3>{formatDate(filters.dateFrom)}</h3>}
+            {filters.dateFrom && (
+              <h3>
+                {t("from")} {formatDate(filters.dateFrom)}
+              </h3>
+            )}
             {filters.dateFrom && filters.dateTo && (
               <h3>
                 <i className="fa-solid fa-arrow-right"></i>
               </h3>
             )}
-            {filters.dateTo && <h3>{formatDate(filters.dateTo)}</h3>}
+            {filters.dateTo && (
+              <h3>
+                {t("to")} {formatDate(filters.dateTo)}
+              </h3>
+            )}
           </div>
           <EventList />
         </main>

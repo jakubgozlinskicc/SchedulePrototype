@@ -61,6 +61,8 @@
   "search-placeholder": "Search events...",
   "date-from": "From date",
   "date-to": "To date",
+  "from": "From",
+  "to": "To",
   "show-past-events": "Show past events",
   "reset-filters": "Reset filters",
   "no-upcoming-events": "No upcoming events",

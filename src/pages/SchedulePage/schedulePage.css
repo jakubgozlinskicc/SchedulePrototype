@@ -56,6 +56,7 @@
 
 .rbc-button-link {
   font-weight: bold;
+  font-family: inherit !important;
 }
 
 .rbc-show-more {

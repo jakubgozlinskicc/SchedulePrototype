@@ -39,6 +39,12 @@
   --radius-lg: 12px;
 }
 
+.theme-transitioning,
+.theme-transitioning * {
+  transition: background-color 1.5s ease, border-color 1.5s ease,
+    color 1.5s ease, box-shadow 1.5s ease, fill 1.5s ease !important;
+}
+
 body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
