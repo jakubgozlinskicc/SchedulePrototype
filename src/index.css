@@ -1,5 +1,10 @@
 :root {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
     sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -41,8 +46,12 @@
 
 .theme-transitioning,
 .theme-transitioning * {
-  transition: background-color 1.5s ease, border-color 1.5s ease,
-    color 1.5s ease, box-shadow 1.5s ease, fill 1.5s ease !important;
+  transition:
+    background-color 1s ease,
+    border-color 1s ease,
+    color 1s ease,
+    box-shadow 1s ease,
+    fill 1s ease !important;
 }
 
 body {

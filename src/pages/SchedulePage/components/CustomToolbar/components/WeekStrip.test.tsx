@@ -19,6 +19,7 @@ vi.mock("../../../../../utils/calendarLocalizer/calendarLocalizer", () => ({
 describe("WeekStrip", () => {
   let mockOnNavigate: (action: NavigateAction, newDate?: Date) => void;
   let mockOnView: (view: "month" | "week" | "day") => void;
+  const mockView: "month" | "week" | "day" = "month";
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -32,7 +33,8 @@ describe("WeekStrip", () => {
         date={new Date("2025-06-18T10:00:00")}
         onNavigate={mockOnNavigate}
         onView={mockOnView}
-      />
+        view={mockView}
+      />,
     );
 
     const days = document.querySelectorAll(".week-strip-day");
@@ -45,7 +47,8 @@ describe("WeekStrip", () => {
         date={new Date("2025-06-18T10:00:00")}
         onNavigate={mockOnNavigate}
         onView={mockOnView}
-      />
+        view={mockView}
+      />,
     );
 
     const days = document.querySelectorAll(".week-strip-day");
@@ -61,7 +64,8 @@ describe("WeekStrip", () => {
         date={new Date("2025-06-18T10:00:00")}
         onNavigate={mockOnNavigate}
         onView={mockOnView}
-      />
+        view={mockView}
+      />,
     );
 
     const days = screen.getAllByRole("button");
@@ -74,7 +78,8 @@ describe("WeekStrip", () => {
         date={new Date("2025-06-18T10:00:00")}
         onNavigate={mockOnNavigate}
         onView={mockOnView}
-      />
+        view={mockView}
+      />,
     );
 
     const days = screen.getAllByRole("button");

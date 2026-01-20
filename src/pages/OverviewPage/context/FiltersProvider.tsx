@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { FiltersContext, type EventFilters } from "./filtersContext";
-import { resetTime } from "../components/EventList/useEventList/useFilteredEvents/resetTime";
+import { applyFilterAutoUpdates } from "./applyFilterAutoUpdates";
 
 interface FiltersProviderProps {
   children: ReactNode;
@@ -22,25 +22,12 @@ export function FiltersProvider({ children }: FiltersProviderProps) {
     value: EventFilters[K],
   ) => {
     setFilters((prev) => {
-      const newFilters = { ...prev, [key]: value };
-      const today = resetTime(new Date());
-
-      if (key === "dateFrom" && value) {
-        const fromDate = resetTime(new Date(value as Date));
-        if (fromDate < today && !prev.showPastEvents) {
-          newFilters.showPastEvents = true;
-        }
-        if (fromDate > today && prev.showPastEvents) {
-          newFilters.showPastEvents = false;
-        }
-      }
-      if (key === "dateTo" && value) {
-        const toDate = resetTime(new Date(value as Date));
-        if (toDate < today && !prev.showPastEvents) {
-          newFilters.showPastEvents = true;
-        }
-      }
-      return newFilters;
+      const autoUpdates = applyFilterAutoUpdates(key, value, prev);
+      return {
+        ...prev,
+        [key]: value,
+        ...autoUpdates,
+      };
     });
   };
   const resetFilters = () => setFilters(defaultFilters);

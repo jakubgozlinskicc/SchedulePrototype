@@ -10,9 +10,15 @@ interface WeekStripProps {
   date: Date;
   onNavigate: (action: NavigateAction, newDate?: Date) => void;
   onView: OnView;
+  view: "month" | "week" | "day";
 }
 
-export const WeekStrip = ({ date, onNavigate, onView }: WeekStripProps) => {
+export const WeekStrip = ({
+  date,
+  onNavigate,
+  onView,
+  view,
+}: WeekStripProps) => {
   const start = startOfWeek(date, { weekStartsOn: 1 });
   const days = Array.from({ length: 7 }, (_, i) => addDays(start, i));
   const { currentLanguage } = useTranslationContext();
@@ -27,7 +33,7 @@ export const WeekStrip = ({ date, onNavigate, onView }: WeekStripProps) => {
           <Button
             key={day.toISOString()}
             variant="primary"
-            isActive={isSameDay(day, date)}
+            isActive={isSameDay(day, date) && view === "day"}
             className={`week-strip-day ${isDayToday ? "is-today" : ""}`}
             onClick={() => {
               onView("day");

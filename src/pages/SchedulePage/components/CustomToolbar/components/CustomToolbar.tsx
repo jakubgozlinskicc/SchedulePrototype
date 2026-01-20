@@ -101,7 +101,12 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
       </div>
 
       {(view === "day" || view === "week") && (
-        <WeekStrip date={date} onNavigate={onNavigate} onView={onView} />
+        <WeekStrip
+          date={date}
+          onNavigate={onNavigate}
+          onView={onView}
+          view={view}
+        />
       )}
     </>
   );

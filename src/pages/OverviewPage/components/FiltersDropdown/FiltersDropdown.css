@@ -20,7 +20,7 @@
   border: 1px solid var(--color-border-primary);
   border-radius: var(--radius-sm);
   padding: 16px;
-  min-width: 280px;
+  min-width: 210px;
   box-shadow: var(--shadow-xl);
   z-index: 100;
   gap: 10px;
@@ -39,10 +39,6 @@
   visibility: visible;
 }
 
-.filter-group {
-  margin-bottom: 16px;
-}
-
 .filter-label {
   display: inline-flex;
   align-items: center;
@@ -58,6 +54,7 @@
   border: 1px solid var(--color-border-primary);
   border-radius: 4px;
   font-size: 0.9rem;
+  font-family: inherit;
 }
 
 .filter-checkbox {
