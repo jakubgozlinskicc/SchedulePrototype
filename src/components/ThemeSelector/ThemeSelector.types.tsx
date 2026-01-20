@@ -63,4 +63,4 @@ export const THEMES: Record<string, Theme> = {
 };
 
 export const STORAGE_KEY = "selectedTheme";
-export const DEFAULT_THEME = "pink";
+export const DEFAULT_THEME = "violet";

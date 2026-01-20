@@ -17,7 +17,7 @@ describe("DateRangeFilter", () => {
 
   const createFilters = (
     dateFrom: Date | null,
-    dateTo: Date | null
+    dateTo: Date | null,
   ): EventFilters => ({
     searchQuery: "",
     showPastEvents: false,
@@ -30,19 +30,19 @@ describe("DateRangeFilter", () => {
     it("should return true when both dates are set", () => {
       const filters = createFilters(
         new Date("2024-06-01"),
-        new Date("2024-06-30")
+        new Date("2024-06-30"),
       );
       expect(dateRangeFilter.isActive(filters)).toBe(true);
     });
 
-    it("should return false when dateFrom is null", () => {
-      const filters = createFilters(null, new Date("2024-06-30"));
-      expect(dateRangeFilter.isActive(filters)).toBe(false);
+    it("should return true when only dateFrom is set", () => {
+      const filters = createFilters(new Date("2024-06-01"), null);
+      expect(dateRangeFilter.isActive(filters)).toBe(true);
     });
 
-    it("should return false when dateTo is null", () => {
-      const filters = createFilters(new Date("2024-06-01"), null);
-      expect(dateRangeFilter.isActive(filters)).toBe(false);
+    it("should return true when only dateTo is set", () => {
+      const filters = createFilters(null, new Date("2024-06-30"));
+      expect(dateRangeFilter.isActive(filters)).toBe(true);
     });
 
     it("should return false when both dates are null", () => {
@@ -56,7 +56,7 @@ describe("DateRangeFilter", () => {
       const event = createEvent(new Date("2024-06-15T10:00:00"));
       const filters = createFilters(
         new Date("2024-06-01"),
-        new Date("2024-06-30")
+        new Date("2024-06-30"),
       );
       expect(dateRangeFilter.apply(event, filters)).toBe(true);
     });
@@ -65,7 +65,7 @@ describe("DateRangeFilter", () => {
       const event = createEvent(new Date("2024-06-01T10:00:00"));
       const filters = createFilters(
         new Date("2024-06-01"),
-        new Date("2024-06-30")
+        new Date("2024-06-30"),
       );
       expect(dateRangeFilter.apply(event, filters)).toBe(true);
     });
@@ -74,7 +74,7 @@ describe("DateRangeFilter", () => {
       const event = createEvent(new Date("2024-06-30T10:00:00"));
       const filters = createFilters(
         new Date("2024-06-01"),
-        new Date("2024-06-30")
+        new Date("2024-06-30"),
       );
       expect(dateRangeFilter.apply(event, filters)).toBe(true);
     });
@@ -83,7 +83,7 @@ describe("DateRangeFilter", () => {
       const event = createEvent(new Date("2024-05-31T10:00:00"));
       const filters = createFilters(
         new Date("2024-06-01"),
-        new Date("2024-06-30")
+        new Date("2024-06-30"),
       );
       expect(dateRangeFilter.apply(event, filters)).toBe(false);
     });
@@ -92,7 +92,7 @@ describe("DateRangeFilter", () => {
       const event = createEvent(new Date("2024-07-01T10:00:00"));
       const filters = createFilters(
         new Date("2024-06-01"),
-        new Date("2024-06-30")
+        new Date("2024-06-30"),
       );
       expect(dateRangeFilter.apply(event, filters)).toBe(false);
     });
@@ -113,7 +113,7 @@ describe("DateRangeFilter", () => {
       const event = createEvent(new Date("2024-06-15T23:59:59"));
       const filters = createFilters(
         new Date("2024-06-15T00:00:00"),
-        new Date("2024-06-15T00:00:00")
+        new Date("2024-06-15T00:00:00"),
       );
       expect(dateRangeFilter.apply(event, filters)).toBe(true);
     });
@@ -128,7 +128,7 @@ describe("DateRangeFilter", () => {
       const event = createEvent(new Date("2024-06-15T12:00:00"));
       const filters = createFilters(
         new Date("2024-06-15"),
-        new Date("2024-06-15")
+        new Date("2024-06-15"),
       );
       expect(dateRangeFilter.apply(event, filters)).toBe(true);
     });
@@ -137,7 +137,7 @@ describe("DateRangeFilter", () => {
       const event = createEvent(new Date("2024-06-14T12:00:00"));
       const filters = createFilters(
         new Date("2024-06-15"),
-        new Date("2024-06-15")
+        new Date("2024-06-15"),
       );
       expect(dateRangeFilter.apply(event, filters)).toBe(false);
     });
@@ -146,7 +146,7 @@ describe("DateRangeFilter", () => {
       const event = createEvent(new Date("2024-06-16T12:00:00"));
       const filters = createFilters(
         new Date("2024-06-15"),
-        new Date("2024-06-15")
+        new Date("2024-06-15"),
       );
       expect(dateRangeFilter.apply(event, filters)).toBe(false);
     });
@@ -155,7 +155,7 @@ describe("DateRangeFilter", () => {
       const event = createEvent(new Date("2024-12-31T23:59:59"));
       const filters = createFilters(
         new Date("2024-12-01"),
-        new Date("2025-01-15")
+        new Date("2025-01-15"),
       );
       expect(dateRangeFilter.apply(event, filters)).toBe(true);
     });
@@ -164,7 +164,7 @@ describe("DateRangeFilter", () => {
       const event = createEvent(new Date("2024-02-29T10:00:00"));
       const filters = createFilters(
         new Date("2024-02-01"),
-        new Date("2024-02-29")
+        new Date("2024-02-29"),
       );
       expect(dateRangeFilter.apply(event, filters)).toBe(true);
     });

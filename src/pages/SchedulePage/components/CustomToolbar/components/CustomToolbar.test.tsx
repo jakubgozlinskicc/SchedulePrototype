@@ -184,13 +184,13 @@ describe("CustomToolbar", () => {
     expect(weekStrip).not.toBeInTheDocument();
   });
 
-  it("should not render WeekStrip when view is week", () => {
+  it("should render WeekStrip when view is week", () => {
     const weekProps = { ...mockProps, view: "week" as const };
 
     render(<CustomToolbar {...weekProps} />);
 
     const weekStrip = document.querySelector(".week-strip");
-    expect(weekStrip).not.toBeInTheDocument();
+    expect(weekStrip).toBeInTheDocument();
   });
 
   it("should render WeekStrip when view is day", () => {
