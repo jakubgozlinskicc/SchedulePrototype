@@ -5,23 +5,23 @@
 
 .formInput {
   padding: 10px 12px;
-  border: 1px solid var(--color-border-light);
+  border: 2px solid var(--color-border-primary);
   border-radius: var(--radius-sm);
   font-size: 0.95rem;
   color: var(--main-text-color);
   background-color: var(--color-bg-secondary);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
   font-family: inherit;
 }
 
 .formInput:focus {
   outline: none;
-  border-color: var(--color-primary-hover);
+  border-color: var(--color-primary);
   box-shadow: var(--shadow-focus);
 }
 
 .formInput:hover:not(:focus) {
-  border: 1px solid var(--color-text-muted);
+  border-color: var(--color-border-light);
 }
 
 .formError {

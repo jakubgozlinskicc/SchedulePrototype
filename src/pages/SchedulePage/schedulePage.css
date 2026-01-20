@@ -18,6 +18,7 @@
   display: flex;
   border-radius: var(--radius-lg);
   overflow: hidden;
+  border: 1px solid var(--color-border-primary);
 }
 
 .schedule-title {
@@ -26,11 +27,23 @@
 
 .rbc-time-header-cell .rbc-today {
   font-size: 14px;
-
   display: flex;
   align-items: center;
   justify-content: center;
   height: 36px;
+}
+
+.rbc-time-view .rbc-header {
+  display: none;
+  visibility: hidden;
+}
+
+.rbc-time-header-content {
+  height: fit-content;
+}
+
+.rbc-time-header-content .rbc-row.rbc-time-header-cell {
+  display: none !important;
 }
 
 .rbc-header {
@@ -42,6 +55,7 @@
   background-color: var(--color-primary);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-sm);
+  font-weight: 600 !important;
 }
 
 .rbc-time-header .rbc-header.rbc-today {
@@ -55,7 +69,7 @@
 }
 
 .rbc-button-link {
-  font-weight: bold;
+  font-weight: 600 !important;
   font-family: inherit !important;
 }
 
@@ -91,12 +105,13 @@
 }
 
 .rbc-time-view {
-  border-radius: var(--radius-sm);
+  border-right: 14px !important;
 }
 
 .rbc-time-content {
   background-color: var(--color-bg-secondary);
   font-weight: 500;
+  border-left: none;
 }
 
 .rbc-time-view .rbc-event.colored-event {
@@ -106,15 +121,12 @@
   border: none;
   background: color-mix(in srgb, var(--event-color) 20%, transparent);
   border-left: 6px solid var(--event-color);
+  z-index: 200;
 }
 
 .rbc-event-label {
   font-weight: 500;
   color: var(--color-text-muted);
-}
-
-.rbc-time-view .rbc-allday-cell {
-  margin-top: 15px;
 }
 
 .rbc-month-view .rbc-event.colored-event {
@@ -158,6 +170,16 @@
   border-top: none !important;
 }
 
-.rbc-time-view .rbc-day-bg {
-  height: auto;
+.rbc-row-bg {
+  right: 0 !important;
+  width: 100% !important;
+}
+
+.rbc-time-content .rbc-time-gutter {
+  width: 57px !important;
+}
+
+.rbc-current-time-indicator {
+  background-color: var(--color-primary-hover) !important;
+  height: 3px !important;
 }

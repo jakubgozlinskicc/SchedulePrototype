@@ -66,8 +66,8 @@
   "show-past-events": "Pokaż przeszłe wydarzenia",
   "reset-filters": "Resetuj filtry",
   "no-upcoming-events": "Brak nadchodzących wydarzeń",
-  "select-date-from": "Wybierz początek",
-  "select-date-to": "Wybierz koniec",
+  "select-date-from": "Wybierz od kiedy",
+  "select-date-to": "Wybierz do kiedy",
 
   "colors": "Kolory",
   "select-colors": "Wybierz kolory",
@@ -102,6 +102,7 @@
   "recurrence-interval-required": "Interwał powtarzania jest wymagany",
   "recurrence-interval-min": "Interwał musi wynosić co najmniej 1",
   "recurrence-interval-max": "Interwał nie może przekraczać 100",
+  "recurrence-interval-too-short": "Interwał musi być co najmniej tak długi jak czas trwania wydarzenia",
 
   "errors-title-message": "Tytuł wymagany",
   "errors-start-message": "Początek wymagany",

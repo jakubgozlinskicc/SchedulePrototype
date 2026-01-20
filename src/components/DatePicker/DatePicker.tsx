@@ -42,6 +42,7 @@ export function DatePicker({
         dropdownMode="select"
         yearDropdownItemNumber={100}
         scrollableYearDropdown
+        showPopperArrow={false}
       />
     </div>
   );

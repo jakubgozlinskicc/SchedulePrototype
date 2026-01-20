@@ -12,7 +12,7 @@ import { Button } from "../../../../../components/Button/Button";
 
 type CustomToolbarProps<
   TEvent extends object = Event,
-  TResource extends object = object
+  TResource extends object = object,
 > = ToolbarProps<TEvent, TResource> & {
   onAddEvent: () => void;
 };
@@ -100,7 +100,7 @@ export const CustomToolbar = (props: CustomToolbarProps) => {
         </div>
       </div>
 
-      {view === "day" && (
+      {(view === "day" || view === "week") && (
         <WeekStrip date={date} onNavigate={onNavigate} onView={onView} />
       )}
     </>

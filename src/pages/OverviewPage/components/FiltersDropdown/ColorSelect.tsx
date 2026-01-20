@@ -46,30 +46,27 @@ export function ColorSelect({ selectedColors, onChange }: ColorSelectProps) {
         className="color-select-toggle"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="color-select-label">
-          {selectedColors.length > 0
-            ? `${t("colors-selected")}: ${selectedColors.length}`
-            : t("select-colors")}
-        </span>
+        {selectedColors.length > 0 ? (
+          <div className="color-select-preview">
+            {selectedColors.map((colorKey) => {
+              const color = COLOR_OPTIONS.find((c) => c.key === colorKey);
+              return (
+                <span
+                  key={colorKey}
+                  className="color-preview-dot"
+                  style={{ backgroundColor: color?.sample }}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <span className="color-select-placeholder">{t("select-colors")}</span>
+        )}
+
         <span className={`color-select-arrow ${isOpen ? "open" : ""}`}>
           <i className="fa-solid fa-arrow-down"></i>
         </span>
       </button>
-
-      {selectedColors.length > 0 && (
-        <div className="color-select-preview">
-          {selectedColors.map((colorKey) => {
-            const color = COLOR_OPTIONS.find((c) => c.key === colorKey);
-            return (
-              <span
-                key={colorKey}
-                className="color-preview-dot"
-                style={{ backgroundColor: color?.sample }}
-              />
-            );
-          })}
-        </div>
-      )}
 
       <div className={`color-select-dropdown ${isOpen ? "open" : ""}`}>
         <div className="color-options-grid">

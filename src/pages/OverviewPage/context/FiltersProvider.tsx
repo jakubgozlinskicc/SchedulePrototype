@@ -19,26 +19,30 @@ export function FiltersProvider({ children }: FiltersProviderProps) {
 
   const updateFilter = <K extends keyof EventFilters>(
     key: K,
-    value: EventFilters[K]
+    value: EventFilters[K],
   ) => {
     setFilters((prev) => {
       const newFilters = { ...prev, [key]: value };
+      const today = resetTime(new Date());
+
       if (key === "dateFrom" && value) {
         const fromDate = resetTime(new Date(value as Date));
-        const today = resetTime(new Date());
-
         if (fromDate < today && !prev.showPastEvents) {
           newFilters.showPastEvents = true;
         }
-
         if (fromDate > today && prev.showPastEvents) {
           newFilters.showPastEvents = false;
+        }
+      }
+      if (key === "dateTo" && value) {
+        const toDate = resetTime(new Date(value as Date));
+        if (toDate < today && !prev.showPastEvents) {
+          newFilters.showPastEvents = true;
         }
       }
       return newFilters;
     });
   };
-
   const resetFilters = () => setFilters(defaultFilters);
 
   const activeFiltersCount = [

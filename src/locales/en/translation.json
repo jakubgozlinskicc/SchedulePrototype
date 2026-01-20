@@ -102,6 +102,7 @@
   "recurrence-interval-required": "Recurrence interval is required",
   "recurrence-interval-min": "Interval must be at least 1",
   "recurrence-interval-max": "Interval cannot exceed 100",
+  "recurrence-interval-too-short": "Interval must be longer than the event duration.",
 
   "errors-title-message": "Title required",
   "errors-start-message": "Start required",

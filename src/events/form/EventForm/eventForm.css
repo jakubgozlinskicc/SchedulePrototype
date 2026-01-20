@@ -9,7 +9,7 @@
 
 .form-wrapper {
   width: 90%;
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -32,20 +32,11 @@
   gap: 20px;
 }
 
-.event-form-input:hover:not(:focus),
-.event-form-textarea:hover:not(:focus) {
-  border-color: var(--color-primary);
-}
-
 .event-form-color-picker {
   width: 60px;
   height: 40px;
   padding: 2px;
-  border: 2px solid var(--color-border-light);
-  border-radius: var(--radius-sm);
-  background: none;
   cursor: pointer;
-  transition: border-color 0.2s ease;
 }
 
 .event-form-actions {

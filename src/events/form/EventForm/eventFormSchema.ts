@@ -10,6 +10,29 @@ const recurrenceTypes: RecurrenceType[] = [
 ] as const;
 const recurrenceEndTypes = ["never", "date", "count"] as const;
 
+const getEventDurationInDays = (start: string, end: string): number => {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  const diffTime = endDate.getTime() - startDate.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+};
+
+const getIntervalInDays = (interval: number, type: RecurrenceType): number => {
+  switch (type) {
+    case "daily":
+      return interval;
+    case "weekly":
+      return interval * 7;
+    case "monthly":
+      return interval * 28;
+    case "yearly":
+      return interval * 365;
+    default:
+      return interval;
+  }
+};
+
 export const createEventFormSchema = (t: (key: string) => string) =>
   yup.object({
     title: yup
@@ -33,6 +56,12 @@ export const createEventFormSchema = (t: (key: string) => string) =>
 
     color: yup.string().defined().default("#0000FF"),
 
+    recurrenceType: yup
+      .string()
+      .oneOf(recurrenceTypes)
+      .defined()
+      .default("none"),
+
     recurrenceInterval: yup
       .number()
       .transform((val, orig) => (orig === "" ? undefined : val))
@@ -42,15 +71,28 @@ export const createEventFormSchema = (t: (key: string) => string) =>
           schema
             .required(t("recurrence-interval-required"))
             .min(1, t("recurrence-interval-min"))
-            .max(100, t("recurrence-interval-max")),
+            .max(100, t("recurrence-interval-max"))
+            .test(
+              "interval-covers-event-duration",
+              t("recurrence-interval-too-short"),
+              function (value) {
+                const { start, end, recurrenceType } = this.parent;
+                if (!start || !end || !value || recurrenceType === "none") {
+                  return true;
+                }
+                const durationDays = getEventDurationInDays(start, end);
+                if (durationDays <= 1) {
+                  return true;
+                }
+                const intervalInDays = getIntervalInDays(
+                  value,
+                  recurrenceType as RecurrenceType,
+                );
+                return intervalInDays >= durationDays;
+              },
+            ),
         otherwise: (schema) => schema.optional().default(1),
       }),
-
-    recurrenceType: yup
-      .string()
-      .oneOf(recurrenceTypes)
-      .defined()
-      .default("none"),
 
     recurrenceEndType: yup
       .string()
@@ -74,7 +116,7 @@ export const createEventFormSchema = (t: (key: string) => string) =>
                 const { start } = this.parent;
                 if (!start || !value) return true;
                 return new Date(value) > new Date(start);
-              }
+              },
             ),
         otherwise: (schema) => schema.optional(),
       }),

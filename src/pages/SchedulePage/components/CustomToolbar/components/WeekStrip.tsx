@@ -1,4 +1,4 @@
-import { format, startOfWeek, addDays, isSameDay } from "date-fns";
+import { format, startOfWeek, addDays, isSameDay, isToday } from "date-fns";
 import type { NavigateAction } from "react-big-calendar";
 import { useTranslationContext } from "../../../../../locales/useTranslationContext";
 import { locales } from "../../../../../utils/calendarLocalizer/calendarLocalizer";
@@ -20,20 +20,24 @@ export const WeekStrip = ({ date, onNavigate, onView }: WeekStripProps) => {
 
   return (
     <div className="week-strip">
-      {days.map((day) => (
-        <Button
-          key={day.toISOString()}
-          variant="primary"
-          isActive={isSameDay(day, date)}
-          className="week-strip-day"
-          onClick={() => {
-            onView("day");
-            onNavigate("DATE", day);
-          }}
-        >
-          {format(day, "EEE dd", { locale })}
-        </Button>
-      ))}
+      {days.map((day) => {
+        const isDayToday = isToday(day);
+
+        return (
+          <Button
+            key={day.toISOString()}
+            variant="primary"
+            isActive={isSameDay(day, date)}
+            className={`week-strip-day ${isDayToday ? "is-today" : ""}`}
+            onClick={() => {
+              onView("day");
+              onNavigate("DATE", day);
+            }}
+          >
+            {format(day, "EEE dd", { locale })}
+          </Button>
+        );
+      })}
     </div>
   );
 };

@@ -5,6 +5,7 @@
 .filters-badge {
   background: var(--color-primary);
   font-size: 0.75rem;
+  width: 10px;
   padding: 2px 6px;
   border-radius: var(--radius-lg);
 }
@@ -26,7 +27,10 @@
   opacity: 0;
   transform: translateY(-10px);
   visibility: hidden;
-  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    visibility 0.25s;
 }
 
 .filters-panel.open {
@@ -63,27 +67,6 @@
   cursor: pointer;
 }
 
-.color-filters {
-  display: flex;
-  gap: 8px;
-}
-
-.color-btn {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  cursor: pointer;
-}
-
-.color-btn:hover {
-  transform: scale(1.1);
-}
-
-.color-btn.active {
-  border-color: var(--color-text-primary);
-}
-
 .reset-filters-btn {
   width: 100%;
   padding: 8px;
@@ -97,16 +80,4 @@
 
 .reset-filters-btn:hover {
   background: var(--color-danger-hover);
-}
-.filter-input[type="date"] {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid var(--color-border-primary);
-  border-radius: 4px;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-.filter-input[type="date"]::-webkit-calendar-picker-indicator {
-  cursor: pointer;
 }
