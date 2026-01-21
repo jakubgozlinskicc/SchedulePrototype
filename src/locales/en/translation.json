@@ -11,7 +11,9 @@
   "page": "Page",
 
   "title": "Title",
+  "title-placeholder": "Enter title",
   "description": "Description",
+  "description-placeholder": "Enter description",
   "start-date": "Start",
   "end-date": "End",
   "color": "Color",
@@ -49,6 +51,7 @@
   "recurrence-end-type": "End recurrence",
   "recurrence-end-never": "Never",
   "recurrence-end-date": "On date",
+  "select-end-date": "Select end date",
   "recurrence-end-count": "After number of occurrences",
   "recurrence-end-date-label": "End Date",
   "recurrence-count-label": "Number of occurrences",
@@ -111,5 +114,7 @@
   "error-event-not-found": "Error. Event not found",
 
   "go-back": "Go back",
-  "dont-mess-around": "Don't mess around, go back."
+  "dont-mess-around": "Don't mess around, go back.",
+
+  "select-city": "Select city.\nCurrently:"
 }

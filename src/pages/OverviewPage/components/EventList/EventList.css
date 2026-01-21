@@ -69,9 +69,29 @@
 }
 
 .day-header {
-  font-weight: bold;
-  padding: 10px;
+  display: flex;
+  justify-content: space-between;
   background-color: var(--color-primary);
   border-radius: var(--radius-sm);
-  margin-bottom: 5px;
+  padding: 10px;
+  font-weight: bold;
+  align-items: center;
+  gap: 1rem;
+}
+
+.day-header-weather {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-primary);
+  font-weight: normal;
+}
+
+.day-header-weather i {
+  font-size: 1.2rem;
+}
+
+.day-header-weather .weather-temp {
+  color: var(--color-text-primary);
+  font-weight: 600;
 }

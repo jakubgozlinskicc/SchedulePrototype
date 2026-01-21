@@ -6,6 +6,7 @@ import type { Language } from "../../contexts/translationContext/translationCont
 import { Selector } from "../Selector/Selector";
 import { ThemeSelector } from "../ThemeSelector/ThemeSelector";
 import { useTranslation } from "react-i18next";
+import { CityPicker } from "../CityPicker/CityPicker";
 
 const Nav = () => {
   const { handleAddEventClick } = useNavigateToAddEvent();
@@ -13,7 +14,7 @@ const Nav = () => {
   const { t } = useTranslation();
 
   const handleLanguageChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
+    event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     changeLanguage(event.target.value as Language);
   };
@@ -27,6 +28,7 @@ const Nav = () => {
         <option value="pl">PL</option>
       </Selector>
       <ThemeSelector />
+      <CityPicker />
       <ul className="sidebar-links">
         <li>
           <NavLink

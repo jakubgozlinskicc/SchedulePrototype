@@ -3,15 +3,18 @@ import { BrowserRouter } from "react-router-dom";
 import { TranslationProvider } from "./contexts/translationContext/translationProvider";
 import Nav from "./components/Nav/Nav";
 import { AppRoutes } from "./AppRoutes";
+import { LocationProvider } from "./contexts/locationContext/locationProvider";
 
 function App() {
   return (
     <BrowserRouter>
       <TranslationProvider>
-        <Nav />
-        <main className="main-content">
-          <AppRoutes />
-        </main>
+        <LocationProvider>
+          <Nav />
+          <main className="main-content">
+            <AppRoutes />
+          </main>
+        </LocationProvider>
       </TranslationProvider>
     </BrowserRouter>
   );

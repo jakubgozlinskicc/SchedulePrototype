@@ -11,6 +11,7 @@
   padding: 8px 4px !important;
   min-width: 0;
   box-shadow: var(--shadow-sm);
+  position: relative;
 }
 
 .week-strip-day.is-today {
@@ -21,4 +22,60 @@
 
 .week-strip-day + .week-strip-day {
   border-left: 1px solid var(--color-border-primary);
+}
+
+.weather-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--color-text-primary);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  z-index: 300;
+  pointer-events: none;
+}
+
+.weather-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--color-text-primary);
+}
+
+.weather-tooltip.tooltip-left {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+.weather-tooltip.tooltip-left::after {
+  left: auto;
+  right: 12px;
+  transform: none;
+}
+
+.week-strip-day.has-weather:hover .weather-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+.weather-icon {
+  font-size: 1.1rem;
+}
+
+.weather-temp {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
 }

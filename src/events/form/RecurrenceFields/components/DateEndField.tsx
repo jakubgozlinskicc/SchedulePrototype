@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { FormField } from "../../../../components/Form/FormField/FormField";
 import { FormLabel } from "../../../../components/Form/FormLabel/FormLabel";
-import { FormInput } from "../../../../components/Form/FormInput/FormInput";
+import { FormDatePicker } from "../../../../components/Form/FormDatePicker/FormDatePicker";
 
 export function DateEndField() {
   const { t } = useTranslation();
@@ -11,7 +11,11 @@ export function DateEndField() {
       <FormLabel htmlFor="recurrenceEndDate">
         {t("recurrence-end-date-label")}
       </FormLabel>
-      <FormInput id="recurrenceEndDate" name="recurrenceEndDate" type="date" />
+      <FormDatePicker
+        name="recurrenceEndDate"
+        variant="date"
+        placeholderText={t("select-end-date")}
+      />
     </FormField>
   );
 }

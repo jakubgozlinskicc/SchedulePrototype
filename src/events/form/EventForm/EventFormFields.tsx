@@ -27,7 +27,11 @@ export function EventFormFields({
           {t("title")}
           <i className="fa-solid fa-asterisk"></i>
         </FormLabel>
-        <FormInput name="title" type="text" />
+        <FormInput
+          name="title"
+          type="text"
+          placeholder={t("title-placeholder")}
+        />
       </FormField>
 
       <FormField>
@@ -35,7 +39,10 @@ export function EventFormFields({
           <i className="fa-solid fa-bars-staggered"></i>
           {t("description")}
         </FormLabel>
-        <FormTextArea name="description" />
+        <FormTextArea
+          name="description"
+          placeholder={t("description-placeholder")}
+        />
       </FormField>
 
       <FormField>

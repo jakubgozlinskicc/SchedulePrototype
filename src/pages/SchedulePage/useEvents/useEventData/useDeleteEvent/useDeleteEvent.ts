@@ -6,7 +6,7 @@ import type { DeleteOptions } from "../../../../../events/deleteStrategies/IDele
 
 export function useDeleteEvent(
   closeModal: () => void,
-  repository: IEventRepository
+  repository: IEventRepository,
 ) {
   const { eventData } = useEventDataContext();
   const { reloadEvents } = useReloadEvents(repository);
@@ -16,7 +16,7 @@ export function useDeleteEvent(
       await DeleteStrategyRegistry.executeDelete(
         eventData,
         repository,
-        options
+        options,
       );
       await reloadEvents();
       closeModal();

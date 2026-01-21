@@ -11,7 +11,9 @@
   "page": "Strona",
 
   "title": "Tytuł",
+  "title-placeholder": "Wpisz tytuł",
   "description": "Opis",
+  "description-placeholder": "Wpisz opis",
   "start-date": "Początek",
   "end-date": "Koniec",
   "color": "Kolor",
@@ -49,6 +51,7 @@
   "recurrence-end-type": "Zakończ powtarzanie",
   "recurrence-end-never": "Nigdy",
   "recurrence-end-date": "W dniu",
+  "select-end-date": "Wybierz datę zakończenia",
   "recurrence-end-count": "Po liczbie wystąpień",
   "recurrence-end-date-label": "Data zakończenia",
   "recurrence-count-label": "Liczba wystąpień",
@@ -111,5 +114,7 @@
   "error-event-not-found": "Błąd. Nie ma takiego wydarzenia",
 
   "go-back": "Powrót",
-  "dont-mess-around": "Nie kombinuj, zawracaj."
+  "dont-mess-around": "Nie kombinuj, zawracaj.",
+
+  "select-city": "Wybierz miasto.\n Aktualne:"
 }

@@ -9,12 +9,21 @@ import { useLoadEvents } from "./useEventList/useLoadEvents/useLoadEvents";
 import { RecurringEventConfirmation } from "../../../../events/Confirmations/RecurringEventConfirmation/RecurringEventConfirmation";
 import { RegularEventConfirmation } from "../../../../events/Confirmations/RegularEventConfirmation/RegularEventConfirmation";
 import { useEventNavigation } from "./useEventList/useEventNavigation/useEventNavigation";
+import { useWeatherForecast } from "../../../../hooks/useWeatherForecast/useWeatherForecast";
+import { useLocationContext } from "../../../../contexts/locationContext/useLocationContext";
+import {
+  getWeatherDisplayInfo,
+  getWeatherIconClass,
+} from "../../../../utils/weatherUtils/weatherUtils";
 
 export function EventList() {
   const { events, reloadEvents } = useLoadEvents(eventRepository);
 
   const { groupedEvents, formatTime, pagination } = useEventList(events);
   const { t } = useTranslation();
+
+  const { forecast } = useWeatherForecast();
+  const { city } = useLocationContext();
 
   const {
     eventToDelete,
@@ -57,57 +66,79 @@ export function EventList() {
           />
         )}
 
-        {groupedEvents.map((group) => (
-          <div key={group.dateKey} className="day-group">
-            <div className="day-header">{group.dateLabel}</div>
+        {groupedEvents.map((group) => {
+          const { shouldShow: showWeather, weather } = getWeatherDisplayInfo(
+            new Date(group.dateKey),
+            forecast,
+          );
 
-            {group.events.map((event) => (
-              <div
-                key={
-                  event.id ||
-                  `${event.recurringEventId}-${event.start.getTime()}`
-                }
-                className="event-item"
-                style={{
-                  borderColor: event.color,
-                }}
-              >
-                <div className="event-content">
-                  <div className="event-header">
-                    <span className="event-title">
-                      {isRecurringEvent(event) && (
-                        <i className="fa-solid fa-repeat"></i>
-                      )}
-                      {event.title}
+          return (
+            <div key={group.dateKey} className="day-group">
+              <div className="day-header">
+                {group.dateLabel}
+                {showWeather && weather && (
+                  <span className="day-header-weather">
+                    <i
+                      className={`fa-solid ${getWeatherIconClass(weather.weathercode)}`}
+                    />
+                    <span className="weather-temp">
+                      {city.name}: {weather.temperatureMin}° /{" "}
+                      {weather.temperatureMax}°
                     </span>
-                    <div className="event-actions">
-                      <Button
-                        variant="danger"
-                        onClick={() => handleDeleteClick(event)}
-                      >
-                        <i className="fa-regular fa-trash-can"></i>
-                        {t("btn_delete")}
-                      </Button>
-                      <Button
-                        variant="primary"
-                        onClick={() => handleEditClick(event)}
-                      >
-                        <i className="fa-regular fa-pen-to-square"></i>
-                        {t("edit")}
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="event-time">
-                    {formatTime(event.start)} — {formatTime(event.end)}
-                  </div>
-                  {event.description && (
-                    <div className="event-description">{event.description}</div>
-                  )}
-                </div>
+                  </span>
+                )}
               </div>
-            ))}
-          </div>
-        ))}
+
+              {group.events.map((event) => (
+                <div
+                  key={
+                    event.id ||
+                    `${event.recurringEventId}-${event.start.getTime()}`
+                  }
+                  className="event-item"
+                  style={{
+                    borderColor: event.color,
+                  }}
+                >
+                  <div className="event-content">
+                    <div className="event-header">
+                      <span className="event-title">
+                        {isRecurringEvent(event) && (
+                          <i className="fa-solid fa-repeat"></i>
+                        )}
+                        {event.title}
+                      </span>
+                      <div className="event-actions">
+                        <Button
+                          variant="danger"
+                          onClick={() => handleDeleteClick(event)}
+                        >
+                          <i className="fa-regular fa-trash-can"></i>
+                          {t("btn_delete")}
+                        </Button>
+                        <Button
+                          variant="primary"
+                          onClick={() => handleEditClick(event)}
+                        >
+                          <i className="fa-regular fa-pen-to-square"></i>
+                          {t("edit")}
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="event-time">
+                      {formatTime(event.start)} — {formatTime(event.end)}
+                    </div>
+                    {event.description && (
+                      <div className="event-description">
+                        {event.description}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        })}
       </div>
       <Pagination {...pagination} />
     </>
