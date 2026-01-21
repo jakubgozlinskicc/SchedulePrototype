@@ -126,7 +126,7 @@ export function EventList() {
                       </div>
                     </div>
                     <div className="event-time">
-                      {formatTime(event.start)} — {formatTime(event.end)}
+                      {formatTime(event.start, event.end)}
                     </div>
                     {event.description && (
                       <div className="event-description">
