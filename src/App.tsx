@@ -4,6 +4,7 @@ import { TranslationProvider } from "./contexts/translationContext/translationPr
 import Nav from "./components/Nav/Nav";
 import { AppRoutes } from "./AppRoutes";
 import { LocationProvider } from "./contexts/locationContext/locationProvider";
+import "weather-icons/css/weather-icons.css";
 
 function App() {
   return (

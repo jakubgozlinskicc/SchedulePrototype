@@ -17,7 +17,7 @@ export const SubmitStrategyRegistry = {
   async executeSubmit(
     eventData: Event,
     repository: IEventRepository,
-    options?: EditOptions
+    options?: EditOptions,
   ): Promise<void> {
     const strategy = strategies.find((s) => s.canExecute(eventData, options));
     if (!strategy) {

@@ -47,6 +47,7 @@ const weatherCodes: Record<number, string> = {
   71: "fa-snowflake",
   73: "fa-snowflake",
   75: "fa-snowflake",
+  77: "fa-snowflake",
   80: "fa-cloud-sun-rain",
   81: "fa-cloud-showers-heavy",
   82: "fa-cloud-bolt",
