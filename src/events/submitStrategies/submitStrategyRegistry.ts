@@ -20,6 +20,7 @@ export const SubmitStrategyRegistry = {
     options?: EditOptions,
   ): Promise<void> {
     const strategy = strategies.find((s) => s.canExecute(eventData, options));
+    console.log("Selected strategy:", strategy);
     if (!strategy) {
       throw new Error("No submit strategy found for event");
     }

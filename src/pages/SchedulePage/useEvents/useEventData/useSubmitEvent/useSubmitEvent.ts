@@ -9,18 +9,19 @@ import type { EditOptions } from "../../../../../events/submitStrategies/ISubmit
 export function useSubmitEvent(
   closeModal: () => void,
   repository: IEventRepository,
-  event?: Event
+  event?: Event,
 ) {
   const { reloadEvents } = useReloadEvents(repository);
 
   const onSubmit = async (data: EventFormData, options?: EditOptions) => {
     try {
       const eventToSave = convertFormDataToEvent(data, event);
-
+      console.log("Event to save:", data);
+      console.log("Submitting event:", eventToSave, options);
       await SubmitStrategyRegistry.executeSubmit(
         eventToSave,
         repository,
-        options
+        options,
       );
 
       await reloadEvents();

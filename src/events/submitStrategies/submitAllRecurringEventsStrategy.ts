@@ -1,3 +1,4 @@
+import { addDays, differenceInCalendarDays } from "date-fns";
 import type { Event } from "../../db/scheduleDb";
 import type { IEventRepository } from "../IEventRepository";
 import type { EditOptions, ISubmitStrategy } from "./ISubmitStrategy";
@@ -16,14 +17,20 @@ export class SubmitAllRecurringEventsStrategy implements ISubmitStrategy {
       throw new Error("Parent event not found");
     }
 
-    const newStart = new Date(parentEvent.start);
+    const daysDifference = differenceInCalendarDays(
+      eventData.start,
+      parentEvent.start,
+    );
+
+    const newStart = addDays(parentEvent.start, daysDifference);
     newStart.setHours(eventData.start.getHours());
     newStart.setMinutes(eventData.start.getMinutes());
 
-    const newEnd = new Date(parentEvent.end);
-    newEnd.setHours(eventData.end.getHours());
-    newEnd.setMinutes(eventData.end.getMinutes());
+    const duration = eventData.end.getTime() - eventData.start.getTime();
 
+    const newEnd = new Date(newStart.getTime() + duration);
+
+    console.log(`newStart: ${newStart}, newEnd: ${newEnd}`);
     await repository.editEvent(parentId!, {
       title: eventData.title,
       description: eventData.description,
