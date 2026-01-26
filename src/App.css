@@ -1,2 +1,13 @@
 @import "react-big-calendar/lib/css/react-big-calendar.css";
 @import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 1rem;
+  overflow-x: auto;
+}

@@ -1,6 +1,6 @@
 import Dexie from "dexie";
 import type { Table } from "dexie";
-import type { RecurrenceRule } from "../pages/schedulePage/recurrence/recurrenceTypes";
+import type { RecurrenceRule } from "../events/recurrence/recurrenceTypes";
 
 export interface Event {
   id?: number;

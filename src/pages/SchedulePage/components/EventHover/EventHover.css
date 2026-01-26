@@ -1,0 +1,97 @@
+.event-hover {
+  position: fixed;
+  z-index: 2000;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  min-width: 260px;
+  max-width: 360px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  overflow: hidden;
+  animation: hoverFadeIn 0.15s ease-out;
+}
+
+@keyframes hoverFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hover-header {
+  padding: 12px 16px;
+  background-color: color-mix(in srgb, var(--event-color) 25%, transparent);
+  border-left: solid 5px;
+  border-radius: var(--radius-sm);
+}
+
+.hover-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-text-primary);
+}
+
+.hover {
+  padding: 12px 16px 14px;
+  background: var(--color-bg-secondary);
+}
+
+.view-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.view-field:last-child {
+  margin-bottom: 0;
+}
+
+.view-label {
+  font-weight: 600;
+  flex-shrink: 0;
+  color: var(--color-text-primary);
+}
+
+.view-value {
+  flex: 1;
+  word-break: break-word;
+}
+
+.hover .view-field:last-child .view-value {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hover-footer {
+  padding: 9px 16px 11px;
+  background: var(--primary-background);
+  text-align: center;
+  border-top: 1px solid var(--color-border-primary);
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+  .event-hover {
+    min-width: 220px;
+    max-width: 260px;
+    font-size: 13px;
+  }
+}

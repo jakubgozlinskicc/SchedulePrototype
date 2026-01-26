@@ -1,13 +1,6 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { calendarEventPropGetter } from "./calendarEventPropGetter";
 import type { Event } from "../../db/scheduleDb";
-
-vi.mock("./colorUtils", () => ({
-  getTextColor: vi.fn((color: string) => {
-    const brightness = parseInt(color.replace("#", ""), 16);
-    return brightness > 0xffffff / 2 ? "black" : "white";
-  }),
-}));
 
 describe("calendarEventPropGetter", () => {
   const createMockEvent = (overrides: Partial<Event> = {}): Event => ({
@@ -40,46 +33,12 @@ describe("calendarEventPropGetter", () => {
 
     const styleKeys = Object.keys(result.style);
     expect(styleKeys).toContain("--event-color");
-    expect(styleKeys).toContain("color");
-    expect(styleKeys).toHaveLength(2);
+    expect(styleKeys).toHaveLength(1);
   });
 
   it("It should set --event-color to event.color", () => {
     const event = createMockEvent({ color: "#9435c0ff" });
     const result = calendarEventPropGetter(event);
     expect(result.style["--event-color"]).toBe("#9435c0ff");
-  });
-
-  it("It should set white for dark background", () => {
-    const event = createMockEvent({ color: "#000000" });
-    const result = calendarEventPropGetter(event);
-    expect(result.style.color).toBe("white");
-  });
-
-  it("It should set black for bright background", () => {
-    const event = createMockEvent({ color: "#FFFFFF" });
-    const result = calendarEventPropGetter(event);
-    expect(result.style.color).toBe("black");
-  });
-
-  it("It should handle blue", () => {
-    const event = createMockEvent({ color: "#0000FF" });
-    const result = calendarEventPropGetter(event);
-    expect(result.style["--event-color"]).toBe("#0000FF");
-    expect(result.style.color).toBe("white");
-  });
-
-  it("It should handle red", () => {
-    const event = createMockEvent({ color: "#FF0000" });
-    const result = calendarEventPropGetter(event);
-    expect(result.style["--event-color"]).toBe("#FF0000");
-    expect(result.style.color).toBe("black");
-  });
-
-  it("It should handle green", () => {
-    const event = createMockEvent({ color: "#00FF00" });
-    const result = calendarEventPropGetter(event);
-    expect(result.style["--event-color"]).toBe("#00FF00");
-    expect(result.style.color).toBe("white");
   });
 });

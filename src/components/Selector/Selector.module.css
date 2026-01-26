@@ -1,0 +1,17 @@
+.languageSelector {
+  padding: 5px;
+  background-color: var(--color-primary-hover);
+  font-weight: bold;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s;
+  border-radius: var(--radius-sm);
+  width: auto;
+  field-sizing: content;
+}
+
+.languageSelector:hover {
+  background-color: var(--color-text-primary);
+  color: var(--color-text-secondary);
+}

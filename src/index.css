@@ -1,5 +1,60 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   line-height: 1.5;
   font-weight: 400;
+
+  --color-primary: #c1bef1;
+  --color-primary-hover: #9791e5;
+  --color-primary-transparent: rgba(89, 30, 253, 0.2);
+
+  --color-secondary: #e5e7eb;
+  --color-secondary-hover: #d1d5db;
+  --color-secondary-active: #bfc2c5;
+  --color-secondary-active-hover: #696b70;
+
+  --color-danger: #ff6961;
+  --color-danger-hover: #e9564f;
+
+  --color-text-primary: #000000;
+  --color-text-secondary: #ffffff;
+  --color-text-muted: #696b70;
+
+  --color-bg-primary: #f5f5f5;
+  --color-bg-secondary: #ffffff;
+  --color-bg-surface: #ffffff;
+  --color-backdrop: rgba(0, 0, 0, 0.4);
+
+  --color-border-primary: #e0e0e0;
+  --color-border-light: #bfc2c5;
+
+  --shadow-xl: 0 10px 40px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-focus: 0 0 0 3px rgba(0, 0, 0, 0.15);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 2px 8px rgba(0, 0, 0, 0.5);
+
+  --radius-sm: 6px;
+  --radius-lg: 12px;
+}
+
+.theme-transitioning,
+.theme-transitioning * {
+  transition:
+    background-color 1s ease,
+    border-color 1s ease,
+    color 1s ease,
+    box-shadow 1s ease,
+    fill 1s ease !important;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
 }

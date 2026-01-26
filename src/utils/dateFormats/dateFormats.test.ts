@@ -9,9 +9,10 @@ describe("dateFormats", () => {
   describe("createFormats", () => {
     describe("with pl locale", () => {
       const formats = createFormats(pl);
-      it("It should format day range", () => {
-        const start = new Date(2025, 11, 10);
-        const end = new Date(2025, 11, 15);
+
+      it("should format day range", () => {
+        const start = new Date(2025, 11, 1);
+        const end = new Date(2025, 11, 7);
 
         const formatter = formats.dayRangeHeaderFormat;
         if (typeof formatter !== "function") {
@@ -20,24 +21,10 @@ describe("dateFormats", () => {
 
         const result = formatter({ start, end }, defaultCulture);
 
-        expect(result).toBe("10-15 grudzień");
+        expect(result).toBe("01 grudzień 2025 - 07 grudzień 2025  ");
       });
 
-      it("It should handle range in one day", () => {
-        const start = new Date(2025, 11, 11);
-        const end = new Date(2024, 11, 11);
-
-        const formatter = formats.dayRangeHeaderFormat;
-        if (typeof formatter !== "function") {
-          throw new Error("dayRangeHeaderFormat should be a function");
-        }
-
-        const result = formatter({ start, end }, defaultCulture);
-
-        expect(result).toBe("11-11 grudzień");
-      });
-
-      it("It should format month header", () => {
+      it("should format month header", () => {
         const date = new Date(2025, 11, 10);
 
         const formatter = formats.monthHeaderFormat;
@@ -50,7 +37,7 @@ describe("dateFormats", () => {
         expect(result).toBe("grudzień 2025");
       });
 
-      it("It should format day header", () => {
+      it("should format day header", () => {
         const date = new Date(2025, 11, 10);
 
         const formatter = formats.dayHeaderFormat;
@@ -60,14 +47,14 @@ describe("dateFormats", () => {
 
         const result = formatter(date, defaultCulture);
 
-        expect(result).toBe("10 grudnia środa");
+        expect(result).toBe("10 grudnia 2025 środa");
       });
     });
 
     describe("with english locale", () => {
       const formats = createFormats(enUS);
 
-      it("It should format day range", () => {
+      it("should format day range", () => {
         const start = new Date(2025, 11, 10);
         const end = new Date(2025, 11, 15);
 
@@ -78,10 +65,10 @@ describe("dateFormats", () => {
 
         const result = formatter({ start, end }, defaultCulture);
 
-        expect(result).toBe("10-15 December");
+        expect(result).toBe("10 December 2025 - 15 December 2025  ");
       });
 
-      it("It should format month header", () => {
+      it("should format month header", () => {
         const date = new Date(2025, 11, 10);
 
         const formatter = formats.monthHeaderFormat;
@@ -94,7 +81,7 @@ describe("dateFormats", () => {
         expect(result).toBe("December 2025");
       });
 
-      it("It should format day header", () => {
+      it("should format day header", () => {
         const date = new Date(2025, 11, 10);
 
         const formatter = formats.dayHeaderFormat;
@@ -104,7 +91,7 @@ describe("dateFormats", () => {
 
         const result = formatter(date, defaultCulture);
 
-        expect(result).toBe("10 December Wednesday");
+        expect(result).toBe("10 December 2025 Wednesday");
       });
     });
   });

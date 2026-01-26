@@ -1,17 +1,24 @@
 import "./App.css";
-import SchedulePage from "./pages/schedulePage/schedulePage";
-import { EventDataProvider } from "./pages/schedulePage/eventContext/eventDataProvider";
+import { BrowserRouter } from "react-router-dom";
 import { TranslationProvider } from "./contexts/translationContext/translationProvider";
+import Nav from "./components/Nav/Nav";
+import { AppRoutes } from "./AppRoutes";
+import { LocationProvider } from "./contexts/locationContext/locationProvider";
+import "weather-icons/css/weather-icons.css";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <TranslationProvider>
-        <EventDataProvider>
-          <SchedulePage />
-        </EventDataProvider>
+        <LocationProvider>
+          <Nav />
+          <main className="main-content">
+            <AppRoutes />
+          </main>
+        </LocationProvider>
       </TranslationProvider>
-    </>
+    </BrowserRouter>
   );
 }
+
 export default App;

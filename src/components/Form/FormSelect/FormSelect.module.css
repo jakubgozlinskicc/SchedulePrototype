@@ -1,0 +1,4 @@
+.formInput option:checked,
+.formInput option:hover {
+  background-color: var(--color-primary) !important;
+}

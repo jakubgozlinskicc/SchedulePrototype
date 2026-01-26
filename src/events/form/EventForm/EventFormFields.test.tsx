@@ -1,0 +1,230 @@
+import { describe, it, expect, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { FormProvider, useForm } from "react-hook-form";
+import { EventFormFields } from "./EventFormFields";
+import { TranslationProvider } from "../../../contexts/translationContext/translationProvider";
+
+vi.mock("react-i18next", () => ({
+  useTranslation: () => ({
+    t: (key: string) => key,
+  }),
+}));
+
+function FormWrapper({
+  children,
+  defaultValues = {},
+}: {
+  children: React.ReactNode;
+  defaultValues?: Record<string, unknown>;
+}) {
+  const methods = useForm({
+    defaultValues: {
+      title: "",
+      description: "",
+      start: "",
+      end: "",
+      color: "#0000FF",
+      recurrenceType: "none",
+      recurrenceInterval: 1,
+      recurrenceEndType: "never",
+      ...defaultValues,
+    },
+  });
+  return (
+    <TranslationProvider>
+      <FormProvider {...methods}>{children}</FormProvider>
+    </TranslationProvider>
+  );
+}
+
+describe("EventFormFields", () => {
+  it("should render title field", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields />
+      </FormWrapper>
+    );
+
+    expect(screen.getByText("title")).toBeInTheDocument();
+  });
+
+  it("should render description field", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields />
+      </FormWrapper>
+    );
+
+    expect(screen.getByText("description")).toBeInTheDocument();
+  });
+
+  it("should render start date field", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields />
+      </FormWrapper>
+    );
+
+    expect(screen.getByText("start-date")).toBeInTheDocument();
+  });
+
+  it("should render end date field", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields />
+      </FormWrapper>
+    );
+
+    expect(screen.getByText("end-date")).toBeInTheDocument();
+  });
+
+  it("should render color field", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields />
+      </FormWrapper>
+    );
+
+    expect(screen.getByText("color")).toBeInTheDocument();
+  });
+
+  it("should render recurrence type select", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields />
+      </FormWrapper>
+    );
+
+    expect(screen.getByText("recurrence-type")).toBeInTheDocument();
+    expect(screen.getByRole("combobox")).toBeInTheDocument();
+  });
+
+  it("should render all recurrence type options", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields />
+      </FormWrapper>
+    );
+
+    expect(
+      screen.getByRole("option", { name: "recurrence-none" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: "recurrence-daily" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: "recurrence-weekly" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: "recurrence-monthly" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: "recurrence-yearly" })
+    ).toBeInTheDocument();
+  });
+
+  it("should not render RecurrenceFields when recurrence type is none", () => {
+    render(
+      <FormWrapper defaultValues={{ recurrenceType: "none" }}>
+        <EventFormFields />
+      </FormWrapper>
+    );
+
+    expect(screen.queryByText("recurrence-interval")).not.toBeInTheDocument();
+  });
+
+  it("should render form icons", () => {
+    const { container } = render(
+      <FormWrapper>
+        <EventFormFields />
+      </FormWrapper>
+    );
+
+    expect(container.querySelector(".fa-pen-to-square")).toBeInTheDocument();
+    expect(container.querySelector(".fa-bars-staggered")).toBeInTheDocument();
+    expect(container.querySelector(".fa-hourglass-start")).toBeInTheDocument();
+    expect(container.querySelector(".fa-hourglass-end")).toBeInTheDocument();
+    expect(container.querySelector(".fa-palette")).toBeInTheDocument();
+    expect(container.querySelector(".fa-repeat")).toBeInTheDocument();
+  });
+
+  it("should render color input with correct type", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields />
+      </FormWrapper>
+    );
+
+    const colorInput = document.querySelector('input[type="color"]');
+    expect(colorInput).toBeInTheDocument();
+  });
+
+  it("should render date picker inputs for start and end", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields />
+      </FormWrapper>
+    );
+
+    expect(
+      screen.getByPlaceholderText("select-start-date")
+    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("select-end-date")).toBeInTheDocument();
+  });
+
+  it("should not render recurrence type select when isRecurringEditSingle is true", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields isRecurringEditSingle={true} />
+      </FormWrapper>
+    );
+
+    expect(screen.queryByText("recurrence-type")).not.toBeInTheDocument();
+    expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
+  });
+
+  it("should not render repeat icon when isRecurringEditSingle is true", () => {
+    const { container } = render(
+      <FormWrapper>
+        <EventFormFields isRecurringEditSingle={true} />
+      </FormWrapper>
+    );
+
+    expect(container.querySelector(".fa-repeat")).not.toBeInTheDocument();
+  });
+
+  it("should render basic fields when isRecurringEditSingle is true", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields isRecurringEditSingle={true} />
+      </FormWrapper>
+    );
+
+    expect(screen.getByText("title")).toBeInTheDocument();
+    expect(screen.getByText("description")).toBeInTheDocument();
+    expect(screen.getByText("start-date")).toBeInTheDocument();
+    expect(screen.getByText("end-date")).toBeInTheDocument();
+    expect(screen.getByText("color")).toBeInTheDocument();
+  });
+
+  it("should not render RecurrenceFields when isRecurringEditSingle is true even with recurrence type set", () => {
+    render(
+      <FormWrapper defaultValues={{ recurrenceType: "daily" }}>
+        <EventFormFields isRecurringEditSingle={true} />
+      </FormWrapper>
+    );
+
+    expect(screen.queryByText("recurrence-interval")).not.toBeInTheDocument();
+  });
+
+  it("should render recurrence fields when isRecurringEditSingle is false", () => {
+    render(
+      <FormWrapper>
+        <EventFormFields isRecurringEditSingle={false} />
+      </FormWrapper>
+    );
+
+    expect(screen.getByText("recurrence-type")).toBeInTheDocument();
+    expect(screen.getByRole("combobox")).toBeInTheDocument();
+  });
+});

@@ -1,0 +1,32 @@
+.modal {
+  background: var(--color-bg-secondary);
+  padding: 20px;
+  border-radius: var(--radius-sm);
+  width: 400px;
+}
+
+.modal-title {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.modal-form {
+  padding: 10px;
+  border-bottom: 2px solid var(--color-primary);
+  border-top: 2px solid var(--color-primary);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 70vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}

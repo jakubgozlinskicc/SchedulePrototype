@@ -1,0 +1,185 @@
+.schedule-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.calendar-section {
+  background-color: var(--color-bg-secondary);
+  box-shadow: var(--shadow-card);
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+}
+
+.calendar-section .rbc-calendar {
+  width: 100%;
+  display: flex;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border-primary);
+}
+
+.schedule-title {
+  margin: 0;
+}
+
+.rbc-time-header-cell .rbc-today {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+}
+
+.rbc-time-view .rbc-header {
+  display: none;
+  visibility: hidden;
+}
+
+.rbc-time-header-content {
+  height: fit-content;
+}
+
+.rbc-time-header-content .rbc-row.rbc-time-header-cell {
+  display: none !important;
+}
+
+.rbc-header {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  font-weight: 600 !important;
+}
+
+.rbc-time-header .rbc-header.rbc-today {
+  background-color: var(--color-primary-hover);
+  border: none;
+  box-shadow: var(--shadow-md);
+  transform: scale(1.05);
+  z-index: 10;
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+
+.rbc-button-link {
+  font-weight: 600 !important;
+  font-family: inherit !important;
+}
+
+.rbc-show-more {
+  color: var(--color-text-primary);
+  transition: 0.2s;
+}
+
+.rbc-show-more:hover {
+  color: var(--color-primary-hover);
+}
+
+.rbc-date-cell .rbc-button-link {
+  transition: 0.2s;
+}
+
+.rbc-date-cell .rbc-button-link:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.rbc-month-view .rbc-today {
+  background-color: color-mix(
+    in srgb,
+    var(--color-primary-transparent) 40%,
+    transparent
+  );
+  border: 1px solid var(--color-primary-hover) !important;
+  box-shadow: var(--shadow-md);
+}
+
+.rbc-time-view .rbc-today {
+  background-color: var(--color-bg-secondary);
+}
+
+.rbc-time-view {
+  border-right: 14px !important;
+}
+
+.rbc-time-content {
+  background-color: var(--color-bg-secondary);
+  font-weight: 500;
+  border-left: none;
+}
+
+.rbc-time-view .rbc-event.colored-event {
+  box-shadow: var(--shadow-md);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-sm);
+  border: none;
+  background: color-mix(in srgb, var(--event-color) 20%, transparent);
+  border-left: 6px solid var(--event-color);
+  z-index: 200;
+}
+
+.rbc-event-label {
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.rbc-month-view .rbc-event.colored-event {
+  box-shadow: var(--shadow-sm);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-sm);
+  border-left: 5px solid var(--event-color);
+  background: color-mix(in srgb, var(--event-color) 25%, transparent);
+}
+
+.rbc-date-cell .rbc-button-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-primary-transparent);
+  margin: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 25%;
+  transition: 0.2s;
+}
+
+.rbc-date-cell .rbc-button-link:hover {
+  background-color: var(--color-primary);
+}
+
+.rbc-month-view .rbc-date-cell.rbc-off-range .rbc-button-link {
+  background-color: var(--color-secondary-hover);
+}
+
+.rbc-month-view .rbc-date-cell.rbc-off-range .rbc-button-link:hover {
+  background-color: var(--color-secondary-active);
+}
+
+.rbc-month-view .rbc-day-bg {
+  border-radius: var(--radius-lg);
+  border: solid 1px var(--color-border-primary);
+}
+
+.rbc-month-row {
+  border-top: none !important;
+}
+
+.rbc-row-bg {
+  right: 0 !important;
+  width: 100% !important;
+}
+
+.rbc-time-content .rbc-time-gutter {
+  width: 57px !important;
+}
+
+.rbc-current-time-indicator {
+  background-color: var(--color-primary-hover) !important;
+  height: 3px !important;
+}

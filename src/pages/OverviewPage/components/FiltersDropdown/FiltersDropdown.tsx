@@ -1,0 +1,100 @@
+import { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import "./FiltersDropdown.css";
+import { useFiltersContext } from "../../context/useFiltersContext";
+import { ColorSelect } from "./ColorSelect";
+import { useClickOutside } from "../../../../hooks/useClickOutside/useClickOutside";
+import { Button } from "../../../../components/Button/Button";
+import { DatePicker } from "../../../../components/DatePicker/DatePicker";
+
+export function FiltersDropdown() {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const { filters, activeFiltersCount, updateFilter, resetFilters } =
+    useFiltersContext();
+  const { t } = useTranslation();
+
+  useClickOutside(dropdownRef, (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+
+    if (target.closest(".react-datepicker")) {
+      return;
+    }
+
+    setIsOpen(false);
+  });
+
+  const handleDateFromChange = (date: Date | null) => {
+    updateFilter("dateFrom", date);
+  };
+
+  const handleDateToChange = (date: Date | null) => {
+    updateFilter("dateTo", date);
+  };
+
+  return (
+    <div className="filters-dropdown" ref={dropdownRef}>
+      <Button variant="secondary" onClick={() => setIsOpen(!isOpen)}>
+        <i className="fa-solid fa-filter"></i>
+        {t("filters")}
+        <span className="filters-badge">{activeFiltersCount}</span>
+      </Button>
+      <div className={`filters-panel ${isOpen ? "open" : ""}`}>
+        <div className="filter-group">
+          <label className="filter-label">
+            <i className="fa-solid fa-hourglass-start"></i>
+            {t("date-from")}
+          </label>
+          <DatePicker
+            value={filters.dateFrom}
+            onChange={handleDateFromChange}
+            variant="date"
+            maxDate={filters.dateTo ?? undefined}
+            placeholderText={t("select-date-from")}
+          />
+        </div>
+
+        <div className="filter-group">
+          <label className="filter-label">
+            <i className="fa-solid fa-hourglass-end"></i>
+            {t("date-to")}
+          </label>
+          <DatePicker
+            value={filters.dateTo}
+            onChange={handleDateToChange}
+            variant="date"
+            minDate={filters.dateFrom ?? undefined}
+            placeholderText={t("select-date-to")}
+          />
+        </div>
+
+        <div className="filter-group">
+          <label className="filter-checkbox">
+            <i className="fa-solid fa-backward-fast"></i>
+            {t("show-past-events")}
+            <input
+              type="checkbox"
+              checked={filters.showPastEvents}
+              onChange={(e) => updateFilter("showPastEvents", e.target.checked)}
+            />
+          </label>
+        </div>
+
+        <div className="filter-group">
+          <label className="filter-label">
+            <i className="fa-solid fa-palette"></i>
+            {t("colors")}
+          </label>
+          <ColorSelect
+            selectedColors={filters.colors}
+            onChange={(colors) => updateFilter("colors", colors)}
+          />
+        </div>
+        <Button variant="danger" onClick={resetFilters}>
+          <i className="fa-solid fa-toilet"></i>
+          {t("reset-filters")}
+        </Button>
+      </div>
+    </div>
+  );
+}

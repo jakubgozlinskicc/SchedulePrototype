@@ -1,0 +1,44 @@
+import { useRef, useState, type MouseEvent } from "react";
+import { useHover } from "usehooks-ts";
+import { createPortal } from "react-dom";
+import type { Event } from "../../../../db/scheduleDb";
+import { EventHover } from "../EventHover/EventHover";
+
+interface CalendarEventProps {
+  event: Event;
+}
+
+export function CalendarEvent({ event }: CalendarEventProps) {
+  const hoverRef = useRef<HTMLDivElement>(null!);
+  const isHovering = useHover(hoverRef);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    setPosition({ x: e.clientX, y: e.clientY });
+  };
+
+  return (
+    <>
+      <div
+        ref={hoverRef}
+        onMouseMove={handleMouseMove}
+        style={
+          {
+            height: "100%",
+            cursor: "pointer",
+          } as React.CSSProperties
+        }
+      >
+        {(!event.id || event.recurrenceRule?.type !== "none") && (
+          <i className="fa-solid fa-repeat" style={{ marginRight: "8px" }}></i>
+        )}
+        {event.title}
+      </div>
+      {isHovering &&
+        createPortal(
+          <EventHover event={event} position={position} />,
+          document.body
+        )}
+    </>
+  );
+}
